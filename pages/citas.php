@@ -6,13 +6,6 @@
     </button>
 </div>
 
-<!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h3">Asignar nueva cita</h1>
-</div> -->
-
-
-
-
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -47,10 +40,6 @@
         </div>
     </div>
 </div>
-
-<!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h3">Citas asignadas</h1>
-</div> -->
 
 <div class="table-responsive small">
     <form class="row g-3">

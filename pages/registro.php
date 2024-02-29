@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-bs-theme="auto">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario de Registro</title>
-
-  <!-- Bootstrap CSS (Asegúrate de ajustar la ruta si estás usando una versión descargada) -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">
+  <script src="../assets/bootstrap-5.3/js/color-modes.js"></script>
+  <script src="../assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
@@ -58,10 +58,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Bootstrap JS y dependencias (Ajusta la ruta si es necesario) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 
 </html>
