@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 26-01-2024 a las 18:17:57
+-- Servidor: localhost
+-- Tiempo de generación: 02-03-2024 a las 13:37:07
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -24,10 +24,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `citas`
+-- Estructura de tabla para la tabla `appointments`
 --
 
-CREATE TABLE `citas` (
+CREATE TABLE `appointments` (
   `ID_Cita` int(11) NOT NULL,
   `ID_Paciente` int(11) DEFAULT NULL,
   `ID_Fisioterapeuta` int(11) DEFAULT NULL,
@@ -39,10 +39,10 @@ CREATE TABLE `citas` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `facturas`
+-- Estructura de tabla para la tabla `invoices`
 --
 
-CREATE TABLE `facturas` (
+CREATE TABLE `invoices` (
   `ID_Factura` int(11) NOT NULL,
   `ID_Paciente` int(11) DEFAULT NULL,
   `FechaEmision_FA` date DEFAULT NULL,
@@ -55,10 +55,32 @@ CREATE TABLE `facturas` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `fisioterapeutas`
+-- Estructura de tabla para la tabla `patients`
 --
 
-CREATE TABLE `fisioterapeutas` (
+CREATE TABLE `patients` (
+  `ID_Paciente` int(11) NOT NULL,
+  `Nombre_P` varchar(50) DEFAULT NULL,
+  `Apellido_P` varchar(50) DEFAULT NULL,
+  `Direccion_P` varchar(100) DEFAULT NULL,
+  `Telefono_P` varchar(15) DEFAULT NULL,
+  `CorreoElectronico_P` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `patients`
+--
+
+INSERT INTO `patients` (`ID_Paciente`, `Nombre_P`, `Apellido_P`, `Direccion_P`, `Telefono_P`, `CorreoElectronico_P`) VALUES
+(1, 's', 's', 's', '6', '2');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `physiotherapists`
+--
+
+CREATE TABLE `physiotherapists` (
   `ID_Fisioterapeuta` int(11) NOT NULL,
   `Nombre_F` varchar(50) DEFAULT NULL,
   `Apellido_F` varchar(50) DEFAULT NULL,
@@ -70,27 +92,10 @@ CREATE TABLE `fisioterapeutas` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `pacientes`
+-- Estructura de tabla para la tabla `users`
 --
 
-CREATE TABLE `pacientes` (
-  `ID_Paciente` int(11) NOT NULL,
-  `Nombre_P` varchar(50) DEFAULT NULL,
-  `Apellido_P` varchar(50) DEFAULT NULL,
-  `FechaNacimiento_P` date DEFAULT NULL,
-  `Genero_P` varchar(10) DEFAULT NULL,
-  `Direccion_P` varchar(100) DEFAULT NULL,
-  `Telefono_P` varchar(15) DEFAULT NULL,
-  `CorreoElectronico_P` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuarios`
---
-
-CREATE TABLE `usuarios` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
@@ -101,10 +106,10 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `usuarios` (`id`, `username`, `name`, `lastname`, `password`, `email`, `user-type`) VALUES
+INSERT INTO `users` (`id`, `username`, `name`, `lastname`, `password`, `email`, `user-type`) VALUES
 (1, 'miguelon', 'Miguel', 'Ortega', '1234', 'hola@gmail.com', 2);
 
 --
@@ -112,36 +117,36 @@ INSERT INTO `usuarios` (`id`, `username`, `name`, `lastname`, `password`, `email
 --
 
 --
--- Indices de la tabla `citas`
+-- Indices de la tabla `appointments`
 --
-ALTER TABLE `citas`
+ALTER TABLE `appointments`
   ADD PRIMARY KEY (`ID_Cita`),
   ADD KEY `ID_Paciente` (`ID_Paciente`),
   ADD KEY `ID_Fisioterapeuta` (`ID_Fisioterapeuta`);
 
 --
--- Indices de la tabla `facturas`
+-- Indices de la tabla `invoices`
 --
-ALTER TABLE `facturas`
+ALTER TABLE `invoices`
   ADD PRIMARY KEY (`ID_Factura`),
   ADD KEY `ID_Paciente` (`ID_Paciente`);
 
 --
--- Indices de la tabla `fisioterapeutas`
+-- Indices de la tabla `patients`
 --
-ALTER TABLE `fisioterapeutas`
-  ADD PRIMARY KEY (`ID_Fisioterapeuta`);
-
---
--- Indices de la tabla `pacientes`
---
-ALTER TABLE `pacientes`
+ALTER TABLE `patients`
   ADD PRIMARY KEY (`ID_Paciente`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indices de la tabla `physiotherapists`
 --
-ALTER TABLE `usuarios`
+ALTER TABLE `physiotherapists`
+  ADD PRIMARY KEY (`ID_Fisioterapeuta`);
+
+--
+-- Indices de la tabla `users`
+--
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -149,9 +154,9 @@ ALTER TABLE `usuarios`
 --
 
 --
--- AUTO_INCREMENT de la tabla `usuarios`
+-- AUTO_INCREMENT de la tabla `users`
 --
-ALTER TABLE `usuarios`
+ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
@@ -159,17 +164,17 @@ ALTER TABLE `usuarios`
 --
 
 --
--- Filtros para la tabla `citas`
+-- Filtros para la tabla `appointments`
 --
-ALTER TABLE `citas`
-  ADD CONSTRAINT `citas_ibfk_1` FOREIGN KEY (`ID_Paciente`) REFERENCES `pacientes` (`ID_Paciente`),
-  ADD CONSTRAINT `citas_ibfk_2` FOREIGN KEY (`ID_Fisioterapeuta`) REFERENCES `fisioterapeutas` (`ID_Fisioterapeuta`);
+ALTER TABLE `appointments`
+  ADD CONSTRAINT `appointments_ibfk_1` FOREIGN KEY (`ID_Paciente`) REFERENCES `patients` (`ID_Paciente`),
+  ADD CONSTRAINT `appointments_ibfk_2` FOREIGN KEY (`ID_Fisioterapeuta`) REFERENCES `physiotherapists` (`ID_Fisioterapeuta`);
 
 --
--- Filtros para la tabla `facturas`
+-- Filtros para la tabla `invoices`
 --
-ALTER TABLE `facturas`
-  ADD CONSTRAINT `facturas_ibfk_1` FOREIGN KEY (`ID_Paciente`) REFERENCES `pacientes` (`ID_Paciente`);
+ALTER TABLE `invoices`
+  ADD CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`ID_Paciente`) REFERENCES `patients` (`ID_Paciente`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

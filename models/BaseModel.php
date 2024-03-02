@@ -2,7 +2,7 @@
 
 class BaseModel
 {
-    private static $conexion = null;
+    protected static $conexion = null;
 
     public function __construct()
     {
@@ -24,7 +24,7 @@ class BaseModel
         }
     }
 
-    public function insertar($tabla, $datos)
+    public function insert($tabla, $datos)
     {
         // Prepara la consulta
         $campos = implode(', ', array_map(function ($campo) {
@@ -36,10 +36,10 @@ class BaseModel
         $sql = "INSERT INTO `$tabla` ($campos) VALUES ($valores)";
 
         // Ejecuta la consulta
-        return $this->ejecutarConsulta($sql);
+        return $this->executeQuery($sql);
     }
 
-    public function modificar($tabla, $datos, $condicion)
+    public function update($tabla, $datos, $condicion)
     {
         // Prepara la consulta
         $actualizaciones = implode(', ', array_map(function ($campo, $valor) {
@@ -48,19 +48,19 @@ class BaseModel
         $sql = "UPDATE `$tabla` SET $actualizaciones WHERE $condicion";
 
         // Ejecuta la consulta
-        return $this->ejecutarConsulta($sql);
+        return $this->executeQuery($sql);
     }
 
-    public function eliminar($tabla, $condicion)
+    public function delete($tabla, $condicion)
     {
         // Prepara la consulta
         $sql = "DELETE FROM `$tabla` WHERE $condicion";
 
         // Ejecuta la consulta
-        return $this->ejecutarConsulta($sql);
+        return $this->executeQuery($sql);
     }
 
-    public function leer($tabla, $condicion = '')
+    public function read($tabla, $condicion = '')
     {
         // Prepara la consulta
         $sql = "SELECT * FROM `$tabla`";
@@ -84,7 +84,7 @@ class BaseModel
         return $datos;
     }
 
-    private function ejecutarConsulta($sql)
+    protected function executeQuery($sql)
     {
         // Ejecuta la consulta
         if (self::$conexion->query($sql) === TRUE) {

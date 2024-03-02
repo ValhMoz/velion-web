@@ -1,3 +1,17 @@
+<?php
+    // Inicia la sesión si no está iniciada
+    session_start();
+
+    // Verifica si hay un nombre de usuario en la sesión
+    if (isset($_SESSION['username'])) {
+        $nombreUsuario = $_SESSION['username'];
+    } else {
+        // Si no hay un nombre de usuario en la sesión, redirige a la página de inicio de sesión
+        header('Location: ./404.php');
+        exit();
+    }
+?>
+
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Pacientes</h1>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -64,6 +78,9 @@
     <form class="row g-3">
         <div class="col-auto">
             <label for="inputPassword2" class="visually-hidden">Filtro</label>
+            <input type="text" class="form-control" id="inputPassword2" placeholder="Filtrar por ID...">
+        </div>
+        <div class="col-auto">
             <input type="text" class="form-control" id="inputPassword2" placeholder="Filtrar por nombre...">
         </div>
         <div class="col-auto">

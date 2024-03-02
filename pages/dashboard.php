@@ -199,7 +199,7 @@
                     <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <button id="btnInicio" onclick="cargarPagina('inicio')" class="nav-link d-flex align-items-center gap-2" aria-current="page">
+                                <button id="btnInicio" onclick="cargarPagina('start')" class="nav-link d-flex align-items-center gap-2" aria-current="page">
                                     <svg class="bi">
                                         <use xlink:href="#house-fill" />
                                     </svg>
@@ -207,7 +207,7 @@
                                 </button>
                             </li>
                             <li class="nav-item">
-                                <button id="btnCitas" onclick="cargarPagina('citas')" class="nav-link d-flex align-items-center gap-2">
+                                <button id="btnCitas" onclick="cargarPagina('appointments')" class="nav-link d-flex align-items-center gap-2">
                                     <svg class="bi">
                                         <use xlink:href="#calendar3" />
                                     </svg>
@@ -215,7 +215,7 @@
                                 </button>
                             </li>
                             <li class="nav-item">
-                                <button id="btnPacientes" onclick="cargarPagina('pacientes')" class="nav-link d-flex align-items-center gap-2">
+                                <button id="btnPacientes" onclick="cargarPagina('patients')" class="nav-link d-flex align-items-center gap-2">
                                     <svg class="bi">
                                         <use xlink:href="#people" />
                                     </svg>
@@ -223,7 +223,7 @@
                                 </button>
                             </li>
                             <li class="nav-item">
-                                <button id="btnFacturas" onclick="cargarPagina('facturas')" class="nav-link d-flex align-items-center gap-2">
+                                <button id="btnFacturas" onclick="cargarPagina('invoices')" class="nav-link d-flex align-items-center gap-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-receipt" viewBox="0 0 16 16">
                                         <path d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1A.5.5 0 0 1 15 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1A.5.5 0 0 1 1 14V2a.5.5 0 0 1 .053-.224l.5-1a.5.5 0 0 1 .367-.27m.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0z" />
                                         <path d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1H3a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1H3a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1H3a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1H3a.5.5 0 0 1-.5-.5m8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5" />
@@ -232,7 +232,7 @@
                                 </button>
                             </li>
                             <li class="nav-item">
-                                <button id="btnCompraBonos" onclick="cargarPagina('comprabonos')" class="nav-link d-flex align-items-center gap-2">
+                                <button id="btnCompraBonos" onclick="cargarPagina('buy_pass')" class="nav-link d-flex align-items-center gap-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5" />
                                         <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z" />
@@ -290,7 +290,7 @@
             const contenido = $('#contenido');
 
             // Cargar el contenido de inicio.php
-            cargarContenido('inicio.php', contenido);
+            cargarContenido('start.php', contenido);
         });
 
         // Función para cargar la página y activar el botón correspondiente
@@ -328,7 +328,7 @@
         function cerrarSesion() {
             // Realiza una solicitud AJAX a la API de cerrar sesión
             $.ajax({
-                url: '../scripts/procesar_logout.php', // Ruta de la API de cerrar sesión
+                url: '../scripts/logout_manager.php', // Ruta de la API de cerrar sesión
                 type: 'POST', // Método de la solicitud
                 success: function(response) {
                     // Redirige al usuario a index.php después de cerrar sesión

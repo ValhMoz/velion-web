@@ -1,7 +1,7 @@
 <?php
 
-// Incluye el archivo LoginController.php
-include '../controllers/LoginController.php';
+// Incluye el archivo UserController.php
+include '../controllers/UserController.php';
 
 // Verifica si se han enviado datos del formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -12,10 +12,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = $_POST["password"];
 
         // Crea una instancia del controlador de inicio de sesión
-        $loginController = new LoginController();
+        $userController = new UserController();
 
         // Intenta iniciar sesión con los datos proporcionados
-        $loginController->iniciarSesion($username, $password);
+        $userController->iniciarSesion($username, $password);
+
+        // Si el checkbox está marcado, establece un tiempo de expiración más largo para la sesión
+        if (isset($_POST['mantener_sesion']) && $_POST['mantener_sesion'] == 'on') {
+            // Establece un tiempo de expiración más largo (por ejemplo, 30 días)
+            ini_set('session.cookie_lifetime', 30 * 24 * 3600);
+        }
     } else {
         // Datos de inicio de sesión incompletos
         echo "Por favor, introduzca nombre de usuario y contraseña.";

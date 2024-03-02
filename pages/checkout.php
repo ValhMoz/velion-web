@@ -1,15 +1,28 @@
+<?php
+    // Inicia la sesión si no está iniciada
+    session_start();
+
+    // Verifica si hay un nombre de usuario en la sesión
+    if (isset($_SESSION['username'])) {
+        $nombreUsuario = $_SESSION['username'];
+    } else {
+        // Si no hay un nombre de usuario en la sesión, redirige a la página de inicio de sesión
+        header('Location: ./404.php');
+        exit();
+    }
+?>
+
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
 
 <head>
-    <script src="../assets/bootstrap-5.3/js/color-modes.js"></script>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="generator" content="Hugo 0.118.2">
     <title>Confirmación de compra</title>
     <link href="../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="../assets/bootstrap-5.3/js/color-modes.js"></script>
     <meta name="theme-color" content="#712cf9">
 
     <style>

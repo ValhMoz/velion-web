@@ -1,15 +1,15 @@
 <?php
 
-require_once '../models/UsuarioModel.php';
+require_once '../models/UserModel.php';
 require_once '../index.php';
 
-class LoginController
+class UserController
 {
     private $usuarioModel;
 
     public function __construct()
     {
-        $this->usuarioModel = new UsuarioModel();
+        $this->usuarioModel = new UserModel();
     }
 
     // public function mostrarFormularioLogin() {
@@ -20,8 +20,8 @@ class LoginController
     public function iniciarSesion($username, $password)
     {
         // Verificar si el usuario existe en la base de datos
-        $usuario = $this->usuarioModel->leer('usuarios', "username = '$username'");
-
+        $usuario = $this->usuarioModel->read('users', "username = '$username'");
+        echo($usuario);
         if (!empty($usuario)) {
             // Verificar la contraseña
             if ($password === $usuario[0]['password']) {
@@ -41,6 +41,11 @@ class LoginController
             // Usuario no encontrado
             echo "Usuario no encontrado.";
         }
+    }
+
+    public function registrarUsuario()
+    {
+        
     }
 
     public function cerrarSesion()

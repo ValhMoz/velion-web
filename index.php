@@ -14,7 +14,7 @@
 
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
   <main class="form-signin w-100 m-auto">
-    <form action="./scripts/procesar_login.php" method="post">
+    <form action="./scripts/login_manager.php" method="post">
       <!-- <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
       <h1 class="title-login-register">Inicia Sesión</h1>
 
@@ -34,7 +34,7 @@
         </label>
       </div>
       <button class="btn btn-primary w-100 py-2" style="margin-bottom: 5px;" type="submit">Iniciar sesión</button>
-      <a class="btn btn-secondary w-100 py-2" type="submit" href="./pages/registro.php">Regístrate</a>
+      <a class="btn btn-secondary w-100 py-2" type="submit" href="./pages/sign_up.php">Regístrate</a>
       <p class="mt-5 mb-3 text-body-secondary">&copy; 2024</p>
     </form>
   </main>

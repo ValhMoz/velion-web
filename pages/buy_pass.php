@@ -1,3 +1,17 @@
+<?php
+    // Inicia la sesión si no está iniciada
+    session_start();
+
+    // Verifica si hay un nombre de usuario en la sesión
+    if (isset($_SESSION['username'])) {
+        $nombreUsuario = $_SESSION['username'];
+    } else {
+        // Si no hay un nombre de usuario en la sesión, redirige a la página de inicio de sesión
+        header('Location: ./404.php');
+        exit();
+    }
+?>
+
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
         <symbol id="check" viewBox="0 0 16 16">

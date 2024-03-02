@@ -17,7 +17,7 @@
       <div class="col-md-6">
 
         <!-- Formulario de Registro -->
-        <form>
+        <form action="./scripts/signup_manager.php" method="post">
           <h2 class="mb-3">Registro</h2>
 
           <!-- Nombre de usuario -->
@@ -47,12 +47,13 @@
           <div class="mb-3">
             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" requiredChecked>
             <label class="form-check-label" for="flexCheckDefault">
-              Acepto los <a href="terminos.php">términos y condiciones del servicio</a>
+              Acepto los <a href="terms.php">términos y condiciones del servicio</a>
             </label>
           </div>
 
           <!-- Botón de Registro -->
           <button type="submit" class="btn btn-primary">Registrarse</button>
+          <a href="#" onclick="history.back();" class="btn btn-secondary">Volver atrás</a>
         </form>
 
       </div>
