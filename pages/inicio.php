@@ -1,11 +1,17 @@
 <?php
-include("../core/login.php");  // Asegúrate de incluir login.php primero
+// Inicia la sesión si no está iniciada
+session_start();
 
-// Obtener el nombre de usuario y datos del usuario desde la sesión
-$datosUsuario = obtenerDatosUsuario($_SESSION["username"], $conexion);
-$nombreUsuario = $datosUsuario["username"];
-$correoElectronico = $datosUsuario["user-type"];
+// Verifica si hay un nombre de usuario en la sesión
+if (isset($_SESSION['username'])) {
+    $nombreUsuario = $_SESSION['username'];
+} else {
+    // Si no hay un nombre de usuario en la sesión, redirige a la página de inicio de sesión
+    header('Location: ./404.php');
+    exit();
+}
 ?>
+
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Bienvenid@, <?php echo $nombreUsuario?> </h1>
     <!-- <div class="btn-toolbar mb-2 mb-md-0">

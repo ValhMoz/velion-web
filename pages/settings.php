@@ -1,11 +1,18 @@
 <?php
-include("../core/login.php");  // Asegúrate de incluir login.php primero
+// Inicia la sesión si no está iniciada
+session_start();
 
-// Obtener el nombre de usuario y datos del usuario desde la sesión
-$datosUsuario = obtenerDatosUsuario($_SESSION["username"], $conexion);
-$nombreUsuario = $datosUsuario["username"];
-$correoElectronico = $datosUsuario["email"];
+// Verifica si hay un nombre de usuario y un correo electrónico en la sesión
+if (isset($_SESSION['username']) && isset($_SESSION['email'])) {
+    $nombreUsuario = $_SESSION['username'];
+    $correoElectronico = $_SESSION['email'];
+} else {
+    // Si no hay un nombre de usuario y un correo electrónico en la sesión, redirige a la página de inicio de sesión
+    header('Location: ../index.php');
+    exit();
+}
 ?>
+
 
 <div class="container mt-5">
     <div class="row">
@@ -14,7 +21,7 @@ $correoElectronico = $datosUsuario["email"];
             <div class="card">
                 <!-- <img src="" class="card-img-top" alt="Avatar"> -->
                 <div class="card-body">
-                    <h5 class="card-title">Nombre de Usuario:  <?php echo $nombreUsuario ?> </h5>
+                    <h5 class="card-title">Nombre de Usuario: <?php echo $nombreUsuario ?> </h5>
                     <p class="card-text">Correo electrónico: <?php echo $correoElectronico ?></p>
                 </div>
             </div>

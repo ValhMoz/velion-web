@@ -1,7 +1,17 @@
 <?php
-include '../core/sesion.php';
-include  "../core/conn.php";
+    // Inicia la sesión si no está iniciada
+    session_start();
+
+    // Verifica si hay un nombre de usuario en la sesión
+    if (isset($_SESSION['username'])) {
+        $nombreUsuario = $_SESSION['username'];
+    } else {
+        // Si no hay un nombre de usuario en la sesión, redirige a la página de inicio de sesión
+        header('Location: ./404.php');
+        exit();
+    }
 ?>
+
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
 
@@ -241,7 +251,7 @@ include  "../core/conn.php";
                                 </button>
                             </li>
                             <li class="nav-item">
-                                <a href="../core/logout.php" onclick="cerrarSesion()" class="nav-link d-flex align-items-center gap-2">
+                                <a href="#" onclick="cerrarSesion()" class="nav-link d-flex align-items-center gap-2">
                                     <svg class="bi">
                                         <use xlink:href="#door-closed" />
                                     </svg>
@@ -314,6 +324,24 @@ include  "../core/conn.php";
             boton.classList.add('active');
         }
     </script>
+    <script>
+        function cerrarSesion() {
+            // Realiza una solicitud AJAX a la API de cerrar sesión
+            $.ajax({
+                url: '../scripts/procesar_logout.php', // Ruta de la API de cerrar sesión
+                type: 'POST', // Método de la solicitud
+                success: function(response) {
+                    // Redirige al usuario a index.php después de cerrar sesión
+                    window.location.href = '../index.php';
+                },
+                error: function(xhr, status, error) {
+                    // Maneja el error si ocurre
+                    console.error(error);
+                }
+            });
+        }
+    </script>
+
 </body>
 
 </html>

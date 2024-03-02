@@ -47,7 +47,7 @@
           <div class="mb-3">
             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" requiredChecked>
             <label class="form-check-label" for="flexCheckDefault">
-              Acepto los <a href="../core/terminos.php">términos y condiciones del servicio</a>
+              Acepto los <a href="terminos.php">términos y condiciones del servicio</a>
             </label>
           </div>
 

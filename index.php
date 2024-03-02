@@ -5,16 +5,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Inicio de sesión</title>
-  <link href="../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../assets/bootstrap-5.3/css/sign-in.css" rel="stylesheet">
-  <link href="../assets/custom/css/style.css" rel="stylesheet">
-  <script src="../assets/bootstrap-5.3/js/color-modes.js"></script>
-  <script src="../assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
+  <link href="./assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="./assets/bootstrap-5.3/css/sign-in.css" rel="stylesheet">
+  <link href="./assets/custom/css/style.css" rel="stylesheet">
+  <script src="./assets/bootstrap-5.3/js/color-modes.js"></script>
+  <script src="./assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
   <main class="form-signin w-100 m-auto">
-    <form action="../core/login.php" method="post">
+    <form action="./scripts/procesar_login.php" method="post">
       <!-- <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
       <h1 class="title-login-register">Inicia Sesión</h1>
 
@@ -34,7 +34,7 @@
         </label>
       </div>
       <button class="btn btn-primary w-100 py-2" style="margin-bottom: 5px;" type="submit">Iniciar sesión</button>
-      <a class="btn btn-secondary w-100 py-2" type="submit" href="./registro.php">Regístrate</a>
+      <a class="btn btn-secondary w-100 py-2" type="submit" href="./pages/registro.php">Regístrate</a>
       <p class="mt-5 mb-3 text-body-secondary">&copy; 2024</p>
     </form>
   </main>
