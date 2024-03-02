@@ -20,11 +20,11 @@ class UserController
     public function iniciarSesion($username, $password)
     {
         // Verificar si el usuario existe en la base de datos
-        $usuario = $this->usuarioModel->read('users', "username = '$username'");
+        $usuario = $this->usuarioModel->read('usuarios', "nombre_usuario = '$username'");
         echo($usuario);
         if (!empty($usuario)) {
             // Verificar la contraseña
-            if ($password === $usuario[0]['password']) {
+            if ($password === $usuario[0]['contraseña']) {
                 // Iniciar sesión
                 session_start();
                 $_SESSION['username'] = $username;

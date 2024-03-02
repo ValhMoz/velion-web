@@ -3,7 +3,7 @@
 session_start();
 
 // Verifica si hay un nombre de usuario y un correo electrónico en la sesión
-if (isset($_SESSION['username']) && isset($_SESSION['email'])) {
+if (isset($_SESSION['username'])) {
     $nombreUsuario = $_SESSION['username'];
     $correoElectronico = $_SESSION['email'];
 } else {
