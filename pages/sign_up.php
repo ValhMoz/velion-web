@@ -23,7 +23,13 @@
           <!-- Nombre de usuario -->
           <div class="mb-3">
             <label for="username" class="form-label">Nombre de usuario</label>
-            <input type="text" class="form-control" id="username" name="username" required>
+            <input type="text" class="form-control" id="username" name="username" pattern="[a-z]+" title="Introduce un nombre de usuario válido (solo letras minúsculas, sin espacios)" required>
+          </div>
+
+          <!-- DNI -->
+          <div class="mb-3">
+            <label for="dni" class="form-label">DNI</label>
+            <input type="text" class="form-control" id="dni" name="dni" pattern="\d{8}[A-Za-z]" title="Introduce un DNI válido (8 dígitos seguidos de una letra)" required>
           </div>
 
           <!-- Correo electrónico -->
@@ -35,13 +41,20 @@
           <!-- Contraseña -->
           <div class="mb-3">
             <label for="password" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" id="password" name="password" required>
+            <input type="password" class="form-control" id="password" minlength="8" name="password" required>
           </div>
 
           <!-- Confirmar contraseña -->
           <div class="mb-3">
             <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
             <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+
+            <!-- Mostrar mensaje de error si las contraseñas no coinciden -->
+            <?php
+            if (isset($_GET["error"]) && $_GET["error"] === "password_mismatch") {
+              echo '<div class="text-danger">Las contraseñas no coinciden. Por favor, inténtalo de nuevo.</div>';
+            }
+            ?>
           </div>
 
           <div class="mb-3">
