@@ -17,22 +17,22 @@ class UserController
     //     include 'login.php';
     // }
 
-    public function iniciarSesion($username, $password)
+    public function iniciarSesion($email, $pass)
     {
         // Verificar si el usuario existe en la base de datos
-        $usuario = $this->usuarioModel->read('usuarios', "nombre_usuario = '$username'");
-        echo($usuario);
+        $usuario = $this->usuarioModel->read('usuarios', "email= '$email'");
         if (!empty($usuario)) {
             // Verificar la contraseña
-            if ($password === $usuario[0]['contraseña']) {
+            if ($pass === $usuario[0]['pass']) {
                 // Iniciar sesión
                 session_start();
-                $_SESSION['username'] = $username;
-                $_SESSION['email'] = $usuario[0]['email'];
+                $_SESSION['email'] = $email;
+                $_SESSION['nombre'] = $usuario[0]['nombre'];
 
                 // Redirigir a la página de inicio o a otra página de tu elección
                 header('Location: ../pages/dashboard.php');
-                // exit();
+                exit();
+
             } else {
                 // Contraseña incorrecta
                 echo "Contraseña incorrecta.";
@@ -43,9 +43,11 @@ class UserController
         }
     }
 
-    public function registrarUsuario()
+    public function registrarUsuario($datos)
     {
-        
+        $this->usuarioModel->insert('usuarios', $datos);
+        header('Location: ../index.php');
+        exit();
     }
 
     public function cerrarSesion()

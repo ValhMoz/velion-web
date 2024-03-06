@@ -3,7 +3,7 @@
 session_start();
 
 // Verifica si hay un nombre de usuario en la sesión
-if (isset($_SESSION['username'])) {
+if (isset($_SESSION['email'])) {
     $nombreUsuario = $_SESSION['username'];
 } else {
     // Si no hay un nombre de usuario en la sesión, redirige a la página de inicio de sesión
@@ -13,7 +13,7 @@ if (isset($_SESSION['username'])) {
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Bienvenid@, <?php echo $nombreUsuario?> </h1>
+    <h1 class="h2">Bienvenid@, <?php echo $nombreUsuario ?> </h1>
     <!-- <div class="btn-toolbar mb-2 mb-md-0">
         <div class="btn-group me-2">
             <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -39,6 +39,9 @@ if (isset($_SESSION['username'])) {
             <input type="text" class="form-control" id="inputPassword2" placeholder="Filtrar por nombre...">
         </div>
         <div class="col-auto">
+            <input type="text" class="form-control" id="inputPassword2" placeholder="Filtrar por nombre...">
+        </div>
+        <div class="col-auto">
             <button type="submit" class="btn btn-primary mb-3">Filtrar</button>
         </div>
     </form>
@@ -48,69 +51,13 @@ if (isset($_SESSION['username'])) {
                 <th scope="col">ID</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Apellidos</th>
-                <th scope="col">Fecha y hora</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Hora</th>
                 <th scope="col">Fisioterapeuta asociado</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1,001</td>
-                <td>random</td>
-                <td>data</td>
-                <td>placeholder</td>
-                <td>text</td>
-            </tr>
-            <tr>
-                <td>1,001</td>
-                <td>random</td>
-                <td>data</td>
-                <td>placeholder</td>
-                <td>text</td>
-            </tr>
-            <tr>
-                <td>1,001</td>
-                <td>random</td>
-                <td>data</td>
-                <td>placeholder</td>
-                <td>text</td>
-            </tr>
-            <tr>
-                <td>1,001</td>
-                <td>random</td>
-                <td>data</td>
-                <td>placeholder</td>
-                <td>text</td>
-            </tr>
-            <tr>
-                <td>1,001</td>
-                <td>random</td>
-                <td>data</td>
-                <td>placeholder</td>
-                <td>text</td>
-            </tr>
-            <tr>
-                <td>1,001</td>
-                <td>random</td>
-                <td>data</td>
-                <td>placeholder</td>
-                <td>text</td>
-            </tr>
-            <tr>
-                <td>1,001</td>
-                <td>random</td>
-                <td>data</td>
-                <td>placeholder</td>
-                <td>text</td>
-            </tr>
-            <tr>
-                <td>1,001</td>
-                <td>random</td>
-                <td>data</td>
-                <td>placeholder</td>
-                <td>text</td>
-            </tr>
-
             <tr>
                 <td>1,001</td>
                 <td>random</td>

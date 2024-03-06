@@ -13,12 +13,12 @@ class UserModel extends BaseModel
     {
         $username = $datos['username'];
         $email = $datos['email'];
-        $password = $datos['password'];
+        $pass = $datos['pass'];
 
         // Escapar valores para evitar inyección de SQL
         $username = $this->conexion->real_escape_string($username);
         $email = $this->conexion->real_escape_string($email);
-        $password = $this->conexion->real_escape_string($password);
+        $password = $this->conexion->real_escape_string($pass);
 
         // Hashear la contraseña antes de almacenarla en la base de datos
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);

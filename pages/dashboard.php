@@ -3,7 +3,7 @@
     session_start();
 
     // Verifica si hay un nombre de usuario en la sesión
-    if (isset($_SESSION['username'])) {
+    if (isset($_SESSION['email'])) {
         $nombreUsuario = $_SESSION['username'];
     } else {
         // Si no hay un nombre de usuario en la sesión, redirige a la página de inicio de sesión
@@ -220,14 +220,6 @@
                                         <use xlink:href="#people" />
                                     </svg>
                                     Usuarios
-                                </button>
-                            </li>
-                            <li class="nav-item">
-                                <button id="btnPacientes" onclick="cargarPagina('patients')" class="nav-link d-flex align-items-center gap-2">
-                                    <svg class="bi">
-                                        <use xlink:href="#people" />
-                                    </svg>
-                                    Pacientes
                                 </button>
                             </li>
                             <li class="nav-item">

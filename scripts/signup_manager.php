@@ -2,17 +2,26 @@
 // Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener los valores del formulario
-    $username = $_POST["username"];
-    $dni = $_POST["usuario_id"];
-    $email = $_POST["email"];
-    $password = $_POST["contraseña"];
-    $direccion = $_POST["direccion"];
-    // Verificar si las contraseñas coinciden
-    if ($password !== $confirmPassword) {
-        // Las contraseñas no coinciden, mostrar un mensaje de error y redirigir de vuelta al formulario de registro
-        header("Location: ../pages/sign_up.php?error=password_mismatch");
-        exit; // Detener la ejecución del script
-    }
+
+    $datos = array(
+        'usuario_id' => $_POST["usuario_id"],
+        'nombre' => $_POST["nombre"],
+        'lastname' => $_POST["lastname"],
+        'dni' => $_POST["dni"],
+        'genero' => $_POST["genero"],
+        'telefono' => $_POST["telefono"],
+        'direccion' => $_POST["direccion"],
+        'email' => $_POST["email"],
+        'pass' => $_POST["pass"],
+        'confirmPass' => $_POST["confirmPass"],
+        'rol' => "paciente"
+    );
+
+         // Crea una instancia del controlador de inicio de sesión
+        $userController = new UserController();
+
+        // Intenta registrar un usuario con los datos proporcionados
+        $userController->registrarUsuario($datos);
 
     // Aquí continuaría la lógica para procesar el registro
     // Por ejemplo, guardar los datos en la base de datos

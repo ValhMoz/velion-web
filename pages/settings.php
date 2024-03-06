@@ -3,7 +3,7 @@
 session_start();
 
 // Verifica si hay un nombre de usuario y un correo electrónico en la sesión
-if (isset($_SESSION['username'])) {
+if (isset($_SESSION['email'])) {
     $nombreUsuario = $_SESSION['username'];
     $correoElectronico = $_SESSION['email'];
 } else {
@@ -31,19 +31,32 @@ if (isset($_SESSION['username'])) {
             <h2 class="mb-4">Cambiar Datos</h2>
             <form>
                 <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" placeholder="Nombre">
+                    <label for="email" class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="email" placeholder="Correo electrónico" required>
                 </div>
                 <div class="mb-3">
-                    <label for="correo" class="form-label">Correo Electrónico</label>
-                    <input type="email" class="form-control" id="correo" placeholder="Correo electrónico">
+                    <label for="pass" class="form-label">Contraseña</label>
+                    <input type="pass" class="form-control" id="pass" placeholder="Contraseña" required>
                 </div>
                 <div class="mb-3">
-                    <label for="contrasena" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="contrasena" placeholder="Contraseña">
+                    <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
+                    <input type="password" class="form-control" id="confirmPass" name="confirmPass" placeholder="Confirmar Contraseña" required>
+                    <div id="passwordError" class="text-danger"></div>
                 </div>
                 <button type="submit" class="btn btn-primary">Guardar Cambios</button>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    function validatePassword() {
+        var password = document.getElementById("pass").value;
+        var confirmPassword = document.getElementById("confirmPass").value;
+        if (password != confirmPassword) {
+            document.getElementById("passwordError").innerHTML = "Las contraseñas no coinciden. Por favor, inténtalo de nuevo.";
+            return false;
+        }
+        return true;
+    }
+</script>
