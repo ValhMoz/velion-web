@@ -1,18 +1,6 @@
 <?php
-// Inicia la sesión si no está iniciada
-session_start();
-
-// Verifica si hay un nombre de usuario y un correo electrónico en la sesión
-if (isset($_SESSION['email'])) {
-    $nombreUsuario = $_SESSION['username'];
-    $correoElectronico = $_SESSION['email'];
-} else {
-    // Si no hay un nombre de usuario y un correo electrónico en la sesión, redirige a la página de inicio de sesión
-    header('Location: ../index.php');
-    exit();
-}
+    require_once '../scripts/session_manager.php';
 ?>
-
 
 <div class="container mt-5">
     <div class="row">

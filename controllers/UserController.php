@@ -1,7 +1,5 @@
 <?php
-
 require_once '../models/UserModel.php';
-require_once '../index.php';
 
 class UserController
 {
@@ -29,10 +27,13 @@ class UserController
                 $_SESSION['email'] = $email;
                 $_SESSION['nombre'] = $usuario[0]['nombre'];
 
-                // Redirigir a la página de inicio o a otra página de tu elección
-                header('Location: ../pages/dashboard.php');
-                exit();
-
+                if ($usuario[0]['rol'] == 'administrador' || $usuario[0]['rol'] == 'fisioterapeuta') {
+                    header('Location: ../pages/dashboard.php');
+                    exit();
+                } else {
+                    header('Location: ../pages/dashboard-patient.php');
+                    exit();
+                }
             } else {
                 // Contraseña incorrecta
                 echo "Contraseña incorrecta.";
@@ -45,9 +46,12 @@ class UserController
 
     public function registrarUsuario($datos)
     {
-        $this->usuarioModel->insert('usuarios', $datos);
-        header('Location: ../index.php');
-        exit();
+        if ($this->usuarioModel->insert('usuarios', $datos) == true) {
+            header('Location: ../index.php');
+            exit();
+        } else {
+            echo "No se ha podido completar el registro";
+        }
     }
 
     public function cerrarSesion()
@@ -55,7 +59,7 @@ class UserController
         // Cerrar sesión
         session_start();
         // Destruir todas las variables de sesión
-        $_SESSION = array();
+        // $_SESSION = array();
 
         // Borrar la cookie de sesión
         if (ini_get("session.use_cookies")) {
@@ -75,7 +79,7 @@ class UserController
         session_destroy();
 
         // Redirigir a la página de inicio
-        header("Location: ../pages/index.php");
+        header("Location: ../index.php");
         exit();
     }
 }

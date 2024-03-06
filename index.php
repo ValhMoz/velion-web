@@ -19,11 +19,11 @@
       <h1 class="title-login-register">Inicia Sesión</h1>
 
       <div class="form-floating">
-        <input type="email" class="form-control" name="email" id="email">
+        <input type="email" class="form-control" name="email" id="email" required>
         <label for="email">Correo electronico</label>
       </div>
       <div class="form-floating">
-        <input type="password" class="form-control" name="pass" id="pass">
+        <input type="password" class="form-control" name="pass" id="pass" required>
         <label for="password">Contraseña</label>
       </div>
 

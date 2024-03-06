@@ -34,7 +34,6 @@ class BaseModel
             return "'" . self::$conexion->real_escape_string($valor) . "'";
         }, array_values($datos)));
         $sql = "INSERT INTO `$tabla` ($campos) VALUES ($valores)";
-
         // Ejecuta la consulta
         return $this->executeQuery($sql);
     }

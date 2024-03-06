@@ -17,36 +17,36 @@
       <div class="col-md-6">
 
         <!-- Formulario de Registro -->
-        <form action="./scripts/signup_manager.php" method="post" onsubmit="return validatePassword()">
+        <form action="../scripts/signup_manager.php" method="post" onsubmit="return validatePassword()">
           <h2 class="mb-3">Registro</h2>
 
-          <!-- Nombre -->
-          <div class="mb-3">
-            <label for="username" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="username" name="username" required>
+          <!-- Nombre y Apellidos -->
+          <div class="row mb-3">
+            <div class="col">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombre" name="nombre" required>
+            </div>
+            <div class="col">
+              <label for="apellidos" class="form-label">Apellidos</label>
+              <input type="text" class="form-control" id="apellidos" name="apellidos" required>
+            </div>
           </div>
 
-          <!-- Apellidos -->
-          <div class="mb-3">
-            <label for="username" class="form-label">Apellidos</label>
-            <input type="text" class="form-control" id="lastname" name="lastname" required>
-          </div>
-
-          <!-- DNI -->
-          <div class="mb-3">
-            <label for="dni" class="form-label">DNI</label>
-            <input type="text" class="form-control" id="dni" name="dni" pattern="\d{8}[A-Za-z]" title="Introduce un DNI válido (8 dígitos seguidos de una letra)" required>
-          </div>
-
-          <!-- Género -->
-          <div class="mb-3">
-            <label for="dni" class="form-label">Género</label>
-            <select class="form-select" aria-label="Selecciona tu género">
-              <option selected>Selecciona tu género</option>
-              <option value="hombre">Hombre</option>
-              <option value="mujer">Mujer</option>
-              <option value="otro">Otro</option>
-            </select>
+          <!-- DNI y Género -->
+          <div class="row mb-3">
+            <div class="col">
+              <label for="usuario_id" class="form-label">DNI</label>
+              <input type="text" class="form-control" id="usuario_id" name="usuario_id" pattern="\d{8}[A-Za-z]" title="Introduce un DNI válido (8 dígitos seguidos de una letra)" required>
+            </div>
+            <div class="col">
+              <label for="genero" class="form-label">Género</label>
+              <select class="form-select" aria-label="Selecciona tu género">
+                <option selected>Selecciona tu género</option>
+                <option value="hombre">Hombre</option>
+                <option value="mujer">Mujer</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
           </div>
 
           <!-- Fecha de nacimiento -->
@@ -55,17 +55,16 @@
             <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
           </div>
 
-
-          <!-- Telefono -->
-          <div class="mb-3">
-            <label for="telefono" class="form-label">Teléfono</label>
-            <input type="text" class="form-control" id="telefono" name="telefono" pattern="\d{8}[0-9]" title="Introduce un telefono válido, sin espacios (9 dígitos)" required>
-          </div>
-
-          <!-- Direccion -->
-          <div class="mb-3">
-            <label for="direccion" class="form-label">Dirección</label>
-            <input type="text" class="form-control" id="direccion" name="direccion" required>
+          <!-- Teléfono y Dirección -->
+          <div class="row mb-3">
+            <div class="col">
+              <label for="telefono" class="form-label">Teléfono</label>
+              <input type="text" class="form-control" id="telefono" name="telefono" pattern="\d{8}[0-9]" title="Introduce un telefono válido, sin espacios (9 dígitos)" required>
+            </div>
+            <div class="col">
+              <label for="direccion" class="form-label">Dirección</label>
+              <input type="text" class="form-control" id="direccion" name="direccion" required>
+            </div>
           </div>
 
           <!-- Correo electrónico -->
@@ -74,17 +73,17 @@
             <input type="email" class="form-control" id="email" name="email" required>
           </div>
 
-          <!-- Contraseña -->
-          <div class="mb-3">
-            <label for="password" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" id="pass" minlength="8" name="pass" required>
-          </div>
-
-          <!-- Confirmar contraseña -->
-          <div class="mb-3">
-            <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
-            <input type="password" class="form-control" id="confirmPass" name="confirmPass" required>
-            <div id="passwordError" class="text-danger"></div>
+          <!-- Contraseña y Confirmar contraseña -->
+          <div class="row mb-3">
+            <div class="col">
+              <label for="password" class="form-label">Contraseña</label>
+              <input type="password" class="form-control" id="pass" minlength="8" name="pass" required>
+            </div>
+            <div class="col">
+              <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
+              <input type="password" class="form-control" id="confirmPass" name="confirmPass" required>
+              <div id="passwordError" class="text-danger"></div>
+            </div>
           </div>
 
           <!-- CheckBox para aceptar términos y condiciones -->

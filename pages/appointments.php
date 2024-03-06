@@ -1,15 +1,5 @@
 <?php
-// Inicia la sesión si no está iniciada
-session_start();
-
-// Verifica si hay un nombre de usuario en la sesión
-if (isset($_SESSION['email'])) {
-    $nombreUsuario = $_SESSION['username'];
-} else {
-    // Si no hay un nombre de usuario en la sesión, redirige a la página de inicio de sesión
-    header('Location: ./404.php');
-    exit();
-}
+    require_once '../scripts/session_manager.php';
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -32,26 +22,26 @@ if (isset($_SESSION['email'])) {
             <div class="modal-body">
                 <!-- Pasos -->
                 <div id="paso1" class="pasos">
-                    <h5>Selecciona un paciente</h5>
+                    <h5>1. Selecciona un paciente</h5>
                     <select name="" id="">
                         <option value=""></option>
                     </select>
                 </div>
                 <div id="paso2" class="pasos" style="display: none;">
-                    <h5>Seleccionar Fisioterapeuta</h5>
+                    <h5>2. Selecciona un fisioterapeuta</h5>
                     <select name="" id="">
                         <option value=""></option>
                     </select>
                 </div>
                 <div id="paso3" class="pasos" style="display: none;">
-                    <h5>Seleccionar Día</h5>
+                    <h5>3. Selecciona un día</h5>
                     <div class="mb-3">
                         <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
                         <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
                     </div>
                 </div>
                 <div id="paso4" class="pasos" style="display: none;">
-                    <h5>Seleccionar Hora</h5>
+                    <h5>4. Selecciona una hora</h5>
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
