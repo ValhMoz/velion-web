@@ -99,7 +99,6 @@
         .btn-bd-primary {
             --bd-violet-bg: #712cf9;
             --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-
             --bs-btn-font-weight: 600;
             --bs-btn-color: var(--bs-white);
             --bs-btn-bg: var(--bd-violet-bg);
@@ -157,13 +156,13 @@
     <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" disabled>Panel de Gestión</a>
         <ul class="navbar-nav flex-row d-md-none">
-            <li class="nav-item text-nowrap">
+            <!-- <li class="nav-item text-nowrap">
                 <button class="nav-link px-3 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle search">
                     <svg class="bi">
                         <use xlink:href="#search" />
                     </svg>
                 </button>
-            </li>
+            </li> -->
             <li class="nav-item text-nowrap">
                 <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                     <svg class="bi">
@@ -173,9 +172,9 @@
             </li>
         </ul>
 
-        <div id="navbarSearch" class="navbar-search w-100 collapse">
+        <!-- <div id="navbarSearch" class="navbar-search w-100 collapse">
             <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
-        </div>
+        </div> -->
     </header>
 
     <div class="container-fluid">
@@ -227,7 +226,7 @@
                                         <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5" />
                                         <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z" />
                                     </svg>
-                                    Compra de Bonos
+                                    Tienda
                                 </button>
                             </li>
                         </ul>
