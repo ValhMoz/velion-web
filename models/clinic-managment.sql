@@ -9,7 +9,8 @@ CREATE TABLE usuarios (
     email VARCHAR(100) UNIQUE,
     pass VARCHAR(255),
     rol ENUM('administrador', 'paciente', 'fisioterapeuta'),
-    genero ENUM('hombre', 'mujer', 'otro')
+    genero ENUM('hombre', 'mujer', 'otro'),
+    sesiones_disponibles INT
 );
 
 -- Tabla para almacenar información de citas

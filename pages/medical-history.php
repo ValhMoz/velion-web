@@ -1,3 +1,7 @@
+<?php
+    require_once '../scripts/session_manager.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +9,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil del Paciente</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/bootstrap-5.3/css/dashboard.css" rel="stylesheet">
 </head>
 
 <body>
