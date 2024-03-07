@@ -4,6 +4,7 @@ CREATE TABLE usuarios (
     nombre VARCHAR(255),
     apellidos VARCHAR(255),
     telefono VARCHAR(100),
+    fecha_nacimiento DATE,
     direccion VARCHAR(100),
     email VARCHAR(100) UNIQUE,
     pass VARCHAR(255),

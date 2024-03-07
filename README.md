@@ -22,22 +22,25 @@ Este proyecto consiste en un Sistema de Gestión de Recursos Empresariales (ERP)
 
 ## Instalación y Configuración
 
-1. Clona este repositorio a tu máquina local:
-
-    ```bash
-    git clone https://github.com/Z2V-LABS/project-crm.git
-    ```
+1. Clona este repositorio a tu máquina local.
 
 2. Coloca el proyecto en tu servidor web local (p. ej., XAMPP, WAMP, etc.).
 
-3. Importa la base de datos proporcionada (database.sql) en tu sistema de gestión de bases de datos (p. ej., MySQL).
+3. Importa la base de datos proporcionada (/models/clinic-managment.sql) en tu sistema de gestión de bases de datos (p. ej., MySQL).
 
-4. Configura la conexión a la base de datos en el archivo config.php dentro del directorio includes.
+4. Configura la conexión a la base de datos en el archivo BaseModel.php.
 
 5. Accede al proyecto desde tu navegador web:
 
-    http://localhost/project-crm/pages/index.php
+    http://localhost/clinic-managment/index.php
 
 ## Licencia
 
 Este proyecto está bajo la Licencia MIT.
+
+## NOTA
+
+Para arrancar docker deberás ejecutar el comando:
+```bash
+ sudo docker compose up --build
+ ```

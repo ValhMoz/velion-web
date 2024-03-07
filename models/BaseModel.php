@@ -9,9 +9,9 @@ class BaseModel
         // Verifica si ya hay una conexión establecida
         if (self::$conexion === null) {
             // Configura la conexión a la base de datos
-            $host = 'localhost';
+            $host = 'mysql';
             $usuario = 'root';
-            $contrasena = '';
+            $contrasena = 'root';
             $base_de_datos = 'clinic-managment';
 
             // Intenta establecer la conexión
