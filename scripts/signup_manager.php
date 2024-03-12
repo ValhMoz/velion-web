@@ -8,12 +8,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'usuario_id' => $_POST["usuario_id"],
         'nombre' => $_POST["nombre"],
         'apellidos' => $_POST["apellidos"],
-        // 'genero' => $_POST["genero"],
+        'genero' => $_POST["genero"],
         'telefono' => $_POST["telefono"],
         'fecha_nacimiento' => $_POST["fecha_nacimiento"],
         'direccion' => $_POST["direccion"],
         'email' => $_POST["email"],
-        'pass' => $_POST["pass"],
+        'pass' => password_hash($_POST["pass"], PASSWORD_DEFAULT),
         'rol' => "paciente"
     );
 

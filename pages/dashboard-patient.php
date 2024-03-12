@@ -36,11 +36,14 @@ if (isset($_SESSION['email'])) {
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick="cargarPagina('invoices')">Inicio</a>
+          <a class="nav-link" href="#" onclick="cargarPagina('start')">Inicio</a>
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link" href="#" onclick="cargarPagina('invoices')">Citas</a>
-        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="cargarPagina('appointments')">Citas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="cargarPagina('invoices')">Facturas</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="#" onclick="cargarPagina('buy_pass')">Tienda</a>
         </li>

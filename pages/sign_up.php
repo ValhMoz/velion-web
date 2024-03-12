@@ -40,7 +40,7 @@
             </div>
             <div class="col">
               <label for="genero" class="form-label">Género</label>
-              <select class="form-select" aria-label="Selecciona tu género">
+              <select class="form-select" id="genero" name="genero" aria-label="Selecciona tu género">
                 <option selected>Selecciona tu género</option>
                 <option value="hombre">Hombre</option>
                 <option value="mujer">Mujer</option>

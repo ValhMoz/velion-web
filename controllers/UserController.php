@@ -17,12 +17,10 @@ class UserController
 
     public function iniciarSesion($email, $pass)
     {
-        // Verificar si el usuario existe en la base de datos
         $usuario = $this->usuarioModel->read('usuarios', "email= '$email'");
         if (!empty($usuario)) {
-            // Verificar la contraseña
-            if ($pass === $usuario[0]['pass']) {
-                // Iniciar sesión
+            // Verificar la contraseña utilizando password_verify
+            if (password_verify($pass, $usuario[0]['pass'])) {
                 session_start();
                 $_SESSION['email'] = $email;
                 $_SESSION['nombre'] = $usuario[0]['nombre'];
@@ -35,14 +33,13 @@ class UserController
                     exit();
                 }
             } else {
-                // Contraseña incorrecta
                 echo "Contraseña incorrecta.";
             }
         } else {
-            // Usuario no encontrado
             echo "Usuario no encontrado.";
         }
     }
+
 
     public function registrarUsuario($datos)
     {
