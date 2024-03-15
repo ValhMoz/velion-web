@@ -11,8 +11,8 @@
     <meta name="description" content="">
     <meta name="generator" content="Hugo 0.118.2">
     <title>Confirmación de compra</title>
-    <link href="../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="../assets/bootstrap-5.3/js/color-modes.js"></script>
+    <link href="../../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="../../assets/bootstrap-5.3/js/color-modes.js"></script>
     <meta name="theme-color" content="#712cf9">
 
     <style>
