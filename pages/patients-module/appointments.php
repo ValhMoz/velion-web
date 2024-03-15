@@ -1,12 +1,12 @@
 <?php
-require_once '../scripts/session_manager.php';
+require_once '../../scripts/session_manager.php';
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Citas</h1>
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAsignarCita">
-        Asignar Cita
+        Pedir Cita
     </button>
 </div>
 
@@ -15,33 +15,27 @@ require_once '../scripts/session_manager.php';
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Asignar Cita</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Pedir Cita</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
             </div>
             <div class="modal-body">
                 <!-- Pasos -->
                 <div id="paso1" class="pasos">
-                    <h5>1. Selecciona un paciente</h5>
+                    <h5>1. Selecciona un fisioterapeuta</h5>
                     <select name="" id="">
                         <option value=""></option>
                     </select>
                 </div>
                 <div id="paso2" class="pasos" style="display: none;">
-                    <h5>2. Selecciona un fisioterapeuta</h5>
-                    <select name="" id="">
-                        <option value=""></option>
-                    </select>
-                </div>
-                <div id="paso3" class="pasos" style="display: none;">
-                    <h5>3. Selecciona un día</h5>
+                    <h5>2. Selecciona un día</h5>
                     <div class="mb-3">
                         <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
                         <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
                     </div>
                 </div>
-                <div id="paso4" class="pasos" style="display: none;">
-                    <h5>4. Selecciona una hora</h5>
+                <div id="paso3" class="pasos" style="display: none;">
+                    <h5>3. Selecciona una hora</h5>
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
@@ -98,10 +92,7 @@ require_once '../scripts/session_manager.php';
 <div class="table-responsive small">
     <form class="row g-3">
         <div class="col-auto">
-            <label for="inputPassword2" class="visually-hidden">Filtro</label>
-            <input type="text" class="form-control" id="inputPassword2" placeholder="Filtrar por nombre...">
-        </div>
-        <div class="col-auto">
+            <label for="" class="visually-hidden">Filtro</label>
             <input type="date" class="form-control" id="">
         </div>
         <div class="col-auto">
@@ -110,69 +101,60 @@ require_once '../scripts/session_manager.php';
     </form>
 
     <div class="row">
+        <!-- Aquí se mostrarán las citas en forma de listas -->
         <div class="col">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col" style="width: 5%;">ID</th>
-                            <th scope="col" style="width: 15%;">Fecha</th>
-                            <th scope="col" style="width: 15%;">Hora</th>
-                            <th scope="col" style="width: 25%;">Fisioterapeuta asociado</th>
-                            <th scope="col" style="width: 25%;">Paciente</th>
-                            <th scope="col" style="width: 15%;">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>12/03/2024</td>
-                            <td>10:00</td>
-                            <td>Información sobre la cita 1.</td>
-                            <td>Paciente 1</td>
-                            <td>
-                                <button type="button" class="btn btn-success btn-sm">Confirmar</button>
-                                <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>14/03/2024</td>
-                            <td>11:00</td>
-                            <td>Información sobre la cita 2.</td>
-                            <td>Paciente 2</td>
-                            <td>
-                                <button type="button" class="btn btn-success btn-sm">Confirmar</button>
-                                <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
-                            </td>
-                        </tr>
-                        <!-- Repite estas filas para cada cita -->
-                    </tbody>
-                </table>
-            </div>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Cita 1</h5>
+                        <small>Fecha: 12/03/2024 Hora: 10:00</small>
+                    </div>
+                    <p class="mb-1">Información sobre la cita 1.</p>
+                    <small>Nombre del paciente: Paciente 1</small>
+                    <small>Nombre del fisioterapeuta: Fisioterapeuta 1</small>
+                    <div class="text-end mt-2">
+                        <button type="button" class="btn btn-danger">Cancelar cita</button>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Cita 2</h5>
+                        <small>Fecha: 14/03/2024 Hora: 11:00</small>
+                    </div>
+                    <p class="mb-1">Información sobre la cita 2.</p>
+                    <small>Nombre del paciente: Paciente 2</small>
+                    <small>Nombre del fisioterapeuta: Fisioterapeuta 2</small>
+                    <div class="text-end mt-2">
+                        <button type="button" class="btn btn-danger">Cancelar cita</button>
+                    </div>
+                </li>
+                <!-- Repite estas listas para cada cita -->
+            </ul>
         </div>
     </div>
 </div>
 
-<nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-start">
-        <li class="page-item disabled">
-            <a class="page-link">Previous</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-        </li>
-    </ul>
-</nav>
+
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-start">
+            <li class="page-item disabled">
+                <a class="page-link">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 <script>
     $(document).ready(function() {
         var pasoActual = 1;
-        var totalPasos = 4;
+        var totalPasos = 3;
 
         $('#btnSiguiente').click(function() {
             if (pasoActual < totalPasos) {

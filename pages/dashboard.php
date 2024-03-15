@@ -196,19 +196,19 @@
                                 </button>
                             </li>
                             <li class="nav-item">
-                                <button id="btnCitas" onclick="cargarPagina('appointments')" class="nav-link d-flex align-items-center gap-2">
-                                    <svg class="bi">
-                                        <use xlink:href="#calendar3" />
-                                    </svg>
-                                    Citas
-                                </button>
-                            </li>
-                            <li class="nav-item">
                                 <button id="btnPacientes" onclick="cargarPagina('users')" class="nav-link d-flex align-items-center gap-2">
                                     <svg class="bi">
                                         <use xlink:href="#people" />
                                     </svg>
                                     Usuarios
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button id="btnCitas" onclick="cargarPagina('appointments')" class="nav-link d-flex align-items-center gap-2">
+                                    <svg class="bi">
+                                        <use xlink:href="#calendar3" />
+                                    </svg>
+                                    Citas
                                 </button>
                             </li>
                             <li class="nav-item">
@@ -218,15 +218,6 @@
                                         <path d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1H3a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1H3a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1H3a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1H3a.5.5 0 0 1-.5-.5m8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5" />
                                     </svg>
                                     Facturas
-                                </button>
-                            </li>
-                            <li class="nav-item">
-                                <button id="btnCompraBonos" onclick="cargarPagina('buy_pass')" class="nav-link d-flex align-items-center gap-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5" />
-                                        <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z" />
-                                    </svg>
-                                    Tienda
                                 </button>
                             </li>
                         </ul>

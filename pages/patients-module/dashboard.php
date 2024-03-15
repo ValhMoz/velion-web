@@ -18,11 +18,11 @@ if (isset($_SESSION['email'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel de Pacientes</title>
-  <link href="../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">
-  <script src="../assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/custom/js/timeout.js"></script>
+  <link href="../../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">
+  <script src="../../assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/custom/js/timeout.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="../assets/bootstrap-5.3/js/color-modes.js"></script>
+    <script src="../../assets/bootstrap-5.3/js/color-modes.js"></script>
 
 </head>
 <body>
@@ -48,7 +48,7 @@ if (isset($_SESSION['email'])) {
           <a class="nav-link" href="#" onclick="cargarPagina('buy_pass')">Tienda</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick="cargarPagina('settings')">Perfil</a>
+          <a class="nav-link" href="#" onclick="cargarPagina('../settings')">Perfil</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#" onclick="cerrarSesion()">Cerrar Sesión</a>
@@ -109,11 +109,11 @@ if (isset($_SESSION['email'])) {
         function cerrarSesion() {
             // Realiza una solicitud AJAX a la API de cerrar sesión
             $.ajax({
-                url: '../scripts/logout_manager.php', // Ruta de la API de cerrar sesión
+                url: '../../scripts/logout_manager.php', // Ruta de la API de cerrar sesión
                 type: 'POST', // Método de la solicitud
                 success: function(response) {
                     // Redirige al usuario a index.php después de cerrar sesión
-                    window.location.href = '../index.php';
+                    window.location.href = '../../index.php';
                 },
                 error: function(xhr, status, error) {
                     // Maneja el error si ocurre

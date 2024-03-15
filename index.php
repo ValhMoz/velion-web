@@ -8,8 +8,16 @@
   <link href="./assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">
   <link href="./assets/bootstrap-5.3/css/sign-in.css" rel="stylesheet">
   <link href="./assets/custom/css/style.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.css" rel="stylesheet">
   <script src="./assets/bootstrap-5.3/js/color-modes.js"></script>
   <script src="./assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
+  <style>
+    .separator-line {
+      border-top: 1px solid #ccc;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
@@ -20,7 +28,7 @@
 
       <div class="form-floating">
         <input type="email" class="form-control" name="email" id="email" required>
-        <label for="email">Correo electronico</label>
+        <label for="email">Correo electrónico</label>
       </div>
       <div class="form-floating">
         <input type="password" class="form-control" name="pass" id="pass" required>
@@ -33,8 +41,18 @@
           Mantener sesión iniciada
         </label>
       </div>
-      <button class="btn btn-primary w-100 py-2" style="margin-bottom: 5px;" type="submit">Iniciar sesión</button>
-      <a class="btn btn-secondary w-100 py-2" type="submit" href="./pages/sign_up.php">Regístrate</a>
+      <div class="row mb-3">
+      <div class="col">
+      <button class="btn btn-primary w-100 py-2" style="margin-bottom: 5px;" type="submit">Iniciar sesión</button> </div>
+      <div class="col">
+      <a class="btn btn-secondary w-100 py-2" type="submit" href="./pages/sign_up.php">Regístrate</a> </div> </div>
+     
+      <hr class="separator-line">
+      <div class="mb-3">
+        <button class="btn btn-google btn-primary w-100 py-2" type="button">
+          <i class="bi bi-google me-2"></i> Iniciar sesión con Google
+        </button>
+      </div>
       <p class="mt-5 mb-3 text-body-secondary">&copy; 2024</p>
     </form>
   </main>

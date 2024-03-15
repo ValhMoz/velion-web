@@ -1,5 +1,5 @@
 <?php
-    require_once '../scripts/session_manager.php';
+    require_once '../../scripts/session_manager.php';
 ?>
 
 <svg xmlns="http://www.w3.org/2000/svg" class="d-none">

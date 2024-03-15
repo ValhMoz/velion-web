@@ -113,32 +113,58 @@
     </form>
 
 
-    <table class="table table-striped table-sm">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellidos</th>
-                <th scope="col">E-mail</th>
-                <th scope="col">Fecha de Nacimiento</th>
-                <th scope="col">Género</th>
-                <th scope="col">Rol</th>
-                <th scope="col">Dirección</th>
-                <th scope="col">Teléfono</th>
-                <th scope="col">Sesiones disponibles</th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1,001</td>
-                <td>random</td>
-                <td>data</td>
-                <td>placeholder</td>
-                <td>text</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="row">
+    <!-- Aquí se mostrarán los usuarios en forma de tabla -->
+    <div class="col">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 5%;">ID</th>
+                        <th scope="col" style="width: 15%;">Nombre</th>
+                        <th scope="col" style="width: 15%;">Apellidos</th>
+                        <th scope="col" style="width: 15%;">Email</th>
+                        <th scope="col" style="width: 15%;">Dirección</th>
+                        <th scope="col" style="width: 10%;">Teléfono</th>
+                        <th scope="col" style="width: 10%;">Sesiones Disponibles</th>
+                        <th scope="col" style="width: 10%;">Rol</th>
+                        <th scope="col" style="width: 5%;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Nombre1</td>
+                        <td>Apellidos1</td>
+                        <td>correo1@example.com</td>
+                        <td>Dirección1</td>
+                        <td>123456789</td>
+                        <td>5</td>
+                        <td>Usuario</td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Nombre2</td>
+                        <td>Apellidos2</td>
+                        <td>correo2@example.com</td>
+                        <td>Dirección2</td>
+                        <td>987654321</td>
+                        <td>10</td>
+                        <td>Admin</td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+                        </td>
+                    </tr>
+                    <!-- Repite estas filas para cada usuario -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-start">
             <li class="page-item disabled">

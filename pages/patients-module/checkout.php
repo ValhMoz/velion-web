@@ -1,5 +1,5 @@
 <?php
-    require_once '../scripts/session_manager.php';
+    require_once '../../scripts/session_manager.php';
 ?>
 
 <!doctype html>

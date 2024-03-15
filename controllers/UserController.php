@@ -29,7 +29,7 @@ class UserController
                     header('Location: ../pages/dashboard.php');
                     exit();
                 } else {
-                    header('Location: ../pages/dashboard-patient.php');
+                    header('Location: ../pages/patients-module/dashboard.php');
                     exit();
                 }
             } else {
