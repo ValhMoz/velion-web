@@ -3,7 +3,12 @@
 ?>
 
        <div class="container mt-5">
-        <h1 class="mb-4">Historial Médico</h1>
+
+        <div class="d-flex align-items-start justify-content-between">
+            <h1 class="mb-4">Historial Médico</h1>
+            <button type="button" class="btn btn-success">Generar Reporte</button>
+        </div>
+
 
         <!-- Filtro de búsqueda -->
         <div class="input-group mb-3">
@@ -60,10 +65,5 @@
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </form>
             </div>
-        </div>
-
-        <!-- Botón para generar reporte -->
-        <div class="mt-4">
-            <button type="button" class="btn btn-success">Generar Reporte</button>
         </div>
     </div>

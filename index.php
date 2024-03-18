@@ -49,9 +49,7 @@
      
       <hr class="separator-line">
       <div class="mb-3">
-        <button class="btn btn-google btn-primary w-100 py-2" type="button">
-          <i class="bi bi-google me-2"></i> Iniciar sesión con Google
-        </button>
+        <button class="btn btn-outline-primary w-100 py-2" type="button">Recuperar Contraseña</button>
       </div>
       <p class="mt-5 mb-3 text-body-secondary">&copy; 2024</p>
     </form>
