@@ -1,19 +1,11 @@
 <?php
-// Inicia la sesión si no está iniciada
-session_start();
-
-// Verifica si hay un nombre de usuario en la sesión
-if (isset($_SESSION['email'])) {
-    $nombreUsuario = $_SESSION['nombre'];
-} else {
-    // Si no hay un nombre de usuario en la sesión, redirige a la página de inicio de sesión
-    header('Location: ./404.php');
-    exit();
-}
+  require_once '../../scripts/session_manager.php';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,106 +14,108 @@ if (isset($_SESSION['email'])) {
   <script src="../../assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
   <script src="../../assets/custom/js/timeout.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="../../assets/bootstrap-5.3/js/color-modes.js"></script>
+  <script src="../../assets/bootstrap-5.3/js/color-modes.js"></script>
 
 </head>
+
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-    <a class="navbar-brand" href="#">Panel personal</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#" onclick="cargarPagina('start')">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" onclick="cargarPagina('appointments')">Citas</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" onclick="cargarPagina('invoices')">Facturas</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" onclick="cargarPagina('buy_pass')">Tienda</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" onclick="cargarPagina('../settings')">Perfil</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" onclick="cerrarSesion()">Cerrar Sesión</a>
-        </li>
-      </ul>
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark shadow">
+    <div class="container">
+      <a class="navbar-brand" href="#">Panel personal</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="cargarPagina('start')">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="cargarPagina('appointments')">Citas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="cargarPagina('invoices')">Facturas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="cargarPagina('buy_pass')">Tienda</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="cargarPagina('../settings')">Perfil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="cerrarSesion()">Cerrar Sesión</a>
+          </li>
+        </ul>
+      </div>
     </div>
+  </nav>
+
+  <div class="container mt-4" id="contenido">
+    <h2>Bienvenido a tu Panel de Pacientes</h2>
   </div>
-</nav>
 
-<div class="container mt-4" id="contenido">
-  <h2>Bienvenido a tu Panel de Pacientes</h2>
-</div>
-
-<script>
-        // Función para cargar el contenido de una URL en un elemento HTML
-        function cargarContenido(url, elemento) {
-            $.ajax({
-                url: url,
-                method: 'GET',
-                dataType: 'html',
-                success: function(html) {
-                    // Asignar el HTML al contenido del elemento
-                    elemento.html(html);
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('Error al cargar el contenido:', errorThrown);
-                }
-            });
+  <script>
+    // Función para cargar el contenido de una URL en un elemento HTML
+    function cargarContenido(url, elemento) {
+      $.ajax({
+        url: url,
+        method: 'GET',
+        dataType: 'html',
+        success: function(html) {
+          // Asignar el HTML al contenido del elemento
+          elemento.html(html);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.error('Error al cargar el contenido:', errorThrown);
         }
-    </script>
-    <script>
-        $(document).ready(function() {
-            // Obtener la referencia al elemento <main> con id "contenido"
-            const contenido = $('#contenido');
+      });
+    }
+  </script>
+  <script>
+    $(document).ready(function() {
+      // Obtener la referencia al elemento <main> con id "contenido"
+      const contenido = $('#contenido');
 
-            // Cargar el contenido de inicio.php
-            cargarContenido('start.php', contenido);
-        });
+      // Cargar el contenido de inicio.php
+      cargarContenido('start.php', contenido);
+    });
 
-        // Función para cargar la página y activar el botón correspondiente
-        function cargarPagina(pagina) {
-            // Realizar la petición Ajax con jQuery
-            $.ajax({
-                url: pagina + '.php',
-                method: 'GET',
-                dataType: 'html',
-                success: function(data) {
-                    // Actualizar el contenido de la etiqueta main con la respuesta Ajax
-                    $('#contenido').html(data);
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('Error:', errorThrown);
-                }
-            });
+    // Función para cargar la página y activar el botón correspondiente
+    function cargarPagina(pagina) {
+      // Realizar la petición Ajax con jQuery
+      $.ajax({
+        url: pagina + '.php',
+        method: 'GET',
+        dataType: 'html',
+        success: function(data) {
+          // Actualizar el contenido de la etiqueta main con la respuesta Ajax
+          $('#contenido').html(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.error('Error:', errorThrown);
         }
-    </script>
-     <script>
-        function cerrarSesion() {
-            // Realiza una solicitud AJAX a la API de cerrar sesión
-            $.ajax({
-                url: '../../scripts/logout_manager.php', // Ruta de la API de cerrar sesión
-                type: 'POST', // Método de la solicitud
-                success: function(response) {
-                    // Redirige al usuario a index.php después de cerrar sesión
-                    window.location.href = '../../index.php';
-                },
-                error: function(xhr, status, error) {
-                    // Maneja el error si ocurre
-                    console.error(error);
-                }
-            });
+      });
+    }
+  </script>
+  <script>
+    function cerrarSesion() {
+      // Realiza una solicitud AJAX a la API de cerrar sesión
+      $.ajax({
+        url: '../../scripts/logout_manager.php', // Ruta de la API de cerrar sesión
+        type: 'POST', // Método de la solicitud
+        success: function(response) {
+          // Redirige al usuario a index.php después de cerrar sesión
+          window.location.href = '../../index.php';
+        },
+        error: function(xhr, status, error) {
+          // Maneja el error si ocurre
+          console.error(error);
         }
-    </script>
+      });
+    }
+  </script>
 
 </body>
+
 </html>

@@ -25,7 +25,7 @@
                     <h4 class="my-0 fw-normal">10 sesiones</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">100€<small class="text-body-secondary fw-light">/año</small></h1>
+                    <h1 class="card-title pricing-card-title">100€</h1>
                     <br>
                     <br>
                     <!-- <ul class="list-unstyled mt-3 mb-4">
@@ -34,7 +34,7 @@
                                 <li>Email support</li>
                                 <li>Help center access</li>
                             </ul> -->
-                    <button type="button" id="buy" class="w-100 btn btn-lg btn-outline-primary">Haz click aquí para comprar</button>
+                    <button type="button" id="bono1" class="w-100 btn btn-lg btn-outline-primary buy">Haz click aquí para comprar</button>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
                     <h4 class="my-0 fw-normal">20 sesiones</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">180€<small class="text-body-secondary fw-light">/año</small></h1>
+                    <h1 class="card-title pricing-card-title">180€</h1>
                     <br>
                     <br>
                     <!-- <ul class="list-unstyled mt-3 mb-4">
@@ -53,7 +53,7 @@
                                 <li>Email support</li>
                                 <li>Help center access</li>
                             </ul> -->
-                    <button type="button" id="buy" class="w-100 btn btn-lg btn-outline-primary">Haz click aquí para comprar</button>
+                    <button type="button" id="bono2" class="w-100 btn btn-lg btn-outline-primary buy">Haz click aquí para comprar</button>
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@
                     <h4 class="my-0 fw-normal">30 sesiones</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">260€<small class="text-body-secondary fw-light">/año</small></h1>
+                    <h1 class="card-title pricing-card-title">260€</h1>
                     <br>
                     <br>
                     <!-- <ul class="list-unstyled mt-3 mb-4">
@@ -72,7 +72,7 @@
                                 <li>Email support</li>
                                 <li>Help center access</li>
                             </ul> -->
-                    <button type="button" id="buy" class="w-100 btn btn-lg btn-outline-primary">Haz click aquí para comprar</button>
+                    <button type="button" id="bono3" class="w-100 btn btn-lg btn-outline-primary buy">Haz click aquí para comprar</button>
                 </div>
             </div>
         </div>
@@ -101,14 +101,18 @@
     <p>Si tiene alguna pregunta o inquietud sobre estas condiciones, no dude en ponerse en contacto con nosotros.</p>
 
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script>
-    // Esperar a que el DOM esté listo
     $(document).ready(function() {
-        // Manejar el evento de clic en el botón por su clase
-        $('#buy').on('click', function() {
-            // Redirigir a checkout.php
-            window.location.href = 'checkout.php';
+        $('.buy').on('click', function() {
+            var bono = $(this).closest('.card').find('h4').text();
+            var precioText = $(this).closest('.card').find('.card-title').text();
+
+            // Extraer solo el número del precio sin el símbolo del euro
+            var precio = parseFloat(precioText.replace(/[^\d.]/g, ''));
+
+            // Redirigir a la página de confirmación de compra con los parámetros de bono y precio
+            window.location.href = 'checkout.php?bono=' + encodeURIComponent(bono) + '&precio=' + encodeURIComponent(precio);
         });
     });
 </script>

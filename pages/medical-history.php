@@ -23,10 +23,10 @@
             </div>
             <div class="card-body">
                 <h5 class="card-title">Nombre del Paciente: John Doe</h5>
-                <p class="card-text">Edad: 30 años</p>
+                <p class="card-text">Fecha de nacimiento: 30 años</p>
                 <p class="card-text">Género: Masculino</p>
-                <p class="card-text">Altura: 170 cm</p>
-                <p class="card-text">Peso: 70 kg</p>
+                <p class="card-text">Direccion: 170 cm</p>
+                <p class="card-text">Teléfono: 70 kg</p>
             </div>
         </div>
 

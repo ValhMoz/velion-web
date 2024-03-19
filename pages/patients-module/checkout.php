@@ -1,5 +1,11 @@
 <?php
-    require_once '../../scripts/session_manager.php';
+require_once '../../scripts/session_manager.php';
+
+// Obtener los parámetros de bono y precio de la URL
+$bono = $_GET['bono'] ?? '';
+$precio = $_GET['precio'] ?? '';
+$fecha_emision = date('Y-m-d');
+
 ?>
 
 <!doctype html>
@@ -14,6 +20,19 @@
     <link href="../../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="../../assets/bootstrap-5.3/js/color-modes.js"></script>
     <meta name="theme-color" content="#712cf9">
+
+    <script>
+        function mostrarCamposPago() {
+            var metodoPago = document.querySelector('input[name="paymentMethod"]:checked').value;
+            if (metodoPago === "tarjeta") {
+                document.getElementById("camposTarjeta").style.display = "block";
+                document.getElementById("camposTransferencia").style.display = "none";
+            } else if (metodoPago === "transferencia") {
+                document.getElementById("camposTransferencia").style.display = "block";
+                document.getElementById("camposTarjeta").style.display = "none";
+            }
+        }
+    </script>
 
     <style>
         .bd-placeholder-img {
@@ -104,164 +123,129 @@
                 <!-- <img class="d-block mx-auto mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
                 <h2>Confirmación de compra</h2>
             </div>
+            <form action="../../scripts/checkout_manager.php" method="post" class="needs-validation" novalidate>
 
-            <div class="row g-5">
-                <div class="col-md-5 col-lg-4 order-md-last">
-                    <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-primary">Tu carrito</span>
-                        <span class="badge bg-primary rounded-pill">3</span>
-                    </h4>
-                    <ul class="list-group mb-3">
-                        <li class="list-group-item d-flex justify-content-between lh-sm">
-                            <div>
-                                <h6 class="my-0">Product name</h6>
-                                <small class="text-body-secondary">Brief description</small>
-                            </div>
-                            <span class="text-body-secondary">$12</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
-                            <div class="text-success">
-                                <h6 class="my-0">Promo code</h6>
-                                <small>EXAMPLECODE</small>
-                            </div>
-                            <span class="text-success">−$5</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>Total (EUR)</span>
-                            <strong>$20</strong>
-                        </li>
-                    </ul>
+                <div class="row g-5">
+                    <div class="col-md-5 col-lg-4 order-md-last">
+                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-primary">Tu carrito</span>
+                        </h4>
+                        <ul class="list-group mb-3">
+                            <li class="list-group-item d-flex justify-content-between lh-sm">
+                                <div>
+                                    <h6 class="my-0">Bono de <?php echo $bono; ?></h6>
+                                    <small class="text-body-secondary">lorem ipsum</small>
+                                </div>
+                                <span class="text-body-secondary"><?php echo $precio; ?>€</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Total (EUR)</span>
+                                <strong><?php echo $precio; ?>€</strong>
+                            </li>
+                        </ul>
 
-                    <form class="card p-2">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Promo code">
-                            <button type="submit" class="btn btn-secondary">Canjear</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-7 col-lg-8">
-                    <h4 class="mb-3">Dirección de facturación</h4>
-                    <form class="needs-validation" novalidate>
+                    </div>
+                    <input type="hidden" id="paciente_id" name="paciente_id" value="<?php echo $DNI; ?>">
+                    <input type="hidden" id="monto" name="monto" value="<?php echo $precio; ?>">
+                    <input type="hidden" id="fecha_emision" name="fecha_emision" value="<?php echo $fecha_emision; ?>">
+                    <input type="hidden" id="estado" name="estado" value="pagada">
+                    <div class="col-md-7 col-lg-8">
+                        <h4 class="mb-3">Dirección de facturación</h4>
                         <div class="row g-3">
                             <div class="col-sm-6">
                                 <label for="firstName" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
-                                <div class="invalid-feedback">
-                                    Valid first name is required.
-                                </div>
+                                <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $nombre ?>" disabled>
                             </div>
 
                             <div class="col-sm-6">
                                 <label for="lastName" class="form-label">Apellidos</label>
-                                <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
-                                <div class="invalid-feedback">
-                                    Valid last name is required.
-                                </div>
+                                <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $apellidos ?>" disabled>
                             </div>
 
                             <div class="col-12">
-                                <label for="email" class="form-label">Email <span class="text-body-secondary">(Optional)</span></label>
-                                <input type="email" class="form-control" id="email" placeholder="you@example.com">
-                                <div class="invalid-feedback">
-                                    Please enter a valid email address for shipping updates.
-                                </div>
+                                <label for="email" class="form-label">Correo electrónico</label>
+                                <input type="email" class="form-control" id="email" name="email" value="<?php echo $correo ?>" disabled>
                             </div>
 
                             <div class="col-12">
-                                <label for="address" class="form-label">Address</label>
-                                <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
-                                <div class="invalid-feedback">
-                                    Please enter your shipping address.
-                                </div>
+                                <label for="direccion" class="form-label">Dirección</label>
+                                <input type="text" class="form-control" id="direccion" name="direccion" value="<?php echo $direccion ?>" disabled>
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="state" class="form-label">Ciudad</label>
+                                <input type="text" class="form-control" id="ciudad" value="<?php echo $ciudad ?>" disabled>
                             </div>
 
                             <div class="col-md-4">
-                                <label for="state" class="form-label">Provincia</label>
-                                <select class="form-select" id="state" required>
-                                    <option value="">Choose...</option>
-                                    <option>California</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    Please provide a valid state.
-                                </div>
+                                <label for="state" class="form-label">Municipicio</label>
+                                <input type="text" class="form-control" id="municipio" value="<?php echo $municipio ?>" disabled>
                             </div>
 
                             <div class="col-md-3">
                                 <label for="zip" class="form-label">CP</label>
-                                <input type="text" class="form-control" id="zip" placeholder="" required>
-                                <div class="invalid-feedback">
-                                    Zip code required.
-                                </div>
+                                <input type="text" class="form-control" id="cp" name="cp" value="<?php echo $cp ?>" disabled>
                             </div>
                         </div>
 
                         <hr class="my-4">
 
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="save-info">
-                            <label class="form-check-label" for="save-info">Guardar información para la próxima vez</label>
-                        </div>
+                        <div class="container mt-5">
+                            <h4 class="mb-3">Método de pago</h4>
 
-                        <hr class="my-4">
-
-                        <h4 class="mb-3">Método de pago</h4>
-
-                        <div class="my-3">
-                            <div class="form-check">
-                                <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
-                                <label class="form-check-label" for="credit">Tarjeta</label>
-                            </div>
-                            <div class="form-check">
-                                <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
-                                <label class="form-check-label" for="debit">Transferencia</label>
-                            </div>
-                            <div class="form-check">
-                                <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
-                                <label class="form-check-label" for="paypal">PayPal</label>
-                            </div>
-                        </div>
-
-                        <div class="row gy-3">
-                            <div class="col-md-6">
-                                <label for="cc-name" class="form-label">Nombre en la tarjeta</label>
-                                <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                                <small class="text-body-secondary">Full name as displayed on card</small>
-                                <div class="invalid-feedback">
-                                    Name on card is required
+                            <div class="my-3">
+                                <div class="form-check">
+                                    <input id="credit" name="paymentMethod" type="radio" class="form-check-input" value="tarjeta" onclick="mostrarCamposPago()" checked required>
+                                    <label class="form-check-label" for="credit">Tarjeta</label>
+                                </div>
+                                <div class="form-check">
+                                    <input id="debit" name="paymentMethod" type="radio" class="form-check-input" value="transferencia" onclick="mostrarCamposPago()" required>
+                                    <label class="form-check-label" for="debit">Transferencia</label>
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <label for="cc-number" class="form-label">Número</label>
-                                <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                                <div class="invalid-feedback">
-                                    Credit card number is required
+                            <!-- Campos de Tarjeta de Crédito -->
+                            <div id="camposTarjeta" style="display: block;">
+                                <div class="mb-3">
+                                    <label for="numTarjeta" class="form-label">Número de Tarjeta</label>
+                                    <input type="text" class="form-control" id="numTarjeta" name="numTarjeta">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="titularTarjeta" class="form-label">Titular de la Tarjeta</label>
+                                    <input type="text" class="form-control" id="titularTarjeta" name="titularTarjeta">
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <label for="expiracionTarjeta" class="form-label">Fecha de Expiración</label>
+                                        <input type="text" class="form-control" id="expiracionTarjeta" name="expiracionTarjeta" placeholder="MM/AA">
+                                    </div>
+                                    <div class="col">
+                                        <label for="cvvTarjeta" class="form-label">CVV</label>
+                                        <input type="text" class="form-control" id="cvvTarjeta" name="cvvTarjeta">
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <label for="cc-expiration" class="form-label">Fecha de caducidad</label>
-                                <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-                                <div class="invalid-feedback">
-                                    Expiration date required
+                            <!-- Campos de Transferencia -->
+                            <div id="camposTransferencia" style="display: none;">
+                                <div class="mb-3">
+                                    <label for="numCuenta" class="form-label">Número de Cuenta</label>
+                                    <input type="text" class="form-control" id="numCuenta" name="numCuenta">
                                 </div>
+                                <div class="mb-3">
+                                    <label for="nombreBeneficiario" class="form-label">Nombre del Beneficiario</label>
+                                    <input type="text" class="form-control" id="nombreBeneficiario" name="nombreBeneficiario">
+                                </div>
+                                <!-- Otros campos relacionados con la transferencia -->
                             </div>
 
-                            <div class="col-md-3">
-                                <label for="cc-cvv" class="form-label">CVV</label>
-                                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                                <div class="invalid-feedback">
-                                    Security code required
-                                </div>
-                            </div>
                         </div>
 
                         <hr class="my-4">
 
                         <button class="w-100 btn btn-primary btn-lg" type="submit">Pagar</button>
-                    </form>
                 </div>
-            </div>
+            </form>
         </main>
 
         <footer class="my-5 pt-5 text-body-secondary text-center text-small">

@@ -49,11 +49,34 @@
      
       <hr class="separator-line">
       <div class="mb-3">
-        <button class="btn btn-outline-primary w-100 py-2" type="button">Recuperar Contraseña</button>
+        <button class="btn btn-outline-primary w-100 py-2"  data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Recuperar Contraseña</button>
       </div>
       <p class="mt-5 mb-3 text-body-secondary">&copy; 2024</p>
     </form>
   </main>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Recuperar Contraseña</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="resetEmail" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="resetEmail" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

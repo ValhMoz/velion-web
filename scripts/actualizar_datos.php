@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userController = new UserController();
 
     // Intenta registrar un usuario con los datos proporcionados
-    $userController->registrarUsuario($datos);
+    $userController->actualizarDatos($datos);
 
 
 } else {

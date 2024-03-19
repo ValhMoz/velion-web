@@ -36,7 +36,8 @@
           <div class="row mb-3">
             <div class="col">
               <label for="usuario_id" class="form-label">DNI</label>
-              <input type="text" class="form-control" id="usuario_id" name="usuario_id" pattern="\d{8}[A-Za-z]" title="Introduce un DNI válido (8 dígitos seguidos de una letra)" required>
+              <input type="text" class="form-control" id="usuario_id" name="usuario_id" pattern="\d{8}[A-Za-z]" title="Introduce un DNI válido (8 dígitos seguidos de una letra)" oninput="return validarInput()" required>
+              <div id="idError" class="text-danger"></div>
             </div>
             <div class="col">
               <label for="genero" class="form-label">Género</label>
@@ -64,6 +65,104 @@
             <div class="col">
               <label for="direccion" class="form-label">Dirección</label>
               <input type="text" class="form-control" id="direccion" name="direccion" required>
+            </div>
+          </div>
+
+          <!-- Ciudad, Municipio y CP -->
+          <div class="row mb-3">
+            <div class="col">
+              <label for="ciudad" class="form-label">Ciudad</label>
+              <select class="form-select" id="ciudad" name="ciudad" required>
+                <option value="">Selecciona tu ciudad</option>
+                <option value="Córdoba">Córdoba</option>
+                <!-- Puedes añadir más opciones de ciudades aquí -->
+              </select>
+            </div>
+
+            <div class="col">
+              <label for="municipio" class="form-label">Municipio</label>
+              <select class="form-select" id="municipio" name="municipio" required>
+                <option value="">Selecciona un municipio</option>
+                <option value="Adamuz">Adamuz</option>
+                <option value="Aguilar de la Frontera">Aguilar de la Frontera</option>
+                <option value="Alcaracejos">Alcaracejos</option>
+                <option value="Almedinilla">Almedinilla</option>
+                <option value="Almodóvar del Río">Almodóvar del Río</option>
+                <option value="Añora">Añora</option>
+                <option value="Baena">Baena</option>
+                <option value="Belalcázar">Belalcázar</option>
+                <option value="Belmez">Belmez</option>
+                <option value="Benamejí">Benamejí</option>
+                <option value="Blázquez, Los">Blázquez, Los</option>
+                <option value="Bujalance">Bujalance</option>
+                <option value="Cabra">Cabra</option>
+                <option value="Cañete de las Torres">Cañete de las Torres</option>
+                <option value="Carcabuey">Carcabuey</option>
+                <option value="Cardeña">Cardeña</option>
+                <option value="Carlota, La">Carlota, La</option>
+                <option value="Carpio, El">Carpio, El</option>
+                <option value="Castro del Río">Castro del Río</option>
+                <option value="Conquista">Conquista</option>
+                <option value="Córdoba">Córdoba</option>
+                <option value="Doña Mencía">Doña Mencía</option>
+                <option value="Dos Torres">Dos Torres</option>
+                <option value="Encinas Reales">Encinas Reales</option>
+                <option value="Espejo">Espejo</option>
+                <option value="Espiel">Espiel</option>
+                <option value="Fernán-Núñez">Fernán-Núñez</option>
+                <option value="Fuente la Lancha">Fuente la Lancha</option>
+                <option value="Fuente Obejuna">Fuente Obejuna</option>
+                <option value="Fuente Palmera">Fuente Palmera</option>
+                <option value="Fuente-Tójar">Fuente-Tójar</option>
+                <option value="Granjuela, La">Granjuela, La</option>
+                <option value="Guadalcázar">Guadalcázar</option>
+                <option value="Guijo, El">Guijo, El</option>
+                <option value="Hinojosa del Duque">Hinojosa del Duque</option>
+                <option value="Hornachuelos">Hornachuelos</option>
+                <option value="Iznájar">Iznájar</option>
+                <option value="Lucena">Lucena</option>
+                <option value="Luque">Luque</option>
+                <option value="Montalbán de Córdoba">Montalbán de Córdoba</option>
+                <option value="Montemayor">Montemayor</option>
+                <option value="Montilla">Montilla</option>
+                <option value="Montoro">Montoro</option>
+                <option value="Monturque">Monturque</option>
+                <option value="Moriles">Moriles</option>
+                <option value="Nueva Carteya">Nueva Carteya</option>
+                <option value="Obejo">Obejo</option>
+                <option value="Palenciana">Palenciana</option>
+                <option value="Palma del Río">Palma del Río</option>
+                <option value="Pedro Abad">Pedro Abad</option>
+                <option value="Pedroche">Pedroche</option>
+                <option value="Peñarroya-Pueblonuevo">Peñarroya-Pueblonuevo</option>
+                <option value="Posadas">Posadas</option>
+                <option value="Pozoblanco">Pozoblanco</option>
+                <option value="Priego de Córdoba">Priego de Córdoba</option>
+                <option value="Puente Genil">Puente Genil</option>
+                <option value="Rambla, La">Rambla, La</option>
+                <option value="Rute">Rute</option>
+                <option value="San Sebastián de los Ballesteros">San Sebastián de los Ballesteros</option>
+                <option value="Santa Eufemia">Santa Eufemia</option>
+                <option value="Santaella">Santaella</option>
+                <option value="Torrecampo">Torrecampo</option>
+                <option value="Valenzuela">Valenzuela</option>
+                <option value="Valsequillo">Valsequillo</option>
+                <option value="Victoria, La">Victoria, La</option>
+                <option value="Villa del Río">Villa del Río</option>
+                <option value="Villafranca de Córdoba">Villafranca de Córdoba</option>
+                <option value="Villaharta">Villaharta</option>
+                <option value="Villanueva de Córdoba">Villanueva de Córdoba</option>
+                <option value="Villanueva del Duque">Villanueva del Duque</option>
+                <option value="Villanueva del Rey">Villanueva del Rey</option>
+                <option value="Villaralto">Villaralto</option>
+                <option value="Villaviciosa de Córdoba">Villaviciosa de Córdoba</option>
+                <option value="Viso, El">Viso, El</option>
+                <option value="Zuheros">Zuheros</option>
+              </select>
+            </div>
+            <div class="col">
+              <label for="cp" class="form-label">Código Postal</label>
+              <input type="text" class="form-control" id="cp" name="cp" pattern="[0-9]{5}" title="Introduce un código postal válido (5 dígitos)" required>
             </div>
           </div>
 
@@ -112,6 +211,35 @@
         return false;
       }
       return true;
+    }
+
+    // Función para validar el DNI
+    function validarDNI(dni) {
+      var dniRegex = /^[0-9]{8}[a-zA-Z]$/;
+      if (!dniRegex.test(dni)) {
+        return false;
+      }
+      var letrasDNI = 'TRWAGMYFPDXBNJZSQVHLCKE';
+      var numeroDNI = dni.substring(0, 8);
+      var letraDNI = dni.substring(8).toUpperCase();
+      var resto = numeroDNI % 23;
+      var letraCalculada = letrasDNI.charAt(resto);
+      return letraDNI === letraCalculada;
+    }
+
+    // Función para manejar el evento de entrada
+    function validarInput() {
+      var dniInput = document.getElementById('dni');
+      var dni = dniInput.value;
+      var resultado = document.getElementById('resultado');
+
+      if (validarDNI(dni)) {
+        resultado.textContent = 'El DNI es válido.';
+        resultado.style.color = 'green';
+      } else {
+        resultado.textContent = 'El DNI no es válido.';
+        resultado.style.color = 'red';
+      }
     }
   </script>
 </body>

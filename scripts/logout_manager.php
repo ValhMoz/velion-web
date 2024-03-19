@@ -1,24 +1,10 @@
 <?php
-session_start();
+include '../controllers/UserController.php';
 
-// Destruir todas las variables de sesión
-$_SESSION = array();
+// Crea una instancia del controlador de inicio de sesión
+$userController = new UserController();
 
-// Borrar la cookie de sesión
-if (ini_get("session.use_cookies")) {
-    $params = session_get_cookie_params();
-    setcookie(
-        session_name(),
-        '',
-        time() - 42000,
-        $params["path"],
-        $params["domain"],
-        $params["secure"],
-        $params["httponly"]
-    );
-}
+// Intenta registrar un usuario con los datos proporcionados
+$userController->cerrarSesion();
 
-// Destruir la sesión
-session_destroy();
-exit();
 ?>
