@@ -6,7 +6,7 @@ CREATE TABLE usuarios (
     telefono VARCHAR(100),
     fecha_nacimiento DATE,
     direccion VARCHAR(100),
-    ciudad VARCHAR(100),
+    provincia VARCHAR(100),
     municipio VARCHAR(100),
     cp VARCHAR(7),
     email VARCHAR(100) UNIQUE,

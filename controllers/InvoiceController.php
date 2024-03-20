@@ -1,8 +1,9 @@
 <?php
-include '../models/InvoiceModel.php';
-include '../assets/fpdf186/fpdf.php';
 
-class InvoiceController
+require_once '../models/InvoiceModel.php';
+require_once '../assets/fpdf186/fpdf.php';
+
+class InvoiceController extends FPDF
 {
     private $invoiceModel;
 
@@ -14,16 +15,15 @@ class InvoiceController
     public function obtenerFacturas()
     {
         $facturas =$this->invoiceModel->obtenerDatosFacturas();
+        // include '../pages/patients-module/invoices.php';
         return $facturas;
-        include '../pages/patients-module/invoices.php';
     }
 
     // Función para generar la factura PDF
     function generarFacturaPDF($factura_id)
     {
-
         $factura = $this->invoiceModel->read('facturas', "id = $factura_id");
-
+        // var_dump(json_encode($factura));
 
         // Verificar si se encontró la factura
         if ($factura) {
@@ -41,7 +41,7 @@ class InvoiceController
                 $pdf->SetFont('Arial', '', 12);
                 $pdf->Cell(0, 10, 'Nombre: ' . $datosPaciente['nombre'] . ' ' . $datosPaciente['apellidos'], 0, 1);
                 $pdf->Cell(0, 10, 'Dirección: ' . $datosPaciente['direccion'], 0, 1);
-                $pdf->Cell(0, 10, 'Ciudad: ' . $datosPaciente['ciudad'], 0, 1);
+                $pdf->Cell(0, 10, 'provincia: ' . $datosPaciente['provincia'], 0, 1);
                 $pdf->Cell(0, 10, 'Municipio: ' . $datosPaciente['municipio'], 0, 1);
                 $pdf->Cell(0, 10, 'Código Postal: ' . $datosPaciente['cp'], 0, 1);
                 $pdf->Cell(0, 10, 'Correo Electrónico: ' . $datosPaciente['email'], 0, 1);

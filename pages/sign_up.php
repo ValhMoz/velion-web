@@ -68,14 +68,14 @@
             </div>
           </div>
 
-          <!-- Ciudad, Municipio y CP -->
+          <!-- provincia, Municipio y CP -->
           <div class="row mb-3">
             <div class="col">
-              <label for="ciudad" class="form-label">Ciudad</label>
-              <select class="form-select" id="ciudad" name="ciudad" required>
-                <option value="">Selecciona tu ciudad</option>
+              <label for="provincia" class="form-label">Provincia</label>
+              <select class="form-select" id="provincia" name="provincia" required>
+                <option value="">Selecciona tu provincia</option>
                 <option value="Córdoba">Córdoba</option>
-                <!-- Puedes añadir más opciones de ciudades aquí -->
+                <!-- Puedes añadir más opciones de provinciaes aquí -->
               </select>
             </div>
 

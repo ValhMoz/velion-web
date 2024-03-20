@@ -10,10 +10,10 @@
         $correo= $_SESSION['email'];
         $fecha_nacimiento =  $_SESSION['fecha_nacimiento'];
         $direccion = $_SESSION['direccion'];
-        $ciudad = $_SESSION['ciudad'];
+        $provincia = $_SESSION['provincia'];
         $municipio = $_SESSION['municipio'];
         $cp = $_SESSION['cp'];
-        $direccionCompleta = $_SESSION['direccion'] . " " . $_SESSION['ciudad'] . " " . $_SESSION['municipio'] . " " . $_SESSION['cp'];
+        $direccionCompleta = $_SESSION['direccion'] . " " . $_SESSION['provincia'] . " " . $_SESSION['municipio'] . " " . $_SESSION['cp'];
         $telefono = $_SESSION['telefono'];
         $sesiones = isset($_SESSION['sesiones_disponibles']) ? $_SESSION['sesiones_disponibles'] : "";
 

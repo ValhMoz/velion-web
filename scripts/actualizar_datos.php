@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'telefono' => $_POST["telefono"],
         'fecha_nacimiento' => $_POST["fecha_nacimiento"],
         'direccion' => $_POST["direccion"],
-        'ciudad' => $_POST["ciudad"],
+        'provincia' => $_POST["provincia"],
         'municipio' => $_POST["municipio"],
         'cp' => $_POST["cp"],
         'email' => $_POST["email"],

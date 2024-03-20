@@ -173,8 +173,8 @@ $fecha_emision = date('Y-m-d');
                             </div>
 
                             <div class="col-md-5">
-                                <label for="state" class="form-label">Ciudad</label>
-                                <input type="text" class="form-control" id="ciudad" value="<?php echo $ciudad ?>" disabled>
+                                <label for="state" class="form-label">Provincia</label>
+                                <input type="text" class="form-control" id="provincia" value="<?php echo $provincia ?>" disabled>
                             </div>
 
                             <div class="col-md-4">

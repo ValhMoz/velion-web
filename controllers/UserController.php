@@ -26,7 +26,7 @@ class UserController
                 $_SESSION['telefono'] = $usuario[0]['telefono'];
                 $_SESSION['direccion'] = $usuario[0]['direccion'];
                 $_SESSION['fecha_nacimiento'] = $usuario[0]['fecha_nacimiento'];
-                $_SESSION['ciudad'] = $usuario[0]["ciudad"];
+                $_SESSION['provincia'] = $usuario[0]["provincia"];
                 $_SESSION['municipio'] = $usuario[0]['municipio'];
                 $_SESSION['cp'] = $usuario[0]['cp'];
                 $_SESSION['sesiones_disponibles'] = $usuario[0]['sesiones_disponibles'];

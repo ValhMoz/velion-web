@@ -48,7 +48,7 @@ require_once '../scripts/session_manager.php';
                         </div>
                     </div>
 
-                    <!-- Rol, Fecha de nacimiento, Ciudad y Municipio -->
+                    <!-- Rol, Fecha de nacimiento, provincia y Municipio -->
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="rol" class="form-label">Rol</label>
@@ -65,7 +65,7 @@ require_once '../scripts/session_manager.php';
                         </div>
                     </div>
 
-                    <!-- Telefono, Dirección, Ciudad y Municipio -->
+                    <!-- Telefono, Dirección, provincia y Municipio -->
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="telefono" class="form-label">Teléfono</label>
@@ -90,11 +90,11 @@ require_once '../scripts/session_manager.php';
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <label for="ciudad" class="form-label">Ciudad</label>
-                            <select class="form-select" id="ciudad" name="ciudad" aria-label="Selecciona tu ciudad">
-                                <option selected>Selecciona tu ciudad</option>
+                            <label for="provincia" class="form-label">Provincia</label>
+                            <select class="form-select" id="provincia" name="provincia" aria-label="Selecciona tu provincia">
+                                <option selected>Selecciona tu provincia</option>
                                 <option value="Córdoba">Córdoba</option>
-                                <!-- Aquí puedes incluir las opciones de ciudad -->
+                                <!-- Aquí puedes incluir las opciones de provincia -->
                             </select>
                         </div>
                         <div class="col-md-4">

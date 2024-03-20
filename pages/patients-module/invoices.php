@@ -42,7 +42,7 @@
                                 <td><?php echo $factura['fecha_emision']; ?></td>
                                 <td><?php echo $factura['estado']; ?></td>
                                 <td><?php echo $factura['monto']; ?>$</td>
-                                <td><a href="descargar_factura.php?id=<?php echo $factura['id']; ?>" class="btn btn-primary btn-sm">Descargar</a></td>
+                                <!-- <td><a href="descargar_factura.php?id=<?php echo $factura['id']; ?>" class="btn btn-primary btn-sm">Descargar</a></td> -->
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
