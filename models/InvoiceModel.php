@@ -17,14 +17,19 @@ class InvoiceModel extends BaseModel
                 INNER JOIN usuarios u ON f.paciente_id = u.usuario_id";
 
         // Ejecutar la consulta
-        $resultados = $this->executeQuery($sql);
+        $resultado =  self::$conexion->query($sql);
 
-        // Verificar si se obtuvieron resultados
-        if ($resultados) {
-            return $resultados;
-        } else {
-            return false; // No se encontraron facturas con datos del paciente
+        // Manejo de errores
+        if (!$resultado) {
+            die("Error al ejecutar la consulta: " . self::$conexion->error);
         }
+
+        // Procesa el resultado
+        $datos = array();
+        while ($fila = $resultado->fetch_assoc()) {
+            $datos[] = $fila;
+        }
+        return $datos;
     }
 
 }

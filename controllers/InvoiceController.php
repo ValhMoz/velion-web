@@ -2,7 +2,7 @@
 include '../models/InvoiceModel.php';
 include '../assets/fpdf186/fpdf.php';
 
-class InvoiceController extends FPDF
+class InvoiceController
 {
     private $invoiceModel;
 
@@ -14,10 +14,8 @@ class InvoiceController extends FPDF
     public function obtenerFacturas()
     {
         $facturas =$this->invoiceModel->obtenerDatosFacturas();
-        var_dump($facturas);
         return $facturas;
-        include './pages/patients-module/invoices.php';
-
+        include '../pages/patients-module/invoices.php';
     }
 
     // Función para generar la factura PDF

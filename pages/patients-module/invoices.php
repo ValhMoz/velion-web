@@ -1,18 +1,13 @@
 <?php
     include '../../scripts/session_manager.php';
-    // include '../../controllers/InvoiceController.php';
+    include '../../controllers/InvoiceController.php';
 
-    // // Crear una instancia del controlador de facturas
-    // $invoiceController = new InvoiceController();
+    // Crear una instancia del controlador de facturas
+    $invoiceController = new InvoiceController();
 
-    // // Obtener todas las facturas
-    // $facturas = $invoiceController->obtenerFacturas();
+    // Obtener todas las facturas
+    $facturas = $invoiceController->obtenerFacturas();
 
-    // // Función para formatear la fecha
-    // function formatFecha($fecha) {
-    //     return date('d/m/Y', strtotime($fecha));
-    // }
-    var_dump($facturas)
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -41,7 +36,7 @@
                     <tbody>
                         <?php foreach ($facturas as $factura): ?>
                             <tr>
-                                <td><?php echo $factura['id']; ?></td>
+                                <td><?php echo $factura['paciente_id']; ?></td>
                                 <td><?php echo $factura['nombre']; ?></td>
                                 <td><?php echo $factura['apellidos']; ?></td>
                                 <td><?php echo $factura['fecha_emision']; ?></td>
