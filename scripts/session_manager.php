@@ -11,6 +11,7 @@
         $fecha_nacimiento =  $_SESSION['fecha_nacimiento'];
         $direccion = $_SESSION['direccion'];
         $provincia = $_SESSION['provincia'];
+        $rol = $_SESSION['rol'];
         $municipio = $_SESSION['municipio'];
         $cp = $_SESSION['cp'];
         $direccionCompleta = $_SESSION['direccion'] . " " . $_SESSION['provincia'] . " " . $_SESSION['municipio'] . " " . $_SESSION['cp'];

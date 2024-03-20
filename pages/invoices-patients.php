@@ -1,13 +1,17 @@
 <?php
-    include '../../scripts/session_manager.php';
-    include '../../controllers/InvoiceController.php';
+include '../scripts/session_manager.php';
+if($rol == "administrador" ||  $rol == "fisioterapeuta")
+{
+    header("Location: 404.php");
+    exit();
+}
+include '../controllers/InvoiceController.php';
 
-    // Crear una instancia del controlador de facturas
-    $invoiceController = new InvoiceController();
+// Crear una instancia del controlador de facturas
+$invoiceController = new InvoiceController();
 
-    // Obtener todas las facturas
-    $facturas = $invoiceController->obtenerFacturas();
-
+// Obtener todas las facturas
+$facturas = $invoiceController->obtenerFacturasUsuario($DNI);
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -34,15 +38,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($facturas as $factura): ?>
+                        <?php foreach ($facturas as $factura) : ?>
                             <tr>
                                 <td><?php echo $factura['paciente_id']; ?></td>
                                 <td><?php echo $factura['nombre']; ?></td>
                                 <td><?php echo $factura['apellidos']; ?></td>
                                 <td><?php echo $factura['fecha_emision']; ?></td>
                                 <td><?php echo $factura['estado']; ?></td>
-                                <td><?php echo $factura['monto']; ?>$</td>
-                                <!-- <td><a href="descargar_factura.php?id=<?php echo $factura['id']; ?>" class="btn btn-primary btn-sm">Descargar</a></td> -->
+                                <td><?php echo $factura['monto']; ?>€</td>
+                                <td>
+                                    <form action="../scripts/descargar_factura.php" method="GET">
+                                        <input type="hidden" name="id" value="<?php echo $factura['factura_id']; ?>">
+                                        <button type="submit" class="btn btn-primary btn-sm" style="padding: 6px 12px;">Descargar</button>
+                                    </form>
+                                </td>
+
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -50,10 +60,18 @@
             </div>
         </div>
     </div>
-</div>
 
-<nav aria-label="Page navigation example">
+    <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-start">
-        <!-- Paginación (si es necesario) -->
+        <li class="page-item disabled">
+            <a class="page-link">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+        </li>
     </ul>
 </nav>
+</div>

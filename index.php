@@ -64,7 +64,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="./scripts/resetPasswordRequest_manager.php" method="post">
                         <div class="mb-3">
                             <label for="resetEmail" class="form-label">Correo electrónico</label>
                             <input type="email" class="form-control" id="resetEmail" required>

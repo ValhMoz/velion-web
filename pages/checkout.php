@@ -1,5 +1,10 @@
 <?php
-require_once '../../scripts/session_manager.php';
+require_once '../scripts/session_manager.php';
+if($rol == "administrador" ||  $rol == "fisioterapeuta")
+{
+    header("Location: 404.php");
+    exit();
+}
 
 // Obtener los parámetros de bono y precio de la URL
 $bono = $_GET['bono'] ?? '';
@@ -17,8 +22,8 @@ $fecha_emision = date('Y-m-d');
     <meta name="description" content="">
     <meta name="generator" content="Hugo 0.118.2">
     <title>Confirmación de compra</title>
-    <link href="../../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="../../assets/bootstrap-5.3/js/color-modes.js"></script>
+    <link href="../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="../assets/bootstrap-5.3/js/color-modes.js"></script>
     <meta name="theme-color" content="#712cf9">
 
     <script>
@@ -123,7 +128,7 @@ $fecha_emision = date('Y-m-d');
                 <!-- <img class="d-block mx-auto mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
                 <h2>Confirmación de compra</h2>
             </div>
-            <form action="../../scripts/checkout_manager.php" method="post" class="needs-validation" novalidate>
+            <form action="../scripts/checkout_manager.php" method="post" class="needs-validation" novalidate>
 
                 <div class="row g-5">
                     <div class="col-md-5 col-lg-4 order-md-last">

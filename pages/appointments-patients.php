@@ -1,5 +1,14 @@
 <?php
-require_once '../../scripts/session_manager.php';
+require_once '../scripts/session_manager.php';
+if($rol == "administrador" ||  $rol == "fisioterapeuta")
+{
+    header("Location: 404.php");
+    exit();
+}
+require_once '../controllers/AppointmentController.php';
+
+$appoinmentController = new AppointmentController();
+$citas = $appoinmentController->obtenerCitasUsuario($DNI);
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -104,6 +113,8 @@ require_once '../../scripts/session_manager.php';
         <!-- Aquí se mostrarán las citas en forma de listas -->
         <div class="col">
             <ul class="list-group">
+
+            
                 <li class="list-group-item">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">Cita 1</h5>
@@ -112,18 +123,6 @@ require_once '../../scripts/session_manager.php';
                     <p class="mb-1">Información sobre la cita 1.</p>
                     <small>Nombre del paciente: Paciente 1</small>
                     <small>Nombre del fisioterapeuta: Fisioterapeuta 1</small>
-                    <div class="text-end mt-2">
-                        <button type="button" class="btn btn-danger">Cancelar cita</button>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">Cita 2</h5>
-                        <small>Fecha: 14/03/2024 Hora: 11:00</small>
-                    </div>
-                    <p class="mb-1">Información sobre la cita 2.</p>
-                    <small>Nombre del paciente: Paciente 2</small>
-                    <small>Nombre del fisioterapeuta: Fisioterapeuta 2</small>
                     <div class="text-end mt-2">
                         <button type="button" class="btn btn-danger">Cancelar cita</button>
                     </div>

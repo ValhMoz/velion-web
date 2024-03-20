@@ -33,6 +33,7 @@ CREATE TABLE facturas (
     factura_id INT AUTO_INCREMENT PRIMARY KEY,
     paciente_id VARCHAR(9),
     fecha_emision DATE,
+    descripcion VARCHAR(100),
     monto DECIMAL(10, 2),
     estado ENUM('pendiente', 'pagada'),
     FOREIGN KEY (paciente_id) REFERENCES usuarios(usuario_id)

@@ -1,5 +1,13 @@
 <?php
 require_once '../scripts/session_manager.php';
+if($rol == "paciente"){
+    header("Location: 404.php");
+    exit();
+}
+require_once '../controllers/AppointmentController.php';
+
+$appoinmentController = new AppointmentController();
+$citas = $appoinmentController->obtenerCitasHoy();
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -36,29 +44,20 @@ require_once '../scripts/session_manager.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>12/03/2024</td>
-                            <td>10:00</td>
-                            <td>Información sobre la cita 1.</td>
-                            <td>Paciente 1</td>
-                            <td>
-                                <button type="button" class="btn btn-success btn-sm">Confirmar</button>
-                                <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>14/03/2024</td>
-                            <td>11:00</td>
-                            <td>Información sobre la cita 2.</td>
-                            <td>Paciente 2</td>
-                            <td>
-                                <button type="button" class="btn btn-success btn-sm">Confirmar</button>
-                                <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
-                            </td>
-                        </tr>
-                        <!-- Repite estas filas para cada cita -->
+                    <?php foreach ($citas as $cita) : ?>
+                            <tr>
+                                <td><?php echo $cita['cita_id']; ?></td>
+                                <td><?php echo $cita['fecha_hora']; ?></td>
+                                <td><?php echo $cita['hora']; ?></td>
+                                <td><?php echo $cita['nombre_fisioterapeuta']; ?></td>
+                                <td><?php echo $cita['nombre_paciente']; ?></td>
+                                <td>
+                                    <button type="button" class="btn btn-success btn-sm">Confirmar</button>
+                                    <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+                                </td>
+
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>

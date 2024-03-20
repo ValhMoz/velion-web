@@ -1,5 +1,9 @@
 <?php
     require_once '../scripts/session_manager.php';
+    if($rol == "paciente"){
+        header("Location: 404.php");
+        exit();
+    }
 ?>
 
        <div class="container mt-5">

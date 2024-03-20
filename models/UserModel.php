@@ -52,4 +52,7 @@ class UserModel extends BaseModel
         // Usuario no encontrado o contraseña incorrecta
         return false;
     }
+
+    
+
 }

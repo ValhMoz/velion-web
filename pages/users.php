@@ -1,5 +1,13 @@
 <?php
 require_once '../scripts/session_manager.php';
+if($rol == "paciente"){
+    header("Location: 404.php");
+    exit();
+}
+require_once '../controllers/UserController.php';
+
+$userController = new UserController();
+$usuarios = $userController->obtenerUsuarios();
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -227,35 +235,22 @@ require_once '../scripts/session_manager.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Nombre1</td>
-                            <td>Apellidos1</td>
-                            <td>correo1@example.com</td>
-                            <td>123456789</td>
-                            <td>5</td>
-                            <td>Usuario</td>
-                            <td>
-                                <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Ver más</button>
-                                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button>
-                                <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Nombre2</td>
-                            <td>Apellidos2</td>
-                            <td>correo2@example.com</td>
-                            <td>987654321</td>
-                            <td>10</td>
-                            <td>Admin</td>
-                            <td>
-                                <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Ver más</button>
-                                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button>
-                                <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
-                            </td>
-                        </tr>
-                        <!-- Repite estas filas para cada usuario -->
+                        <?php foreach ($usuarios as $usuario) : ?>
+                            <tr>
+                                <td><?php echo $usuario['usuario_id']; ?></td>
+                                <td><?php echo $usuario['nombre']; ?></td>
+                                <td><?php echo $usuario['apellidos']; ?></td>
+                                <td><?php echo $usuario['email']; ?></td>
+                                <td><?php echo $usuario['telefono']; ?></td>
+                                <td><?php echo $usuario['sesiones_disponibles']; ?></td>
+                                <td><?php echo $usuario['rol']; ?></td>
+                                <td>
+                                    <button type="button" class="btn btn-info btn-sm">Ver</button>
+                                    <button type="button" class="btn btn-warning btn-sm">Editar</button>
+                                    <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
@@ -278,7 +273,7 @@ require_once '../scripts/session_manager.php';
 
     <script>
         // Función para actualizar el modal según la acción seleccionada
-        $('#exampleModal').on('show.bs.modal', function (event) {
+        $('#exampleModal').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget); // Botón que activó el modal
             var action = button.data('action'); // Acción seleccionada
             var modal = $(this);

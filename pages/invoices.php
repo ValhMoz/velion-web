@@ -1,5 +1,16 @@
 <?php
     require_once '../scripts/session_manager.php';
+    if($rol == "paciente"){
+        header("Location: 404.php");
+        exit();
+    }
+    include '../controllers/InvoiceController.php';
+
+    // Crear una instancia del controlador de facturas
+    $invoiceController = new InvoiceController();
+
+    // Obtener todas las facturas
+    $facturas = $invoiceController->obtenerFacturas();
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -36,29 +47,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Nombre1</td>
-                        <td>Apellidos1</td>
-                        <td>12/03/2024</td>
-                        <td>Pagada</td>
-                        <td>$100</td>
-                        <td>
-                            <button type="button" class="btn btn-primary btn-sm">Descargar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Nombre2</td>
-                        <td>Apellidos2</td>
-                        <td>14/03/2024</td>
-                        <td>Pendiente</td>
-                        <td>$150</td>
-                        <td>
-                            <button type="button" class="btn btn-primary btn-sm">Descargar</button>
-                        </td>
-                    </tr>
-                    <!-- Repite estas filas para cada factura -->
+                <?php foreach ($facturas as $factura) : ?>
+                            <tr>
+                                <td><?php echo $factura['paciente_id']; ?></td>
+                                <td><?php echo $factura['nombre']; ?></td>
+                                <td><?php echo $factura['apellidos']; ?></td>
+                                <td><?php echo $factura['fecha_emision']; ?></td>
+                                <td><?php echo $factura['estado']; ?></td>
+                                <td><?php echo $factura['monto']; ?>€</td>
+                                <td>
+                                    <form action="../../scripts/descargar_factura.php" method="GET">
+                                        <input type="hidden" name="id" value="<?php echo $factura['factura_id']; ?>">
+                                        <button type="submit" class="btn btn-primary btn-sm" style="padding: 6px 12px;">Descargar</button>
+                                    </form>
+                                </td>
+
+                            </tr>
+                        <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

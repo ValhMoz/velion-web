@@ -10,6 +10,10 @@ class UserController
         $this->usuarioModel = new UserModel();
     }
 
+    public function obtenerUsuarios() {
+        return $this->usuarioModel->read('usuarios');
+    }
+
     public function iniciarSesion($email, $pass)
     {
         $usuario = $this->usuarioModel->read('usuarios', "email= '$email'");
@@ -25,6 +29,7 @@ class UserController
                 $_SESSION['apellidos'] = $usuario[0]['apellidos'];
                 $_SESSION['telefono'] = $usuario[0]['telefono'];
                 $_SESSION['direccion'] = $usuario[0]['direccion'];
+                $_SESSION['rol'] = $usuario[0]['rol'];
                 $_SESSION['fecha_nacimiento'] = $usuario[0]['fecha_nacimiento'];
                 $_SESSION['provincia'] = $usuario[0]["provincia"];
                 $_SESSION['municipio'] = $usuario[0]['municipio'];
@@ -35,7 +40,7 @@ class UserController
                     header('Location: ../pages/dashboard.php');
                     exit();
                 } else {
-                    header('Location: ../pages/patients-module/dashboard.php');
+                    header('Location: ../pages/dashboard-patients.php');
                     exit();
                 }
             } else {
@@ -96,4 +101,5 @@ class UserController
         header("Location: ../index.php");
         exit();
     }
+
 }

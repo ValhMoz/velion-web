@@ -20,7 +20,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <!-- Formulario de Reinicio de Contraseña -->
-                <form action="#" method="post">
+                <form action="../scripts/resetPassword_manager.php" method="post">
                     <h2 class="mb-3">Reinicio de Contraseña</h2>
 
                     <!-- Correo Electrónico
