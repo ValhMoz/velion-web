@@ -33,39 +33,40 @@
     <div class="row">
     <!-- Aquí se mostrarán las facturas en forma de tabla -->
     <div class="col">
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col" style="width: 5%;">ID</th>
-                        <th scope="col" style="width: 15%;">Nombre</th>
-                        <th scope="col" style="width: 15%;">Apellidos</th>
-                        <th scope="col" style="width: 15%;">Fecha de Emisión</th>
-                        <th scope="col" style="width: 15%;">Estado</th>
-                        <th scope="col" style="width: 15%;">Monto</th>
-                        <th scope="col" style="width: 15%;">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php foreach ($facturas as $factura) : ?>
-                            <tr>
-                                <td><?php echo $factura['paciente_id']; ?></td>
-                                <td><?php echo $factura['nombre']; ?></td>
-                                <td><?php echo $factura['apellidos']; ?></td>
-                                <td><?php echo $factura['fecha_emision']; ?></td>
-                                <td><?php echo $factura['estado']; ?></td>
-                                <td><?php echo $factura['monto']; ?>€</td>
-                                <td>
-                                    <form action="../../scripts/descargar_factura.php" method="GET">
-                                        <input type="hidden" name="id" value="<?php echo $factura['factura_id']; ?>">
-                                        <button type="submit" class="btn btn-primary btn-sm" style="padding: 6px 12px;">Descargar</button>
-                                    </form>
-                                </td>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 5%;">ID</th>
+                            <th scope="col" style="width: 15%;">Nombre</th>
+                            <th scope="col" style="width: 15%;">Apellidos</th>
+                            <th scope="col" style="width: 15%;">Fecha de Emisión</th>
+                            <th scope="col" style="width: 15%;">Estado</th>
+                            <th scope="col" style="width: 15%;">Monto</th>
+                            <th scope="col" style="width: 15%;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($facturas as $factura) : ?>
+                                <tr>
+                                    <td><?php echo $factura['paciente_id']; ?></td>
+                                    <td><?php echo $factura['nombre']; ?></td>
+                                    <td><?php echo $factura['apellidos']; ?></td>
+                                    <td><?php echo $factura['fecha_emision']; ?></td>
+                                    <td><?php echo $factura['estado']; ?></td>
+                                    <td><?php echo $factura['monto']; ?>€</td>
+                                    <td>
+                                        <form action="../../scripts/descargar_factura.php" method="GET">
+                                            <input type="hidden" name="id" value="<?php echo $factura['factura_id']; ?>">
+                                            <button type="submit" class="btn btn-primary btn-sm" style="padding: 6px 12px;">Descargar</button>
+                                        </form>
+                                    </td>
 
-                            </tr>
-                        <?php endforeach; ?>
-                </tbody>
-            </table>
+                                </tr>
+                            <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

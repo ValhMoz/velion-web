@@ -1,7 +1,6 @@
 <?php
 require_once '../scripts/session_manager.php';
-if($rol == "administrador" ||  $rol == "fisioterapeuta")
-{
+if ($rol == "administrador" ||  $rol == "fisioterapeuta") {
     header("Location: 404.php");
     exit();
 }
@@ -83,7 +82,10 @@ if($rol == "administrador" ||  $rol == "fisioterapeuta")
                     <small>Nombre del paciente: Paciente 1</small>
                     <small>Nombre del fisioterapeuta: Fisioterapeuta 1</small>
                     <div class="text-end mt-2">
-                        <button type="button" class="btn btn-success">Descargar</button>
+                        <form action="../scripts/descargar_informe.php" method="GET">
+                            <button type="submit" class="btn btn-success">Descargar</button>
+
+                        </form>
                     </div>
                 </li>
                 <!-- Repite estas listas para cada cita -->
