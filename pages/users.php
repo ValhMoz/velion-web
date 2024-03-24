@@ -1,6 +1,6 @@
 <?php
 require_once '../scripts/session_manager.php';
-if($rol == "paciente"){
+if ($rol == "paciente") {
     header("Location: 404.php");
     exit();
 }
@@ -56,7 +56,7 @@ $usuarios = $userController->obtenerUsuarios();
                         </div>
                     </div>
 
-                    <!-- Rol, Fecha de nacimiento, provincia y Municipio -->
+                    <!-- Rol, Fecha de nacimiento -->
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="rol" class="form-label">Rol</label>
@@ -99,91 +99,13 @@ $usuarios = $userController->obtenerUsuarios();
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label for="provincia" class="form-label">Provincia</label>
-                            <select class="form-select" id="provincia" name="provincia" aria-label="Selecciona tu provincia">
-                                <option selected>Selecciona tu provincia</option>
-                                <option value="Córdoba">Córdoba</option>
-                                <!-- Aquí puedes incluir las opciones de provincia -->
+                            <select class="form-select" id="ps-prov" name="provincia" aria-label="Selecciona tu provincia">
+
                             </select>
                         </div>
                         <div class="col-md-4">
                             <label for="municipio" class="form-label">Municipio</label>
-                            <select class="form-select" id="municipio">
-                                <option value="">Selecciona un municipio</option>
-                                <option value="Adamuz">Adamuz</option>
-                                <option value="Aguilar de la Frontera">Aguilar de la Frontera</option>
-                                <option value="Alcaracejos">Alcaracejos</option>
-                                <option value="Almedinilla">Almedinilla</option>
-                                <option value="Almodóvar del Río">Almodóvar del Río</option>
-                                <option value="Añora">Añora</option>
-                                <option value="Baena">Baena</option>
-                                <option value="Belalcázar">Belalcázar</option>
-                                <option value="Belmez">Belmez</option>
-                                <option value="Benamejí">Benamejí</option>
-                                <option value="Blázquez, Los">Blázquez, Los</option>
-                                <option value="Bujalance">Bujalance</option>
-                                <option value="Cabra">Cabra</option>
-                                <option value="Cañete de las Torres">Cañete de las Torres</option>
-                                <option value="Carcabuey">Carcabuey</option>
-                                <option value="Cardeña">Cardeña</option>
-                                <option value="Carlota, La">Carlota, La</option>
-                                <option value="Carpio, El">Carpio, El</option>
-                                <option value="Castro del Río">Castro del Río</option>
-                                <option value="Conquista">Conquista</option>
-                                <option value="Córdoba">Córdoba</option>
-                                <option value="Doña Mencía">Doña Mencía</option>
-                                <option value="Dos Torres">Dos Torres</option>
-                                <option value="Encinas Reales">Encinas Reales</option>
-                                <option value="Espejo">Espejo</option>
-                                <option value="Espiel">Espiel</option>
-                                <option value="Fernán-Núñez">Fernán-Núñez</option>
-                                <option value="Fuente la Lancha">Fuente la Lancha</option>
-                                <option value="Fuente Obejuna">Fuente Obejuna</option>
-                                <option value="Fuente Palmera">Fuente Palmera</option>
-                                <option value="Fuente-Tójar">Fuente-Tójar</option>
-                                <option value="Granjuela, La">Granjuela, La</option>
-                                <option value="Guadalcázar">Guadalcázar</option>
-                                <option value="Guijo, El">Guijo, El</option>
-                                <option value="Hinojosa del Duque">Hinojosa del Duque</option>
-                                <option value="Hornachuelos">Hornachuelos</option>
-                                <option value="Iznájar">Iznájar</option>
-                                <option value="Lucena">Lucena</option>
-                                <option value="Luque">Luque</option>
-                                <option value="Montalbán de Córdoba">Montalbán de Córdoba</option>
-                                <option value="Montemayor">Montemayor</option>
-                                <option value="Montilla">Montilla</option>
-                                <option value="Montoro">Montoro</option>
-                                <option value="Monturque">Monturque</option>
-                                <option value="Moriles">Moriles</option>
-                                <option value="Nueva Carteya">Nueva Carteya</option>
-                                <option value="Obejo">Obejo</option>
-                                <option value="Palenciana">Palenciana</option>
-                                <option value="Palma del Río">Palma del Río</option>
-                                <option value="Pedro Abad">Pedro Abad</option>
-                                <option value="Pedroche">Pedroche</option>
-                                <option value="Peñarroya-Pueblonuevo">Peñarroya-Pueblonuevo</option>
-                                <option value="Posadas">Posadas</option>
-                                <option value="Pozoblanco">Pozoblanco</option>
-                                <option value="Priego de Córdoba">Priego de Córdoba</option>
-                                <option value="Puente Genil">Puente Genil</option>
-                                <option value="Rambla, La">Rambla, La</option>
-                                <option value="Rute">Rute</option>
-                                <option value="San Sebastián de los Ballesteros">San Sebastián de los Ballesteros</option>
-                                <option value="Santa Eufemia">Santa Eufemia</option>
-                                <option value="Santaella">Santaella</option>
-                                <option value="Torrecampo">Torrecampo</option>
-                                <option value="Valenzuela">Valenzuela</option>
-                                <option value="Valsequillo">Valsequillo</option>
-                                <option value="Victoria, La">Victoria, La</option>
-                                <option value="Villa del Río">Villa del Río</option>
-                                <option value="Villafranca de Córdoba">Villafranca de Córdoba</option>
-                                <option value="Villaharta">Villaharta</option>
-                                <option value="Villanueva de Córdoba">Villanueva de Córdoba</option>
-                                <option value="Villanueva del Duque">Villanueva del Duque</option>
-                                <option value="Villanueva del Rey">Villanueva del Rey</option>
-                                <option value="Villaralto">Villaralto</option>
-                                <option value="Villaviciosa de Córdoba">Villaviciosa de Córdoba</option>
-                                <option value="Viso, El">Viso, El</option>
-                                <option value="Zuheros">Zuheros</option>
+                            <select class="form-select" id="ps-mun" name="municipio" required>
                             </select>
                         </div>
                         <div class="col-md-4">
@@ -292,6 +214,18 @@ $usuarios = $userController->obtenerUsuarios();
                 modal.find('#actionType').val('editar');
                 modal.find('.modal-footer button').text('Guardar Cambios');
             }
+        });
+    </script>
+
+    <script>
+        var prov = document.getElementById('ps-prov');
+        var mun = document.getElementById('ps-mun');
+        // Create PS
+        new Pselect().create(prov, mun);
+
+
+        document.getElementById('ps-mun').addEventListener('change', function onChange() {
+            document.getElementById('code').innerText = 'Código: ' + document.getElementById('ps-mun').value;
         });
     </script>
 
