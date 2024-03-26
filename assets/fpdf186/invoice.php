@@ -251,10 +251,10 @@ function addPageNumber( $page )
 // Client address
 function addClientAdresse($factura)
 {
-    $nombreCompleto = $factura[0]['nombre'] . ' ' . $factura[0]['apellidos'];
-    $direccion = $factura[0]['direccion'];
-	$municipio = $factura[0]['municipio'];
-    $provincia = $factura[0]['provincia'];
+    $nombreCompleto = iconv('UTF-8', 'windows-1252', $factura[0]['nombre']) . ' ' . iconv('UTF-8', 'windows-1252', $factura[0]['apellidos']);
+    $direccion = iconv('UTF-8', 'windows-1252', $factura[0]['direccion']);
+	$municipio = iconv('UTF-8', 'windows-1252', $factura[0]['municipio']);
+    $provincia =iconv('UTF-8', 'windows-1252', $factura[0]['provincia']);
     $codigoPostal = $factura[0]['cp'];
     $email = $factura[0]['email'];
 

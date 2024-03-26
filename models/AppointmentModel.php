@@ -45,7 +45,7 @@ class AppointmentModel extends BaseModel
                 INNER JOIN usuarios AS pacientes ON citas.paciente_id = pacientes.usuario_id
                 INNER JOIN usuarios AS fisioterapeutas ON citas.fisioterapeuta_id = fisioterapeutas.usuario_id
                 WHERE pacientes.rol = 'paciente'
-                AND DATE(citas.fecha_hora) = :fecha_actual";
+                AND DATE(citas.fecha_hora) = $fecha_actual";
 
         // Ejecutar la consulta
         $resultado =  self::$conexion->query($sql);

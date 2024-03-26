@@ -32,11 +32,11 @@ class InvoiceController extends PDF_Invoice
             $pdf = new PDF_Invoice('P', 'mm', 'A4');
             $pdf->AddPage();
             $pdf->addSociete(
-                "Clinica Fisioterapia Aquiles SL",
-                "CIF: \n".
-                "Av. Virgen de los Dolores, 5\n" .
-                "Cordoba, Cordoba 14005\n".
-                "Tel.: 957 413 031 / 661 125 257"
+                iconv('UTF-8', 'windows-1252', 'Clínica Fisioterapia Aquiles'),
+                "CIF: X-12345678\n".
+                "Av. Virgen de los Dolores, 17\n" .
+                iconv('UTF-8', 'windows-1252', "Córdoba, Córdoba, 14004\n").
+                iconv('UTF-8', 'windows-1252', "Tel.: 957 413 031 • 661 125 257")
             );
             $pdf->fact_dev("Factura:", $factura_id);
             // $pdf->temporaire("Devis temporaire");
@@ -50,7 +50,7 @@ class InvoiceController extends PDF_Invoice
             // $pdf->addReference("Devis ... du ....");
             $cols = array(
                 "REF"    => 23,
-                "DESCRIPCION"  => 78,
+                iconv('UTF-8', 'windows-1252', "DESCRIPCIÓN")  => 78,
                 "CANTIDAD"     => 22,
                 "PRECIO UNITARIO" => 37,
                 "PRECIO TOTAL" => 30,
@@ -58,7 +58,7 @@ class InvoiceController extends PDF_Invoice
             $pdf->addCols($cols);
             $cols = array(
                 "REF"    => "L",
-                "DESCRIPCION"  => "L",
+                iconv('UTF-8', 'windows-1252', "DESCRIPCIÓN")  => "L",
                 "CANTIDAD"     => "C",
                 "PRECIO UNITARIO" => "R",
                 "PRECIO TOTAL" => "R",
@@ -69,7 +69,7 @@ class InvoiceController extends PDF_Invoice
             $y    = 109;
             $line = array(
                 "REF"    => "REF1",
-                "DESCRIPCION"  => "Bono 10 sesiones",
+                iconv('UTF-8', 'windows-1252', "DESCRIPCIÓN")  => "Bono 10 sesiones",
                 "CANTIDAD"     => "1",
                 "PRECIO UNITARIO"      => "600.00". EURO,
                 "PRECIO TOTAL" => "600.00". EURO,
@@ -79,7 +79,7 @@ class InvoiceController extends PDF_Invoice
 
             // $line = array(
             //     "REF"    => "REF2",
-            //     "DESCRIPCION"  => "Câble RS232",
+            //     iconv('UTF-8', 'windows-1252', "DESCRIPCIÓN")  => "Câble RS232",
             //     "CANTIDAD"     => "1",
             //     "PRECIO UNITARIO"      => "10.00",
             //     "PRECIO TOTAL" => "60.00",

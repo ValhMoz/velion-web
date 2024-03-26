@@ -10,7 +10,8 @@ class UserController
         $this->usuarioModel = new UserModel();
     }
 
-    public function obtenerUsuarios() {
+    public function obtenerUsuarios()
+    {
         return $this->usuarioModel->read('usuarios');
     }
 
@@ -62,9 +63,22 @@ class UserController
         }
     }
 
+    public function añadirNuevoUsuario($datos)
+    {
+        if ($this->usuarioModel->insert('usuarios', $datos) == true) {
+            // Dentro de la función añadirNuevoUsuario en UserController.php
+            header('Location: ../pages/dashboard.php?page=users');
+            exit();
+        } else {
+            // Dentro de la función añadirNuevoUsuario en UserController.php
+            header('Location: ../pages/dashboard.php?page=users');
+            exit();
+        }
+    }
+
     public function actualizarDatos($datos)
     {
-        echo($_SESSION['usuario_id']);
+        echo ($_SESSION['usuario_id']);
         if ($this->usuarioModel->update('usuarios', $datos, $_SESSION['usuario_id']) == true) {
             exit();
         } else {
@@ -101,5 +115,4 @@ class UserController
         header("Location: ../index.php");
         exit();
     }
-
 }

@@ -6,6 +6,13 @@ require_once '../assets/fpdf186/fpdf.php';
 class MedicalHistoryController extends FPDF
 {
 
+    private $medicalhistoryModel;
+
+    public function __construct()
+    {
+        $this->medicalhistoryModel = new MedicalHistoryModel();
+    }
+
     function generarInformeMedico()
     {
         // Crear una instancia de FPDF
@@ -85,7 +92,8 @@ class MedicalHistoryController extends FPDF
         $pdf->Output();
     }
 
-    function actualizarInformeMedico()
+    function actualizarInformeMedico($datos)
     {
+        $this->medicalhistoryModel->update('historial_medico', $datos, $datos[0]['usuario_id']);
     }
 }
