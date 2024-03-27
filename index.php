@@ -46,7 +46,6 @@
       <button class="btn btn-primary w-100 py-2" style="margin-bottom: 5px;" type="submit">Iniciar sesión</button> </div>
       <div class="col">
       <a class="btn btn-secondary w-100 py-2" type="submit" href="./pages/sign_up.php">Regístrate</a> </div> </div>
-     
       <hr class="separator-line">
       <div class="mb-3">
         <button class="btn btn-outline-primary w-100 py-2"  data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Recuperar Contraseña</button>
@@ -64,7 +63,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="./scripts/resetPasswordRequest_manager.php" method="post">
+                    <form action="./scripts/user_manager.php" method="post">
+                      <input type="hidden" id="actionType" name="action" value="solicitar_nueva_contraseña">
                         <div class="mb-3">
                             <label for="resetEmail" class="form-label">Correo electrónico</label>
                             <input type="email" class="form-control" id="resetEmail" required>

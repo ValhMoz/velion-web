@@ -15,7 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
             break;
 
         case 'actualizar_informe':
-            
+            $medicalController->actualizarInformeMedico($datos);
+            header('Location: ../pages/dashboard.php');
             exit();
             break;
     }

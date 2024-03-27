@@ -20,7 +20,12 @@ $facturas = $invoiceController->obtenerFacturasUsuario($DNI);
 
 <div class="table-responsive small">
     <form class="row g-3">
-        <!-- Filtros de búsqueda (si es necesario) -->
+        <div class="col-auto">
+            <input type="date" class="form-control" id="">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Filtrar</button>
+        </div>
     </form>
     <div class="row">
         <div class="col">
@@ -47,7 +52,7 @@ $facturas = $invoiceController->obtenerFacturasUsuario($DNI);
                                 <td><?php echo $factura['estado']; ?></td>
                                 <td><?php echo $factura['monto']; ?>€</td>
                                 <td>
-                                    <form action="../scripts/descargar_factura.php" method="GET">
+                                    <form action="../scripts/invoice_manager.php" method="GET">
                                         <input type="hidden" name="id" value="<?php echo $factura['factura_id']; ?>">
                                         <button type="submit" class="btn btn-primary btn-sm" style="padding: 6px 12px;">Descargar</button>
                                     </form>
@@ -62,16 +67,17 @@ $facturas = $invoiceController->obtenerFacturasUsuario($DNI);
     </div>
 
     <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-start">
-        <li class="page-item disabled">
-            <a class="page-link">Previous</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-        </li>
-    </ul>
-</nav>
+        <ul class="pagination justify-content-start">
+            <li class="page-item disabled">
+                <a class="page-link">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+
 </div>

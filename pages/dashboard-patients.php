@@ -43,7 +43,7 @@
             <a class="nav-link" href="#" onclick="cargarPagina('invoices-patients')">Facturas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" onclick="cargarPagina('buy_pass')">Tienda</a>
+            <a class="nav-link" href="#" onclick="cargarPagina('shop')">Tienda</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#" onclick="cargarPagina('../settings')">Perfil</a>

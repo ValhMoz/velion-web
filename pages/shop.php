@@ -18,19 +18,19 @@
     <header>
         <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
             <h1 class="display-4 fw-normal text-body-emphasis">Bonos de sesiones</h1>
-            <p class="fs-5 text-body-secondary">Adquiera aquí su bono ahora.</p>
+            <p class="fs-5 text-body-secondary">Adquiera aquí su bono.</p>
         </div>
     </header>
 
-
+   
     <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-        <div class="col">
+    <div class="col">
             <div class="card mb-4 rounded-3 shadow-sm">
                 <div class="card-header py-3">
-                    <h4 class="my-0 fw-normal">10 sesiones</h4>
+                    <h4 class="my-0 fw-normal">Sesión individual</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">100€</h1>
+                    <h1 class="card-title pricing-card-title">35€</h1>
                     <br>
                     <br>
                     <!-- <ul class="list-unstyled mt-3 mb-4">
@@ -39,7 +39,35 @@
                                 <li>Email support</li>
                                 <li>Help center access</li>
                             </ul> -->
+                    <button type="button" id="bono3" class="w-100 btn btn-lg btn-outline-primary buy">Haz click aquí para comprar</button>
+                </div>
+            </div>
+    </div>
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">10 sesiones</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">300€</h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>(30€/sesión)</li>
+                    </ul>
                     <button type="button" id="bono1" class="w-100 btn btn-lg btn-outline-primary buy">Haz click aquí para comprar</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">15 sesiones</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">390€</h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>(26€/sesión)</li>
+                    </ul>
+                    <button type="button" id="bono2" class="w-100 btn btn-lg btn-outline-primary buy">Haz click aquí para comprar</button>
                 </div>
             </div>
         </div>
@@ -49,16 +77,11 @@
                     <h4 class="my-0 fw-normal">20 sesiones</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">180€</h1>
-                    <br>
-                    <br>
-                    <!-- <ul class="list-unstyled mt-3 mb-4">
-                                <li>10 users included</li>
-                                <li>2 GB of storage</li>
-                                <li>Email support</li>
-                                <li>Help center access</li>
-                            </ul> -->
-                    <button type="button" id="bono2" class="w-100 btn btn-lg btn-outline-primary buy">Haz click aquí para comprar</button>
+                    <h1 class="card-title pricing-card-title">480€</h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>(24€/sesión)</li>
+                    </ul>
+                    <button type="button" id="bono3" class="w-100 btn btn-lg btn-outline-primary buy">Haz click aquí para comprar</button>
                 </div>
             </div>
         </div>
@@ -68,15 +91,24 @@
                     <h4 class="my-0 fw-normal">30 sesiones</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">260€</h1>
-                    <br>
-                    <br>
-                    <!-- <ul class="list-unstyled mt-3 mb-4">
-                                <li>10 users included</li>
-                                <li>2 GB of storage</li>
-                                <li>Email support</li>
-                                <li>Help center access</li>
-                            </ul> -->
+                    <h1 class="card-title pricing-card-title">615€</h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>(20,5€/sesión)</li>
+                    </ul>
+                    <button type="button" id="bono3" class="w-100 btn btn-lg btn-outline-primary buy">Haz click aquí para comprar</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">Especial 10 sesiones</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">370€</h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>(37€/sesión)</li>
+                    </ul>
                     <button type="button" id="bono3" class="w-100 btn btn-lg btn-outline-primary buy">Haz click aquí para comprar</button>
                 </div>
             </div>

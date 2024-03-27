@@ -98,6 +98,28 @@ $citas = $appoinmentController->obtenerCitasUsuario($DNI);
     </div>
 </div>
 
+<!-- Modal eliminar cita -->
+<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar cita</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="../scripts/user_manager.php" method="post">
+                <div class="modal-body">
+                    <input type="hidden" id="actionType" name="action" value="eliminar">
+
+                    <p>¿Deseas eliminar esta cita?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Eliminar cita</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="table-responsive small">
     <form class="row g-3">
         <div class="col-auto">
@@ -113,20 +135,20 @@ $citas = $appoinmentController->obtenerCitasUsuario($DNI);
         <!-- Aquí se mostrarán las citas en forma de listas -->
         <div class="col">
             <ul class="list-group">
-
-            
-                <li class="list-group-item">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">Cita 1</h5>
-                        <small>Fecha: 12/03/2024 Hora: 10:00</small>
-                    </div>
-                    <p class="mb-1">Información sobre la cita 1.</p>
-                    <small>Nombre del paciente: Paciente 1</small>
-                    <small>Nombre del fisioterapeuta: Fisioterapeuta 1</small>
-                    <div class="text-end mt-2">
-                        <button type="button" class="btn btn-danger">Cancelar cita</button>
-                    </div>
-                </li>
+                <?php foreach ($citas as $cita) : ?>
+                    <li class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Cita <?php echo $cita['cita_id']?></h5>
+                            <small>Fecha y Hora: <?php echo $cita['fecha_hora']?></small>
+                        </div>
+                        <p class="mb-1">Información sobre la cita <?php echo $cita['cita_id']?>.</p>
+                        <small>Nombre del paciente: <?php echo $cita['paciente_id']?></small>
+                        <small>Nombre del fisioterapeuta: <?php echo $cita['fisioterapeuta_id']?></small>
+                        <div class="text-end mt-2">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" data-action="eliminar">Cancelar cita</button>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
                 <!-- Repite estas listas para cada cita -->
             </ul>
         </div>

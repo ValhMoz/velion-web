@@ -20,7 +20,7 @@ class AppointmentController
     }
 
     public function obtenerCitasUsuario($DNI) {
-        return $this->appointmentModel->obtenerDatosCitasUsuario($DNI);
+        return $this->appointmentModel->read("citas", 'paciente_id', $DNI);
     }
 
 }
