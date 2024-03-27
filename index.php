@@ -45,7 +45,7 @@
       <div class="col">
       <button class="btn btn-primary w-100 py-2" style="margin-bottom: 5px;" type="submit">Iniciar sesión</button> </div>
       <div class="col">
-      <a class="btn btn-secondary w-100 py-2" type="submit" href="./pages/sign_up.php">Regístrate</a> </div> </div>
+      <a class="btn btn-secondary w-100 py-2" type="submit" href="./pages/signup.php">Regístrate</a> </div> </div>
       <hr class="separator-line">
       <div class="mb-3">
         <button class="btn btn-outline-primary w-100 py-2"  data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Recuperar Contraseña</button>

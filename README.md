@@ -8,8 +8,8 @@ Este proyecto consiste en un Sistema de Gestión de Recursos Empresariales (ERP)
 2. CSS3
 3. JavaScript
 4. jQuery
-5. Bootstrap
-6. PHP
+5. Bootstrap v5.3
+6. PHP v8.2
 7. Librería externa: FPDF (para la generación de documentos PDF)
 
 ## Características Principales
@@ -40,7 +40,7 @@ Este proyecto está bajo la Licencia MIT.
 
 ## NOTA
 
-Para arrancar docker deberás ejecutar el comando:
+Si deseas virtualizar Apache y MySQL con docker deberás ejecutar el comando:
 ```bash
  sudo docker compose up --build
  ```
