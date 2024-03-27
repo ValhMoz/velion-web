@@ -21,7 +21,6 @@ if ($rol == "paciente") {
     <script src="../assets/custom/js/timeout.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="../assets/bootstrap-5.3/js/color-modes.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/pselect.js@4.0.1/dist/pselect.min.js"></script>
     <style>
         .active {
             background-color: #0056b3;

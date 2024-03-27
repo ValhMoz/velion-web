@@ -27,7 +27,8 @@
             <div class="card">
                 <div class="card-body">
                     <h2 class="card-title mb-4">Cambiar Datos</h2>
-                    <form action="../scripts/actualizar_datos.php" method="POST">
+                    <form action="../scripts/user_manager.php" method="POST">
+                    <input type="hidden" id="actionType" name="action" value="actualizar_datos">
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo Electrónico</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Correo electrónico" value="<?php echo $correo ?>">

@@ -9,30 +9,30 @@ class AppointmentModel extends BaseModel
         parent::__construct(); // Llama al constructor de la clase padre (BaseModel)
     }
 
-    public function obtenerDatosCitas()
-    {
-        $sql = "SELECT citas.cita_id, pacientes.nombre AS nombre_paciente, fisioterapeutas.nombre AS nombre_fisioterapeuta, citas.fecha_hora
-            FROM citas
-            INNER JOIN usuarios AS pacientes ON citas.paciente_id = pacientes.usuario_id
-            INNER JOIN usuarios AS fisioterapeutas ON citas.fisioterapeuta_id = fisioterapeutas.usuario_id
-            WHERE pacientes.rol = 'paciente'";
+    // public function obtenerDatosCitas()
+    // {
+    //     $sql = "SELECT citas.cita_id, pacientes.nombre AS nombre_paciente, fisioterapeutas.nombre AS nombre_fisioterapeuta, citas.fecha_hora
+    //         FROM citas
+    //         INNER JOIN usuarios AS pacientes ON citas.paciente_id = pacientes.usuario_id
+    //         INNER JOIN usuarios AS fisioterapeutas ON citas.fisioterapeuta_id = fisioterapeutas.usuario_id
+    //         WHERE pacientes.rol = 'paciente'";
 
 
-        // Ejecutar la consulta
-        $resultado =  self::$conexion->query($sql);
+    //     // Ejecutar la consulta
+    //     $resultado =  self::$conexion->query($sql);
 
-        // Manejo de errores
-        if (!$resultado) {
-            die("Error al ejecutar la consulta: " . self::$conexion->error);
-        }
+    //     // Manejo de errores
+    //     if (!$resultado) {
+    //         die("Error al ejecutar la consulta: " . self::$conexion->error);
+    //     }
 
-        // Procesa el resultado
-        $datos = array();
-        while ($fila = $resultado->fetch_assoc()) {
-            $datos[] = $fila;
-        }
-        return $datos;
-    }
+    //     // Procesa el resultado
+    //     $datos = array();
+    //     while ($fila = $resultado->fetch_assoc()) {
+    //         $datos[] = $fila;
+    //     }
+    //     return $datos;
+    // }
 
     public function obtenerDatosCitasHoy()
     {

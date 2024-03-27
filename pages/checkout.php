@@ -128,8 +128,8 @@ $fecha_emision = date('Y-m-d');
                 <!-- <img class="d-block mx-auto mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
                 <h2>Confirmación de compra</h2>
             </div>
-            <form action="../scripts/checkout_manager.php" method="post" class="needs-validation" novalidate>
-
+            <form action="../scripts/invoice_manager.php" method="post" class="needs-validation" novalidate>
+                <input type="hidden" id="actionType" name="action" value="guardar_factura">
                 <div class="row g-5">
                     <div class="col-md-5 col-lg-4 order-md-last">
                         <h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -153,6 +153,7 @@ $fecha_emision = date('Y-m-d');
                     <input type="hidden" id="paciente_id" name="paciente_id" value="<?php echo $DNI; ?>">
                     <input type="hidden" id="monto" name="monto" value="<?php echo $precio; ?>">
                     <input type="hidden" id="fecha_emision" name="fecha_emision" value="<?php echo $fecha_emision; ?>">
+                    <input type="hidden" id="descripcion" name="descripcion" value="Bono de <?php echo $bono; ?>">
                     <input type="hidden" id="estado" name="estado" value="pagada">
                     <div class="col-md-7 col-lg-8">
                         <h4 class="mb-3">Dirección de facturación</h4>

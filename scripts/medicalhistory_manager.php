@@ -1,24 +1,23 @@
 <?php
 include '../controllers/MedicalHistoryController.php';
+
+// Crea una instancia del controlador de inicio de sesión
+$invoiceController = new InvoiceController();
+
 // Verificar si se ha enviado el formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtener los valores del formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
 
-    $datos = array(
-        'usuario_id' => $_POST["usuario_id"],
-        'diagnostico' => $_POST["diagnostico"],
-        'tratamiento' => $_POST["tratamiento"],
-        'notas' => $_POST["notas"],
-    );
+    switch ($_POST['action']) {
+        case 'generar_informe':
+            $medicalController->generarInformeMedico();
+            header('Location: ../pages/dashboard-patients.php');
+            exit();
+            break;
 
-    // Crea una instancia del controlador de inicio de sesión
-    $medicalhistoryController = new MedicalHistoryController();
-
-    // Intenta registrar un usuario con los datos proporcionados
-    $medicalhistoryController->actualizarInformeMedico($datos);
-
-
-} else {
-    echo "No se ha podido completar el registro";
+        case 'actualizar_informe':
+            
+            exit();
+            break;
+    }
 }
 ?>

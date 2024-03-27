@@ -76,6 +76,14 @@ class UserController
         }
     }
 
+    public function editarUsuario($datos){
+
+    }
+
+    public function eliminarUsuario($datos){
+
+    }
+
     public function actualizarDatos($datos)
     {
         echo ($_SESSION['usuario_id']);

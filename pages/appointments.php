@@ -104,6 +104,50 @@ $citas = $appoinmentController->obtenerCitas();
     </div>
 </div>
 
+<!-- Modal confirmar cita -->
+<div class="modal fade" id="confirmarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar cita</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="../scripts/user_manager.php" method="post">
+                <div class="modal-body">
+                    <input type="hidden" id="actionType" name="action" value="confirmar">
+
+                    <p>¿Deseas confirmar esta cita?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Confirmar cita</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal eliminar cita -->
+<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar cita</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="../scripts/user_manager.php" method="post">
+                <div class="modal-body">
+                    <input type="hidden" id="actionType" name="action" value="eliminar">
+
+                    <p>¿Deseas eliminar esta cita?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Eliminar cita</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="table-responsive small">
     <form class="row g-3">
         <div class="col-auto">
@@ -126,9 +170,10 @@ $citas = $appoinmentController->obtenerCitas();
                         <tr>
                             <th scope="col" style="width: 5%;">ID</th>
                             <th scope="col" style="width: 15%;">Fecha</th>
-                            <th scope="col" style="width: 15%;">Hora</th>
-                            <th scope="col" style="width: 25%;">Fisioterapeuta asociado</th>
-                            <th scope="col" style="width: 25%;">Paciente</th>
+                            <th scope="col" style="width: 20%;">Paciente</th>
+                            <th scope="col" style="width: 20%;">Fisioterapeuta asociado</th>
+                            <!-- <th scope="col" style="width: 10%;">Consulta</th> -->
+                            <th scope="col" style="width: 10%;">Estado</th>
                             <th scope="col" style="width: 15%;">Acciones</th>
                         </tr>
                     </thead>
@@ -136,12 +181,13 @@ $citas = $appoinmentController->obtenerCitas();
                             <tr>
                                 <td><?php echo $cita['cita_id']; ?></td>
                                 <td><?php echo $cita['fecha_hora']; ?></td>
-                                <td><?php echo $cita['hora']; ?></td>
-                                <td><?php echo $cita['nombre_fisioterapeuta']; ?></td>
-                                <td><?php echo $cita['nombre_paciente']; ?></td>
+                                <td><?php echo $cita['paciente_id']; ?></td>
+                                <td><?php echo $cita['fisioterapeuta_id']; ?></td>
+                                <!-- <td><?php echo $cita['sala_consulta']; ?></td> -->
+                                <td><?php echo $cita['estado']; ?></td>
                                 <td>
-                                <button type="button" class="btn btn-success btn-sm">Confirmar</button>
-                                    <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#confirmarModal" data-action="confirmar">Confirmar</button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#eliminarModal" data-action="eliminar">Eliminar</button>
                                 </td>
 
                             </tr>

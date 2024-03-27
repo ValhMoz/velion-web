@@ -8,7 +8,6 @@
   <link href="../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">
   <script src="../assets/bootstrap-5.3/js/color-modes.js"></script>
   <script src="../assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/pselect.js@4.0.1/dist/pselect.min.js"></script>
 </head>
 
 <body>
@@ -18,9 +17,9 @@
       <div class="col-md-6">
 
         <!-- Formulario de Registro -->
-        <form action="../scripts/signup_manager.php" method="post" onsubmit="return validatePassword()">
+        <form action="../scripts/user_manager.php" method="post" onsubmit="return validatePassword()">
           <h2 class="mb-3">Registro</h2>
-
+          <input type="hidden" id="actionType" name="action" value="registrar_usuario">
           <!-- Nombre y Apellidos -->
           <div class="row mb-3">
             <div class="col">
@@ -73,12 +72,12 @@
           <div class="row mb-3">
             <div class="col">
               <label for="provincia" class="form-label">Provincia</label>
-              <select class="form-select" id="ps-prov" name="provincia" required></select>
+              <input type="text" class="form-control" id="provincia" name="provincia" required>
             </div>
 
             <div class="col">
               <label for="municipio" class="form-label">Municipio</label>
-              <select class="form-select" id="ps-mun" name="municipio" required></select>
+              <input type="text" class="form-control" id="municipio" name="municipio" required>
             </div>
 
             <div class="col">
@@ -162,17 +161,6 @@
         resultado.style.color = 'red';
       }
     }
-  </script>
-  <script>
-    var prov = document.getElementById('ps-prov');
-    var mun = document.getElementById('ps-mun');
-    // Create PS
-    new Pselect().create(prov, mun);
-
-
-    document.getElementById('ps-mun').addEventListener('change', function onChange() {
-      document.getElementById('code').innerText = 'Código: ' + document.getElementById('ps-mun').value;
-    });
   </script>
 </body>
 

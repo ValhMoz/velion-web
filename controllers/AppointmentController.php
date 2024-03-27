@@ -12,7 +12,7 @@ class AppointmentController
     }
 
     public function obtenerCitas(){
-        return $this->appointmentModel->obtenerDatosCitas();
+        return $this->appointmentModel->read('citas');
     }
 
     public function obtenerCitasHoy() {

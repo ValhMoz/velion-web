@@ -56,7 +56,7 @@
                                     <td><?php echo $factura['estado']; ?></td>
                                     <td><?php echo $factura['monto']; ?>€</td>
                                     <td>
-                                        <form action="../../scripts/descargar_factura.php" method="GET">
+                                        <form action="../../scripts/invoice_manager.php" method="GET">
                                             <input type="hidden" name="id" value="<?php echo $factura['factura_id']; ?>">
                                             <button type="submit" class="btn btn-primary btn-sm" style="padding: 6px 12px;">Descargar</button>
                                         </form>

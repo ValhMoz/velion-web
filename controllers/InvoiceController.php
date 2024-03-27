@@ -69,10 +69,10 @@ class InvoiceController extends PDF_Invoice
             $y    = 109;
             $line = array(
                 "REF"    => "REF1",
-                iconv('UTF-8', 'windows-1252', "DESCRIPCIÓN")  => "Bono 10 sesiones",
+                iconv('UTF-8', 'windows-1252', "DESCRIPCIÓN")  => $factura[0]['descripcion'],
                 "CANTIDAD"     => "1",
-                "PRECIO UNITARIO"      => "600.00". EURO,
-                "PRECIO TOTAL" => "600.00". EURO,
+                "PRECIO UNITARIO"      => $factura[0]['monto']. EURO,
+                "PRECIO TOTAL" => $factura[0]['monto']. EURO,
             );
             $size = $pdf->addLine($y, $line);
             // $y   += $size + 2;
