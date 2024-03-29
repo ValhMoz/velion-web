@@ -22,7 +22,7 @@
 
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
   <main class="form-signin w-100 m-auto">
-    <form action="./scripts/user_manager.php" method="post">
+    <form action="./scripts/login_manager.php" method="post">
       <!-- <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
       <h1 class="title-login-register">Inicia Sesión</h1>
       <input type="hidden" id="actionType" name="action" value="iniciar_sesion">

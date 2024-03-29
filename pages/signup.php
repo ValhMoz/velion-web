@@ -17,7 +17,7 @@
       <div class="col-md-6">
 
         <!-- Formulario de Registro -->
-        <form action="../scripts/user_manager.php" method="post" onsubmit="return validatePassword()">
+        <form action="../scripts/login_manager.php" method="post" onsubmit="return validatePassword()">
           <h2 class="mb-3">Registro</h2>
           <input type="hidden" id="actionType" name="action" value="registrar_usuario">
           <!-- Nombre y Apellidos -->

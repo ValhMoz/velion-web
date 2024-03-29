@@ -300,7 +300,7 @@ $usuarios = $userController->obtenerUsuarios();
                                 <td><?php echo $usuario['rol']; ?></td>
                                 <td>
                                     <!-- <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-action="ver">Ver</button> -->
-                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editarModal" data-action="editar">Editar</button>
+                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editarModal" data-action="editar" data-user-id="<?php echo $usuario['usuario_id']; ?>">Editar</button>
                                     <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#eliminarModal" data-action="eliminar">Eliminar</button>
                                 </td>
                             </tr>
@@ -326,3 +326,39 @@ $usuarios = $userController->obtenerUsuarios();
     </nav>
 
 </div>
+
+<script>
+$(document).ready(function() {
+    $('.edit-user').click(function() {
+        var userId = $(this).data('user-id');
+
+        // Aquí puedes hacer una llamada AJAX para obtener los datos del usuario por su ID
+        // y luego cargar los datos en los campos del formulario de edición del modal
+        // Por ejemplo:
+        $.ajax({
+            url: 'obtener_usuario.php',
+            method: 'POST',
+            data: { userId: userId },
+            dataType: 'json',
+            success: function(response) {
+                $('#nombre').val(response.nombre);
+                $('#apellidos').val(response.apellidos);
+                $('#dni').val(response.usuario_id);
+                $('#genero').val(response.genero);
+                $('#rol').val(response.rol);
+                $('#fecha_nacimiento').val(response.fecha_nacimiento);
+                $('#telefono').val(response.telefono);
+                $('#direccion').val(response.direccion);
+                $('#email').val(response.email);
+                $('#pass').val(response.pass);
+                $('#provincia').val(response.provincia);
+                $('#municipio').val(response.municipio);
+                $('#cp').val(response.cp);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+});
+</script>
