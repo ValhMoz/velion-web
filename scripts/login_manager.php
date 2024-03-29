@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
                 $pass = $_POST["pass"];
 
                 // Intenta iniciar sesión con los datos proporcionados
-                $userController->iniciarSesion($email, $pass);
+                $loginController->iniciarSesion($email, $pass);
 
                 // Si el checkbox está marcado, establece un tiempo de expiración más largo para la sesión
                 if (isset($_POST['mantener_sesion']) && $_POST['mantener_sesion'] == 'on') {
@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
 
 
                 // Intenta registrar un usuario con los datos proporcionados
-                $userController->registrarUsuario($datos);
+                $loginController->registrarUsuario($datos);
             } else {
                 echo "No se ha podido completar el registro";
             }
