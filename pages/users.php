@@ -13,6 +13,9 @@ $usuarios = $userController->obtenerUsuarios();
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Usuarios</h1>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarModal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-dotted" viewBox="0 0 16 16">
+            <path d="M8 0q-.264 0-.523.017l.064.998a7 7 0 0 1 .918 0l.064-.998A8 8 0 0 0 8 0M6.44.152q-.52.104-1.012.27l.321.948q.43-.147.884-.237L6.44.153zm4.132.271a8 8 0 0 0-1.011-.27l-.194.98q.453.09.884.237zm1.873.925a8 8 0 0 0-.906-.524l-.443.896q.413.205.793.459zM4.46.824q-.471.233-.905.524l.556.83a7 7 0 0 1 .793-.458zM2.725 1.985q-.394.346-.74.74l.752.66q.303-.345.648-.648zm11.29.74a8 8 0 0 0-.74-.74l-.66.752q.346.303.648.648zm1.161 1.735a8 8 0 0 0-.524-.905l-.83.556q.254.38.458.793l.896-.443zM1.348 3.555q-.292.433-.524.906l.896.443q.205-.413.459-.793zM.423 5.428a8 8 0 0 0-.27 1.011l.98.194q.09-.453.237-.884zM15.848 6.44a8 8 0 0 0-.27-1.012l-.948.321q.147.43.237.884zM.017 7.477a8 8 0 0 0 0 1.046l.998-.064a7 7 0 0 1 0-.918zM16 8a8 8 0 0 0-.017-.523l-.998.064a7 7 0 0 1 0 .918l.998.064A8 8 0 0 0 16 8M.152 9.56q.104.52.27 1.012l.948-.321a7 7 0 0 1-.237-.884l-.98.194zm15.425 1.012q.168-.493.27-1.011l-.98-.194q-.09.453-.237.884zM.824 11.54a8 8 0 0 0 .524.905l.83-.556a7 7 0 0 1-.458-.793zm13.828.905q.292-.434.524-.906l-.896-.443q-.205.413-.459.793zm-12.667.83q.346.394.74.74l.66-.752a7 7 0 0 1-.648-.648zm11.29.74q.394-.346.74-.74l-.752-.66q-.302.346-.648.648zm-1.735 1.161q.471-.233.905-.524l-.556-.83a7 7 0 0 1-.793.458zm-7.985-.524q.434.292.906.524l.443-.896a7 7 0 0 1-.793-.459zm1.873.925q.493.168 1.011.27l.194-.98a7 7 0 0 1-.884-.237zm4.132.271a8 8 0 0 0 1.012-.27l-.321-.948a7 7 0 0 1-.884.237l.194.98zm-2.083.135a8 8 0 0 0 1.046 0l-.064-.998a7 7 0 0 1-.918 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+        </svg>
         Agregar Usuario
     </button>
 </div>
@@ -76,7 +79,7 @@ $usuarios = $userController->obtenerUsuarios();
                             </div>
                         </div>
 
-                        <!-- Telefono, Dirección, provincia y Municipio -->
+                        <!-- Telefono, Dirección -->
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="telefono" class="form-label">Teléfono</label>
@@ -88,7 +91,7 @@ $usuarios = $userController->obtenerUsuarios();
                             </div>
                         </div>
 
-                        <!-- Correo electrónico, Contraseña y Código Postal -->
+                        <!-- Correo electrónico, Contraseña, Provincia, Municipio y Código Postal -->
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="email" class="form-label">Correo electrónico</label>
@@ -183,7 +186,7 @@ $usuarios = $userController->obtenerUsuarios();
                             </div>
                         </div>
 
-                        <!-- Telefono, Dirección, provincia y Municipio -->
+                        <!-- Telefono, Dirección -->
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="telefono" class="form-label">Teléfono</label>
@@ -195,7 +198,7 @@ $usuarios = $userController->obtenerUsuarios();
                             </div>
                         </div>
 
-                        <!-- Correo electrónico, Contraseña y Código Postal -->
+                        <!-- Correo electrónico, Contraseña, Provincia, Municipio y Código Postal -->
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="email" class="form-label">Correo electrónico</label>
@@ -241,7 +244,6 @@ $usuarios = $userController->obtenerUsuarios();
             <form action="../scripts/user_manager.php" method="post">
                 <div class="modal-body">
                     <input type="hidden" id="actionType" name="action" value="eliminar">
-
                     <p>¿Deseas eliminar este usuario?</p>
                 </div>
                 <div class="modal-footer">
@@ -280,11 +282,11 @@ $usuarios = $userController->obtenerUsuarios();
                             <th scope="col" style="width: 15%;">Nombre</th>
                             <th scope="col" style="width: 15%;">Apellidos</th>
                             <th scope="col" style="width: 15%;">Email</th>
-                            <th scope="col" style="width: 25%;">Direccion</th>
+                            <th scope="col" style="width: 29%;">Direccion</th>
                             <th scope="col" style="width: 5%;">Teléfono</th>
                             <th scope="col" style="width: 5%;">Ses.Dis.</th>
                             <th scope="col" style="width: 5%;">Rol</th>
-                            <th scope="col" style="width: 15%;">Acciones</th>
+                            <th scope="col" style="width: 8%;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -299,9 +301,14 @@ $usuarios = $userController->obtenerUsuarios();
                                 <td><?php echo $usuario['sesiones_disponibles']; ?></td>
                                 <td><?php echo $usuario['rol']; ?></td>
                                 <td>
-                                    <!-- <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-action="ver">Ver</button> -->
-                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editarModal" data-action="editar" data-user-id="<?php echo $usuario['usuario_id']; ?>">Editar</button>
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#eliminarModal" data-action="eliminar">Eliminar</button>
+                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarModal" data-bs-id="<?= $usuario['usuario_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                        </svg></button>
+                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" data-bs-id="<?= $usuario['usuario_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                        </svg></button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -328,37 +335,46 @@ $usuarios = $userController->obtenerUsuarios();
 </div>
 
 <script>
-$(document).ready(function() {
-    $('.edit-user').click(function() {
-        var userId = $(this).data('user-id');
+    // Espera a que el DOM esté completamente cargado
+    document.addEventListener('DOMContentLoaded', function() {
+        // Obtiene todos los botones de editar
+        var editButtons = document.querySelectorAll('[data-bs-target="#editarModal"]');
 
-        // Aquí puedes hacer una llamada AJAX para obtener los datos del usuario por su ID
-        // y luego cargar los datos en los campos del formulario de edición del modal
-        // Por ejemplo:
-        $.ajax({
-            url: 'obtener_usuario.php',
-            method: 'POST',
-            data: { userId: userId },
-            dataType: 'json',
-            success: function(response) {
-                $('#nombre').val(response.nombre);
-                $('#apellidos').val(response.apellidos);
-                $('#dni').val(response.usuario_id);
-                $('#genero').val(response.genero);
-                $('#rol').val(response.rol);
-                $('#fecha_nacimiento').val(response.fecha_nacimiento);
-                $('#telefono').val(response.telefono);
-                $('#direccion').val(response.direccion);
-                $('#email').val(response.email);
-                $('#pass').val(response.pass);
-                $('#provincia').val(response.provincia);
-                $('#municipio').val(response.municipio);
-                $('#cp').val(response.cp);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
+        // Itera sobre cada botón de editar
+        editButtons.forEach(function(button) {
+            // Agrega un evento de clic a cada botón
+            button.addEventListener('click', function(event) {
+                // Evita que el enlace predeterminado se ejecute
+                event.preventDefault();
+
+                // Obtiene el ID del usuario desde el atributo data-bs-id
+                var userId = button.getAttribute('data-bs-id');
+
+                // Busca el usuario correspondiente en el array de usuarios
+                // var usuario = obtenerUsuarioPorId(userId);
+
+                let usuario = <?php echo json_encode($usuarios); ?>.find(function(user) {
+                    return user.usuario_id == userId;
+                });
+
+                console.log(usuario)
+
+
+                // Llena los campos del modal con los datos del usuario
+                document.getElementById('nombre').value = usuario.nombre;
+                document.getElementById('apellidos').value = usuario.apellidos;
+                document.getElementById('dni').value = usuario.dni;
+                document.getElementById('genero').value = usuario.genero;
+                document.getElementById('rol').value = usuario.rol;
+                document.getElementById('fecha_nacimiento').value = usuario.fecha_nacimiento;
+                document.getElementById('telefono').value = usuario.telefono;
+                document.getElementById('direccion').value = usuario.direccion;
+                document.getElementById('email').value = usuario.email;
+                document.getElementById('pass').value = ''; // Asegúrate de borrar la contraseña
+                document.getElementById('provincia').value = usuario.provincia;
+                document.getElementById('municipio').value = usuario.municipio;
+                document.getElementById('cp').value = usuario.cp;
+            });
         });
     });
-});
 </script>

@@ -47,10 +47,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
                     'pass' => password_hash($_POST["pass"], PASSWORD_DEFAULT),
                     'rol' => "paciente"
                 );
+                $datos_historial = array(
+                    'paciente_id' => $_POST["usuario_id"],
+                    'fecha' => $_POST["fecha_nacimiento"]
+                );
 
 
                 // Intenta registrar un usuario con los datos proporcionados
-                $loginController->registrarUsuario($datos);
+                $loginController->registrarUsuario($datos, $datos_historial);
             } else {
                 echo "No se ha podido completar el registro";
             }

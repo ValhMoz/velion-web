@@ -46,7 +46,7 @@
             <a class="nav-link" href="#" onclick="cargarPagina('shop')">Tienda</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" onclick="cargarPagina('../settings')">Perfil</a>
+            <a class="nav-link" href="#" onclick="cargarPagina('settings')">Perfil</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#" onclick="cerrarSesion()">Cerrar Sesión</a>

@@ -1,7 +1,6 @@
 <?php
 require_once '../scripts/session_manager.php';
-if($rol == "administrador" ||  $rol == "fisioterapeuta")
-{
+if ($rol == "administrador" ||  $rol == "fisioterapeuta") {
     header("Location: 404.php");
     exit();
 }
@@ -138,14 +137,16 @@ $citas = $appoinmentController->obtenerCitasUsuario($DNI);
                 <?php foreach ($citas as $cita) : ?>
                     <li class="list-group-item">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Cita <?php echo $cita['cita_id']?></h5>
-                            <small>Fecha y Hora: <?php echo $cita['fecha_hora']?></small>
+                            <h5 class="mb-1">Cita <?php echo $cita['cita_id'] ?></h5>
+                            <small>Fecha y Hora: <?php echo $cita['fecha_hora'] ?></small>
                         </div>
-                        <p class="mb-1">Información sobre la cita <?php echo $cita['cita_id']?>.</p>
-                        <small>Nombre del paciente: <?php echo $cita['paciente_id']?></small>
-                        <small>Nombre del fisioterapeuta: <?php echo $cita['fisioterapeuta_id']?></small>
+                        <p class="mb-1">Información sobre la cita <?php echo $cita['cita_id'] ?>.</p>
+                        <small>Nombre del paciente: <?php echo $cita['paciente_id'] ?></small>
+                        <small>Nombre del fisioterapeuta: <?php echo $cita['fisioterapeuta_id'] ?></small>
                         <div class="text-end mt-2">
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" data-action="eliminar">Cancelar cita</button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" data-action="eliminar"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                                </svg>Cancelar cita</button>
                         </div>
                     </li>
                 <?php endforeach; ?>
@@ -157,19 +158,19 @@ $citas = $appoinmentController->obtenerCitasUsuario($DNI);
 
 
 
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-start">
-            <li class="page-item disabled">
-                <a class="page-link">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-start">
+        <li class="page-item disabled">
+            <a class="page-link">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+        </li>
+    </ul>
+</nav>
 </div>
 
 <script>

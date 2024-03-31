@@ -48,9 +48,9 @@ class LoginController
     }
 
 
-    public function registrarUsuario($datos)
+    public function registrarUsuario($datos, $datos_historial)
     {
-        if ($this->loginModel->insert('usuarios', $datos) == true) {
+        if ($this->loginModel->insert('usuarios', $datos) == true && ($this->loginModel->insert('historial_medico', $datos_historial)) == true) {
             header('Location: ../index.php');
             exit();
         } else {

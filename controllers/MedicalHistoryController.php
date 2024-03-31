@@ -96,4 +96,9 @@ class MedicalHistoryController extends FPDF
     {
         $this->medicalhistoryModel->update('historial_medico', $datos, $datos[0]['usuario_id']);
     }
+
+    function obtenerInformes()
+    {
+        return ($this->medicalhistoryModel->read('historial_medico'));
+    }
 }
