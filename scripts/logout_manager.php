@@ -1,10 +1,10 @@
 <?php
-include '../controllers/UserController.php';
+include '../controllers/LoginController.php';
 
 // Crea una instancia del controlador de inicio de sesión
-$userController = new UserController();
+$loginController = new LoginController();
 
 // Intenta registrar un usuario con los datos proporcionados
-$userController->cerrarSesion();
+$loginController->cerrarSesion();
 
 ?>

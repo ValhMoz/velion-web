@@ -9,14 +9,14 @@ function checkInactivity() {
         clearTimeout(timer);
         timer = setTimeout(function () {
             // Redirigir a la página de cierre de sesión
-            window.location.href = './core/logout.php';
+            window.location.href = '../scripts/logout_manager.php';
         }, sessionTimeout * 1000);
     }
 
     // Iniciar el temporizador al cargar la página
     let timer = setTimeout(function () {
         // Redirigir a la página de cierre de sesión
-        window.location.href = './core/logout.php';
+        window.location.href = '../scripts/logout_manager.php';
     }, sessionTimeout * 1000);
 }
 

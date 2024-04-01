@@ -1,10 +1,10 @@
 <?php
-    require_once '../scripts/session_manager.php';
-    if($rol == "administrador" ||  $rol == "fisioterapeuta")
-{
+require_once '../scripts/session_manager.php';
+if ($rol == "administrador" ||  $rol == "fisioterapeuta") {
     header("Location: 404.php");
     exit();
 }
+include_once 'dashboard-patients.php';
 ?>
 
 <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -22,9 +22,9 @@
         </div>
     </header>
 
-   
+
     <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-    <div class="col">
+        <div class="col">
             <div class="card mb-4 rounded-3 shadow-sm">
                 <div class="card-header py-3">
                     <h4 class="my-0 fw-normal">Sesión individual</h4>
@@ -42,7 +42,7 @@
                     <button type="button" id="bono3" class="w-100 btn btn-lg btn-outline-primary buy">Haz click aquí para comprar</button>
                 </div>
             </div>
-    </div>
+        </div>
         <div class="col">
             <div class="card mb-4 rounded-3 shadow-sm">
                 <div class="card-header py-3">
@@ -139,6 +139,8 @@
 
 </div>
 
+</div>
+
 <script>
     $(document).ready(function() {
         $('.buy').on('click', function() {
@@ -153,3 +155,25 @@
         });
     });
 </script>
+
+<script>
+    function cerrarSesion() {
+        // Realiza una solicitud AJAX a la API de cerrar sesión
+        $.ajax({
+            url: '../scripts/logout_manager.php', // Ruta de la API de cerrar sesión
+            type: 'POST', // Método de la solicitud
+            success: function(response) {
+                // Redirige al usuario a index.php después de cerrar sesión
+                window.location.href = '../index.php';
+            },
+            error: function(xhr, status, error) {
+                // Maneja el error si ocurre
+                console.error(error);
+            }
+        });
+    }
+</script>
+
+</body>
+
+</html>

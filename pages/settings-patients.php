@@ -1,6 +1,10 @@
 <?php
 require_once '../scripts/session_manager.php';
-include_once 'dashboard.php';
+if ($rol == "administrador" ||  $rol == "fisioterapeuta") {
+    header("Location: 404.php");
+    exit();
+}
+include_once 'dashboard-patients.php';
 
 ?>
 
@@ -52,7 +56,7 @@ include_once 'dashboard.php';
     </div>
 </div>
 
-</main>
+</div>
 
 <script>
     function cerrarSesion() {
@@ -69,18 +73,6 @@ include_once 'dashboard.php';
                 console.error(error);
             }
         });
-    }
-</script>
-
-<script>
-    function validatePassword() {
-        var password = document.getElementById("pass").value;
-        var confirmPassword = document.getElementById("confirmPass").value;
-        if (password != confirmPassword) {
-            document.getElementById("passwordError").innerHTML = "Las contraseñas no coinciden. Por favor, inténtalo de nuevo.";
-            return false;
-        }
-        return true;
     }
 </script>
 

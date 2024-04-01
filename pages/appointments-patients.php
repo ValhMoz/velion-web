@@ -8,6 +8,7 @@ require_once '../controllers/AppointmentController.php';
 
 $appoinmentController = new AppointmentController();
 $citas = $appoinmentController->obtenerCitasUsuario($DNI);
+include_once 'dashboard-patients.php';
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -144,9 +145,7 @@ $citas = $appoinmentController->obtenerCitasUsuario($DNI);
                         <small>Nombre del paciente: <?php echo $cita['paciente_id'] ?></small>
                         <small>Nombre del fisioterapeuta: <?php echo $cita['fisioterapeuta_id'] ?></small>
                         <div class="text-end mt-2">
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" data-action="eliminar"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-                                </svg>Cancelar cita</button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" data-action="eliminar">Cancelar cita</button>
                         </div>
                     </li>
                 <?php endforeach; ?>
@@ -171,6 +170,7 @@ $citas = $appoinmentController->obtenerCitasUsuario($DNI);
         </li>
     </ul>
 </nav>
+
 </div>
 
 <script>
@@ -206,3 +206,25 @@ $citas = $appoinmentController->obtenerCitasUsuario($DNI);
         });
     });
 </script>
+
+<script>
+    function cerrarSesion() {
+        // Realiza una solicitud AJAX a la API de cerrar sesión
+        $.ajax({
+            url: '../scripts/logout_manager.php', // Ruta de la API de cerrar sesión
+            type: 'POST', // Método de la solicitud
+            success: function(response) {
+                // Redirige al usuario a index.php después de cerrar sesión
+                window.location.href = '../index.php';
+            },
+            error: function(xhr, status, error) {
+                // Maneja el error si ocurre
+                console.error(error);
+            }
+        });
+    }
+</script>
+
+</body>
+
+</html>

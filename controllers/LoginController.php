@@ -33,10 +33,10 @@ class LoginController
                 $_SESSION['sesiones_disponibles'] = $usuario[0]['sesiones_disponibles'];
 
                 if ($usuario[0]['rol'] == 'administrador' || $usuario[0]['rol'] == 'fisioterapeuta') {
-                    header('Location: ../pages/dashboard.php');
+                    header('Location: ../pages/start.php');
                     exit();
                 } else {
-                    header('Location: ../pages/dashboard-patients.php');
+                    header('Location: ../pages/start-patients.php');
                     exit();
                 }
             } else {

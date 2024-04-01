@@ -8,6 +8,8 @@ require_once '../controllers/UserController.php';
 
 $userController = new UserController();
 $usuarios = $userController->obtenerUsuarios();
+
+include_once 'dashboard.php';
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -334,6 +336,26 @@ $usuarios = $userController->obtenerUsuarios();
 
 </div>
 
+</main>
+
+<script>
+    function cerrarSesion() {
+        // Realiza una solicitud AJAX a la API de cerrar sesión
+        $.ajax({
+            url: '../scripts/logout_manager.php', // Ruta de la API de cerrar sesión
+            type: 'POST', // Método de la solicitud
+            success: function(response) {
+                // Redirige al usuario a index.php después de cerrar sesión
+                window.location.href = '../index.php';
+            },
+            error: function(xhr, status, error) {
+                // Maneja el error si ocurre
+                console.error(error);
+            }
+        });
+    }
+</script>
+
 <script>
     // Espera a que el DOM esté completamente cargado
     document.addEventListener('DOMContentLoaded', function() {
@@ -378,3 +400,7 @@ $usuarios = $userController->obtenerUsuarios();
         });
     });
 </script>
+
+</body>
+
+</html>
