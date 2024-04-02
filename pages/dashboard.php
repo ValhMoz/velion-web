@@ -12,6 +12,8 @@
     <script src="../assets/custom/js/timeout.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="../assets/bootstrap-5.3/js/color-modes.js"></script>
+    <script src="../assets/custom/js/logout.js"></script>
+
     <style>
         .active {
             background-color: #0056b3;
@@ -189,14 +191,12 @@
                     <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                            <li class="nav-item">
                                 <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="start.php">
                                     <svg class="bi">
                                         <use xlink:href="#house-fill" />
                                     </svg>
                                     Inicio
                                 </a>
-                            </li>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="users.php">

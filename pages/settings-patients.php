@@ -21,7 +21,7 @@ include_once 'dashboard-patients.php';
                         <li class="list-group-item"><strong>Correo Electrónico:</strong> <?php echo $correo ?></li>
                         <li class="list-group-item"><strong>DNI:</strong> <?php echo $DNI ?></li>
                         <li class="list-group-item"><strong>Teléfono:</strong> <?php echo $telefono ?></li>
-                        <li class="list-group-item"><strong>Fecha de Nacimiento:</strong> <?php echo $fecha_nacimiento ?></li>
+                        <!-- <li class="list-group-item"><strong>Fecha de Nacimiento:</strong> <?php echo $fecha_nacimiento ?></li> -->
                         <li class="list-group-item"><strong>Dirección:</strong> <?php echo $direccionCompleta ?></li>
                         <li class="list-group-item"><strong>Sesiones disponibles:</strong> <?php echo $sesiones ?></li>
                     </ul>
@@ -57,24 +57,6 @@ include_once 'dashboard-patients.php';
 </div>
 
 </div>
-
-<script>
-    function cerrarSesion() {
-        // Realiza una solicitud AJAX a la API de cerrar sesión
-        $.ajax({
-            url: '../scripts/logout_manager.php', // Ruta de la API de cerrar sesión
-            type: 'POST', // Método de la solicitud
-            success: function(response) {
-                // Redirige al usuario a index.php después de cerrar sesión
-                window.location.href = '../index.php';
-            },
-            error: function(xhr, status, error) {
-                // Maneja el error si ocurre
-                console.error(error);
-            }
-        });
-    }
-</script>
 
 </body>
 

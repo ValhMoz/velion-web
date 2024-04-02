@@ -99,6 +99,7 @@ class MedicalHistoryController extends FPDF
 
     function obtenerInformes()
     {
-        return ($this->medicalhistoryModel->read('historial_medico'));
+        return ($this->medicalhistoryModel->obtenerInformes());
     }
+
 }

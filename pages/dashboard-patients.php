@@ -20,6 +20,7 @@
   <script src="../assets/custom/js/timeout.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="../assets/bootstrap-5.3/js/color-modes.js"></script>
+  <script src="../assets/custom/js/logout.js"></script>
 
 </head>
 

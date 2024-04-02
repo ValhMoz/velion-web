@@ -42,10 +42,12 @@ CREATE TABLE facturas (
 CREATE TABLE historial_medico (
     id INT AUTO_INCREMENT PRIMARY KEY,
     paciente_id VARCHAR(9),
+    fisioterapeuta_id VARCHAR(9),
     fecha DATE,
     descripcion TEXT,
     diagnostico TEXT,
     tratamiento TEXT,
     notas TEXT,
-    FOREIGN KEY (paciente_id) REFERENCES usuarios(usuario_id)
+    FOREIGN KEY (paciente_id) REFERENCES usuarios(usuario_id),
+    FOREIGN KEY (fisioterapeuta_id) REFERENCES usuarios(usuario_id)
 );

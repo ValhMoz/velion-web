@@ -12,11 +12,11 @@ class AppointmentController
     }
 
     public function obtenerCitas(){
-        return $this->appointmentModel->read('citas');
+        return $this->appointmentModel->obtenerCitas();
     }
 
     public function obtenerCitasHoy() {
-        return $this->appointmentModel->obtenerDatosCitasHoy();
+        return $this->appointmentModel->obtenerCitasHoy();
     }
 
     public function obtenerCitasUsuario($DNI) {

@@ -23,8 +23,8 @@ include_once 'dashboard.php';
 </div>
 
 <!-- Modal agregar usuario -->
-<div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+<div class="modal" id="agregarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Usuario</h1>
@@ -131,8 +131,8 @@ include_once 'dashboard.php';
 </div>
 
 <!-- Modal editar usuario -->
-<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+<div class="modal" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Usuario</h1>
@@ -236,22 +236,22 @@ include_once 'dashboard.php';
 </div>
 
 <!-- Modal eliminar usuario -->
-<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+<div class="modal" id="eliminarModal" tabindex="-1">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Usuario</h1>
+                <h5 class="modal-title">Eliminar usuario</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="../scripts/user_manager.php" method="post">
-                <div class="modal-body">
+            <div class="modal-body">
+                <p>¿Deseas eliminar este usuario?</p>
+            </div>
+            <div class="modal-footer">
+                <form action="../scripts/user_manager.php" method="post">
                     <input type="hidden" id="actionType" name="action" value="eliminar">
-                    <p>¿Deseas eliminar este usuario?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger">Eliminar Usuario</button>
-                </div>
-            </form>
+                    <button type="submit" class="btn btn-danger">Eliminar usuario</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -337,24 +337,6 @@ include_once 'dashboard.php';
 </div>
 
 </main>
-
-<script>
-    function cerrarSesion() {
-        // Realiza una solicitud AJAX a la API de cerrar sesión
-        $.ajax({
-            url: '../scripts/logout_manager.php', // Ruta de la API de cerrar sesión
-            type: 'POST', // Método de la solicitud
-            success: function(response) {
-                // Redirige al usuario a index.php después de cerrar sesión
-                window.location.href = '../index.php';
-            },
-            error: function(xhr, status, error) {
-                // Maneja el error si ocurre
-                console.error(error);
-            }
-        });
-    }
-</script>
 
 <script>
     // Espera a que el DOM esté completamente cargado

@@ -8,6 +8,7 @@ require_once '../controllers/AppointmentController.php';
 
 $appoinmentController = new AppointmentController();
 $citas = $appoinmentController->obtenerCitas();
+
 include_once 'dashboard.php';
 ?>
 
@@ -107,23 +108,22 @@ include_once 'dashboard.php';
 </div>
 
 <!-- Modal eliminar cita -->
-<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+<div class="modal" id="eliminarModal" tabindex="-1">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar cita</h1>
+                <h5 class="modal-title">Eliminar cita</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="../scripts/user_manager.php" method="post">
-                <div class="modal-body">
+            <div class="modal-body">
+                <p>¿Deseas eliminar esta cita?</p>
+            </div>
+            <div class="modal-footer">
+                <form action="../scripts/user_manager.php" method="post">
                     <input type="hidden" id="actionType" name="action" value="eliminar">
-
-                    <p>¿Deseas eliminar esta cita?</p>
-                </div>
-                <div class="modal-footer">
                     <button type="submit" class="btn btn-danger">Eliminar cita</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -161,8 +161,8 @@ include_once 'dashboard.php';
                         <tr>
                             <td><?php echo $cita['paciente_id']; ?></td>
                             <td><?php echo $cita['fecha_hora']; ?></td>
-                            <td><?php echo $cita['nombre'] . " " . $cita['apellidos']; ?></td>
-                            <td><?php echo $cita['nombre'] . " " . $cita['apellidos'];  ?></td>
+                            <td><?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?></td>
+                            <td><?php echo $cita['fisioterapeuta_nombre'] . " " . $cita['fisioterapeuta_apellidos'];  ?></td>
                             <!-- <td><?php echo $cita['sala_consulta']; ?></td> -->
                             <td><?php echo $cita['estado']; ?></td>
                             <td>
@@ -235,23 +235,6 @@ include_once 'dashboard.php';
 
 </main>
 
-<script>
-    function cerrarSesion() {
-        // Realiza una solicitud AJAX a la API de cerrar sesión
-        $.ajax({
-            url: '../scripts/logout_manager.php', // Ruta de la API de cerrar sesión
-            type: 'POST', // Método de la solicitud
-            success: function(response) {
-                // Redirige al usuario a index.php después de cerrar sesión
-                window.location.href = '../index.php';
-            },
-            error: function(xhr, status, error) {
-                // Maneja el error si ocurre
-                console.error(error);
-            }
-        });
-    }
-</script>
 </body>
 
 </html>
