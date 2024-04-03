@@ -24,9 +24,8 @@ include_once 'dashboard.php';
     <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Escriba el ID del paciente..." oninput="showReport()">
     <datalist id="datalistOptions">
         <?php foreach ($informes as $informe) : ?>
-            <option value="<?php echo($informe['paciente_id']); ?>">
+            <option value="<?php echo($informe['paciente_id']); ?>"><?php echo($informe['paciente_id']) . ' - ' . $informe['nombre_paciente'] . ' ' . $informe['apellidos_paciente']; ?></option>
         <?php endforeach; ?>
-
     </datalist>
 
     <?php if (isset($informe)) : ?>
