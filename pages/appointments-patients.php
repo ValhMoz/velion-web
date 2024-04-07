@@ -1,13 +1,29 @@
 <?php
 require_once '../scripts/session_manager.php';
+require_once '../controllers/AppointmentController.php';
+$appoinmentController = new AppointmentController();
+
 if ($rol == "administrador" ||  $rol == "fisioterapeuta") {
     header("Location: 404.php");
     exit();
 }
-require_once '../controllers/AppointmentController.php';
 
-$appoinmentController = new AppointmentController();
-$citas = $appoinmentController->obtenerCitasUsuario($DNI);
+$articulos_x_pagina = 5;
+
+if(!$_GET){
+    header ('location:appointments-patients.php?pagina=1');
+}
+
+$iniciar = ($_GET['pagina']-1)*$articulos_x_pagina;
+
+$citas = $appoinmentController->obtenerCitasUsuario($DNI,$iniciar, $articulos_x_pagina);
+
+$n_botones_paginacion = ceil(count($citas)/($articulos_x_pagina));
+
+// if($_GET['pagina']>$n_botones_paginacion){
+//     header ('location:appointments-patients.php?pagina=1');
+// }
+
 include_once 'dashboard-patients.php';
 ?>
 
@@ -154,21 +170,20 @@ include_once 'dashboard-patients.php';
     </div>
 </div>
 
-
-
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-start">
-        <li class="page-item disabled">
-            <a class="page-link">Previous</a>
+        <li class="page-item <? echo $_GET['pagina']<=1 ? 'disabled' : '' ?>">
+            <a class="page-link" href="appointments-patients.php?pagina=<?php echo $_GET['pagina']-1?>">Anterior</a>
         </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#">Next</a>
+        <?php for($i=0; $i<$n_botones_paginacion; $i++): ?>
+        <li class="page-item <? echo $_GET['pagina']==$i+1 ? 'active' : '' ?>"><a class="page-link" href="appointments-patients.php?pagina=<?php echo $i+1?>"><?php echo $i+1?></a></li>
+        <?php endfor ?>
+        <li class="page-item <? echo $_GET['pagina']>=$n_botones_paginacion ? 'disabled' : '' ?>">
+            <a class="page-link" href="appointments-patients.php?pagina=<?php echo $_GET['pagina']+1?>">Siguiente</a>
         </li>
     </ul>
 </nav>
+
 
 </div>
 

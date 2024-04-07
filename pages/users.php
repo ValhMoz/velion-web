@@ -1,13 +1,31 @@
 <?php
 require_once '../scripts/session_manager.php';
+require_once '../controllers/UserController.php';
+$userController = new UserController();
+
 if ($rol == "paciente") {
     header("Location: 404.php");
     exit();
 }
-require_once '../controllers/UserController.php';
 
-$userController = new UserController();
+$articulos_x_pagina = 3;
+
+if(!$_GET){
+    header ('location:users.php?pagina=1');
+}
+
 $usuarios = $userController->obtenerUsuarios();
+
+$iniciar = ($_GET['pagina']-1)*$articulos_x_pagina;
+
+$usuariosPaginados = $userController->obtenerUsuariosPaginados($iniciar, $articulos_x_pagina);
+
+$n_botones_paginacion = ceil(count($usuarios)/($articulos_x_pagina));
+
+if($_GET['pagina']>$n_botones_paginacion){
+    header ('location:users.php?pagina=1');
+}
+
 
 include_once 'dashboard.php';
 ?>
@@ -261,12 +279,11 @@ include_once 'dashboard.php';
 <div class="table-responsive small">
     <form class="row g-3">
         <div class="col-auto">
-            <label for="inputPassword2" class="visually-hidden">Filtro</label>
-            <input type="text" class="form-control" id="inputPassword2" placeholder="Filtrar por ID...">
+            <input type="text" class="form-control" id="usuario_id" name="usuario_id" placeholder="Filtrar por ID...">
         </div>
-        <div class="col-auto">
+        <!-- <div class="col-auto">
             <input type="text" class="form-control" id="inputPassword2" placeholder="Filtrar por nombre...">
-        </div>
+        </div> -->
         <div class="col-auto">
             <button type="submit" class="btn btn-primary mb-3">Filtrar</button>
         </div>
@@ -292,7 +309,7 @@ include_once 'dashboard.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($usuarios as $usuario) : ?>
+                        <?php foreach ($usuariosPaginados as $usuario) : ?>
                             <tr>
                                 <td><?php echo $usuario['usuario_id']; ?></td>
                                 <td><?php echo $usuario['nombre']; ?></td>
@@ -322,14 +339,14 @@ include_once 'dashboard.php';
 
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-start">
-            <li class="page-item disabled">
-                <a class="page-link">Previous</a>
+            <li class="page-item <? echo $_GET['pagina']<=1 ? 'disabled' : '' ?>">
+                <a class="page-link" href="users.php?pagina=<?php echo $_GET['pagina']-1?>">Anterior</a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
+            <?php for($i=0; $i<$n_botones_paginacion; $i++): ?>
+            <li class="page-item <? echo $_GET['pagina']==$i+1 ? 'active' : '' ?>"><a class="page-link" href="users.php?pagina=<?php echo $i+1?>"><?php echo $i+1?></a></li>
+            <?php endfor ?>
+            <li class="page-item <? echo $_GET['pagina']>=$n_botones_paginacion ? 'disabled' : '' ?>">
+                <a class="page-link" href="users.php?pagina=<?php echo $_GET['pagina']+1?>">Siguiente</a>
             </li>
         </ul>
     </nav>

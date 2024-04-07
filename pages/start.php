@@ -7,7 +7,7 @@ if ($rol == "paciente") {
 require_once '../controllers/AppointmentController.php';
 
 $appoinmentController = new AppointmentController();
-$citas = $appoinmentController->obtenerCitasHoy();
+// $citas = $appoinmentController->obtenerCitasHoy();
 include_once 'dashboard.php';
 ?>
 

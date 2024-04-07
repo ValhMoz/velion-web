@@ -10,24 +10,20 @@ class UserController
         $this->usuarioModel = new UserModel();
     }
 
+    public function obtenerUsuariosPaginados($iniciar, $articulos_x_pagina)
+    {
+        return $this->usuarioModel->obtenerUsuariosPaginados($iniciar, $articulos_x_pagina);
+    }
+
     public function obtenerUsuarios()
     {
         return $this->usuarioModel->read('usuarios');
     }
 
-    public function obtenerUsuarioID($id)
-    {
-        return $this->usuarioModel->read('usuarios');
-    }
 
-    // public function registrarUsuario($datos)
+    // public function obtenerUsuarioID($id)
     // {
-    //     if ($this->usuarioModel->insert('usuarios', $datos) == true) {
-    //         header('Location: ../index.php');
-    //         exit();
-    //     } else {
-    //         echo "No se ha podido completar el registro";
-    //     }
+    //     return $this->usuarioModel->read('usuarios');
     // }
 
     public function añadirNuevoUsuario($datos, $datos_historial)
@@ -51,10 +47,9 @@ class UserController
 
     }
 
-    public function actualizarDatos($datos)
+    public function actualizarDatos($datos, $DNI)
     {
-        echo ($_SESSION['usuario_id']);
-        if ($this->usuarioModel->update('usuarios', $datos, $_SESSION['usuario_id']) == true) {
+        if ($this->usuarioModel->update('usuarios', $datos, $DNI) == true) {
             exit();
         } else {
             echo "No se ha podido completar el registro";

@@ -21,7 +21,7 @@ include_once 'dashboard.php';
                     Generar Reporte</button></form><?php endif; ?>
     </div>
 
-    <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Escriba el ID del paciente..." oninput="showReport()">
+    <input class="card mb-4 form-control" list="datalistOptions" id="exampleDataList" placeholder="Escriba el ID del paciente..." oninput="showReport()">
     <datalist id="datalistOptions">
         <?php foreach ($informes as $informe) : ?>
             <option value="<?php echo($informe['paciente_id']); ?>"><?php echo($informe['paciente_id']) . ' - ' . $informe['nombre_paciente'] . ' ' . $informe['apellidos_paciente']; ?></option>

@@ -14,12 +14,17 @@ class InvoiceController extends PDF_Invoice
 
     public function obtenerFacturas()
     {
-        return $this->invoiceModel->obtenerDatosFacturas();
+        return $this->invoiceModel->read('facturas');
     }
 
-    public function obtenerFacturasUsuario($DNI)
+    public function obtenerFacturasPaginadas($iniciar, $articulos_x_pagina)
     {
-        return $this->invoiceModel->obtenerDatosFacturasUsuario($DNI);
+        return $this->invoiceModel->obtenerDatosFacturasPaginadas($iniciar, $articulos_x_pagina);
+    }
+
+    public function obtenerFacturasUsuarioPaginadas($DNI, $iniciar, $articulos_x_pagina)
+    {
+        return $this->invoiceModel->obtenerFacturasUsuarioPaginadas($DNI, $iniciar, $articulos_x_pagina);
     }
 
     // Función para generar la factura PDF

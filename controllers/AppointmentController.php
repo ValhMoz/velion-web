@@ -11,16 +11,20 @@ class AppointmentController
         $this->appointmentModel = new AppointmentModel();
     }
 
+    public function obtenerCitasPaginadas($iniciar, $articulos_x_pagina){
+        return $this->appointmentModel->obtenerCitasPaginadas($iniciar, $articulos_x_pagina);
+    }
+
     public function obtenerCitas(){
-        return $this->appointmentModel->obtenerCitas();
+        return $this->appointmentModel->read('citas');
     }
 
-    public function obtenerCitasHoy() {
-        return $this->appointmentModel->obtenerCitasHoy();
-    }
+    // public function obtenerCitasHoy() {
+    //     return $this->appointmentModel->obtenerCitasHoy();
+    // }
 
-    public function obtenerCitasUsuario($DNI) {
-        return $this->appointmentModel->read("citas", 'paciente_id', $DNI);
+    public function obtenerCitasUsuario($DNI, $iniciar, $articulos_x_pagina) {
+        return $this->appointmentModel->obtenerCitasUsuario($DNI, $iniciar, $articulos_x_pagina);
     }
 
 }

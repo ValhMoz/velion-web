@@ -1,5 +1,6 @@
 <?php
 include '../controllers/UserController.php';
+include 'session_manager.php';
 
 // Crea una instancia del controlador de inicio de sesión
 $userController = new UserController();
@@ -86,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
                 // Obtener los valores del formulario
 
                 $datos = array(
-                    // 'usuario_id' => $_POST["usuario_id"],
+                    'usuario_id' => $_POST["usuario_id"],
                     // 'nombre' => $_POST["nombre"],
                     // 'apellidos' => $_POST["apellidos"],
                     // 'genero' => $_POST["genero"],
@@ -102,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
                 );
 
                 // Intenta registrar un usuario con los datos proporcionados
-                $userController->actualizarDatos($datos);
+                $userController->actualizarDatos($datos, $DNI);
             } else {
                 echo "No se ha podido completar el registro";
             }

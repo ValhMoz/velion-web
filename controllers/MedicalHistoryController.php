@@ -102,4 +102,9 @@ class MedicalHistoryController extends FPDF
         return ($this->medicalhistoryModel->obtenerInformes());
     }
 
+    function obtenerInformesUsuario($DNI)
+    {
+        return ($this->medicalhistoryModel->obtenerInformesUsuario($DNI));
+    }
+
 }
