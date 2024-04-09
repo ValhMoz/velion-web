@@ -47,7 +47,7 @@
             <a class="nav-link" href="shop.php" >Tienda</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="settings-patients.php" >Perfil</a>
+            <a class="nav-link" href="settings.php" >Perfil</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#" onclick="cerrarSesion()">Cerrar Sesión</a>

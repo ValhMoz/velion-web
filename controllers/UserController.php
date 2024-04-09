@@ -20,6 +20,12 @@ class UserController
         return $this->usuarioModel->read('usuarios');
     }
 
+    public function obtenerUsuariosPorID($usuario_id) {
+        
+        return $this->usuarioModel->obtenerUsuariosPorID($usuario_id);
+    }
+    
+
 
     // public function obtenerUsuarioID($id)
     // {

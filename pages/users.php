@@ -8,23 +8,37 @@ if ($rol == "paciente") {
     exit();
 }
 
-$articulos_x_pagina = 3;
-
 if(!$_GET){
     header ('location:users.php?pagina=1');
 }
 
+
+$articulos_x_pagina = 3;
+
 $usuarios = $userController->obtenerUsuarios();
 
-$iniciar = ($_GET['pagina']-1)*$articulos_x_pagina;
+$iniciar = ($_GET['pagina'] - 1) * $articulos_x_pagina;
 
-$usuariosPaginados = $userController->obtenerUsuariosPaginados($iniciar, $articulos_x_pagina);
+// Obtener el valor del filtro, si está presente en la URL
+$filtro_usuario_id = isset($_POST['usuario_id']) ? $_POST['usuario_id'] : '';
+
+
+// Obtener usuarios aplicando el filtro si es necesario
+if (!empty($filtro_usuario_id)) {
+    $usuariosPaginados = $userController->obtenerUsuariosPorID($filtro_usuario_id);
+} else {
+    $usuariosPaginados = $userController->obtenerUsuariosPaginados($iniciar, $articulos_x_pagina);
+}
 
 $n_botones_paginacion = ceil(count($usuarios)/($articulos_x_pagina));
+
+
 
 if($_GET['pagina']>$n_botones_paginacion){
     header ('location:users.php?pagina=1');
 }
+
+
 
 
 include_once 'dashboard.php';
@@ -41,7 +55,7 @@ include_once 'dashboard.php';
 </div>
 
 <!-- Modal agregar usuario -->
-<div class="modal" id="agregarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -149,7 +163,7 @@ include_once 'dashboard.php';
 </div>
 
 <!-- Modal editar usuario -->
-<div class="modal" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -254,7 +268,7 @@ include_once 'dashboard.php';
 </div>
 
 <!-- Modal eliminar usuario -->
-<div class="modal" id="eliminarModal" tabindex="-1">
+<div class="modal fade" id="eliminarModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -277,17 +291,16 @@ include_once 'dashboard.php';
 
 
 <div class="table-responsive small">
-    <form class="row g-3">
+
+    <form class="row g-3" method="post">
         <div class="col-auto">
             <input type="text" class="form-control" id="usuario_id" name="usuario_id" placeholder="Filtrar por ID...">
         </div>
-        <!-- <div class="col-auto">
-            <input type="text" class="form-control" id="inputPassword2" placeholder="Filtrar por nombre...">
-        </div> -->
         <div class="col-auto">
             <button type="submit" class="btn btn-primary mb-3">Filtrar</button>
         </div>
     </form>
+
 
 
     <div class="row">
@@ -320,11 +333,11 @@ include_once 'dashboard.php';
                                 <td><?php echo $usuario['sesiones_disponibles']; ?></td>
                                 <td><?php echo $usuario['rol']; ?></td>
                                 <td>
-                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarModal" data-bs-id="<?= $usuario['usuario_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarModal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                                         </svg></button>
-                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal" data-bs-id="<?= $usuario['usuario_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
                                             <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
                                         </svg></button>
@@ -354,51 +367,6 @@ include_once 'dashboard.php';
 </div>
 
 </main>
-
-<script>
-    // Espera a que el DOM esté completamente cargado
-    document.addEventListener('DOMContentLoaded', function() {
-        // Obtiene todos los botones de editar
-        var editButtons = document.querySelectorAll('[data-bs-target="#editarModal"]');
-
-        // Itera sobre cada botón de editar
-        editButtons.forEach(function(button) {
-            // Agrega un evento de clic a cada botón
-            button.addEventListener('click', function(event) {
-                // Evita que el enlace predeterminado se ejecute
-                event.preventDefault();
-
-                // Obtiene el ID del usuario desde el atributo data-bs-id
-                var userId = button.getAttribute('data-bs-id');
-
-                // Busca el usuario correspondiente en el array de usuarios
-                // var usuario = obtenerUsuarioPorId(userId);
-
-                let usuario = <?php echo json_encode($usuarios); ?>.find(function(user) {
-                    return user.usuario_id == userId;
-                });
-
-                console.log(usuario)
-
-
-                // Llena los campos del modal con los datos del usuario
-                document.getElementById('nombre').value = usuario.nombre;
-                document.getElementById('apellidos').value = usuario.apellidos;
-                document.getElementById('dni').value = usuario.dni;
-                document.getElementById('genero').value = usuario.genero;
-                document.getElementById('rol').value = usuario.rol;
-                document.getElementById('fecha_nacimiento').value = usuario.fecha_nacimiento;
-                document.getElementById('telefono').value = usuario.telefono;
-                document.getElementById('direccion').value = usuario.direccion;
-                document.getElementById('email').value = usuario.email;
-                document.getElementById('pass').value = ''; // Asegúrate de borrar la contraseña
-                document.getElementById('provincia').value = usuario.provincia;
-                document.getElementById('municipio').value = usuario.municipio;
-                document.getElementById('cp').value = usuario.cp;
-            });
-        });
-    });
-</script>
 
 </body>
 

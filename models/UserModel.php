@@ -32,4 +32,15 @@ class UserModel extends BaseModel
         return $datos;
     }
 
+    public function obtenerUsuariosPorID($usuario_id) {
+        $sql = "SELECT * FROM `usuarios` WHERE usuario_id = ?";
+        $stmt = self::$conexion->prepare($sql);
+        $stmt->bind_param("s", $usuario_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $usuarios = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $usuarios;
+    }
+
 }

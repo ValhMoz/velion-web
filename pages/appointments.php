@@ -41,7 +41,7 @@ include_once 'dashboard.php';
     </button>
 </div>
 
-<!-- Modal -->
+<!-- Modal pedir cita -->
 <div class="modal fade" id="modalAsignarCita" tabindex="-1" role="dialog" aria-labelledby="modalAsignarCita" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -127,7 +127,7 @@ include_once 'dashboard.php';
 </div>
 
 <!-- Modal eliminar cita -->
-<div class="modal" id="eliminarModal" tabindex="-1">
+<div class="modal fade" id="eliminarModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

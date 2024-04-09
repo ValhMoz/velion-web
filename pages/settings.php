@@ -1,6 +1,11 @@
 <?php
 require_once '../scripts/session_manager.php';
-include_once 'dashboard.php';
+
+if ($rol == "administrador" ||  $rol == "fisioterapeuta") {
+    include_once 'dashboard.php';
+}else {
+    include_once 'dashboard-patients.php';
+}
 
 ?>
 

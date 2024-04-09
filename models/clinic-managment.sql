@@ -55,9 +55,9 @@ CREATE TABLE historial_medico (
 -- Insertar datos de prueba para la tabla usuarios
 INSERT INTO usuarios (usuario_id, nombre, apellidos, telefono, fecha_nacimiento, direccion, provincia, municipio, cp, email, pass, rol, genero, sesiones_disponibles)
 VALUES
-('123456789', 'Juan', 'Pérez', '123456789', '1990-01-01', 'Calle 123', 'Provincia 1', 'Ciudad 1', '12345', 'juan@example.com', 'contraseña', 'paciente', 'hombre', 5),
-('234567890', 'María', 'López', '234567890', '1995-05-05', 'Avenida 456', 'Provincia 2', 'Ciudad 2', '23456', 'maria@example.com', 'contraseña', 'fisioterapeuta', 'mujer', 10),
-('345678901', 'Pedro', 'Gómez', '345678901', '1985-10-10', 'Plaza 789', 'Provincia 3', 'Ciudad 3', '34567', 'pedro@example.com', 'contraseña', 'administrador', 'hombre', NULL);
+('123456789', 'Juan', 'Pérez', '123456789', '1990-01-01', 'Calle 123', 'Provincia 1', 'Ciudad 1', '12345', 'juan@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'paciente', 'hombre', 5),
+('234567890', 'María', 'López', '234567890', '1995-05-05', 'Avenida 456', 'Provincia 2', 'Ciudad 2', '23456', 'maria@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'fisioterapeuta', 'mujer', 10),
+('345678901', 'Pedro', 'Gómez', '345678901', '1985-10-10', 'Plaza 789', 'Provincia 3', 'Ciudad 3', '34567', 'pedro@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'administrador', 'hombre', NULL);
 
 -- Insertar datos de prueba para la tabla citas
 INSERT INTO citas (paciente_id, fisioterapeuta_id, fecha_hora, sala_consulta, estado)

@@ -34,7 +34,7 @@ include_once 'dashboard.php';
 </div>
 
 <!-- Modal eliminar factura -->
-<div class="modal" id="eliminarModal" tabindex="-1">
+<div class="modal fade" id="eliminarModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
