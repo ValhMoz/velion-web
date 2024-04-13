@@ -1,6 +1,7 @@
 <?php
 require_once '../scripts/session_manager.php';
 require_once '../controllers/UserController.php';
+
 $userController = new UserController();
 
 if ($rol == "paciente") {
@@ -8,8 +9,8 @@ if ($rol == "paciente") {
     exit();
 }
 
-if(!$_GET){
-    header ('location:users.php?pagina=1');
+if (!$_GET) {
+    header('location:users.php?pagina=1');
 }
 
 
@@ -30,18 +31,18 @@ if (!empty($filtro_usuario_id)) {
     $usuariosPaginados = $userController->obtenerUsuariosPaginados($iniciar, $articulos_x_pagina);
 }
 
-$n_botones_paginacion = ceil(count($usuarios)/($articulos_x_pagina));
+$n_botones_paginacion = ceil(count($usuarios) / ($articulos_x_pagina));
 
 
 
-if($_GET['pagina']>$n_botones_paginacion){
-    header ('location:users.php?pagina=1');
+if ($_GET['pagina'] > $n_botones_paginacion) {
+    header('location:users.php?pagina=1');
 }
 
 
+include_once './includes/dashboard.php';
+include_once './modals/users/add_modal.php';
 
-
-include_once 'dashboard.php';
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -53,242 +54,6 @@ include_once 'dashboard.php';
         Agregar Usuario
     </button>
 </div>
-
-<!-- Modal agregar usuario -->
-<div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Usuario</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="../scripts/user_manager.php" method="post">
-                <div class="modal-body">
-                    <input type="hidden" id="actionType" name="action" value="agregar">
-
-                    <div id="userDetails">
-                        <!-- Nombre y Apellidos -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="username" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="lastname" class="form-label">Apellidos</label>
-                                <input type="text" class="form-control" id="apellidos" name="apellidos" required>
-                            </div>
-                        </div>
-
-                        <!-- DNI y Género -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="dni" class="form-label">DNI</label>
-                                <input type="text" class="form-control" id="dni" name="usuario_id" pattern="\d{8}[A-Za-z]" title="Introduce un DNI válido (8 dígitos seguidos de una letra)" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="genero" class="form-label">Género</label>
-                                <select class="form-select" id="genero" name="genero" aria-label="Selecciona tu género">
-                                    <option selected>Selecciona tu género</option>
-                                    <option value="hombre">Hombre</option>
-                                    <option value="mujer">Mujer</option>
-                                    <option value="otro">Otro</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Rol, Fecha de nacimiento -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="rol" class="form-label">Rol</label>
-                                <select class="form-select" id="rol" name="rol" aria-label="Selecciona tu rol">
-                                    <option selected>Selecciona tu rol</option>
-                                    <option value="administrador">Administrador</option>
-                                    <option value="paciente">Paciente</option>
-                                    <option value="fisioterapeuta">Fisioterapeuta</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
-                                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
-                            </div>
-                        </div>
-
-                        <!-- Telefono, Dirección -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="text" class="form-control" id="telefono" name="telefono" pattern="\d{8}[0-9]" title="Introduce un telefono válido, sin espacios (9 dígitos)" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="direccion" class="form-label">Dirección</label>
-                                <input type="text" class="form-control" id="direccion" name="direccion" required>
-                            </div>
-                        </div>
-
-                        <!-- Correo electrónico, Contraseña, Provincia, Municipio y Código Postal -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="email" class="form-label">Correo electrónico</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="password" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" id="pass" name="pass" minlength="8" name="pass" required>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                <label for="provincia" class="form-label">Provincia</label>
-                                <input type="text" class="form-control" id="provincia" name="provincia" required>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="municipio" class="form-label">Municipio</label>
-                                <input type="text" class="form-control" id="municipio" name="municipio" required>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="cp" class="form-label">Código Postal</label>
-                                <input type="text" class="form-control" id="cp" name="cp" pattern="[0-9]{5}" title="Introduce un código postal válido (5 dígitos)" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Agregar Usuario</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal editar usuario -->
-<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Usuario</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="../scripts/user_manager.php" method="post">
-                <div class="modal-body">
-                    <input type="hidden" id="actionType" name="action" value="editar">
-                    <div id="userDetails">
-                        <!-- Nombre y Apellidos -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="username" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="lastname" class="form-label">Apellidos</label>
-                                <input type="text" class="form-control" id="apellidos" name="apellidos" required>
-                            </div>
-                        </div>
-
-                        <!-- DNI y Género -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="dni" class="form-label">DNI</label>
-                                <input type="text" class="form-control" id="dni" name="usuario_id" pattern="\d{8}[A-Za-z]" title="Introduce un DNI válido (8 dígitos seguidos de una letra)" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="genero" class="form-label">Género</label>
-                                <select class="form-select" id="genero" name="genero" aria-label="Selecciona tu género">
-                                    <option selected>Selecciona tu género</option>
-                                    <option value="hombre">Hombre</option>
-                                    <option value="mujer">Mujer</option>
-                                    <option value="otro">Otro</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Rol, Fecha de nacimiento -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="rol" class="form-label">Rol</label>
-                                <select class="form-select" id="rol" name="rol" aria-label="Selecciona tu rol">
-                                    <option selected>Selecciona tu rol</option>
-                                    <option value="administrador">Administrador</option>
-                                    <option value="paciente">Paciente</option>
-                                    <option value="fisioterapeuta">Fisioterapeuta</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
-                                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
-                            </div>
-                        </div>
-
-                        <!-- Telefono, Dirección -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="text" class="form-control" id="telefono" name="telefono" pattern="\d{8}[0-9]" title="Introduce un telefono válido, sin espacios (9 dígitos)" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="direccion" class="form-label">Dirección</label>
-                                <input type="text" class="form-control" id="direccion" name="direccion" required>
-                            </div>
-                        </div>
-
-                        <!-- Correo electrónico, Contraseña, Provincia, Municipio y Código Postal -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="email" class="form-label">Correo electrónico</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="password" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" id="pass" name="pass" minlength="8" name="pass" required>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                <label for="provincia" class="form-label">Provincia</label>
-                                <input type="text" class="form-control" id="provincia" name="provincia" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="municipio" class="form-label">Municipio</label>
-                                <input type="text" class="form-control" id="municipio" name="municipio" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="cp" class="form-label">Código Postal</label>
-                                <input type="text" class="form-control" id="cp" name="cp" pattern="[0-9]{5}" title="Introduce un código postal válido (5 dígitos)" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Agregar Usuario</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal eliminar usuario -->
-<div class="modal fade" id="eliminarModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Eliminar usuario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>¿Deseas eliminar este usuario?</p>
-            </div>
-            <div class="modal-footer">
-                <form action="../scripts/user_manager.php" method="post">
-                    <input type="hidden" id="actionType" name="action" value="eliminar">
-                    <button type="submit" class="btn btn-danger">Eliminar usuario</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 
 <div class="table-responsive small">
 
@@ -333,14 +98,19 @@ include_once 'dashboard.php';
                                 <td><?php echo $usuario['sesiones_disponibles']; ?></td>
                                 <td><?php echo $usuario['rol']; ?></td>
                                 <td>
-                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarModal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#edit_<?php echo $usuario['usuario_id']; ?>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
-                                        </svg></button>
-                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                        </svg>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete_<?php echo $usuario['usuario_id']; ?>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
                                             <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
                                         </svg></button>
+                                    <?php include './modals/users/edit_delete_modal.php'; ?>
+
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -352,14 +122,14 @@ include_once 'dashboard.php';
 
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-start">
-            <li class="page-item <? echo $_GET['pagina']<=1 ? 'disabled' : '' ?>">
-                <a class="page-link" href="users.php?pagina=<?php echo $_GET['pagina']-1?>">Anterior</a>
+            <li class="page-item <? echo $_GET['pagina'] <= 1 ? 'disabled' : '' ?>">
+                <a class="page-link" href="users.php?pagina=<?php echo $_GET['pagina'] - 1 ?>">Anterior</a>
             </li>
-            <?php for($i=0; $i<$n_botones_paginacion; $i++): ?>
-            <li class="page-item <? echo $_GET['pagina']==$i+1 ? 'active' : '' ?>"><a class="page-link" href="users.php?pagina=<?php echo $i+1?>"><?php echo $i+1?></a></li>
+            <?php for ($i = 0; $i < $n_botones_paginacion; $i++) : ?>
+                <li class="page-item <? echo $_GET['pagina'] == $i + 1 ? 'active' : '' ?>"><a class="page-link" href="users.php?pagina=<?php echo $i + 1 ?>"><?php echo $i + 1 ?></a></li>
             <?php endfor ?>
-            <li class="page-item <? echo $_GET['pagina']>=$n_botones_paginacion ? 'disabled' : '' ?>">
-                <a class="page-link" href="users.php?pagina=<?php echo $_GET['pagina']+1?>">Siguiente</a>
+            <li class="page-item <? echo $_GET['pagina'] >= $n_botones_paginacion ? 'disabled' : '' ?>">
+                <a class="page-link" href="users.php?pagina=<?php echo $_GET['pagina'] + 1 ?>">Siguiente</a>
             </li>
         </ul>
     </nav>

@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
         // Llamar a la función para generar la factura PDF
         $invoiceController->generarFacturaPDF($factura_id);
-        header('Location: ../pages/patients-module/dashboard.php');
+        header('Location: ../pages/patients-module/./includes/dashboard.php');
         exit();
     } else {
         // Si no se recibió el ID de la factura, redirigir o mostrar un mensaje de error

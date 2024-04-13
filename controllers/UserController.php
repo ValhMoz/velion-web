@@ -36,11 +36,11 @@ class UserController
     {
         if ($this->usuarioModel->insert('usuarios', $datos) == true && ($this->usuarioModel->insert('historial_medico', $datos_historial)) == true) {
             // Dentro de la función añadirNuevoUsuario en UserController.php
-            header('Location: ../pages/dashboard.php?page=users');
+            header('Location: ../pages/./includes/dashboard.php?page=users');
             exit();
         } else {
             // Dentro de la función añadirNuevoUsuario en UserController.php
-            header('Location: ../pages/dashboard.php?page=users');
+            header('Location: ../pages/./includes/dashboard.php?page=users');
             exit();
         }
     }

@@ -26,7 +26,7 @@ $n_botones_paginacion = ceil(count($facturas)/($articulos_x_pagina));
 //     header ('location:invoices-patients.php?pagina=1');
 // }
 
-include_once 'dashboard-patients.php';
+include_once './includes/dashboard-patients.php';
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">

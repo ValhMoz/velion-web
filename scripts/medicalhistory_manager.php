@@ -10,13 +10,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
     switch ($_POST['action']) {
         case 'generar_informe':
             $medicalController->generarInformeMedico();
-            header('Location: ../pages/dashboard-patients.php');
+            header('Location: ../pages/./includes/dashboard-patients.php');
             exit();
             break;
 
         case 'actualizar_informe':
             $medicalController->actualizarInformeMedico($datos);
-            header('Location: ../pages/dashboard.php');
+            header('Location: ../pages/./includes/dashboard.php');
             exit();
             break;
     }

@@ -7,7 +7,7 @@ if ($rol == "informe") {
 }
 $medicalhistory = new MedicalHistoryController();
 $informes = $medicalhistory->obtenerInformes();
-include_once 'dashboard.php';
+include_once './includes/dashboard.php';
 ?>
 
 <div class="container mt-5">

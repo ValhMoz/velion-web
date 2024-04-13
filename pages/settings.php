@@ -2,9 +2,9 @@
 require_once '../scripts/session_manager.php';
 
 if ($rol == "administrador" ||  $rol == "fisioterapeuta") {
-    include_once 'dashboard.php';
+    include_once './includes/dashboard.php';
 }else {
-    include_once 'dashboard-patients.php';
+    include_once './includes/dashboard-patients.php';
 }
 
 ?>

@@ -4,7 +4,7 @@ if ($rol == "administrador" ||  $rol == "fisioterapeuta") {
     header("Location: 404.php");
     exit();
 }
-include_once 'dashboard-patients.php';
+include_once './includes/dashboard-patients.php';
 ?>
 
 <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -114,28 +114,42 @@ include_once 'dashboard-patients.php';
             </div>
         </div>
     </div>
-    <h1>Condiciones para la Compra de Bonos de Citas</h1>
 
-    <p>Por favor, lea detenidamente las siguientes condiciones antes de comprar un bono de citas en nuestra clínica de fisioterapia:</p>
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    Consulte aquí las condiciones de compra
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <h3>Condiciones para la Compra de Bonos de Citas</h3>
 
-    <p><strong>1. Uso de los Bonos de Citas</strong></p>
-    <p>Los bonos de citas adquiridos pueden ser utilizados únicamente para programar sesiones de fisioterapia en nuestra clínica. No son transferibles y no pueden ser canjeados por dinero en efectivo.</p>
+                    <p>Por favor, lea detenidamente las siguientes condiciones antes de comprar un bono de citas en nuestra clínica de fisioterapia:</p>
 
-    <p><strong>2. Validez</strong></p>
-    <p>Los bonos de citas tienen una fecha de vencimiento específica. Es responsabilidad del cliente utilizar los bonos antes de la fecha de expiración. No se otorgarán reembolsos ni se extenderá la validez de los bonos vencidos.</p>
+                    <p><strong>1. Uso de los Bonos de Citas</strong></p>
+                    <p>Los bonos de citas adquiridos pueden ser utilizados únicamente para programar sesiones de fisioterapia en nuestra clínica. No son transferibles y no pueden ser canjeados por dinero en efectivo.</p>
 
-    <p><strong>3. Reserva de Citas</strong></p>
-    <p>La reserva de citas utilizando bonos está sujeta a disponibilidad. Se recomienda programar las citas con anticipación para garantizar la disponibilidad de horarios.</p>
+                    <p><strong>2. Validez</strong></p>
+                    <p>Los bonos de citas tienen una fecha de vencimiento específica. Es responsabilidad del cliente utilizar los bonos antes de la fecha de expiración. No se otorgarán reembolsos ni se extenderá la validez de los bonos vencidos.</p>
 
-    <p><strong>4. Cancelaciones y Reagendamientos</strong></p>
-    <p>Las cancelaciones y reagendamientos de citas deben realizarse con al menos 24 horas de anticipación. Las citas canceladas o reagendadas con menos de 24 horas de anticipación pueden estar sujetas a cargos adicionales o la pérdida del bono correspondiente.</p>
+                    <p><strong>3. Reserva de Citas</strong></p>
+                    <p>La reserva de citas utilizando bonos está sujeta a disponibilidad. Se recomienda programar las citas con anticipación para garantizar la disponibilidad de horarios.</p>
 
-    <p><strong>5. No Show</strong></p>
-    <p>Los clientes que no se presenten a una cita sin previo aviso serán considerados como "no show". Los "no show" pueden resultar en la pérdida del bono correspondiente y la necesidad de adquirir un nuevo bono para programar futuras citas.</p>
+                    <p><strong>4. Cancelaciones y Reagendamientos</strong></p>
+                    <p>Las cancelaciones y reagendamientos de citas deben realizarse con al menos 24 horas de anticipación. Las citas canceladas o reagendadas con menos de 24 horas de anticipación pueden estar sujetas a cargos adicionales o la pérdida del bono correspondiente.</p>
 
-    <p>Al comprar un bono de citas en nuestra clínica de fisioterapia, usted acepta cumplir con estas condiciones.</p>
+                    <p><strong>5. No Show</strong></p>
+                    <p>Los clientes que no se presenten a una cita sin previo aviso serán considerados como "no show". Los "no show" pueden resultar en la pérdida del bono correspondiente y la necesidad de adquirir un nuevo bono para programar futuras citas.</p>
 
-    <p>Si tiene alguna pregunta o inquietud sobre estas condiciones, no dude en ponerse en contacto con nosotros.</p>
+                    <p>Al comprar un bono de citas en nuestra clínica de fisioterapia, usted acepta cumplir con estas condiciones.</p>
+
+                    <p>Si tiene alguna pregunta o inquietud sobre estas condiciones, no dude en ponerse en contacto con nosotros.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
