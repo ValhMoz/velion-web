@@ -5,7 +5,8 @@ function cerrarSesion() {
         type: 'POST', // Método de la solicitud
         success: function(response) {
             // Redirige al usuario a index.php después de cerrar sesión
-            window.location.href = '../index.php';
+            window.location.href = '../index.php?alert=success&message=UHas cerrado sesión correctamente'
+
         },
         error: function(xhr, status, error) {
             // Maneja el error si ocurre

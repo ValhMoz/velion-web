@@ -40,10 +40,12 @@ class LoginController
                     exit();
                 }
             } else {
-                echo "Contraseña incorrecta.";
+                header("Location: ../index.php?alert=warning&message=Contraseña incorrecta.");
+                exit();
             }
         } else {
-            echo "Usuario no encontrado.";
+            header("Location: ../index.php?alert=warning&message=Usuario no encontrado.");
+            exit();
         }
     }
 
@@ -51,10 +53,11 @@ class LoginController
     public function registrarUsuario($datos, $datos_historial)
     {
         if ($this->loginModel->insert('usuarios', $datos) == true && ($this->loginModel->insert('historial_medico', $datos_historial)) == true) {
-            header('Location: ../index.php');
+            header("Location: ../index.php?alert=success&message=Se ha completado el registro.");
             exit();
         } else {
-            echo "No se ha podido completar el registro";
+            header("Location: ../index.php?alert=warning&message=No se ha podido completar el registro.");
+            exit();
         }
     }
 
@@ -84,7 +87,7 @@ class LoginController
         session_destroy();
 
         // Redirigir a la página de inicio
-        header("Location: ../index.php");
+        header("Location: ../index.php?alert=success&message=UHas cerrado sesión correctamente");
         exit();
     }
 }

@@ -22,6 +22,16 @@
 
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
     <main class="form-signin w-100 m-auto">
+        <?php
+        // Verificar si hay una alerta de usuario
+        if (isset($_GET['alert']) && isset($_GET['message'])) {
+            // Mostrar la alerta
+            echo '<div class="alert alert-' . $_GET['alert'] . ' alert-dismissible fade show" role="alert">' . $_GET['message'] . '
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
+        }
+        ?>
+
         <form action="./scripts/login_manager.php" method="post">
             <!-- <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
             <h1 class="title-login-register">Inicia Sesión</h1>
