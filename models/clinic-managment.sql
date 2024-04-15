@@ -53,6 +53,7 @@ CREATE TABLE historial_medico (
 );
 
 -- Insertar datos de prueba para la tabla usuarios
+-- La contraseña está cifrada. Deberás escribir 12345678 en el formulario de inicio de sesión
 INSERT INTO usuarios (usuario_id, nombre, apellidos, telefono, fecha_nacimiento, direccion, provincia, municipio, cp, email, pass, rol, genero, sesiones_disponibles)
 VALUES
 ('123456789', 'Juan', 'Pérez', '123456789', '1990-01-01', 'Calle 123', 'Provincia 1', 'Ciudad 1', '12345', 'juan@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'paciente', 'hombre', 5),
