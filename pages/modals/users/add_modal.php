@@ -8,7 +8,7 @@
             </div>
             <form action="../../scripts/user_manager.php" method="post">
                 <div class="modal-body">
-                    <input type="hidden" id="actionType" name="action" value="agregar">
+                    <input type="hidden" id="actionType" name="action" value="añadir_usuario">
 
                     <div id="userDetails">
                         <!-- Nombre y Apellidos -->

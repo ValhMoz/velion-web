@@ -20,27 +20,22 @@ class UserController
         return $this->usuarioModel->read('usuarios');
     }
 
-    public function obtenerUsuariosPorID($usuario_id) {
-        
+    public function obtenerUsuariosPorID($usuario_id)
+    {
         return $this->usuarioModel->obtenerUsuariosPorID($usuario_id);
     }
-    
-
-
-    // public function obtenerUsuarioID($id)
-    // {
-    //     return $this->usuarioModel->read('usuarios');
-    // }
 
     public function añadirNuevoUsuario($datos, $datos_historial)
     {
         if ($this->usuarioModel->insert('usuarios', $datos) == true && ($this->usuarioModel->insert('historial_medico', $datos_historial)) == true) {
             // Dentro de la función añadirNuevoUsuario en UserController.php
-            header('Location: ../pages/./includes/dashboard.php?page=users');
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Usuario añadido correctamente.');
+            header('Location: ../pages/users.php');
             exit();
         } else {
             // Dentro de la función añadirNuevoUsuario en UserController.php
-            header('Location: ../pages/./includes/dashboard.php?page=users');
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido añadir el usuario correctamente.');
+            header('Location: ../pages/users.php');
             exit();
         }
     }

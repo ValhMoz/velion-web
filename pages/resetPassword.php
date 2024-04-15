@@ -23,12 +23,6 @@
                 <form action="../scripts/resetPassword_manager.php" method="post">
                     <h2 class="mb-3">Reinicio de Contraseña</h2>
 
-                    <!-- Correo Electrónico
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Correo electrónico</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div> -->
-
                     <!-- Contraseña Nueva -->
                     <div class="mb-3">
                         <label for="password" class="form-label">Nueva Contraseña</label>

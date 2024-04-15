@@ -28,7 +28,7 @@ $fecha_emision = date('Y-m-d');
 
     <script>
         function mostrarCamposPago() {
-            var metodoPago = document.querySelector('input[name="paymentMethod"]:checked').value;
+            let metodoPago = document.querySelector('input[name="paymentMethod"]:checked').value;
             if (metodoPago === "tarjeta") {
                 document.getElementById("camposTarjeta").style.display = "block";
                 document.getElementById("camposTransferencia").style.display = "none";
@@ -139,7 +139,7 @@ $fecha_emision = date('Y-m-d');
                             <li class="list-group-item d-flex justify-content-between lh-sm">
                                 <div>
                                     <h6 class="my-0">Bono de <?php echo $bono; ?></h6>
-                                    <small class="text-body-secondary">lorem ipsum</small>
+                                    <!-- <small class="text-body-secondary">lorem ipsum</small> -->
                                 </div>
                                 <span class="text-body-secondary"><?php echo $precio; ?>€</span>
                             </li>

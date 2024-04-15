@@ -130,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
                     );
     
                     // Intenta registrar un usuario con los datos proporcionados
-                    $userController->actualizarDatos($datos);
+                    //$userController->actualizarDatos($datos);
                 } else {
                     echo "No se ha podido completar el registro";
                 }

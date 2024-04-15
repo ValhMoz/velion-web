@@ -112,7 +112,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>¿Deseas eliminar este usuario?</p>
+                <p>¿Deseas eliminar el usuario <?php echo $usuario['nombre'] . ' '. $usuario['apellidos']; ?> con ID: <?php echo $usuario['usuario_id']; ?>?</p>
             </div>
             <div class="modal-footer">
                 <form action="../../scripts/user_manager.php" method="post">
