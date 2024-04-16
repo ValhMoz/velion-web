@@ -8,7 +8,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - /home/sergio/Documentos/clinic-managment:/var/www/html
+      - C://xampp/htdocs/Proyectos/clinic-managment:/var/www/html
     restart: always
 
   phpmyadmin:
