@@ -22,7 +22,15 @@ class UserController
 
     public function obtenerUsuariosPorID($usuario_id)
     {
-        return $this->usuarioModel->obtenerUsuariosPorID($usuario_id);
+        $usuarioBuscado = $this->usuarioModel->obtenerUsuariosPorID($usuario_id);
+
+        if ($usuarioBuscado){
+            return $usuarioBuscado;
+        }else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ningún usuario con los criterios seleccionados.');
+            header('Location: ../pages/users.php');
+            exit();
+        }
     }
 
     public function añadirNuevoUsuario($datos, $datos_historial)

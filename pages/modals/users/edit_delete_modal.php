@@ -31,10 +31,10 @@
                             <div class="col-md-6">
                                 <label for="genero" class="form-label">Género</label>
                                 <select class="form-select" id="genero" name="genero" aria-label="Selecciona tu género">
-                                    <option selected>Selecciona tu género</option>
-                                    <option value="hombre">Hombre</option>
-                                    <option value="mujer">Mujer</option>
-                                    <option value="otro">Otro</option>
+                                    <option value="" disabled>Selecciona tu género</option>
+                                    <option value="hombre" <?php if ($usuario['genero'] === 'hombre') echo 'selected'; ?>>Hombre</option>
+                                    <option value="mujer" <?php if ($usuario['genero'] === 'mujer') echo 'selected'; ?>>Mujer</option>
+                                    <option value="otro" <?php if ($usuario['genero'] === 'otro') echo 'selected'; ?>>Otro</option>
                                 </select>
                             </div>
                         </div>
@@ -44,10 +44,10 @@
                             <div class="col-md-6">
                                 <label for="rol" class="form-label">Rol</label>
                                 <select class="form-select" id="rol" name="rol" aria-label="Selecciona tu rol">
-                                    <option selected>Selecciona tu rol</option>
-                                    <option value="administrador">Administrador</option>
-                                    <option value="paciente">Paciente</option>
-                                    <option value="fisioterapeuta">Fisioterapeuta</option>
+                                    <option disabled>Selecciona un rol</option>
+                                    <option value="administrador" <?php if ($usuario['rol'] === 'administrador') echo 'selected'; ?>>Administrador</option>
+                                    <option value="paciente" <?php if ($usuario['rol'] === 'paciente') echo 'selected'; ?>>Paciente</option>
+                                    <option value="fisioterapeuta" <?php if ($usuario['rol'] === 'fisioterapeuta') echo 'selected'; ?>>Fisioterapeuta</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
