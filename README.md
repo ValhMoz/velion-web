@@ -9,8 +9,9 @@ Este proyecto consiste en un Sistema de Gestión de Recursos Empresariales (ERP)
 3. JavaScript
 4. jQuery
 5. Bootstrap v5.3
-6. PHP v8.2
-7. Librería externa: FPDF (para la generación de documentos PDF)
+6. PHP
+7. PHPUnit
+8. Librería externa: FPDF (para la generación de documentos PDF)
 
 ## Características Principales
 
@@ -24,23 +25,10 @@ Este proyecto consiste en un Sistema de Gestión de Recursos Empresariales (ERP)
 
 1. Clona este repositorio a tu máquina local.
 
-2. Coloca el proyecto en tu servidor web local (p. ej., XAMPP, WAMP, etc.).
+2. Instala Docker en tu dispositivo.
 
-3. Importa la base de datos proporcionada (/models/clinic-managment.sql) en tu sistema de gestión de bases de datos (p. ej., MySQL).
+3. Ejecuta  ``` sudo docker compose up --build  ``` en la terminal.
 
-4. Configura la conexión a la base de datos en el archivo BaseModel.php.
+4. Abre tu navegador y ve a la dirección http://localhost:8080/ para importar la base de datos alojada en models/clinic-managment.sql
 
-5. Accede al proyecto desde tu navegador web:
-
-    http://localhost/clinic-managment/index.php
-
-## Licencia
-
-Este proyecto está bajo la Licencia MIT.
-
-## NOTA
-
-Si deseas virtualizar Apache y MySQL con docker deberás ejecutar el comando:
-```bash
- sudo docker compose up --build
- ```
+5. Inicia sesión con el usuario administrador: admin@example.com - 12345678
