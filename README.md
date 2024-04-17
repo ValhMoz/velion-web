@@ -27,7 +27,7 @@ Este proyecto consiste en un Sistema de Gestión de Recursos Empresariales (ERP)
 
 2. Instala Docker en tu dispositivo.
 
-3. Ejecuta  ``` sudo docker compose up --build  ``` en la terminal.
+3. Ejecuta  ``` sudo docker compose up --build  ``` en la terminal SOLO la primera vez. Para el resto: ``` sudo docker compose up  ```.
 
 4. Abre tu navegador y ve a la dirección http://localhost:8080/ para importar la base de datos alojada en models/clinic-managment.sql
 
