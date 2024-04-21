@@ -9,6 +9,20 @@ if ($rol == "administrador" ||  $rol == "fisioterapeuta") {
 
 ?>
 
+<?php
+// Verificar si hay una alerta de usuario
+if (isset($_SESSION['alert'])) {
+    $alert_type = $_SESSION['alert']['type'];
+    $alert_message = $_SESSION['alert']['message'];
+    // Mostrar la alerta
+    echo '<div class="alert alert-' . $alert_type . ' alert-dismissible fade show" role="alert">' . $alert_message . '
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>';
+    // Eliminar la variable de sesión después de mostrar la alerta
+    unset($_SESSION['alert']);
+}
+?>
+
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-8">
@@ -35,7 +49,7 @@ if ($rol == "administrador" ||  $rol == "fisioterapeuta") {
                 <div class="card-body">
                     <h2 class="card-title mb-4">Cambiar Datos</h2>
                     <form action="../scripts/user_manager.php" method="POST">
-                        <input type="hidden" id="actionType" name="action" value="actualizar_datos">
+                        <input type="hidden" id="action" name="action" value="actualizar_datos">
                         <input type="hidden" id="usuario_id" name="usuario_id" value="<?php echo $DNI ?>">
 
                         <div class="mb-3">

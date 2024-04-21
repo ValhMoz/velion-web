@@ -8,7 +8,7 @@
             </div>
             <form action="../../scripts/user_manager.php" method="post">
                 <div class="modal-body">
-                    <input type="hidden" id="actionType" name="action" value="editar">
+                    <input type="hidden" id="actionType" name="action" value="editar_usuario">
                     <div id="userDetails">
                         <!-- Nombre y Apellidos -->
                         <div class="row mb-3">
@@ -52,7 +52,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
-                                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="<?php echo $usuario['fecha_nacimiento']; ?>"required>
+                                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="<?php echo $usuario['fecha_nacimiento']; ?>" required>
                             </div>
                         </div>
 
@@ -96,7 +96,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Agregar Usuario</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </div>
             </form>
         </div>
@@ -104,7 +104,7 @@
 </div>
 
 <!-- Modal eliminar usuario -->
-<div class="modal fade" id="delete_<?php echo $usuario['usuario_id']; ?>" tabindex="-1">
+<div class="modal fade" id="delete_<?php echo $usuario['usuario_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -116,7 +116,8 @@
             </div>
             <div class="modal-footer">
                 <form action="../../scripts/user_manager.php" method="post">
-                    <input type="hidden" id="actionType" name="action" value="eliminar">
+                    <input type="hidden" id="action" name="action" value="eliminar_usuario">
+                    <input type="hidden" id="usuario_id" name="usuario_id" value="<?php echo $usuario['usuario_id']; ?>">
                     <button type="submit" class="btn btn-danger">Eliminar usuario</button>
                 </form>
             </div>

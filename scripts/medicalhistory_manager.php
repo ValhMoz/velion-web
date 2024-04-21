@@ -1,24 +1,27 @@
 <?php
 include '../controllers/MedicalHistoryController.php';
 
-// Crea una instancia del controlador de inicio de sesión
-$invoiceController = new InvoiceController();
+$medicalController = new MedicalHistoryController();
 
 // Verificar si se ha enviado el formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['id'])) {
+    $medicalController->generarInformeMedico($_GET['id']);
+    //header('Location: ../pages/patients-module/./includes/dashboard.php');
+    exit();
+}
 
-    switch ($_POST['action']) {
-        case 'generar_informe':
-            $medicalController->generarInformeMedico();
-            header('Location: ../pages/./includes/dashboard-patients.php');
-            exit();
-            break;
 
-        case 'actualizar_informe':
-            $medicalController->actualizarInformeMedico($datos);
-            header('Location: ../pages/./includes/dashboard.php');
-            exit();
-            break;
-    }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $datos = array (
+        'fecha' => date('Y-m-d'),
+        'diagnostico' => $_POST['diagnostico'],
+        'tratamiento' => $_POST['tratamiento'],
+        'notas' => $_POST['notas']
+    );
+
+    $condicion = "id = '" . $_POST["id"] . "'";
+    $medicalController->actualizarInformeMedico($datos, $condicion);
+    header('Location: ../pages/medical-history.php');
+    exit();
 }
 ?>
