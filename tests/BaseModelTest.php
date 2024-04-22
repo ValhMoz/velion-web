@@ -1,77 +1,72 @@
 <?php
-
-require './models/BaseModel.php'; // Asegúrate de incluir el archivo de la clase que estás probando
+require_once '../models/BaseModel.php';
 
 use PHPUnit\Framework\TestCase;
 
 class BaseModelTest extends TestCase
 {
+    protected static $conexion;
+
+    public static function setUpBeforeClass(): void
+    {
+        // Establecer la conexión a la base de datos para las pruebas
+        $host = 'mysql';
+        $usuario = 'root';
+        $contrasena = 'root';
+        $base_de_datos = 'clinic-managment';
+
+        self::$conexion = new mysqli($host, $usuario, $contrasena, $base_de_datos);
+
+        if (self::$conexion->connect_error) {
+            die("Error al conectar con la base de datos: " . self::$conexion->connect_error);
+        }
+    }
+
     public function testInsert()
     {
-        // Configurar
+        $datos = array(
+            'campo1' => 'valor1',
+            'campo2' => 'valor2'
+        );
+
         $baseModel = new BaseModel();
-
-        // Simular la conexión a la base de datos
-        $conexionMock = $this->createMock(mysqli::class);
-        $conexionMock->method('query')->willReturn(true); // Simulamos que la consulta es exitosa
-        $baseModel->setConexion($conexionMock);
-
-        // Ejecutar
-        $resultado = $baseModel->insert('ejemplo_tabla', ['campo1' => 'valor1', 'campo2' => 'valor2']);
-
-        // Afirmar
-        $this->assertTrue($resultado); // Verifica que la operación de inserción fue exitosa
+        $this->assertTrue($baseModel->insert('tabla_prueba', $datos));
     }
 
     public function testUpdate()
     {
-        // Configurar
+        $datos = array(
+            'campo1' => 'nuevo_valor1',
+            'campo2' => 'nuevo_valor2'
+        );
+        $condicion = 'id = 1'; // Ajusta la condición según tu base de datos
+
         $baseModel = new BaseModel();
-
-        // Simular la conexión a la base de datos
-        $conexionMock = $this->createMock(mysqli::class);
-        $conexionMock->method('query')->willReturn(true); // Simulamos que la consulta es exitosa
-        $baseModel->setConexion($conexionMock);
-
-        // Ejecutar
-        $resultado = $baseModel->update('ejemplo_tabla', ['campo1' => 'valor_nuevo'], 'condicion');
-
-        // Afirmar
-        $this->assertTrue($resultado); // Verifica que la operación de actualización fue exitosa
+        $this->assertTrue($baseModel->update('tabla_prueba', $datos, $condicion));
     }
 
     public function testDelete()
     {
-        // Configurar
+        $condicion = 'id = 1'; // Ajusta la condición según tu base de datos
+
         $baseModel = new BaseModel();
-
-        // Simular la conexión a la base de datos
-        $conexionMock = $this->createMock(mysqli::class);
-        $conexionMock->method('query')->willReturn(true); // Simulamos que la consulta es exitosa
-        $baseModel->setConexion($conexionMock);
-
-        // Ejecutar
-        $resultado = $baseModel->delete('ejemplo_tabla', 'condicion');
-
-        // Afirmar
-        $this->assertTrue($resultado); // Verifica que la operación de eliminación fue exitosa
+        $this->assertTrue($baseModel->delete('tabla_prueba', $condicion));
     }
 
     public function testRead()
     {
-        // Configurar
+        $condicion = 'id = 1'; // Ajusta la condición según tu base de datos
+
         $baseModel = new BaseModel();
+        $resultados = $baseModel->read('tabla_prueba', $condicion);
 
-        // Simular la conexión a la base de datos y el resultado de la consulta
-        $resultadoConsulta = [['campo1' => 'valor1', 'campo2' => 'valor2']];
-        $conexionMock = $this->createMock(mysqli::class);
-        $conexionMock->method('query')->willReturn($resultadoConsulta);
-        $baseModel->setConexion($conexionMock);
+        $this->assertIsArray($resultados);
+        $this->assertNotEmpty($resultados);
+    }
 
-        // Ejecutar
-        $resultado = $baseModel->read('ejemplo_tabla', 'condicion');
-
-        // Afirmar
-        $this->assertEquals($resultadoConsulta, $resultado); // Verifica que los datos devueltos sean los esperados
+    public static function tearDownAfterClass(): void
+    {
+        // Cerrar la conexión a la base de datos después de las pruebas
+        self::$conexion->close();
     }
 }
