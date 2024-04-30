@@ -27,6 +27,14 @@ class AppointmentController
         return $this->appointmentModel->obtenerCitasUsuario($DNI, $iniciar, $articulos_x_pagina);
     }
 
+    public function obtenerListaPacientes() {
+        return $this->appointmentModel->read('usuarios', 'rol = \'paciente\'');
+    }
+
+    public function obtenerListaFisioterapeutas() {
+        return $this->appointmentModel->read('usuarios', 'rol = \'fisioterapeuta\'');
+    }
+
 }
 
 ?>

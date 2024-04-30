@@ -113,4 +113,8 @@ class MedicalHistoryController extends FPDF
         }
         return ($this->medicalhistoryModel->obtenerInformesUsuario($DNI));
     }
+
+    public function obtenerListaPacientes() {
+        return $this->medicalhistoryModel->read('usuarios', 'rol = \'paciente\'');
+    }
 }

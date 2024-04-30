@@ -12,8 +12,10 @@ $medicalhistory = new MedicalHistoryController();
 // Manejar la búsqueda del historial médico
 if (isset($_POST['user_id'])) {
     $user_id = $_POST['user_id'];
-    $informe = $medicalhistory->obtenerInformesUsuario($user_id, $rol);
+    $informe = $medicalhistory->obtenerInformesUsuario($user_id);
 }
+
+$pacientes = $medicalhistory->obtenerListaPacientes();
 
 include_once './includes/dashboard.php';
 ?>
@@ -49,11 +51,16 @@ include_once './includes/dashboard.php';
     </div>
 
     <!-- Formulario para buscar el historial médico -->
-    <form class="row g-3 mb-4" action="" method="post">
-        <div class="col-md-10">
-            <input type="text" class="form-control" id="user_id" name="user_id" placeholder="Escriba el ID del paciente...">
+    <form class="row mb-4" action="" method="post">
+        <div class="col md-9">
+            <input class="form-control" list="datalistOptions" id="user_id" name="user_id" placeholder="Escribe aquí para buscar...">
+            <datalist id="datalistOptions">
+                <?php foreach ($pacientes as $paciente) : ?>
+                    <option value="<?php echo $paciente['usuario_id']; ?>"><?php echo $paciente['nombre'] . ' ' . $paciente['apellidos']; ?></option>
+                <?php endforeach; ?>
+            </datalist>
         </div>
-        <div class="col-md-2 align-self-end">
+        <div class="col md-3">
             <button type="submit" class="btn btn-primary">Buscar</button>
         </div>
     </form>
@@ -66,7 +73,6 @@ include_once './includes/dashboard.php';
                 Información del informe
             </div>
             <div class="card-body" id="informeSeleccionado">
-
                 <h5 class="card-title">Nombre del paciente: <?php echo $informe[0]['nombre_paciente'] . ' ' . $informe[0]['apellidos_paciente']; ?></h5>
                 <p class="card-text">Fecha de nacimiento: <?php echo $informe[0]['fecha_nacimiento_paciente']; ?> años</p>
                 <p class="card-text">Género: <?php echo $informe[0]['genero_paciente']; ?></p>

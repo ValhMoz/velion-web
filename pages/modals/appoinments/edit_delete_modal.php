@@ -24,7 +24,6 @@
                 <div id="paso3" class="pasos" style="display: none;">
                     <h5>3. Selecciona un día</h5>
                     <div class="mb-3">
-                        <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
                         <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
                     </div>
                 </div>

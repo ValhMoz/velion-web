@@ -8,7 +8,7 @@ $appointmentController = new AppointmentController();
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
 
     switch ($_POST['action']) {
-        case 'asignar_cita':
+        case 'asignar':
 
             break;
 

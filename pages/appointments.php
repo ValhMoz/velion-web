@@ -26,7 +26,8 @@ if($_GET['pagina']>$n_botones_paginacion){
     header ('location:appointments.php?pagina=1');
 }
 
-
+$pacientes = $appoinmentController->obtenerListaPacientes();
+$fisioterapeutas = $appoinmentController->obtenerListaFisioterapeutas();
 
 include_once './includes/dashboard.php';
 include 'modals/appoinments/add_modal.php';
@@ -60,7 +61,7 @@ if (isset($_SESSION['alert'])) {
     <form class="row g-3">
         <div class="col-auto">
             <label for="inputPassword2" class="visually-hidden">Filtro</label>
-            <input type="text" class="form-control" id="inputPassword2" placeholder="Filtrar por nombre...">
+            <input type="text" class="form-control" id="inputPassword2" placeholder="Filtrar por ID de paciente...">
         </div>
         <div class="col-auto">
             <input type="date" class="form-control" id="">
@@ -76,7 +77,7 @@ if (isset($_SESSION['alert'])) {
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col" style="width: 5%;">ID</th>
+                            <th scope="col" style="width: 5%;">ID Pac.</th>
                             <th scope="col" style="width: 15%;">Fecha</th>
                             <th scope="col" style="width: 20%;">Paciente</th>
                             <th scope="col" style="width: 20%;">Fisioterapeuta asociado</th>

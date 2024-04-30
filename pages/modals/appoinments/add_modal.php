@@ -8,23 +8,27 @@
 
             </div>
             <div class="modal-body">
-                <!-- Pasos -->
                 <div id="paso1" class="pasos">
                     <h5>1. Selecciona un paciente</h5>
-                    <select name="" id="">
-                        <option value=""></option>
-                    </select>
+                    <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Escribe aquí para buscar...">
+                    <datalist id="datalistOptions">
+                        <?php foreach ($pacientes as $paciente) : ?>
+                            <option value="<?php echo $paciente['usuario_id']; ?>"><?php echo $paciente['nombre'] . ' ' . $paciente['apellidos']; ?></option>
+                        <?php endforeach; ?>
+                    </datalist>
                 </div>
                 <div id="paso2" class="pasos" style="display: none;">
                     <h5>2. Selecciona un fisioterapeuta</h5>
-                    <select name="" id="">
-                        <option value=""></option>
+                    <select id="selectFisioterapeuta" class="form-select">
+                        <option value="">Selecciona un fisioterapeuta</option>
+                        <?php foreach ($fisioterapeutas as $fisioterapeuta) : ?>
+                            <option value="<?php echo $fisioterapeuta['usuario_id']; ?>"><?php echo $fisioterapeuta['nombre'] . ' ' . $fisioterapeuta['apellidos']; ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div id="paso3" class="pasos" style="display: none;">
                     <h5>3. Selecciona un día</h5>
                     <div class="mb-3">
-                        <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
                         <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
                     </div>
                 </div>
@@ -89,17 +93,22 @@
         var totalPasos = 4;
 
         $('#btnSiguiente').click(function() {
-            if (pasoActual < totalPasos) {
-                $('#paso' + pasoActual).hide();
-                $('#paso' + (pasoActual + 1)).show();
-                if (pasoActual === totalPasos - 1) {
-                    $('#btnSiguiente').hide();
-                    $('#btnConfirmar').show();
-                } else {
-                    $('#btnAnterior').show();
+            // Aquí puedes agregar la lógica de validación para el paso actual
+            // Por ejemplo, puedes verificar que se haya seleccionado un paciente y un fisioterapeuta antes de avanzar al siguiente paso
+            if (pasoActual === 1) {
+                // Validar la selección de paciente
+                if ($('#selectPaciente').val() === '') {
+                    alert('Por favor, selecciona un paciente.');
+                    return;
                 }
-                pasoActual++;
+            } else if (pasoActual === 2) {
+                // Validar la selección de fisioterapeuta
+                if ($('#selectFisioterapeuta').val() === '') {
+                    alert('Por favor, selecciona un fisioterapeuta.');
+                    return;
+                }
             }
+            // Resto de la lógica de avance de pasos...
         });
 
         $('#btnAnterior').click(function() {
@@ -113,6 +122,36 @@
                 }
                 pasoActual--;
             }
+        });
+
+        $('#btnConfirmar').click(function() {
+            // Aquí puedes obtener los datos seleccionados por el usuario
+            var paciente = $('#selectPaciente').val();
+            var fisioterapeuta = $('#selectFisioterapeuta').val();
+            var fecha = $('#fecha').val();
+            var hora = $('input[name="hora"]:checked').val();
+
+            // Aquí puedes enviar los datos al servidor utilizando AJAX
+            $.ajax({
+                url: 'ruta_al_servidor',
+                type: 'POST',
+                data: {
+                    action: 'asignar',
+                    paciente: paciente,
+                    fisioterapeuta: fisioterapeuta,
+                    fecha: fecha,
+                    hora: hora
+                },
+                success: function(response) {
+                    // Manejar la respuesta del servidor en caso de éxito
+                    alert('Cita asignada correctamente.');
+                    // Puedes recargar la página o realizar otras acciones necesarias después de confirmar la cita
+                },
+                error: function(xhr, status, error) {
+                    // Manejar la respuesta del servidor en caso de error
+                    alert('Error al asignar la cita. Por favor, inténtalo de nuevo.');
+                }
+            });
         });
     });
 </script>
