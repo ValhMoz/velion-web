@@ -32,3 +32,5 @@ Este proyecto consiste en un Sistema de Gestión de Recursos Empresariales (ERP)
 4. Abre tu navegador y ve a la dirección http://localhost:8080/ para importar la base de datos alojada en models/clinic-managment.sql
 
 5. Inicia sesión con el usuario administrador: admin@example.com - 12345678
+
+Para ejecutar las pruebas unitarias debes ejecutar el siguiente comando  ``` sudo vendor/bin/phpunit tests/NombreDelArchivoTest.php ```
