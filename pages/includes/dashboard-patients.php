@@ -1,12 +1,3 @@
-<?php
-  require_once '../scripts/session_manager.php';
-  if($rol == "administrador" ||  $rol == "fisioterapeuta")
-{
-    header("Location: 404.php");
-    exit();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 

@@ -1,19 +1,17 @@
 <?php
 require_once '../scripts/session_manager.php';
-// require_once '../controllers/AppointmentController.php';
 require_once '../controllers/MedicalHistoryController.php';
-// $app = new AppointmentController();
+require_once '../controllers/AppointmentController.php';
+
 $medHist = new MedicalHistoryController();
+$app = new AppointmentController();
 
 if ($rol == "administrador" ||  $rol == "fisioterapeuta") {
     header("Location: 404.php");
     exit();
 }
 
-// $citas = $app->obtenerCitasUsuario($DNI);
-$informes = $medHist->obtenerInformesUsuario($DNI);
-
-include_once './includes/dashboard-patients.php';
+include_once 'includes/dashboard-patients.php';
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -69,7 +67,6 @@ if (isset($_SESSION['alert'])) {
         <!-- Aquí se mostrará el informe en forma de listas -->
         <div class="col">
             <ul class="list-group">
-                <?php foreach ($informes as $informe):?>
                 <li class="list-group-item">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">Informe 1</h5>
@@ -82,12 +79,9 @@ if (isset($_SESSION['alert'])) {
                         <form action="../scripts/descargar_informe.php" method="GET">
                             <input type="hidden" name="id" value="<?php echo $factura['factura_id']; ?>">
                             <button type="submit" class="btn btn-success">Descargar</button>
-
                         </form>
                     </div>
                 </li>
-                <?php endforeach?>
-                <!-- Repite estas listas para cada cita -->
             </ul>
         </div>
     </div>

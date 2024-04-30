@@ -1,16 +1,18 @@
 <?php
 require_once '../scripts/session_manager.php';
 require_once '../controllers/MedicalHistoryController.php';
-if ($rol == "informe") {
+
+if ($rol == "paciente") {
     header("Location: 404.php");
     exit();
 }
+
 $medicalhistory = new MedicalHistoryController();
 
 // Manejar la búsqueda del historial médico
 if (isset($_POST['user_id'])) {
     $user_id = $_POST['user_id'];
-    $informe = $medicalhistory->obtenerInformesUsuario($user_id);
+    $informe = $medicalhistory->obtenerInformesUsuario($user_id, $rol);
 }
 
 include_once './includes/dashboard.php';
@@ -47,7 +49,7 @@ include_once './includes/dashboard.php';
     </div>
 
     <!-- Formulario para buscar el historial médico -->
-    <form class="row g-3" action="" method="post">
+    <form class="row g-3 mb-4" action="" method="post">
         <div class="col-md-10">
             <input type="text" class="form-control" id="user_id" name="user_id" placeholder="Escriba el ID del paciente...">
         </div>

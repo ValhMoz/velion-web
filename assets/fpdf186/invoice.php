@@ -460,7 +460,7 @@ function addCadreTVAs()
 	$this->Cell(6,0, "T.V.A. :");
 }
 
-function addCadreTotal()
+function addCadreTotal($monto)
 {
 	$r1  = $this->w - 55;
 	$r2  = $r1 + 41;

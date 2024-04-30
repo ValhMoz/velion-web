@@ -87,7 +87,7 @@ class LoginController
         session_destroy();
 
         // Redirigir a la página de inicio
-        header("Location: ../index.php?alert=success&message=UHas cerrado sesión correctamente");
+        header("Location: ../index.php?alert=success&message=Sesion finalizada");
         exit();
     }
 }

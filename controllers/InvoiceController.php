@@ -37,11 +37,11 @@ class InvoiceController extends PDF_Invoice
             $pdf = new PDF_Invoice('P', 'mm', 'A4');
             $pdf->AddPage();
             $pdf->addSociete(
-                iconv('UTF-8', 'windows-1252', 'Clínica Fisioterapia Aquiles'),
+                iconv('UTF-8', 'windows-1252', 'Clínica Fisioterapia'),
                 "CIF: X-12345678\n".
-                "Av. Virgen de los Dolores, 17\n" .
-                iconv('UTF-8', 'windows-1252', "Córdoba, Córdoba, 14004\n").
-                iconv('UTF-8', 'windows-1252', "Tel.: 957 413 031 • 661 125 257")
+                "Av. Prueba, 17\n" .
+                iconv('UTF-8', 'windows-1252', "Córdoba, Córdoba, 14001\n").
+                iconv('UTF-8', 'windows-1252', "Tel.: 957 000 000 • 600 000 000")
             );
             $pdf->fact_dev("Factura:", $factura_id);
             // $pdf->temporaire("Devis temporaire");
@@ -138,7 +138,7 @@ class InvoiceController extends PDF_Invoice
             // );
 
             // $pdf->addTVAs($params, $tab_tva, $tot_prods);
-            $pdf->addCadreTotal();
+            //$pdf->addCadreTotal($factura[0]['monto']);
             $pdf->Output("", "", true);
         }
     }
