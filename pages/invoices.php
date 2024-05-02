@@ -50,10 +50,10 @@ if (isset($_SESSION['alert'])) {
 <div class="table-responsive small">
     <form class="row g-3">
         <div class="col-auto">
-            <input type="text" class="form-control" id="usuario_id" name="usuario_id" placeholder="Filtrar por ID...">
+            <input type="text" class="form-control" id="usuario_id" name="usuario_id" placeholder="Filtrar por ID de usuario...">
         </div>
         <div class="col-auto">
-            <select class="form-select" id="genero" name="genero" aria-label="Selecciona tu género">
+            <select class="form-select" id="estado" name="estado">
                 <option selected>Selecciona un estado</option>
                 <option value="hombre">Pagada</option>
                 <option value="mujer">Pendiente</option>

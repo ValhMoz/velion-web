@@ -93,22 +93,17 @@
         var totalPasos = 4;
 
         $('#btnSiguiente').click(function() {
-            // Aquí puedes agregar la lógica de validación para el paso actual
-            // Por ejemplo, puedes verificar que se haya seleccionado un paciente y un fisioterapeuta antes de avanzar al siguiente paso
-            if (pasoActual === 1) {
-                // Validar la selección de paciente
-                if ($('#selectPaciente').val() === '') {
-                    alert('Por favor, selecciona un paciente.');
-                    return;
+            if (pasoActual < totalPasos) {
+                $('#paso' + pasoActual).hide();
+                $('#paso' + (pasoActual + 1)).show();
+                if (pasoActual === totalPasos - 1) {
+                    $('#btnSiguiente').hide();
+                    $('#btnConfirmar').show();
+                } else {
+                    $('#btnAnterior').show();
                 }
-            } else if (pasoActual === 2) {
-                // Validar la selección de fisioterapeuta
-                if ($('#selectFisioterapeuta').val() === '') {
-                    alert('Por favor, selecciona un fisioterapeuta.');
-                    return;
-                }
+                pasoActual++;
             }
-            // Resto de la lógica de avance de pasos...
         });
 
         $('#btnAnterior').click(function() {
@@ -125,33 +120,33 @@
         });
 
         $('#btnConfirmar').click(function() {
-            // Aquí puedes obtener los datos seleccionados por el usuario
-            var paciente = $('#selectPaciente').val();
-            var fisioterapeuta = $('#selectFisioterapeuta').val();
-            var fecha = $('#fecha').val();
-            var hora = $('input[name="hora"]:checked').val();
-
-            // Aquí puedes enviar los datos al servidor utilizando AJAX
-            $.ajax({
-                url: 'ruta_al_servidor',
-                type: 'POST',
-                data: {
-                    action: 'asignar',
-                    paciente: paciente,
-                    fisioterapeuta: fisioterapeuta,
-                    fecha: fecha,
-                    hora: hora
-                },
-                success: function(response) {
-                    // Manejar la respuesta del servidor en caso de éxito
-                    alert('Cita asignada correctamente.');
-                    // Puedes recargar la página o realizar otras acciones necesarias después de confirmar la cita
-                },
-                error: function(xhr, status, error) {
-                    // Manejar la respuesta del servidor en caso de error
-                    alert('Error al asignar la cita. Por favor, inténtalo de nuevo.');
-                }
-            });
+        // Recolecta los datos necesarios para la inserción
+        var pacienteId = $('#exampleDataList').val();
+        var fisioterapeutaId = $('#selectFisioterapeuta').val();
+        var fecha = $('#fecha_nacimiento').val();
+        var hora = $('input[name="hora"]:checked').val(); // Obtener la hora seleccionada
+        
+        // Realiza la inserción en la base de datos utilizando Ajax
+        $.ajax({
+            type: 'POST',
+            url: '../../../scripts/appointment_manager.php', // Archivo PHP para manejar la inserción en la base de datos
+            data: {
+                action: 'asignar',
+                paciente_id: pacienteId,
+                fisioterapeuta_id: fisioterapeutaId,
+                fecha: fecha,
+                hora: hora
+            },
+            success: function(response) {
+                // Maneja la respuesta del servidor, por ejemplo, muestra un mensaje de éxito
+                $('#AsignarCita').modal('hide');
+            },
+            error: function(xhr, status, error) {
+                // Maneja los errores, por ejemplo, muestra un mensaje de error
+                alert('Error al asignar la cita: ' + error);
+            }
         });
+});
+
     });
 </script>

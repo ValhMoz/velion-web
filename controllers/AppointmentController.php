@@ -19,10 +19,6 @@ class AppointmentController
         return $this->appointmentModel->read('citas');
     }
 
-    // public function obtenerCitasHoy() {
-    //     return $this->appointmentModel->obtenerCitasHoy();
-    // }
-
     public function obtenerCitasUsuario($DNI, $iniciar, $articulos_x_pagina) {
         return $this->appointmentModel->obtenerCitasUsuario($DNI, $iniciar, $articulos_x_pagina);
     }
@@ -33,6 +29,53 @@ class AppointmentController
 
     public function obtenerListaFisioterapeutas() {
         return $this->appointmentModel->read('usuarios', 'rol = \'fisioterapeuta\'');
+    }
+
+    // public function asignarCita($tabla, $datos){
+    //     if($this->appointmentModel->insert($tabla, $datos)){
+    //         $_SESSION['alert'] = array('type' => 'success', 'message' => 'Cita añadida correctamente.');
+    //         header('Location: ../pages/appointmets.php');
+    //         exit();
+    //     } else {
+    //         // Dentro de la función añadirNuevoUsuario en UserController.php
+    //         $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido añadir la cita correctamente.');
+    //         header('Location: ../pages/appointmets.php');
+    //         exit();
+    //     }
+
+    // }
+
+    public function asignarCita(){
+        $_SESSION['alert'] = array('type' => 'success', 'message' => 'Cita añadida correctamente.');
+        header('Location: ../pages/appointmets.php');
+        exit();
+    }
+
+    public function editarCita(){
+        if($this->appointmentModel->update($tabla, $datos, $condicion)){
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Cita actualizada correctamente.');
+            header('Location: ../pages/appointmets.php');
+            exit();
+        } else {
+            // Dentro de la función añadirNuevoUsuario en UserController.php
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido actualizar la cita correctamente.');
+            header('Location: ../pages/appointmets.php');
+            exit();
+        }
+
+    }
+
+    public function eliminarCita(){
+        if($this->appointmentModel->delete($tabla, $condicion)){
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Cita eliminada correctamente.');
+            header('Location: ../pages/appointmets.php');
+            exit();
+        } else {
+            // Dentro de la función añadirNuevoUsuario en UserController.php
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido eliminar la cita correctamente.');
+            header('Location: ../pages/appointmets.php');
+            exit();
+        }
     }
 
 }

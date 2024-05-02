@@ -13,6 +13,10 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="../../assets/bootstrap-5.3/js/color-modes.js"></script>
     <script src="../../assets/custom/js/logout.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.7.0/main.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.7.0/main.min.js"></script>
 
     <style>
         .active {
@@ -116,6 +120,53 @@
 
         .bd-mode-toggle .dropdown-menu .active .bi {
             display: block !important;
+        }
+
+        /* Estilos adicionales para el calendario */
+        .calendar {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .calendar table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .calendar th,
+        .calendar td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .calendar th {
+            background-color: #f0f0f0;
+        }
+
+        .today {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .prev-month,
+        .next-month {
+            color: #ccc;
+            cursor: pointer;
+        }
+
+        .day {
+            cursor: pointer;
+        }
+
+        .tutorial {
+            margin-top: 5%;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #78eba8;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
         }
     </style>
 </head>

@@ -63,7 +63,7 @@ class MedicalHistoryModel extends BaseModel
         return $datos;
     }
 
-    public function obtenerInformesUsuario($DNI)
+    public function obtenerInforme($DNI)
     {
         $DNI = self::$conexion->real_escape_string($DNI);
 

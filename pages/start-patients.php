@@ -11,6 +11,7 @@ if ($rol == "administrador" ||  $rol == "fisioterapeuta") {
     exit();
 }
 
+$informe = $medHist->obtenerInforme($DNI);
 include_once 'includes/dashboard-patients.php';
 ?>
 
@@ -69,15 +70,19 @@ if (isset($_SESSION['alert'])) {
             <ul class="list-group">
                 <li class="list-group-item">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">Informe 1</h5>
-                        <small>Fecha: <?php echo($informe['fecha'])?></small>
+                        <h5 class="mb-2">Informe 1</h5>
+                        <small>Fecha: <?php echo $informe[0]['fecha']; ?></small>
                     </div>
-                    <p class="mb-1">Información sobre el informe 1.</p>
-                    <small>Nombre del paciente: <?php echo($informe['nombre_paciente'] .$informe['apellidos_paciente'])?></small>
-                    <small>Nombre del fisioterapeuta: <?php echo($informe['nombre_fisioterapeuta'] .$informe['apellidos_fisioterapeuta'] )?></small>
+                    <p class="mb-1">Información sobre el informe.</p>
+                    <div class="mb-0">
+                        <small>Nombre del paciente: <?php echo $informe[0]['nombre_paciente'] . " " . $informe[0]['apellidos_paciente']; ?></small>
+                    </div>
+                    <div class="mb-0">
+                        <small>Nombre del fisioterapeuta: <?php echo $informe[0]['nombre_fisioterapeuta'] . " " . $informe[0]['apellidos_fisioterapeuta']; ?></small>
+                    </div>
                     <div class="text-end mt-2">
-                        <form action="../scripts/descargar_informe.php" method="GET">
-                            <input type="hidden" name="id" value="<?php echo $factura['factura_id']; ?>">
+                        <form action="../scripts/medicalhistory_manager.php" method="GET">
+                            <input type="hidden" id="id" name="id" value="<?php echo $factura[0]['historial_id']; ?>">
                             <button type="submit" class="btn btn-success">Descargar</button>
                         </form>
                     </div>
@@ -86,6 +91,7 @@ if (isset($_SESSION['alert'])) {
         </div>
     </div>
 </div>
+
 
 </div>
 

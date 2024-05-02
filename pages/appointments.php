@@ -67,6 +67,14 @@ if (isset($_SESSION['alert'])) {
             <input type="date" class="form-control" id="">
         </div>
         <div class="col-auto">
+            <select class="form-select" id="estado" name="estado">
+                <option selected>Selecciona un estado</option>
+                <option value="programada">Programada</option>
+                <option value="realizada">Realizada</option>
+                <option value="cancelada">Cancelada</option>
+            </select>
+        </div>
+        <div class="col-auto">
             <button type="submit" class="btn btn-primary mb-3">Filtrar</button>
         </div>
     </form>
@@ -78,12 +86,13 @@ if (isset($_SESSION['alert'])) {
                     <thead>
                         <tr>
                             <th scope="col" style="width: 5%;">ID Pac.</th>
-                            <th scope="col" style="width: 15%;">Fecha</th>
-                            <th scope="col" style="width: 20%;">Paciente</th>
-                            <th scope="col" style="width: 20%;">Fisioterapeuta asociado</th>
+                            <th scope="col" style="width: 10%;">Fecha</th>
+                            <th scope="col" style="width: 10%;">Paciente</th>
+                            <th scope="col" style="width: 10%;">Contacto Pac.</th>
+                            <th scope="col" style="width: 10%;">Fisioterapeuta asociado</th>
                             <!-- <th scope="col" style="width: 10%;">Consulta</th> -->
                             <th scope="col" style="width: 10%;">Estado</th>
-                            <th scope="col" style="width: 5%;">Acciones</th>
+                            <th scope="col" style="width: 2%;">Acciones</th>
                         </tr>
                     </thead>
                     <?php foreach ($citasPaginadas as $cita) : ?>
@@ -91,6 +100,7 @@ if (isset($_SESSION['alert'])) {
                             <td><?php echo $cita['paciente_id']; ?></td>
                             <td><?php echo $cita['fecha_hora']; ?></td>
                             <td><?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?></td>
+                            <td><?php echo $cita['paciente_telefono']?></td>
                             <td><?php echo $cita['fisioterapeuta_nombre'] . " " . $cita['fisioterapeuta_apellidos'];  ?></td>
                             <!-- <td><?php echo $cita['sala_consulta']; ?></td> -->
                             <td><?php echo $cita['estado']; ?></td>

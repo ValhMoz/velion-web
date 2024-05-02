@@ -104,14 +104,18 @@ class MedicalHistoryController extends FPDF
         }
     }
 
-    public function obtenerInformesUsuario($DNI)
+    public function obtenerInformeUsuario($DNI)
     {
-        if (!$this->medicalhistoryModel->obtenerInformesUsuario($DNI)) {
+        if (!$this->medicalhistoryModel->obtenerInforme($DNI)) {
             $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ningún informe médico para el usuario seleccionado.');
             header("Location: ../pages/medical-history.php");
             exit();
         }
-        return ($this->medicalhistoryModel->obtenerInformesUsuario($DNI));
+        return ($this->medicalhistoryModel->obtenerInforme($DNI));
+    }
+
+    public function obtenerInforme($DNI){
+        return $this->medicalhistoryModel->obtenerInforme($DNI);
     }
 
     public function obtenerListaPacientes() {

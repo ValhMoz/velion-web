@@ -12,7 +12,7 @@ $medicalhistory = new MedicalHistoryController();
 // Manejar la búsqueda del historial médico
 if (isset($_POST['user_id'])) {
     $user_id = $_POST['user_id'];
-    $informe = $medicalhistory->obtenerInformesUsuario($user_id);
+    $informe = $medicalhistory->obtenerInformeUsuario($user_id);
 }
 
 $pacientes = $medicalhistory->obtenerListaPacientes();

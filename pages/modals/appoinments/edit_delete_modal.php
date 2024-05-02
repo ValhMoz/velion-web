@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Asignar Cita</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Editar Cita</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
             </div>
@@ -11,13 +11,13 @@
                 <!-- Pasos -->
                 <div id="paso1" class="pasos">
                     <h5>1. Selecciona un paciente</h5>
-                    <select name="" id="">
-                        <option value=""></option>
+                    <select class="form-select" id="">
+                        <option value="<?php echo $usuario['paciente_id']; ?>"><?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?></option>
                     </select>
                 </div>
                 <div id="paso2" class="pasos" style="display: none;">
                     <h5>2. Selecciona un fisioterapeuta</h5>
-                    <select name="" id="">
+                    <select class="form-select" name="" id="">
                         <option value=""></option>
                     </select>
                 </div>
@@ -91,18 +91,17 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>¿Deseas eliminar esta cita con ID: <?php echo $cita['cita_id']; ?>?</p>
+                <p>¿Deseas eliminar esta cita de <?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?>?</p>
             </div>
             <div class="modal-footer">
                 <form action="../scripts/user_manager.php" method="post">
-                    <input type="hidden" id="actionType" name="action" value="eliminar">
-                    <button type="submit" class="btn btn-danger">Eliminar cita</button>
+                    <input type="hidden" id="cita_id" name="cita_id" value=" <?php echo $cita['cita_id']?>">
+                    <button type="submit" class="btn btn-danger" id="btnEliminar">Eliminar cita</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
 
 <script>
     $(document).ready(function() {
@@ -135,5 +134,51 @@
                 pasoActual--;
             }
         });
+
+        $('#btnConfirmar').click(function() {
+            var pacienteId = $('#exampleDataList').val();
+            var fisioterapeutaId = $('#selectFisioterapeuta').val();
+            var fecha = $('#fecha_nacimiento').val();
+            var hora = $('input[name="hora"]:checked').val();
+
+            $.ajax({
+                type: 'POST',
+                url: '../../../scripts/appointment_manager.php',
+                data: {
+                    action: 'editar',
+                    paciente_id: pacienteId,
+                    fisioterapeuta_id: fisioterapeutaId,
+                    fecha: fecha,
+                    hora: hora
+                },
+                success: function(response) {
+                    $('#edit_<?php echo $cita['cita_id']; ?>').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    alert('Error al asignar la cita: ' + error);
+                }
+            });
+        });
+
+        $('#btnEliminar').click(function() {
+            var cita_id = $('#cita_id').val();
+
+            $.ajax({
+                type: 'POST',
+                url: '../../../scripts/appointment_manager.php',
+                data: {
+                    action: 'eliminar',
+                    cita_id: cita_id
+                },
+                success: function(response) {
+                    $('#delete_<?php echo $cita['cita_id']; ?>').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    alert('Error al asignar la cita: ' + error);
+                }
+            });
+        });
+
+
     });
 </script>
