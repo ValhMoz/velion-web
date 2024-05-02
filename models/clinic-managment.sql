@@ -62,11 +62,11 @@ VALUES
 ('345678901', 'Pedro', 'Gomez', '345678901', '1985-10-10', 'Plaza 789', 'Provincia 3', 'Ciudad 3', '34567', 'admin@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'administrador', 'hombre', NULL);
 
 -- Insertar datos de prueba para la tabla citas
-INSERT INTO citas (paciente_id, fisioterapeuta_id, fecha_hora, sala_consulta, estado)
+INSERT INTO citas (paciente_id, fisioterapeuta_id, fecha, hora, sala_consulta, estado)
 VALUES
-('123456789', '234567890', '2024-04-05 09:00:00', 'Sala 1', 'realizada'),
-('234567890', '345678901', '2024-04-06 10:00:00', 'Sala 2', 'programada'),
-('345678901', '123456789', '2024-04-07 11:00:00', 'Sala 3', 'cancelada');
+('123456789', '234567890', '2024-04-05', '09:00', 'Sala 1', 'realizada'),
+('234567890', '345678901', '2024-04-06', '10:00', 'Sala 2', 'programada'),
+('345678901', '123456789', '2024-04-07', '11:00','Sala 3', 'cancelada');
 
 -- Insertar datos de prueba para la tabla facturas
 INSERT INTO facturas (paciente_id, fecha_emision, descripcion, monto, estado)
