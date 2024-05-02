@@ -25,7 +25,7 @@ $n_botones_paginacion = ceil(count($citas)/($articulos_x_pagina));
 // }
 
 include_once './includes/dashboard-patients.php';
-include_once 'modals/appoinments/add_modal.php';
+include_once 'modals/appointments/add_modal.php';
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -53,8 +53,15 @@ if (isset($_SESSION['alert'])) {
 <div class="table-responsive small">
     <form class="row g-3">
         <div class="col-auto">
-            <label for="" class="visually-hidden">Filtro</label>
             <input type="date" class="form-control" id="">
+        </div>
+        <div class="col-auto">
+            <select class="form-select" id="estado" name="estado">
+                <option selected>Selecciona un estado</option>
+                <option value="programada">Programada</option>
+                <option value="realizada">Realizada</option>
+                <option value="cancelada">Cancelada</option>
+            </select>
         </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-primary mb-3">Filtrar</button>
@@ -75,8 +82,9 @@ if (isset($_SESSION['alert'])) {
                         <small>Nombre del paciente: <?php echo $cita['paciente_id'] ?></small>
                         <small>Nombre del fisioterapeuta: <?php echo $cita['fisioterapeuta_id'] ?></small>
                         <div class="text-end mt-2">
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_<?php echo $cita['cita_id']; ?>" data-action="eliminar">Cancelar cita</button>
-                            <?php include 'modals/appoinments/edit_delete_modal.php'; ?>
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit_<?php echo $cita['cita_id']; ?>">Modificar cita</button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_<?php echo $cita['cita_id']; ?>">Cancelar cita</button>
+                            <?php include 'modals/appointments/edit_delete_modal.php'; ?>
                         </div>
                     </li>
                 <?php endforeach; ?>

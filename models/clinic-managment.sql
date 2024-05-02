@@ -57,9 +57,9 @@ CREATE TABLE historial_medico (
 -- La contraseña está cifrada. Deberás escribir 12345678 en el formulario de inicio de sesión
 INSERT INTO usuarios (usuario_id, nombre, apellidos, telefono, fecha_nacimiento, direccion, provincia, municipio, cp, email, pass, rol, genero, sesiones_disponibles)
 VALUES
-('123456789', 'Juan', 'Pérez', '123456789', '1990-01-01', 'Calle 123', 'Provincia 1', 'Ciudad 1', '12345', 'juan@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'paciente', 'hombre', 5),
-('234567890', 'María', 'López', '234567890', '1995-05-05', 'Avenida 456', 'Provincia 2', 'Ciudad 2', '23456', 'maria@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'fisioterapeuta', 'mujer', 10),
-('345678901', 'Pedro', 'Gómez', '345678901', '1985-10-10', 'Plaza 789', 'Provincia 3', 'Ciudad 3', '34567', 'pedro@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'administrador', 'hombre', NULL);
+('123456789', 'Juan', 'Perez', '123456789', '1990-01-01', 'Calle 123', 'Provincia 1', 'Ciudad 1', '12345', 'patient@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'paciente', 'hombre', 5),
+('234567890', 'Maria', 'Lopez', '234567890', '1995-05-05', 'Avenida 456', 'Provincia 2', 'Ciudad 2', '23456', 'fisio@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'fisioterapeuta', 'mujer', 10),
+('345678901', 'Pedro', 'Gomez', '345678901', '1985-10-10', 'Plaza 789', 'Provincia 3', 'Ciudad 3', '34567', 'admin@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'administrador', 'hombre', NULL);
 
 -- Insertar datos de prueba para la tabla citas
 INSERT INTO citas (paciente_id, fisioterapeuta_id, fecha_hora, sala_consulta, estado)
@@ -71,13 +71,13 @@ VALUES
 -- Insertar datos de prueba para la tabla facturas
 INSERT INTO facturas (paciente_id, fecha_emision, descripcion, monto, estado)
 VALUES
-('123456789', '2024-04-01', 'Consulta médica', 50.00, 'pendiente'),
-('234567890', '2024-04-02', 'Terapia física', 75.00, 'pagada'),
-('345678901', '2024-04-03', 'Examen de diagnóstico', 100.00, 'pendiente');
+('123456789', '2024-04-01', 'Consulta medica', 50.00, 'pendiente'),
+('234567890', '2024-04-02', 'Terapia fisica', 75.00, 'pagada'),
+('345678901', '2024-04-03', 'Examen de diagnostico', 100.00, 'pendiente');
 
 -- Insertar datos de prueba para la tabla historial_medico
 INSERT INTO historial_medico (paciente_id, fisioterapeuta_id, fecha, descripcion, diagnostico, tratamiento, notas)
 VALUES
 ('123456789', '234567890', '2024-03-01', 'Paciente con dolor de espalda', 'Contractura muscular', 'Masajes y estiramientos', 'Reposo recomendado'),
-('234567890', '345678901', '2024-03-02', 'Paciente con esguince de tobillo', 'Esguince grado II', 'Terapia de frío y calor, ejercicios de rehabilitación', 'Evolución positiva'),
+('234567890', '345678901', '2024-03-02', 'Paciente con esguince de tobillo', 'Esguince grado II', 'Terapia de frío y calor, ejercicios de rehabilitacion', 'Evolucion positiva'),
 ('345678901', '123456789', '2024-03-03', 'Paciente con dolor de cuello', 'Contractura cervical', 'Masajes terapéuticos y ejercicios de estiramiento', 'Controlar postura durante actividades diarias');

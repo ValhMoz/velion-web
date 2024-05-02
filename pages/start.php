@@ -15,7 +15,7 @@ if ($rol == "paciente") {
                 <div class="tutorial">
                     <h4>Bienvenido</h4>
                     <p>Creado por: Sergio Física y Miguel Ortega</p>
-                    <p>Github: <a href="https://github.com/Z2V-LABS/clinic-managment">https://github.com/Z2V-LABS/clinic-managment</a></p>
+                    <p>Github: <a href="https://github.com/Z2V-LABS/clinic-managment-web">https://github.com/Z2V-LABS/clinic-managment-web</a></p>
                     <p>Uso básico: Navega entre las diferentes opciones del menu lateral izquierdo haciendo clic en los botones.</p>
                 </div>
                 <div class="calendar">

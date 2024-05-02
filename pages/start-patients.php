@@ -74,12 +74,8 @@ if (isset($_SESSION['alert'])) {
                         <small>Fecha: <?php echo $informe[0]['fecha']; ?></small>
                     </div>
                     <p class="mb-1">Información sobre el informe.</p>
-                    <div class="mb-0">
-                        <small>Nombre del paciente: <?php echo $informe[0]['nombre_paciente'] . " " . $informe[0]['apellidos_paciente']; ?></small>
-                    </div>
-                    <div class="mb-0">
-                        <small>Nombre del fisioterapeuta: <?php echo $informe[0]['nombre_fisioterapeuta'] . " " . $informe[0]['apellidos_fisioterapeuta']; ?></small>
-                    </div>
+                    <small>Nombre del paciente: <?php echo $informe[0]['nombre_paciente'] . " " . $informe[0]['apellidos_paciente']; ?></small>
+                    <small>Nombre del fisioterapeuta: <?php echo $informe[0]['nombre_fisioterapeuta'] . " " . $informe[0]['apellidos_fisioterapeuta']; ?></small>
                     <div class="text-end mt-2">
                         <form action="../scripts/medicalhistory_manager.php" method="GET">
                             <input type="hidden" id="id" name="id" value="<?php echo $factura[0]['historial_id']; ?>">

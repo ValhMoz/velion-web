@@ -83,7 +83,7 @@ if (isset($_SESSION['alert'])) {
                     <tbody>
                         <?php foreach ($facturasPaginadas as $factura) : ?>
                             <tr>
-                                <td><?php echo $factura['paciente_id']; ?></td>
+                                <td><?php echo $factura['factura_id']; ?></td>
                                 <td><?php echo $factura['nombre']; ?></td>
                                 <td><?php echo $factura['apellidos']; ?></td>
                                 <td><?php echo $factura['fecha_emision']; ?></td>

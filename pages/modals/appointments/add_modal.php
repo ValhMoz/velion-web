@@ -1,24 +1,29 @@
 <!-- Modal pedir cita -->
-<div class="modal fade" id="edit_<?php echo $cita['cita_id']; ?>" tabindex="-1" role="dialog" aria-labelledby="editarModal" aria-hidden="true">
+<div class="modal fade" id="AsignarCita" tabindex="-1" role="dialog" aria-labelledby="modalAsignarCita" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar Cita</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Asignar Cita</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
             </div>
             <div class="modal-body">
-                <!-- Pasos -->
                 <div id="paso1" class="pasos">
                     <h5>1. Selecciona un paciente</h5>
-                    <select class="form-select" id="">
-                        <option value="<?php echo $usuario['paciente_id']; ?>"><?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?></option>
-                    </select>
+                    <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Escribe aquí para buscar...">
+                    <datalist id="datalistOptions">
+                        <?php foreach ($pacientes as $paciente) : ?>
+                            <option value="<?php echo $paciente['usuario_id']; ?>"><?php echo $paciente['nombre'] . ' ' . $paciente['apellidos']; ?></option>
+                        <?php endforeach; ?>
+                    </datalist>
                 </div>
                 <div id="paso2" class="pasos" style="display: none;">
                     <h5>2. Selecciona un fisioterapeuta</h5>
-                    <select class="form-select" name="" id="">
-                        <option value=""></option>
+                    <select id="selectFisioterapeuta" class="form-select">
+                        <option value="">Selecciona un fisioterapeuta</option>
+                        <?php foreach ($fisioterapeutas as $fisioterapeuta) : ?>
+                            <option value="<?php echo $fisioterapeuta['usuario_id']; ?>"><?php echo $fisioterapeuta['nombre'] . ' ' . $fisioterapeuta['apellidos']; ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div id="paso3" class="pasos" style="display: none;">
@@ -82,27 +87,6 @@
     </div>
 </div>
 
-<!-- Modal eliminar cita -->
-<div class="modal fade" id="delete_<?php echo $cita['cita_id']; ?>" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Eliminar cita</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>¿Deseas eliminar esta cita de <?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?>?</p>
-            </div>
-            <div class="modal-footer">
-                <form action="../scripts/user_manager.php" method="post">
-                    <input type="hidden" id="cita_id" name="cita_id" value=" <?php echo $cita['cita_id']?>">
-                    <button type="submit" class="btn btn-danger" id="btnEliminar">Eliminar cita</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
     $(document).ready(function() {
         var pasoActual = 1;
@@ -136,49 +120,33 @@
         });
 
         $('#btnConfirmar').click(function() {
-            var pacienteId = $('#exampleDataList').val();
-            var fisioterapeutaId = $('#selectFisioterapeuta').val();
-            var fecha = $('#fecha_nacimiento').val();
-            var hora = $('input[name="hora"]:checked').val();
-
-            $.ajax({
-                type: 'POST',
-                url: '../../../scripts/appointment_manager.php',
-                data: {
-                    action: 'editar',
-                    paciente_id: pacienteId,
-                    fisioterapeuta_id: fisioterapeutaId,
-                    fecha: fecha,
-                    hora: hora
-                },
-                success: function(response) {
-                    $('#edit_<?php echo $cita['cita_id']; ?>').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    alert('Error al asignar la cita: ' + error);
-                }
-            });
+        // Recolecta los datos necesarios para la inserción
+        var pacienteId = $('#exampleDataList').val();
+        var fisioterapeutaId = $('#selectFisioterapeuta').val();
+        var fecha = $('#fecha_nacimiento').val();
+        var hora = $('input[name="hora"]:checked').val(); // Obtener la hora seleccionada
+        
+        // Realiza la inserción en la base de datos utilizando Ajax
+        $.ajax({
+            type: 'POST',
+            url: '../scripts/appointment_manager.php', // Archivo PHP para manejar la inserción en la base de datos
+            data: {
+                action: 'asignar',
+                // paciente_id: pacienteId,
+                // fisioterapeuta_id: fisioterapeutaId,
+                // fecha: fecha,
+                // hora: hora
+            },
+            success: function(response) {
+                // Maneja la respuesta del servidor, por ejemplo, muestra un mensaje de éxito
+                $('#AsignarCita').modal('hide');
+            },
+            error: function(xhr, status, error) {
+                // Maneja los errores, por ejemplo, muestra un mensaje de error
+                alert('Error al asignar la cita: ' + error);
+            }
         });
-
-        $('#btnEliminar').click(function() {
-            var cita_id = $('#cita_id').val();
-
-            $.ajax({
-                type: 'POST',
-                url: '../../../scripts/appointment_manager.php',
-                data: {
-                    action: 'eliminar',
-                    cita_id: cita_id
-                },
-                success: function(response) {
-                    $('#delete_<?php echo $cita['cita_id']; ?>').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    alert('Error al asignar la cita: ' + error);
-                }
-            });
-        });
-
+});
 
     });
 </script>

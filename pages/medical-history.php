@@ -51,20 +51,15 @@ include_once './includes/dashboard.php';
     </div>
 
     <!-- Formulario para buscar el historial médico -->
-    <form class="row mb-4" action="" method="post">
-        <div class="col md-9">
-            <input class="form-control" list="datalistOptions" id="user_id" name="user_id" placeholder="Escribe aquí para buscar...">
-            <datalist id="datalistOptions">
-                <?php foreach ($pacientes as $paciente) : ?>
-                    <option value="<?php echo $paciente['usuario_id']; ?>"><?php echo $paciente['nombre'] . ' ' . $paciente['apellidos']; ?></option>
-                <?php endforeach; ?>
-            </datalist>
-        </div>
-        <div class="col md-3">
-            <button type="submit" class="btn btn-primary">Buscar</button>
-        </div>
+    <form class="form input mb-3" action="" method="post">
+        <input class="form-control" list="datalistOptions" id="user_id" name="user_id" placeholder="Escribe aquí para buscar...">
+        <datalist id="datalistOptions">
+            <?php foreach ($pacientes as $paciente) : ?>
+                <option value="<?php echo $paciente['usuario_id']; ?>"><?php echo $paciente['nombre'] . ' ' . $paciente['apellidos']; ?></option>
+            <?php endforeach; ?>
+        </datalist>
+        <!-- <button type="submit" class="btn btn-primary">Buscar</button> -->
     </form>
-
 
     <?php if (isset($informe)) : ?>
         <!-- Información del informe -->

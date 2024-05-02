@@ -9,22 +9,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
 
     switch ($_POST['action']) {
         case 'asignar':
-
             // $datos = array(
-            //     'nombre' => $_POST["nombre"],
-            //     'apellidos' => $_POST["apellidos"],
-            //     'genero' => $_POST["genero"],
-            //     'telefono' => $_POST["telefono"],
-            //     'fecha_nacimiento' => $_POST["fecha_nacimiento"],
-            //     'direccion' => $_POST["direccion"],
-            //     'provincia' => $_POST["provincia"],
-            //     'municipio' => $_POST["municipio"],
-            //     'cp' => $_POST["cp"],
-            //     'email' => $_POST["email"],
-            //     'pass' => password_hash($_POST["pass"], PASSWORD_DEFAULT),
-            //     'rol' => $_POST["rol"]
+            //     'paciente_id' => $_POST["paciente_id"],
+            //     'fisioterapeuta_id' => $_POST["fisioterapeuta_id"],
+            //     'fecha' => $_POST["fecha"],
+            //     'hora' => $_POST["hora"],
             // );
-            $appointmentController->asignarCita();
+            echo('hola');
+            // $appointmentController->asignarCita();
 
             break;
 
@@ -37,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
             break;
 
         case 'eliminar':
+            echo('hola');
 
             break;
     }
