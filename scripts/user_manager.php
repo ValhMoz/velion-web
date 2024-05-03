@@ -48,13 +48,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
             );
 
             $condicion = "usuario_id = '" . $_POST["usuario_id"] . "'";
-
             $userController->editarUsuario($datos, $condicion);
             break;
 
         case 'eliminar_usuario':
             $datos = "usuario_id = '" . $_POST["usuario_id"] . "'";
-
             $userController->eliminarUsuario($datos);
             break;
 
@@ -64,8 +62,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
                 'pass' => password_hash($_POST["pass"], PASSWORD_DEFAULT)
             );
             $condicion = "usuario_id = '" . $_POST["usuario_id"] . "'";
-
             $userController->actualizarDatos($datos, $condicion);
             break;
+
+        case 'exportar':
+            $userController->exportarDatos();
+            break;
     }
+
+    // if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    //     $userController->exportarDatos();
+    //     exit();
+    // }
 }

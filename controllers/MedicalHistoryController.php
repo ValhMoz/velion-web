@@ -88,7 +88,7 @@ class MedicalHistoryController extends FPDF
         $pdf->MultiCell(0, 10, iconv('UTF-8', 'windows-1252', $observaciones));
 
         // Salida del PDF
-        $pdf->Output();
+        $pdf->Output('', '', true);
     }
 
     public function actualizarInformeMedico($datos, $condicion)

@@ -5,12 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel de Pacientes</title>
-  <link href="../../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">
-  <script src="../../assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
-  <script src="../../assets/custom/js/timeout.js"></script>
+  <link href="../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">
+  <script src="../assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/custom/js/timeout.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="../../assets/bootstrap-5.3/js/color-modes.js"></script>
-  <script src="../../assets/custom/js/logout.js"></script>
+  <script src="../assets/bootstrap-5.3/js/color-modes.js"></script>
+  <script src="../assets/custom/js/logout.js"></script>
 
 </head>
 

@@ -1,5 +1,6 @@
 <?php
 require_once '../models/UserModel.php';
+require '../assets/fpdf186/fpdf.php';
 
 class UserController
 {
@@ -73,9 +74,7 @@ class UserController
             $_SESSION['alert'] = array('type' => 'success', 'message' => 'No se ha podido eliminar el usuario correctamente.');
             header('Location: ../pages/users.php');
             exit();
-
         }
-
     }
 
     public function actualizarDatos($datos, $condicion)
@@ -87,5 +86,58 @@ class UserController
         } else {
             echo "No se ha podido completar el registro";
         }
+    }
+
+    public function exportarDatos()
+    {
+        // Instanciar un nuevo objeto FPDF
+        $pdf = new FPDF('L', 'mm', 'A4'); // Orientación horizontal, unidad de medida en mm, tamaño de página A4
+
+        // Agregar una nueva página al PDF
+        $pdf->AddPage();
+
+        // Definir el título del reporte
+        $pdf->SetFont('Arial', 'B', 16);
+        $pdf->Cell(0, 10, 'Reporte de Usuarios', 1, 1, 'C');
+
+        // Definir los encabezados de la tabla
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->SetFillColor(230, 230, 230);
+        $pdf->Cell(20, 10, 'ID', 1, 0, 'C');
+        $pdf->Cell(20, 10, 'Nombre', 1, 0, 'C');
+        $pdf->Cell(30, 10, 'Apellidos', 1, 0, 'C');
+        $pdf->Cell(30, 10, 'Telefono', 1, 0, 'C');
+        $pdf->Cell(30, 10, 'F. Nac.', 1, 0, 'C');
+        $pdf->Cell(40, 10, 'Direccion', 1, 0, 'C');
+        $pdf->Cell(30, 10, 'Provincia', 1, 0, 'C');
+        $pdf->Cell(30, 10, 'Municipio', 1, 0, 'C');
+        $pdf->Cell(20, 10, 'CP', 1, 0, 'C');
+        $pdf->Cell(40, 10, 'Email', 1, 0, 'C');
+        $pdf->Cell(20, 10, 'Rol', 1, 0, 'C');
+        $pdf->Cell(20, 10, 'Genero', 1, 0, 'C');
+        $pdf->Ln(); // Salto de línea para la siguiente fila
+
+        // Obtener los datos de los usuarios (ejemplo usando una consulta a BD)
+        $usuarios = $this->obtenerUsuarios(); // Suponiendo que 'obtenerUsuarios' devuelve un array de usuarios
+
+        // Recorrer los usuarios y mostrarlos en la tabla
+        $pdf->SetFont('Arial', '', 10);
+        foreach ($usuarios as $usuario) {
+            $pdf->Cell(20, 10, $usuario['usuario_id'], 1, 0, 'C');
+            $pdf->Cell(20, 10, $usuario['nombre'], 1, 0, 'L');
+            $pdf->Cell(30, 10, $usuario['apellidos'], 1, 0, 'L');
+            $pdf->Cell(30, 10, $usuario['telefono'], 1, 0, 'C');
+            $pdf->Cell(30, 10, $usuario['fecha_nacimiento'], 1, 0, 'C');
+            $pdf->Cell(40, 10, $usuario['direccion'], 1, 0, 'L');
+            $pdf->Cell(30, 10, $usuario['provincia'], 1, 0, 'L');
+            $pdf->Cell(30, 10, $usuario['municipio'], 1, 0, 'L');
+            $pdf->Cell(20, 10, $usuario['cp'], 1, 0, 'C');
+            $pdf->Cell(40, 10, $usuario['email'], 1, 0, 'L');
+            $pdf->Cell(20, 10, $usuario['rol'], 1, 0, 'C');
+            $pdf->Cell(20, 10, $usuario['genero'], 1, 0, 'C');
+        }
+
+        // Generar el archivo PDF y descargarlo
+        $pdf->Output('ReporteUsuarios.pdf', 'D', true); // 'D' para descargar, 'F' para guardar en el servidor
     }
 }

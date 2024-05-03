@@ -5,14 +5,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Panel de gestión</title>
-    <link href="../../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../assets/bootstrap-5.3/css/dashboard.css" rel="stylesheet">
-    <script src="../../assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
-    <script src="../../assets/bootstrap-5.3/js/dashboard.js"></script>
-    <script src="../../assets/custom/js/timeout.js"></script>
+    <link href="../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/bootstrap-5.3/css/dashboard.css" rel="stylesheet">
+    <script src="../assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/bootstrap-5.3/js/dashboard.js"></script>
+    <script src="../assets/custom/js/timeout.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="../../assets/bootstrap-5.3/js/color-modes.js"></script>
-    <script src="../../assets/custom/js/logout.js"></script>
+    <script src="../assets/bootstrap-5.3/js/color-modes.js"></script>
+    <script src="../assets/custom/js/logout.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.7.0/main.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -280,6 +280,43 @@
                                         <path d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1H3a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1H3a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1H3a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1H3a.5.5 0 0 1-.5-.5m8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5" />
                                     </svg>
                                     Facturas
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="invoices.php">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stopwatch" viewBox="0 0 16 16">
+                                        <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5z" />
+                                        <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64l.012-.013.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5M8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3" />
+                                    </svg>
+                                    Horarios
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="invoices.php">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-capsule" viewBox="0 0 16 16">
+                                        <path d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429z" />
+                                    </svg>
+                                    Especialidades
+                                </a>
+                            </li>
+                        </ul>
+
+                        <hr class="my-3">
+
+                        <ul class="nav flex-column mb-auto">
+                            <li class="nav-item">
+                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="settings.php">
+                                    <svg class="bi">
+                                        <use xlink:href="#gear-wide-connected" />
+                                    </svg>
+                                    Configuración </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" onclick="cerrarSesion()" class="nav-link d-flex align-items-center gap-2">
+                                    <svg class="bi">
+                                        <use xlink:href="#door-closed" />
+                                    </svg>
+                                    Cerrar Sesión
                                 </a>
                             </li>
                         </ul>
