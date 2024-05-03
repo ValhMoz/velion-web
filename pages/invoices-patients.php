@@ -3,7 +3,7 @@ include '../scripts/session_manager.php';
 include '../controllers/InvoiceController.php';
 $invoiceController = new InvoiceController();
 
-if ($rol == "administrador" ||  $rol == "fisioterapeuta") {
+if ($rol == "Administrador" ||  $rol == "Fisioterapeuta") {
     header("Location: 404.php");
     exit();
 }

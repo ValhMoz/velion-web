@@ -6,7 +6,7 @@ require_once '../controllers/AppointmentController.php';
 $medHist = new MedicalHistoryController();
 $app = new AppointmentController();
 
-if ($rol == "administrador" ||  $rol == "fisioterapeuta") {
+if ($rol == "Administrador" ||  $rol == "Fisioterapeuta") {
     header("Location: 404.php");
     exit();
 }

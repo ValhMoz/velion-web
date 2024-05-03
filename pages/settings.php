@@ -1,7 +1,7 @@
 <?php
 require_once '../scripts/session_manager.php';
 
-if ($rol == "administrador" ||  $rol == "fisioterapeuta") {
+if ($rol == "Administrador" ||  $rol == "Fisioterapeuta") {
     include_once './includes/dashboard.php';
 }else {
     include_once './includes/dashboard-patients.php';

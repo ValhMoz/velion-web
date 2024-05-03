@@ -1,6 +1,6 @@
 <?php
 require_once '../scripts/session_manager.php';
-if($rol == "administrador" ||  $rol == "fisioterapeuta")
+if($rol == "Administrador" ||  $rol == "Fisioterapeuta")
 {
     header("Location: 404.php");
     exit();

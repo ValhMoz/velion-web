@@ -4,7 +4,7 @@ require_once '../controllers/ScheduleController.php';
 
 $scheduleController = new ScheduleController();
 
-if ($rol == "paciente") {
+if ($rol == "Paciente") {
     header("Location: 404.php");
     exit();
 }

@@ -3,7 +3,7 @@ require_once '../scripts/session_manager.php';
 require_once '../controllers/AppointmentController.php';
 $appoinmentController = new AppointmentController();
 
-if ($rol == "administrador" ||  $rol == "fisioterapeuta") {
+if ($rol == "Administrador" ||  $rol == "Fisioterapeuta") {
     header("Location: 404.php");
     exit();
 }

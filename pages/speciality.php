@@ -4,7 +4,7 @@ require_once '../controllers/SpecialityController.php';
 
 $specialityController = new SpecialityController();
 
-if ($rol == "paciente") {
+if ($rol == "Paciente") {
     header("Location: 404.php");
     exit();
 }

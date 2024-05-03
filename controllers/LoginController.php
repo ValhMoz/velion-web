@@ -32,7 +32,7 @@ class LoginController
                 $_SESSION['cp'] = $usuario[0]['cp'];
                 $_SESSION['sesiones_disponibles'] = $usuario[0]['sesiones_disponibles'];
 
-                if ($usuario[0]['rol'] == 'administrador' || $usuario[0]['rol'] == 'fisioterapeuta') {
+                if ($usuario[0]['rol'] == 'Administrador' || $usuario[0]['rol'] == 'Fisioterapeuta') {
                     header('Location: ../pages/start.php');
                     exit();
                 } else {

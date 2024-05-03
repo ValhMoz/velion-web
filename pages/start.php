@@ -2,7 +2,7 @@
 require_once '../scripts/session_manager.php';
 include_once './includes/dashboard.php';
 
-if ($rol == "paciente") {
+if ($rol == "Paciente") {
     header("Location: 404.php");
     exit();
 }

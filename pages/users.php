@@ -4,7 +4,7 @@ require_once '../controllers/UserController.php';
 
 $userController = new UserController();
 
-if ($rol == "paciente") {
+if ($rol == "Paciente") {
     header("Location: 404.php");
     exit();
 }
