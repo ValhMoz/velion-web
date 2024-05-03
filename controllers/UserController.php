@@ -92,52 +92,62 @@ class UserController
     {
         // Instanciar un nuevo objeto FPDF
         $pdf = new FPDF('L', 'mm', 'A4'); // Orientación horizontal, unidad de medida en mm, tamaño de página A4
-
+    
         // Agregar una nueva página al PDF
         $pdf->AddPage();
 
+        // Definir el alias para el total de páginas
+        // $pdf->AliasNbPages();
+    
         // Definir el título del reporte
-        $pdf->SetFont('Arial', 'B', 16);
+        $pdf->SetFont('Arial', 'B', 11);
         $pdf->Cell(0, 10, 'Reporte de Usuarios', 1, 1, 'C');
-
+    
         // Definir los encabezados de la tabla
-        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->SetFont('Arial', 'B', 8); // Cambiar el tamaño de la letra
         $pdf->SetFillColor(230, 230, 230);
-        $pdf->Cell(20, 10, 'ID', 1, 0, 'C');
-        $pdf->Cell(20, 10, 'Nombre', 1, 0, 'C');
-        $pdf->Cell(30, 10, 'Apellidos', 1, 0, 'C');
-        $pdf->Cell(30, 10, 'Telefono', 1, 0, 'C');
-        $pdf->Cell(30, 10, 'F. Nac.', 1, 0, 'C');
-        $pdf->Cell(40, 10, 'Direccion', 1, 0, 'C');
-        $pdf->Cell(30, 10, 'Provincia', 1, 0, 'C');
-        $pdf->Cell(30, 10, 'Municipio', 1, 0, 'C');
-        $pdf->Cell(20, 10, 'CP', 1, 0, 'C');
-        $pdf->Cell(40, 10, 'Email', 1, 0, 'C');
-        $pdf->Cell(20, 10, 'Rol', 1, 0, 'C');
-        $pdf->Cell(20, 10, 'Genero', 1, 0, 'C');
+        $pdf->Cell(17, 10, 'ID', 1, 0, 'C'); // Reducir la anchura de la celda
+        $pdf->Cell(25, 10, 'Nombre', 1, 0, 'C'); // Ajustar la anchura de la celda
+        $pdf->Cell(25, 10, 'Apellidos', 1, 0, 'C'); // Ajustar la anchura de la celda
+        $pdf->Cell(20, 10, 'Telefono', 1, 0, 'C'); // Ajustar la anchura de la celda
+        $pdf->Cell(25, 10, 'F. Nac.', 1, 0, 'C'); // Ajustar la anchura de la celda
+        $pdf->Cell(40, 10, 'Direccion', 1, 0, 'C'); // Ajustar la anchura de la celda
+        $pdf->Cell(20, 10, 'Provincia', 1, 0, 'C'); // Ajustar la anchura de la celda
+        $pdf->Cell(20, 10, 'Municipio', 1, 0, 'C'); // Ajustar la anchura de la celda
+        $pdf->Cell(15, 10, 'CP', 1, 0, 'C'); // Reducir la anchura de la celda
+        $pdf->Cell(35, 10, 'Email', 1, 0, 'C'); // Ajustar la anchura de la celda
+        $pdf->Cell(20, 10, 'Rol', 1, 0, 'C'); // Reducir la anchura de la celda
+        $pdf->Cell(15, 10, 'Genero', 1, 0, 'C'); // Reducir la anchura de la celda
         $pdf->Ln(); // Salto de línea para la siguiente fila
-
+    
         // Obtener los datos de los usuarios (ejemplo usando una consulta a BD)
         $usuarios = $this->obtenerUsuarios(); // Suponiendo que 'obtenerUsuarios' devuelve un array de usuarios
-
+    
         // Recorrer los usuarios y mostrarlos en la tabla
-        $pdf->SetFont('Arial', '', 10);
+        $pdf->SetFont('Arial', '', 8);
         foreach ($usuarios as $usuario) {
-            $pdf->Cell(20, 10, $usuario['usuario_id'], 1, 0, 'C');
-            $pdf->Cell(20, 10, $usuario['nombre'], 1, 0, 'L');
-            $pdf->Cell(30, 10, $usuario['apellidos'], 1, 0, 'L');
-            $pdf->Cell(30, 10, $usuario['telefono'], 1, 0, 'C');
-            $pdf->Cell(30, 10, $usuario['fecha_nacimiento'], 1, 0, 'C');
+            $pdf->Cell(17, 10, $usuario['usuario_id'], 1, 0, 'C');
+            $pdf->Cell(25, 10, $usuario['nombre'], 1, 0, 'L');
+            $pdf->Cell(25, 10, $usuario['apellidos'], 1, 0, 'L');
+            $pdf->Cell(20, 10, $usuario['telefono'], 1, 0, 'C');
+            $pdf->Cell(25, 10, $usuario['fecha_nacimiento'], 1, 0, 'C');
             $pdf->Cell(40, 10, $usuario['direccion'], 1, 0, 'L');
-            $pdf->Cell(30, 10, $usuario['provincia'], 1, 0, 'L');
-            $pdf->Cell(30, 10, $usuario['municipio'], 1, 0, 'L');
-            $pdf->Cell(20, 10, $usuario['cp'], 1, 0, 'C');
-            $pdf->Cell(40, 10, $usuario['email'], 1, 0, 'L');
+            $pdf->Cell(20, 10, $usuario['provincia'], 1, 0, 'L');
+            $pdf->Cell(20, 10, $usuario['municipio'], 1, 0, 'L');
+            $pdf->Cell(15, 10, $usuario['cp'], 1, 0, 'C');
+            $pdf->Cell(35, 10, $usuario['email'], 1, 0, 'L');
             $pdf->Cell(20, 10, $usuario['rol'], 1, 0, 'C');
-            $pdf->Cell(20, 10, $usuario['genero'], 1, 0, 'C');
+            $pdf->Cell(15, 10, $usuario['genero'], 1, 0, 'C');
+            $pdf->Ln(); // Salto de línea para la siguiente fila
         }
 
+        // Crear el footer en cada página
+        // $pdf->SetFont('Arial', '', 8);
+        // $pdf->SetY(-15); // Posicionamiento vertical del footer (1.5 cm desde el final)
+        // $pdf->Cell(0, 10, 'Pagina ' . $pdf->PageNo() . 'de {nb}', 0, 0, 'C'); // Page No. and Total Pages
+            
         // Generar el archivo PDF y descargarlo
         $pdf->Output('ReporteUsuarios.pdf', 'D', true); // 'D' para descargar, 'F' para guardar en el servidor
     }
+    
 }

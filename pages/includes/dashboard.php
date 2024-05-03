@@ -40,12 +40,6 @@
             margin-right: 1em;
         }
 
-        .config-buttons {
-            position: fixed;
-            bottom: 5%;
-            width: 100%;
-        }
-
         .bd-placeholder-img {
             font-size: 1.125rem;
             text-anchor: middle;
@@ -283,7 +277,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="invoices.php">
+                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="schedule.php">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stopwatch" viewBox="0 0 16 16">
                                         <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5z" />
                                         <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64l.012-.013.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5M8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3" />
@@ -292,7 +286,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="invoices.php">
+                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="speciality.php">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-capsule" viewBox="0 0 16 16">
                                         <path d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429z" />
                                     </svg>
@@ -304,23 +298,6 @@
                         <hr class="my-3">
 
                         <ul class="nav flex-column mb-auto">
-                            <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="settings.php">
-                                    <svg class="bi">
-                                        <use xlink:href="#gear-wide-connected" />
-                                    </svg>
-                                    Configuración </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" onclick="cerrarSesion()" class="nav-link d-flex align-items-center gap-2">
-                                    <svg class="bi">
-                                        <use xlink:href="#door-closed" />
-                                    </svg>
-                                    Cerrar Sesión
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="nav flex-column mb-auto config-buttons">
                             <li class="nav-item">
                                 <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="settings.php">
                                     <svg class="bi">

@@ -3,6 +3,7 @@ CREATE TABLE usuarios (
     usuario_id VARCHAR(9) PRIMARY KEY,
     nombre VARCHAR(255),
     apellidos VARCHAR(255),
+    especialidad INT,
     telefono VARCHAR(100),
     fecha_nacimiento DATE,
     direccion VARCHAR(100),
@@ -11,9 +12,11 @@ CREATE TABLE usuarios (
     cp VARCHAR(7),
     email VARCHAR(100) UNIQUE,
     pass VARCHAR(255),
-    rol ENUM('administrador', 'paciente', 'fisioterapeuta'),
+    rol ENUM('Administrador', 'Paciente', 'Fisioterapeuta'),
     genero ENUM('hombre', 'mujer', 'otro'),
     sesiones_disponibles INT
+    FOREIGN KEY (especialidad) REFERENCES especialidades(id),
+
 );
 
 -- Tabla para almacenar información de citas
@@ -24,7 +27,7 @@ CREATE TABLE citas (
     fecha_hora DATETIME,
     hora TIME,
     sala_consulta VARCHAR(50),
-    estado ENUM('programada', 'cancelada', 'realizada'),
+    estado ENUM('Programada', 'Cancelada', 'Realizada'),
     FOREIGN KEY (paciente_id) REFERENCES usuarios(usuario_id),
     FOREIGN KEY (fisioterapeuta_id) REFERENCES usuarios(usuario_id)
 );
@@ -36,7 +39,7 @@ CREATE TABLE facturas (
     fecha_emision DATE,
     descripcion VARCHAR(100),
     monto DECIMAL(10, 2),
-    estado ENUM('pendiente', 'pagada'),
+    estado ENUM('Pendiente', 'Pagada'),
     FOREIGN KEY (paciente_id) REFERENCES usuarios(usuario_id)
 );
 
@@ -52,6 +55,20 @@ CREATE TABLE historial_medico (
     FOREIGN KEY (paciente_id) REFERENCES usuarios(usuario_id),
     FOREIGN KEY (fisioterapeuta_id) REFERENCES usuarios(usuario_id)
 );
+
+CREATE TABLE horarios (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre varchar(30),
+  estado ENUM('Activo', 'Pendiente', 'Cancelado'),
+  ult_modificacion timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+);
+
+CREATE TABLE especialidades (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  descripcion varchar(255),
+  fecha timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+);
+
 
 -- Insertar datos de prueba para la tabla usuarios
 -- La contraseña está cifrada. Deberás escribir 12345678 en el formulario de inicio de sesión
@@ -81,3 +98,41 @@ VALUES
 ('123456789', '234567890', '2024-03-01', 'Paciente con dolor de espalda', 'Contractura muscular', 'Masajes y estiramientos', 'Reposo recomendado'),
 ('234567890', '345678901', '2024-03-02', 'Paciente con esguince de tobillo', 'Esguince grado II', 'Terapia de frío y calor, ejercicios de rehabilitacion', 'Evolucion positiva'),
 ('345678901', '123456789', '2024-03-03', 'Paciente con dolor de cuello', 'Contractura cervical', 'Masajes terapéuticos y ejercicios de estiramiento', 'Controlar postura durante actividades diarias');
+
+INSERT INTO especialidades (descripcion) VALUES
+('Fisioterapia Deportiva'),
+('Fisioterapia Neurológica'),
+('Fisioterapia Respiratoria'),
+('Fisioterapia Pediátrica'),
+('Fisioterapia Geriátrica'),
+('Fisioterapia Ortopédica'),
+('Fisioterapia Cardiovascular'),
+('Fisioterapia Oncológica'),
+('Fisioterapia del Suelo Pélvico'),
+('Fisioterapia Musculoesquelética'),
+('Fisioterapia Acuática (Hidroterapia)'),
+('Fisioterapia Manual'),
+('Fisioterapia Deportiva Adaptada'),
+('Fisioterapia del Dolor'),
+('Fisioterapia Vestibular'),
+('Fisioterapia en Salud Mental'),
+('Fisioterapia Dermatofuncional'),
+('Fisioterapia en Disfunciones Temporomandibulares'),
+('Fisioterapia en Traumatología y Cirugía Ortopédica'),
+('Fisioterapia en Salud de la Mujer (Maternidad y Postparto)');
+
+INSERT INTO horarios (nombre, estado) VALUES
+('Lunes Mañana', 'Activo'),
+('Lunes Tarde', 'Activo'),
+('Martes Mañana', 'Activo'),
+('Martes Tarde', 'Activo'),
+('Miércoles Mañana', 'Activo'),
+('Miércoles Tarde', 'Activo'),
+('Jueves Mañana', 'Activo'),
+('Jueves Tarde', 'Activo'),
+('Viernes Mañana', 'Activo'),
+('Viernes Tarde', 'Activo'),
+('Sábado Mañana', 'Activo'),
+('Sábado Tarde', 'Activo'),
+('Domingo Mañana', 'Activo'),
+('Domingo Tarde', 'Activo');

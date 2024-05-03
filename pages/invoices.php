@@ -88,7 +88,25 @@ if (isset($_SESSION['alert'])) {
                                 <td><?php echo $factura['apellidos']; ?></td>
                                 <td><?php echo $factura['fecha_emision']; ?></td>
                                 <td><?php echo $factura['descripcion']; ?></td>
-                                <td><?php echo $factura['estado']; ?></td>
+                                <td>
+                                    <?php
+                                    $estado = $factura['estado'];
+
+                                    switch ($estado) {
+                                        case 'Pendiente':
+                                            $text_gb_class = 'text-bg-warning';
+                                            break;
+                                        case 'Pagada':
+                                            $text_gb_class = 'text-bg-success';
+                                            break;
+                                        default:
+                                            $text_gb_class = 'text-bg-warning';
+                                    }
+                                    ?>
+                                    <span class="badge <?php echo $text_gb_class; ?>">
+                                        <?php echo $estado; ?>
+                                    </span>
+                                </td>
                                 <td><?php echo $factura['monto']; ?>€</td>
                                 <td>
                                     <form style="width: fit-content;" action="../../scripts/invoice_manager.php" method="GET">
