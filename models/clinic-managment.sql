@@ -3,7 +3,6 @@ CREATE TABLE usuarios (
     usuario_id VARCHAR(9) PRIMARY KEY,
     nombre VARCHAR(255),
     apellidos VARCHAR(255),
-    especialidad INT,
     telefono VARCHAR(100),
     fecha_nacimiento DATE,
     direccion VARCHAR(100),
@@ -15,8 +14,6 @@ CREATE TABLE usuarios (
     rol ENUM('Administrador', 'Paciente', 'Fisioterapeuta'),
     genero ENUM('hombre', 'mujer', 'otro'),
     sesiones_disponibles INT
-    FOREIGN KEY (especialidad) REFERENCES especialidades(id),
-
 );
 
 -- Tabla para almacenar información de citas
