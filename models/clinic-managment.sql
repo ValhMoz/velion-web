@@ -1,3 +1,9 @@
+CREATE TABLE especialidades (
+  especialidad_id INT AUTO_INCREMENT PRIMARY KEY,
+  descripcion varchar(255),
+  fecha timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+);
+
 -- Tabla para almacenar información de usuarios
 CREATE TABLE usuarios (
     usuario_id VARCHAR(9) PRIMARY KEY,
@@ -13,7 +19,16 @@ CREATE TABLE usuarios (
     pass VARCHAR(255),
     rol ENUM('Administrador', 'Paciente', 'Fisioterapeuta'),
     genero ENUM('hombre', 'mujer', 'otro'),
-    sesiones_disponibles INT
+    especialidad INT,
+    sesiones_disponibles INT,
+    FOREIGN KEY (especialidad) REFERENCES especialidades(especialidad_id)
+);
+
+CREATE TABLE horarios (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre varchar(30),
+  estado ENUM('Activo', 'Pendiente', 'Cancelado'),
+  ult_modificacion timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 );
 
 -- Tabla para almacenar información de citas
@@ -29,22 +44,30 @@ CREATE TABLE citas (
     FOREIGN KEY (fisioterapeuta_id) REFERENCES usuarios(usuario_id)
 );
 
+CREATE TABLE productos (
+  producto_id INT AUTO_INCREMENT PRIMARY KEY,
+  descripcion varchar(255),
+  monto INT,
+  fecha timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+);
+
 -- Tabla para almacenar información de facturas
 CREATE TABLE facturas (
     factura_id INT AUTO_INCREMENT PRIMARY KEY,
     paciente_id VARCHAR(9),
     fecha_emision DATE,
-    descripcion VARCHAR(100),
-    monto DECIMAL(10, 2),
+    producto INT,
     estado ENUM('Pendiente', 'Pagada'),
-    FOREIGN KEY (paciente_id) REFERENCES usuarios(usuario_id)
+    FOREIGN KEY (paciente_id) REFERENCES usuarios(usuario_id),
+    FOREIGN KEY (producto) REFERENCES productos(producto_id)
+
 );
 
 CREATE TABLE historial_medico (
     id INT AUTO_INCREMENT PRIMARY KEY,
     paciente_id VARCHAR(9),
     fisioterapeuta_id VARCHAR(9),
-    fecha DATE,
+    fecha DATETIME,
     descripcion TEXT,
     diagnostico TEXT,
     tratamiento TEXT,
@@ -53,23 +76,10 @@ CREATE TABLE historial_medico (
     FOREIGN KEY (fisioterapeuta_id) REFERENCES usuarios(usuario_id)
 );
 
-CREATE TABLE horarios (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre varchar(30),
-  estado ENUM('Activo', 'Pendiente', 'Cancelado'),
-  ult_modificacion timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-);
-
-CREATE TABLE especialidades (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  descripcion varchar(255),
-  fecha timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-);
-
 
 -- Insertar datos de prueba para la tabla usuarios
 -- La contraseña está cifrada. Deberás escribir 12345678 en el formulario de inicio de sesión
-INSERT INTO usuarios (usuario_id, nombre, apellidos, telefono, fecha_nacimiento, direccion, provincia, municipio, cp, email, pass, rol, genero, sesiones_disponibles)
+INSERT INTO usuarios (usuario_id, nombre, apellidos, telefono, fecha_nacimiento, direccion, provincia, municipio, cp, email, pass, rol, genero, especialidad, sesiones_disponibles)
 VALUES
 ('123456789', 'Juan', 'Perez', '123456789', '1990-01-01', 'Calle 123', 'Provincia 1', 'Ciudad 1', '12345', 'patient@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'paciente', 'hombre', 5),
 ('234567890', 'Maria', 'Lopez', '234567890', '1995-05-05', 'Avenida 456', 'Provincia 2', 'Ciudad 2', '23456', 'fisio@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'fisioterapeuta', 'mujer', 10),
