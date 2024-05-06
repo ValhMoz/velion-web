@@ -20,16 +20,30 @@ $usuarios = $userController->obtenerUsuarios();
 
 $iniciar = ($_GET['pagina'] - 1) * $articulos_x_pagina;
 
-// Obtener el valor del filtro, si está presente en la URL
+// Obtener el valor de los filtros, si están presentes en el formulario
 $filtro_usuario_id = isset($_POST['usuario_id']) ? $_POST['usuario_id'] : '';
+$filtro_rol = isset($_POST['rol']) ? $_POST['rol'] : '';
 
-
-// Obtener usuarios aplicando el filtro si es necesario
-if (!empty($filtro_usuario_id)) {
-    $usuariosPaginados = $userController->obtenerUsuariosPorID($filtro_usuario_id);
+// Obtener usuarios aplicando los filtros si es necesario
+if (!empty($filtro_usuario_id) || !empty($filtro_rol)) {
+    // Si se aplica al menos un filtro
+    $usuariosPaginados = $userController->buscarUsuarios($filtro_usuario_id, $filtro_rol);
 } else {
+    // Si no se aplican filtros, obtener usuarios paginados
     $usuariosPaginados = $userController->obtenerUsuariosPaginados($iniciar, $articulos_x_pagina);
 }
+
+
+// // Obtener el valor del filtro, si está presente en la URL
+// $filtro_usuario_id = isset($_POST['usuario_id']) ? $_POST['usuario_id'] : '';
+
+
+// // Obtener usuarios aplicando el filtro si es necesario
+// if (!empty($filtro_usuario_id)) {
+//     $usuariosPaginados = $userController->obtenerUsuariosPorID($filtro_usuario_id);
+// } else {
+//     $usuariosPaginados = $userController->obtenerUsuariosPaginados($iniciar, $articulos_x_pagina);
+// }
 
 $n_botones_paginacion = ceil(count($usuarios) / ($articulos_x_pagina));
 
@@ -90,7 +104,25 @@ if (isset($_SESSION['alert'])) {
 
 <div class="table-responsive small">
 
-    <form class="row g-3" method="post">
+    <form class="row g-3" method="post" action="">
+        <div class="col-auto">
+            <input type="text" class="form-control" id="usuario_id" name="usuario_id" placeholder="Filtrar por ID...">
+        </div>
+        <div class="col-auto">
+            <select class="form-select" id="rol" name="rol" aria-label="Selecciona tu rol">
+                <option selected value="">Selecciona tu rol</option>
+                <option value="administrador">Administrador</option>
+                <option value="paciente">Paciente</option>
+                <option value="fisioterapeuta">Fisioterapeuta</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Filtrar</button>
+        </div>
+    </form>
+
+
+    <!-- <form class="row g-3" method="post">
         <div class="col-auto">
             <input type="text" class="form-control" id="usuario_id" name="usuario_id" placeholder="Filtrar por ID...">
         </div>
@@ -105,7 +137,7 @@ if (isset($_SESSION['alert'])) {
         <div class="col-auto">
             <button type="submit" class="btn btn-primary mb-3">Filtrar</button>
         </div>
-    </form>
+    </form> -->
 
     <div class="row">
         <!-- Aquí se mostrarán los usuarios en forma de tabla -->

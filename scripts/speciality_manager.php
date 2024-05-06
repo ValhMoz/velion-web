@@ -40,5 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
             $condicion = "usuario_id = '" . $_POST["usuario_id"] . "'";
             $userController->actualizarDatos($datos, $condicion);
             break;
+        case 'exportar':
+            $specialityController->exportarDatos();
+            break;
     }
 }

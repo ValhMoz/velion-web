@@ -44,6 +44,30 @@ class UserModel extends BaseModel
         return $usuarios;
     }
 
+    public function obtenerUsuariosPorRol($rol)
+    {
+        $sql = "SELECT * FROM `usuarios` WHERE rol = ?";
+        $stmt = self::$conexion->prepare($sql);
+        $stmt->bind_param("s", $rol);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $usuarios = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $usuarios;
+    }
+
+    public function buscarUsuariosPorIDyRol($usuario_id, $rol)
+    {
+        $sql = "SELECT * FROM `usuarios` WHERE usuario_id = ?, rol = ?";
+        $stmt = self::$conexion->prepare($sql);
+        $stmt->bind_param("s", $usuario_id, $rol);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $usuarios = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $usuarios;
+    }
+
     public function actualizarUsuario($usuario_id, $datos)
     {
         $sql = "UPDATE `usuarios` SET nombre = ?, apellidos = ?, telefono = ?, fecha_nacimiento = ?, direccion = ?, provincia = ?, municipio = ?, cp = ?, email = ?, pass = ?, rol = ?, genero = ? WHERE usuario_id = ?";

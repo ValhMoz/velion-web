@@ -21,18 +21,49 @@ class UserController
         return $this->usuarioModel->read('usuarios');
     }
 
-    public function obtenerUsuariosPorID($usuario_id)
+    public function buscarUsuarios($usuario_id, $rol)
     {
-        $usuarioBuscado = $this->usuarioModel->obtenerUsuariosPorID($usuario_id);
-
-        if ($usuarioBuscado) {
-            return $usuarioBuscado;
+        // Verificar si se está aplicando algún filtro
+        if (!empty($usuario_id) && !empty($rol)) {
+            // Si se están aplicando ambos filtros
+            $usuariosFiltrados = $this->usuarioModel->buscarUsuariosPorIDyRol($usuario_id, $rol);
+        } elseif (!empty($usuario_id)) {
+            // Si solo se está aplicando el filtro por ID
+            $usuariosFiltrados = $this->usuarioModel->obtenerUsuariosPorID($usuario_id);
+        } elseif (!empty($rol)) {
+            // Si solo se está aplicando el filtro por rol
+            $usuariosFiltrados = $this->usuarioModel->obtenerUsuariosPorRol($rol);
         } else {
+            // Si no se aplica ningún filtro, redirigir con un mensaje de alerta
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha aplicado ningún filtro.');
+            header('Location: ../pages/users.php');
+            exit();
+        }
+
+        // Verificar si se encontraron usuarios
+        if (!empty($usuariosFiltrados)) {
+            return $usuariosFiltrados;
+        } else {
+            // Si no se encontraron usuarios, mostrar mensaje de alerta
             $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ningún usuario con los criterios seleccionados.');
             header('Location: ../pages/users.php');
             exit();
         }
     }
+
+
+    // public function obtenerUsuariosPorID($usuario_id)
+    // {
+    //     $usuarioBuscado = $this->usuarioModel->obtenerUsuariosPorID($usuario_id);
+
+    //     if ($usuarioBuscado) {
+    //         return $usuarioBuscado;
+    //     } else {
+    //         $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ningún usuario con los criterios seleccionados.');
+    //         header('Location: ../pages/users.php');
+    //         exit();
+    //     }
+    // }
 
     public function añadirNuevoUsuario($datos, $datos_historial)
     {
@@ -92,17 +123,17 @@ class UserController
     {
         // Instanciar un nuevo objeto FPDF
         $pdf = new FPDF('L', 'mm', 'A4'); // Orientación horizontal, unidad de medida en mm, tamaño de página A4
-    
+
         // Agregar una nueva página al PDF
         $pdf->AddPage();
 
         // Definir el alias para el total de páginas
         // $pdf->AliasNbPages();
-    
+
         // Definir el título del reporte
         $pdf->SetFont('Arial', 'B', 11);
         $pdf->Cell(0, 10, 'Reporte de Usuarios', 1, 1, 'C');
-    
+
         // Definir los encabezados de la tabla
         $pdf->SetFont('Arial', 'B', 8); // Cambiar el tamaño de la letra
         $pdf->SetFillColor(230, 230, 230);
@@ -119,10 +150,10 @@ class UserController
         $pdf->Cell(20, 10, 'Rol', 1, 0, 'C'); // Reducir la anchura de la celda
         $pdf->Cell(15, 10, 'Genero', 1, 0, 'C'); // Reducir la anchura de la celda
         $pdf->Ln(); // Salto de línea para la siguiente fila
-    
+
         // Obtener los datos de los usuarios (ejemplo usando una consulta a BD)
         $usuarios = $this->obtenerUsuarios(); // Suponiendo que 'obtenerUsuarios' devuelve un array de usuarios
-    
+
         // Recorrer los usuarios y mostrarlos en la tabla
         $pdf->SetFont('Arial', '', 8);
         foreach ($usuarios as $usuario) {
@@ -145,9 +176,8 @@ class UserController
         // $pdf->SetFont('Arial', '', 8);
         // $pdf->SetY(-15); // Posicionamiento vertical del footer (1.5 cm desde el final)
         // $pdf->Cell(0, 10, 'Pagina ' . $pdf->PageNo() . 'de {nb}', 0, 0, 'C'); // Page No. and Total Pages
-            
+
         // Generar el archivo PDF y descargarlo
         $pdf->Output('ReporteUsuarios.pdf', 'D', true); // 'D' para descargar, 'F' para guardar en el servidor
     }
-    
 }

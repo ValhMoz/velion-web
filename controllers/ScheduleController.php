@@ -79,8 +79,10 @@ class ScheduleController
 
     public function exportarDatos()
     {
+        $horarios = $this->scheduleModel->read('horarios');
+    
         // Instanciar un nuevo objeto FPDF
-        $pdf = new FPDF('L', 'mm', 'A4'); // Orientación horizontal, unidad de medida en mm, tamaño de página A4
+        $pdf = new FPDF(); // Orientación horizontal, unidad de medida en mm, tamaño de página A4
     
         // Agregar una nueva página al PDF
         $pdf->AddPage();
@@ -90,16 +92,15 @@ class ScheduleController
     
         // Definir el título del reporte
         $pdf->SetFont('Arial', 'B', 11);
-        $pdf->Cell(0, 10, 'Reporte de Usuarios', 1, 1, 'C');
+        $pdf->Cell(0, 10, 'Reporte de Horarios', 1, 1, 'C');
     
         // Definir los encabezados de la tabla
         $pdf->SetFont('Arial', 'B', 8); // Cambiar el tamaño de la letra
         $pdf->SetFillColor(230, 230, 230);
-        $pdf->Cell(17, 10, 'ID', 1, 0, 'C'); // Reducir la anchura de la celda
-        $pdf->Cell(25, 10, 'Nombre', 1, 0, 'C'); // Ajustar la anchura de la celda
-        $pdf->Cell(25, 10, 'Fisioterapeuta_id', 1, 0, 'C'); // Ajustar la anchura de la celda
-        $pdf->Cell(20, 10, 'Estado', 1, 0, 'C'); // Ajustar la anchura de la celda
-        $pdf->Cell(25, 10, 'Última Modificación', 1, 0, 'C'); // Ajustar la anchura de la celda
+        $pdf->Cell(27, 10, 'ID', 1, 0, 'C'); // Reducir la anchura de la celda
+        $pdf->Cell(88, 10, iconv('UTF-8', 'windows-1252', 'Descripción'), 1, 0, 'C'); // Ajustar la anchura de la celda
+        $pdf->Cell(30, 10, 'Estado', 1, 0, 'C'); // Ajustar la anchura de la celda
+        $pdf->Cell(45, 10, iconv('UTF-8', 'windows-1252', 'Última modificación'), 1, 0, 'C'); // Ajustar la anchura de la celda
         $pdf->Ln(); // Salto de línea para la siguiente fila
     
         // Obtener los datos de los usuarios (ejemplo usando una consulta a BD)
@@ -108,11 +109,10 @@ class ScheduleController
         // Recorrer los usuarios y mostrarlos en la tabla
         $pdf->SetFont('Arial', '', 8);
         foreach ($horarios as $horario) {
-            $pdf->Cell(17, 10, $horario['id'], 1, 0, 'C');
-            $pdf->Cell(25, 10, $horario['nombre'], 1, 0, 'L');
-            $pdf->Cell(25, 10, $horario['fisioterapeuta_id'], 1, 0, 'L');
-            $pdf->Cell(20, 10, $horario['estado'], 1, 0, 'C');
-            $pdf->Cell(25, 10, $horario['ult_modificacion'], 1, 0, 'C');
+            $pdf->Cell(27, 10, $horario['id'], 1, 0, 'C');
+            $pdf->Cell(88, 10, iconv('UTF-8', 'windows-1252', $horario['nombre']), 1, 0, 'L');
+            $pdf->Cell(30, 10, $horario['estado'], 1, 0, 'C');
+            $pdf->Cell(45, 10, $horario['ult_modificacion'], 1, 0, 'C');
             $pdf->Ln(); // Salto de línea para la siguiente fila
         }
 

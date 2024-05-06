@@ -11,9 +11,9 @@ class MedicalHistoryController extends FPDF
         $this->medicalhistoryModel = new MedicalHistoryModel();
     }
 
-    public function generarInformeMedico($historial_id)
+    public function generarInformeMedico($paciente_id)
     {
-        //$informe = $this->medicalhistoryModel->obtenerInformesUsuario($historial_id);
+        $informe = $this->medicalhistoryModel->obtenerInforme($paciente_id);
         // Crear una instancia de FPDF
         $pdf = new FPDF();
         $pdf->AddPage();
@@ -22,17 +22,17 @@ class MedicalHistoryController extends FPDF
         $pdf->SetFont('Arial', 'B', 16);
 
         // Título del informe
-        $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Informe Medico'), 0, 1, 'C');
+        $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Informe Médico'), 0, 1, 'C');
 
         // Datos del paciente, facultativo, diagnóstico, tratamiento y observaciones
-        $nombre_paciente = "Juan Pérez";
-        $fecha_nacimiento = "01/01/1980";
-        $genero = "Masculino";
-        $nombre_facultativo = "Dr. María García";
+        $nombre_paciente = $informe[0]['nombre_paciente'] . ' ' . $informe[0]['apellidos_paciente'];
+        $fecha_nacimiento = $informe[0]['fecha'];
+        $genero = $informe[0]['genero_paciente'];
+        $nombre_facultativo = $informe[0]['nombre_fisioterapeuta'] . ' ' . $informe[0]['apellidos_fisioterapeuta'];
         $especialidad = "Fisioterapeuta";
-        $diagnostico = "Fractura de muñeca.";
-        $tratamiento = "Reposo y rehabilitación.";
-        $observaciones = "El paciente debe acudir a consulta de seguimiento en 2 semanas.";
+        $diagnostico = $informe[0]['diagnostico'];
+        $tratamiento = $informe[0]['tratamiento'];
+        $observaciones = $informe[0]['notas'];
 
         // Generar los recuadros con la información
         $pdf->SetFillColor(230, 230, 230);
