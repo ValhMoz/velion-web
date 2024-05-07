@@ -25,7 +25,7 @@ CREATE TABLE usuarios (
 );
 
 CREATE TABLE horarios (
-  id INT AUTO_INCREMENT PRIMARY KEY,
+  horario_id INT AUTO_INCREMENT PRIMARY KEY,
   nombre varchar(30),
   estado ENUM('Activo', 'Pendiente', 'Cancelado'),
   ult_modificacion timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -64,7 +64,7 @@ CREATE TABLE facturas (
 );
 
 CREATE TABLE historial_medico (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    historial_id INT AUTO_INCREMENT PRIMARY KEY,
     paciente_id VARCHAR(9),
     fisioterapeuta_id VARCHAR(9),
     fecha DATETIME,

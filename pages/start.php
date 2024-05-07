@@ -55,7 +55,7 @@ if ($rol == "Paciente") {
     </div>
     <div class=" container mt-5">
         <div class="col">
-            <div class="tutorial">
+            <div>
                 <h4>Bienvenido</h4>
                 <p>Creado por: Sergio Física y Miguel Ortega</p>
                 <p>Github: <a href="https://github.com/Z2V-LABS/clinic-managment-web">https://github.com/Z2V-LABS/clinic-managment-web</a></p>
