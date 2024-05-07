@@ -32,11 +32,10 @@ class ScheduleModel extends BaseModel
         return $datos;
     }
 
-    public function obtenerHorariosPorID($id)
+    public function obtenerHorariosPorNombre($filtro_horario)
     {
-        $sql = "SELECT * FROM `horarios` WHERE id = ?";
+        $sql = "SELECT * FROM horarios WHERE nombre LIKE '%$filtro_horario%'";
         $stmt = self::$conexion->prepare($sql);
-        $stmt->bind_param("s", $id);
         $stmt->execute();
         $result = $stmt->get_result();
         $horarios = $result->fetch_all(MYSQLI_ASSOC);

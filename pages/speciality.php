@@ -9,17 +9,24 @@ if ($rol == "Paciente") {
     exit();
 }
 
-$articulos_x_pagina = 10;
-
-$especialidades = $specialityController->obtenerEspecialiades();
-
 if (!$_GET) {
     header('location:speciality.php?pagina=1');
 }
 
+$articulos_x_pagina = 10;
+
+$especialidades = $specialityController->obtenerEspecialiades();
+
 $iniciar = ($_GET['pagina'] - 1) * $articulos_x_pagina;
 
-$especialidadesPaginadas = $specialityController->obtenerEspecialidadesPaginadas($iniciar, $articulos_x_pagina);
+$filtro_especialidad = isset($_POST['descripcion']) ? $_POST['descripcion'] : '';
+
+// Obtener especialidades aplicando el filtro si es necesario
+if (!empty($filtro_especialidad)) {
+    $especialidadesPaginadas = $specialityController->obtenerEspecialidadesPorDescripcion($filtro_especialidad);
+} else {
+    $especialidadesPaginadas = $specialityController->obtenerEspecialidadesPaginadas($iniciar, $articulos_x_pagina);
+}
 
 $n_botones_paginacion = ceil(count($especialidades) / ($articulos_x_pagina));
 
@@ -72,9 +79,9 @@ if (isset($_SESSION['alert'])) {
 ?>
 
 <div class="table-responsive small">
-    <form class="row g-3">
+    <form class="row g-3" method="post">
         <div class="col-auto">
-            <input type="text" class="form-control" id="id" name="id" placeholder="Filtrar por ID...">
+            <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Filtrar por descripción...">
         </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-primary mb-3">Filtrar</button>

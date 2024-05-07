@@ -21,12 +21,11 @@ $horarios = $scheduleController->obtenerHorarios();
 $iniciar = ($_GET['pagina'] - 1) * $articulos_x_pagina;
 
 // Obtener el valor del filtro, si está presente en la URL
-$filtro_horario_id = isset($_POST['id']) ? $_POST['id'] : '';
-
+$filtro_horario = isset($_POST['nombre']) ? $_POST['nombre'] : '';
 
 // Obtener usuarios aplicando el filtro si es necesario
-if (!empty($filtro_horario_id)) {
-    $horariosPaginados = $scheduleController->obtenerHorariosPorID($filtro_horario_id);
+if (!empty($filtro_horario)) {
+    $horariosPaginados = $scheduleController->obtenerHorariosPorNombre($filtro_horario);
 } else {
     $horariosPaginados = $scheduleController->obtenerHorariosPaginados($iniciar, $articulos_x_pagina);
 }

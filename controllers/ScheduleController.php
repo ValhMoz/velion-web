@@ -21,9 +21,9 @@ class ScheduleController
         return $this->scheduleModel->read('horarios');
     }
 
-    public function obtenerHorariosPorID($id)
+    public function obtenerHorariosPorNombre($filtro_horario)
     {
-        $horarioBuscado = $this->scheduleModel->obtenerHorariosPorID($id);
+        $horarioBuscado = $this->scheduleModel->obtenerHorariosPorNombre($filtro_horario);
 
         if ($horarioBuscado) {
             return $horarioBuscado;

@@ -21,6 +21,19 @@ class SpecialityController
         return $this->specialityModel->read('especialidades');
     }
 
+    public function obtenerEspecialidadesPorDescripcion($filtro_especialidad)
+    {
+        $especialidadBuscada = $this->specialityModel->obtenerEspecialidadesPorDescripcion($filtro_especialidad);
+
+        if ($especialidadBuscada) {
+            return $especialidadBuscada;
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ninguna especialidad con los criterios seleccionados.');
+            header('Location: ../pages/speciality.php');
+            exit();
+        }
+    }
+
     public function añadirEspecialidad($datos)
     {
         if ($this->specialityModel->insert('especialidades', $datos)) {

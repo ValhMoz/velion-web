@@ -32,6 +32,17 @@ class SpecialityModel extends BaseModel
         return $datos;
     }
 
+    public function obtenerEspecialidadesPorDescripcion($filtro_especialidad)
+    {
+        $sql = "SELECT * FROM especialidades WHERE descripcion LIKE '%$filtro_especialidad%'";
+        $stmt = self::$conexion->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $horarios = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $horarios;
+    }
+
     // public function obtenerEspecialidadesPorID($usuario_id)
     // {
     //     $sql = "SELECT * FROM `especialidades` WHERE usuario_id = ?";

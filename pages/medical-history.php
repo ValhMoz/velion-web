@@ -98,7 +98,7 @@ include_once './includes/dashboard.php';
             </div>
             <div class="card-body">
                 <form action="../scripts/medicalhistory_manager.php" method="post">
-                    <input type="hidden" name="id" value="<?php echo $informe[0]['historial']; ?>">
+                    <input type="hidden" name="id" value="<?php echo $informe[0]['historial_id']; ?>">
                     <div class="mb-3">
                         <label for="diagnostico" class="form-label">Nuevo Diagnóstico</label>
                         <textarea class="form-control" name="diagnostico" id="diagnostico" rows="3"></textarea>
