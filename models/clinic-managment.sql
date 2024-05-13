@@ -37,11 +37,14 @@ CREATE TABLE citas (
   paciente_id VARCHAR(9),
   fisioterapeuta_id VARCHAR(9),
   fecha_hora DATETIME,
-  hora TIME,
-  sala_consulta VARCHAR(50),
+  duracion_minutos INT,
   estado ENUM('Programada', 'Cancelada', 'Realizada'),
+  especialidad_id INT,
+  horario_id INT,
   FOREIGN KEY (paciente_id) REFERENCES usuarios(usuario_id),
-  FOREIGN KEY (fisioterapeuta_id) REFERENCES usuarios(usuario_id)
+  FOREIGN KEY (fisioterapeuta_id) REFERENCES usuarios(usuario_id),
+  FOREIGN KEY (especialidad_id) REFERENCES especialidades(especialidad_id),
+  FOREIGN KEY (horario_id) REFERENCES horarios(horario_id)
 );
 
 CREATE TABLE productos (
