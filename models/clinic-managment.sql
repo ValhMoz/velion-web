@@ -4,6 +4,13 @@ CREATE TABLE especialidades (
   fecha timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 );
 
+CREATE TABLE horarios (
+  horario_id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre varchar(30),
+  estado ENUM('Activo', 'Pendiente', 'Cancelado'),
+  ult_modificacion timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+);
+
 -- Tabla para almacenar información de usuarios
 CREATE TABLE usuarios (
   usuario_id VARCHAR(9) PRIMARY KEY,
@@ -22,37 +29,6 @@ CREATE TABLE usuarios (
   especialidad INT,
   sesiones_disponibles INT,
   FOREIGN KEY (especialidad) REFERENCES especialidades(especialidad_id)
-);
-
-CREATE TABLE horarios (
-  horario_id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre varchar(30),
-  estado ENUM('Activo', 'Pendiente', 'Cancelado'),
-  ult_modificacion timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-);
-
--- Tabla para almacenar información de citas
-CREATE TABLE citas (
-  cita_id INT AUTO_INCREMENT PRIMARY KEY,
-  paciente_id VARCHAR(9),
-  fisioterapeuta_id VARCHAR(9),
-  fecha_hora DATETIME,
-  duracion_minutos INT,
-  estado ENUM('Programada', 'Cancelada', 'Realizada'),
-  especialidad_id INT,
-  horario_id INT,
-  FOREIGN KEY (paciente_id) REFERENCES usuarios(usuario_id),
-  FOREIGN KEY (fisioterapeuta_id) REFERENCES usuarios(usuario_id),
-  FOREIGN KEY (especialidad_id) REFERENCES especialidades(especialidad_id),
-  FOREIGN KEY (horario_id) REFERENCES horarios(horario_id)
-);
-
-CREATE TABLE productos (
-  producto_id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre varchar(255),
-  descripcion varchar(255),
-  monto INT,
-  fecha timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 );
 
 -- Tabla para almacenar información de facturas
@@ -79,6 +55,32 @@ CREATE TABLE historial_medico (
   FOREIGN KEY (fisioterapeuta_id) REFERENCES usuarios(usuario_id)
 );
 
+-- Tabla para almacenar información de citas
+CREATE TABLE citas (
+  cita_id INT AUTO_INCREMENT PRIMARY KEY,
+  paciente_id VARCHAR(9),
+  fisioterapeuta_id VARCHAR(9),
+  fecha_hora DATETIME,
+  duracion_minutos INT,
+  estado ENUM('Programada', 'Cancelada', 'Realizada'),
+  especialidad_id INT,
+  historial_id INT,
+  horario_id INT,
+  FOREIGN KEY (paciente_id) REFERENCES usuarios(usuario_id),
+  FOREIGN KEY (fisioterapeuta_id) REFERENCES usuarios(usuario_id),
+  FOREIGN KEY (especialidad_id) REFERENCES especialidades(especialidad_id),
+  FOREIGN KEY (horario_id) REFERENCES horarios(horario_id)
+  FOREIGN KEY (historial_id) REFERENCES historial_medico(historial_id)
+
+);
+
+CREATE TABLE productos (
+  producto_id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre varchar(255),
+  descripcion varchar(255),
+  monto INT,
+  fecha timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+);
 
 -- Insertar datos de prueba para la tabla usuarios
 -- La contraseña está cifrada. Deberás escribir 12345678 en el formulario de inicio de sesión
