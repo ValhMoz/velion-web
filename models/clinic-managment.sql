@@ -1,14 +1,22 @@
 CREATE TABLE especialidades (
   especialidad_id INT AUTO_INCREMENT PRIMARY KEY,
-  descripcion varchar(255),
-  fecha timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  descripcion VARCHAR(255),
+  fecha TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 );
 
 CREATE TABLE horarios (
   horario_id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre varchar(30),
+  nombre VARCHAR(30),
   estado ENUM('Activo', 'Pendiente', 'Cancelado'),
-  ult_modificacion timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  ult_modificacion TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+);
+
+CREATE TABLE productos (
+  producto_id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(255),
+  descripcion VARCHAR(255),
+  monto INT,
+  fecha TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 );
 
 -- Tabla para almacenar información de usuarios
@@ -64,23 +72,15 @@ CREATE TABLE citas (
   duracion_minutos INT,
   estado ENUM('Programada', 'Cancelada', 'Realizada'),
   especialidad_id INT,
-  historial_id INT,
+  historial_id INT UNIQUE,
   horario_id INT,
   FOREIGN KEY (paciente_id) REFERENCES usuarios(usuario_id),
   FOREIGN KEY (fisioterapeuta_id) REFERENCES usuarios(usuario_id),
   FOREIGN KEY (especialidad_id) REFERENCES especialidades(especialidad_id),
-  FOREIGN KEY (horario_id) REFERENCES horarios(horario_id)
+  FOREIGN KEY (horario_id) REFERENCES horarios(horario_id),
   FOREIGN KEY (historial_id) REFERENCES historial_medico(historial_id)
-
 );
 
-CREATE TABLE productos (
-  producto_id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre varchar(255),
-  descripcion varchar(255),
-  monto INT,
-  fecha timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-);
 
 -- Insertar datos de prueba para la tabla usuarios
 -- La contraseña está cifrada. Deberás escribir 12345678 en el formulario de inicio de sesión
@@ -122,37 +122,39 @@ INSERT INTO horarios (nombre, estado) VALUES
 ('Domingo Mañana', 'Activo'),
 ('Domingo Tarde', 'Activo');
 
-INSERT INTO productos (nombre, descripcion, monto)
+INSERT INTO productos (nombre, descripcion, monto) VALUES
 ('Sesión individual', '', 35),
 ('Bono de 10 sesiones', '(30€/sesión)', 300),
 ('Bono de 15 sesiones', '(26€/sesión)', 390),
 ('Bono de 20 sesiones', '(24€/sesión)', 480),
 ('Bono de 30 sesiones', '(20,5€/sesión)', 615),
-('Bono especial de 10 sesiones', '(37€/sesión)', 370)
+('Bono especial de 10 sesiones', '(37€/sesión)', 370);
 
 INSERT INTO usuarios (usuario_id, nombre, apellidos, telefono, fecha_nacimiento, direccion, provincia, municipio, cp, email, pass, rol, genero, especialidad, sesiones_disponibles)
 VALUES
-('123456789', 'Juan', 'Perez', '123456789', '1990-01-01', 'Calle 123', 'Provincia 1', 'Ciudad 1', '12345', 'patient@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'paciente', 'hombre', 5),
-('234567890', 'Maria', 'Lopez', '234567890', '1995-05-05', 'Avenida 456', 'Provincia 2', 'Ciudad 2', '23456', 'fisio@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'fisioterapeuta', 'mujer', 10),
-('345678901', 'Pedro', 'Gomez', '345678901', '1985-10-10', 'Plaza 789', 'Provincia 3', 'Ciudad 3', '34567', 'admin@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'administrador', 'hombre', NULL);
-
--- Insertar datos de prueba para la tabla citas
-INSERT INTO citas (paciente_id, fisioterapeuta_id, fecha_hora, sala_consulta, estado)
-VALUES
-('123456789', '234567890', '2024-04-05 09:00:00', 'Sala 1', 'realizada'),
-('234567890', '345678901', '2024-04-06 10:00:00', 'Sala 2', 'programada'),
-('345678901', '123456789', '2024-04-07 11:00:00', 'Sala 3', 'cancelada');
+('123456789', 'Juan', 'Perez', '123456789', '1990-01-01', 'Calle 123', 'Provincia 1', 'Ciudad 1', '12345', 'patient@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'paciente', 'hombre', 10, NULL),
+('234567890', 'Maria', 'Lopez', '234567890', '1995-05-05', 'Avenida 456', 'Provincia 2', 'Ciudad 2', '23456', 'fisio@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'fisioterapeuta', 'mujer', NULL, 10),
+('345678901', 'Pedro', 'Gomez', '345678901', '1985-10-10', 'Plaza 789', 'Provincia 3', 'Ciudad 3', '34567', 'admin@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'administrador', 'hombre', NULL, NULL);
 
 -- Insertar datos de prueba para la tabla facturas
-INSERT INTO facturas (paciente_id, fecha_emision, descripcion, monto, estado)
+INSERT INTO facturas (paciente_id, fecha_emision, producto, estado)
 VALUES
-('123456789', '2024-04-01', 'Consulta medica', 50.00, 'pendiente'),
-('234567890', '2024-04-02', 'Terapia fisica', 75.00, 'pagada'),
-('345678901', '2024-04-03', 'Examen de diagnostico', 100.00, 'pendiente');
+('123456789', '2024-04-01', 2, 'pendiente'),
+('234567890', '2024-04-02', 5, 'pagada'),
+('345678901', '2024-04-03', 1, 'pendiente');
 
--- Insertar datos de prueba para la tabla historial_medico
+-- Insertar datos de prueba en la tabla historial_medico
 INSERT INTO historial_medico (paciente_id, fisioterapeuta_id, fecha, descripcion, diagnostico, tratamiento, notas)
 VALUES
-('123456789', '234567890', '2024-03-01', 'Paciente con dolor de espalda', 'Contractura muscular', 'Masajes y estiramientos', 'Reposo recomendado'),
-('234567890', '345678901', '2024-03-02', 'Paciente con esguince de tobillo', 'Esguince grado II', 'Terapia de frío y calor, ejercicios de rehabilitacion', 'Evolucion positiva'),
-('345678901', '123456789', '2024-03-03', 'Paciente con dolor de cuello', 'Contractura cervical', 'Masajes terapéuticos y ejercicios de estiramiento', 'Controlar postura durante actividades diarias');
+('123456789', '234567890', '2024-01-15 10:00:00', 'Dolor de espalda', 'Lumbalgia', 'Fisioterapia y ejercicios de fortalecimiento', 'Mejoría progresiva'),
+('123456789', '234567890', '2024-02-20 11:00:00', 'Revisión de dolor de espalda', 'Lumbalgia', 'Continuar con fisioterapia', 'Dolor disminuido en un 50%'),
+('123456789', '234567890', '2024-03-25 09:00:00', 'Rehabilitación post cirugía de rodilla', 'Post-cirugía', 'Ejercicios de movilidad y fortalecimiento', 'Buena evolución');
+
+-- Insertar datos de prueba en la tabla citas
+INSERT INTO citas (paciente_id, fisioterapeuta_id, fecha_hora, duracion_minutos, estado, especialidad_id, historial_id, horario_id)
+VALUES
+('123456789', '234567890', '2024-01-15 10:00:00', 60, 'Realizada', 1, 1, 1),
+('123456789', '234567890', '2024-02-20 11:00:00', 60, 'Realizada', 1, 2, 2),
+('123456789', '234567890', '2024-03-25 09:00:00', 60, 'Realizada', 1, 3, 3),
+('123456789', '234567890', '2024-04-20 10:00:00', 60, 'Programada', 1, NULL, 4),
+('234567890', '345678901', '2024-05-05 14:00:00', 60, 'Cancelada', 2, NULL, 5);

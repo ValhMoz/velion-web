@@ -114,6 +114,17 @@ class MedicalHistoryController extends FPDF
         return ($this->medicalhistoryModel->obtenerInforme($DNI));
     }
 
+    public function obtenerCitasUsuario($usuario_id)
+    {
+        $condicion = "paciente_id = '$usuario_id' OR fisioterapeuta_id = '$usuario_id'";
+        $tabla = "citas";
+
+        // Realiza la consulta utilizando la función read() del BaseModel
+        $citas = $this->medicalhistoryModel->read($tabla, $condicion);
+
+        return $citas;
+    }
+
     public function obtenerInforme($DNI){
         return $this->medicalhistoryModel->obtenerInforme($DNI);
     }
