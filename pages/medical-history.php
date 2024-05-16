@@ -34,7 +34,7 @@ include_once './includes/dashboard.php';
     ?>
 
     <div class="d-flex align-items-start justify-content-between">
-        <h1 class="mb-4">Historial Médico por Cita</h1>
+        <h1 class="mb-4">Historial Médico</h1>
         <?php if (isset($citas)) : ?>
             <form action="../scripts/medicalhistory_manager.php" method="GET">
                 <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
@@ -62,7 +62,7 @@ include_once './includes/dashboard.php';
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="heading<?php echo $cita['cita_id']; ?>">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $cita['cita_id']; ?>" aria-expanded="false" aria-controls="collapse<?php echo $cita['cita_id']; ?>">
-                            Cita del <?php echo $cita['fecha_cita']; ?>
+                            Cita del <?php echo $cita['fecha_hora']; ?>
                         </button>
                     </h2>
                     <div id="collapse<?php echo $cita['cita_id']; ?>" class="accordion-collapse collapse" aria-labelledby="heading<?php echo $cita['cita_id']; ?>" data-bs-parent="#accordionCitas">

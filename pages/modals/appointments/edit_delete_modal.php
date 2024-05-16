@@ -94,7 +94,8 @@
                 <p>¿Deseas confirmar esta cita de <?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?>?</p>
             </div>
             <div class="modal-footer">
-                <form action="../scripts/user_manager.php" method="post">
+                <form action="../scripts/appointment_manager.php" method="post">
+                    <input type="hidden" id="action" name="action" value="confirmar">
                     <input type="hidden" id="cita_id" name="cita_id" value=" <?php echo $cita['cita_id']?>">
                     <button type="submit" class="btn btn-success" id="btnCompletar">Confirmar cita</button>
                 </form>
@@ -115,7 +116,7 @@
                 <p>¿Deseas eliminar esta cita de <?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?>?</p>
             </div>
             <div class="modal-footer">
-                <form action="../scripts/user_manager.php" method="post">
+                <form action="../scripts/appointment_manager.php" method="post">
                     <input type="hidden" id="action" name="action" value="eliminar">
                     <input type="hidden" id="cita_id" name="cita_id" value=" <?php echo $cita['cita_id']?>">
                     <button type="submit" class="btn btn-danger" id="btnEliminar">Eliminar cita</button>

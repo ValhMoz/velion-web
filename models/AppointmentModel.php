@@ -42,7 +42,6 @@ class AppointmentModel extends BaseModel
         $sql = "SELECT
         c.cita_id,
         c.fecha_hora,
-        c.sala_consulta,
         c.estado,
         p.usuario_id AS paciente_id,
         p.nombre AS paciente_nombre,
@@ -99,7 +98,6 @@ class AppointmentModel extends BaseModel
         $sql = "SELECT
         c.cita_id,
         c.fecha_hora,
-        c.sala_consulta,
         c.estado,
         p.usuario_id AS paciente_id,
         p.nombre AS paciente_nombre,

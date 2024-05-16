@@ -71,10 +71,8 @@ if (isset($_SESSION['alert'])) {
                     <thead>
                         <tr>
                             <th scope="col" style="width: 5%;">ID</th>
-                            <th scope="col" style="width: 10%;">Nombre</th>
-                            <th scope="col" style="width: 10%;">Apellidos</th>
+                            <th scope="col" style="width: 10%;">Cliente</th>
                             <th scope="col" style="width: 10%;">Fecha de Emisión</th>
-                            <th scope="col" style="width: 17%;">Descripcion</th>
                             <th scope="col" style="width: 10%;">Estado</th>
                             <th scope="col" style="width: 10%;">Monto</th>
                             <th scope="col" style="width: 5%;">Acciones</th>
@@ -84,10 +82,8 @@ if (isset($_SESSION['alert'])) {
                         <?php foreach ($facturasPaginadas as $factura) : ?>
                             <tr>
                                 <td><?php echo $factura['factura_id']; ?></td>
-                                <td><?php echo $factura['nombre']; ?></td>
-                                <td><?php echo $factura['apellidos']; ?></td>
+                                <td><?php echo $factura['paciente_id']; ?></td>
                                 <td><?php echo $factura['fecha_emision']; ?></td>
-                                <td><?php echo $factura['descripcion']; ?></td>
                                 <td>
                                     <?php
                                     $estado = $factura['estado'];
@@ -107,8 +103,7 @@ if (isset($_SESSION['alert'])) {
                                         <?php echo $estado; ?>
                                     </span>
                                 </td>
-                                <td><?php echo $factura['monto']; ?>€</td>
-                                <td>
+                                <td><?php echo $factura['precio_producto']; ?>€</td>                                <td>
                                     <form style="width: fit-content;" action="../../scripts/invoice_manager.php" method="GET">
                                         <input type="hidden" name="id" value="<?php echo $factura['factura_id']; ?>">
                                         <button type="submit" class="btn btn-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">

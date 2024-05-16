@@ -23,12 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
                 'pass' => password_hash($_POST["pass"], PASSWORD_DEFAULT),
                 'rol' => $_POST["rol"]
             );
-            $datos_historial = array(
-                'paciente_id' => $_POST["usuario_id"],
-                'fecha' => $_POST["fecha_nacimiento"]
-            );
 
-            $userController->añadirNuevoUsuario($datos, $datos_historial);
+            $userController->añadirNuevoUsuario($datos);
             break;
 
         case 'editar_usuario':
@@ -52,8 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
             break;
 
         case 'eliminar_usuario':
-            $datos = "usuario_id = '" . $_POST["usuario_id"] . "'";
-            $userController->eliminarUsuario($datos);
+            $userController->eliminarUsuario($_POST["usuario_id"]);
             break;
 
         case 'actualizar_datos':

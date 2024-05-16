@@ -65,9 +65,9 @@ class UserController
     //     }
     // }
 
-    public function añadirNuevoUsuario($datos, $datos_historial)
+    public function añadirNuevoUsuario($datos)
     {
-        if ($this->usuarioModel->insert('usuarios', $datos) && ($this->usuarioModel->insert('historial_medico', $datos_historial))) {
+        if ($this->usuarioModel->insert('usuarios', $datos)) {
             // Dentro de la función añadirNuevoUsuario en UserController.php
             $_SESSION['alert'] = array('type' => 'success', 'message' => 'Usuario añadido correctamente.');
             header('Location: ../pages/users.php');
@@ -97,7 +97,7 @@ class UserController
 
     public function eliminarUsuario($datos)
     {
-        if ($this->usuarioModel->delete('usuarios', $datos)) {
+        if ($this->usuarioModel->eliminarUsuario($datos)) {
             $_SESSION['alert'] = array('type' => 'success', 'message' => 'Usuario eliminado correctamente.');
             header('Location: ../pages/users.php');
             exit();

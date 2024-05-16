@@ -12,7 +12,7 @@ class MedicalHistoryModel extends BaseModel
     public function obtenerInformes()
     {
         $sql = "SELECT 
-        hm.id AS historial_id,
+        hm.historial_id AS historial_id,
         hm.fecha AS fecha,
         hm.descripcion AS descripcion,
         hm.diagnostico AS diagnostico,
@@ -68,7 +68,7 @@ class MedicalHistoryModel extends BaseModel
         $DNI = self::$conexion->real_escape_string($DNI);
 
         $sql = "SELECT 
-        hm.id AS historial_id,
+        hm.historial_id AS historial_id,
         hm.fecha AS fecha,
         hm.descripcion AS descripcion,
         hm.diagnostico AS diagnostico,

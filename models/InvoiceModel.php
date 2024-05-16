@@ -12,10 +12,18 @@ class InvoiceModel extends BaseModel
     public function obtenerDatosFacturasPaginadas($iniciar, $articulos_x_pagina)
     {
         // Query para obtener las facturas junto con los datos del paciente
-        $sql = "SELECT f.factura_id, f.paciente_id, f.fecha_emision, f.descripcion, f.monto, f.estado, u.nombre, u.apellidos, u.email
-                FROM facturas f
-                INNER JOIN usuarios u ON f.paciente_id = u.usuario_id
-                LIMIT $iniciar, $articulos_x_pagina";
+        $sql = "SELECT 
+        facturas.factura_id,
+        facturas.paciente_id,
+        facturas.fecha_emision,
+        facturas.producto,
+        facturas.estado,
+        productos.monto AS precio_producto
+        FROM 
+            facturas
+        JOIN 
+            productos ON facturas.producto = productos.producto_id
+        LIMIT $iniciar, $articulos_x_pagina";
 
         // Ejecutar la consulta
         $resultado =  self::$conexion->query($sql);

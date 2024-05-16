@@ -21,7 +21,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
             break;
 
         case 'confirmar':
-
+            $datos = array(
+                'estado' => 'Realizada'
+            );
+            $condicion = "cita_id = '" . $_POST["cita_id"] . "'";
+            $appointmentController->confirmarCita('citas', $datos, $condicion);
             break;
 
         case 'editar':
@@ -29,7 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
             break;
 
         case 'eliminar':
-            echo('hola');
+            $condicion = "cita_id = '" . $_POST["cita_id"] . "'";
+            $appointmentController->eliminarCita('citas', $condicion);
 
             break;
     }

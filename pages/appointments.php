@@ -102,7 +102,6 @@ if (isset($_SESSION['alert'])) {
                             <td><?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?></td>
                             <td><?php echo $cita['paciente_telefono'] ?></td>
                             <td><?php echo $cita['fisioterapeuta_nombre'] . " " . $cita['fisioterapeuta_apellidos'];  ?></td>
-                            <!-- <td><?php echo $cita['sala_consulta']; ?></td> -->
                             <td>
                                 <?php
                                 $estado = $cita['estado'];

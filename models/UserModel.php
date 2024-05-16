@@ -77,4 +77,47 @@ class UserModel extends BaseModel
         $stmt->close();
         return $result;
     }
+
+    public function eliminarUsuario($usuario_id)
+    {
+        $conexion = self::$conexion;
+        $usuario_id_escapado = $conexion->real_escape_string($usuario_id);
+
+        // Iniciar una transacción
+        $conexion->begin_transaction();
+
+        try {
+            // Eliminar las citas asociadas
+            $sql = "DELETE FROM `citas` WHERE `paciente_id` = '$usuario_id_escapado' OR `fisioterapeuta_id` = '$usuario_id_escapado'";
+            $conexion->query($sql);
+
+            // Eliminar las facturas asociadas
+            $sql = "DELETE FROM `facturas` WHERE `paciente_id` = '$usuario_id_escapado'";
+            $conexion->query($sql);
+
+            // Eliminar los registros de historial médico asociados
+            $sql = "DELETE FROM `historial_medico` WHERE `paciente_id` = '$usuario_id_escapado' OR `fisioterapeuta_id` = '$usuario_id_escapado'";
+            $conexion->query($sql);
+
+            // Finalmente, eliminar el usuario
+            $sql = "DELETE FROM `usuarios` WHERE `usuario_id` = '$usuario_id_escapado'";
+            $conexion->query($sql);
+
+            // Si todo ha ido bien, confirmar la transacción
+            $conexion->commit();
+
+            // Establecer la alerta de éxito
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Usuario eliminado correctamente.');
+        } catch (Exception $e) {
+            // Si ha habido algún problema, revertir la transacción
+            $conexion->rollback();
+
+            // Establecer la alerta de error
+            $_SESSION['alert'] = array('type' => 'error', 'message' => 'No se ha podido eliminar el usuario correctamente. Error: ' . $e->getMessage());
+        }
+
+        // Redirigir a la página de usuarios
+        header('Location: ../pages/users.php');
+        exit();
+    }
 }

@@ -49,8 +49,7 @@ include_once './includes/dashboard-patients.php';
                     <thead>
                         <tr>
                             <th scope="col" style="width: 5%;">ID</th>
-                            <th scope="col" style="width: 15%;">Nombre</th>
-                            <th scope="col" style="width: 15%;">Apellidos</th>
+                            <th scope="col" style="width: 15%;">Cliente</th>
                             <th scope="col" style="width: 15%;">Fecha de Emisión</th>
                             <th scope="col" style="width: 15%;">Estado</th>
                             <th scope="col" style="width: 15%;">Monto</th>
@@ -61,11 +60,28 @@ include_once './includes/dashboard-patients.php';
                         <?php foreach ($facturasPaginadas as $factura) : ?>
                             <tr>
                                 <td><?php echo $factura['factura_id']; ?></td>
-                                <td><?php echo $factura['nombre']; ?></td>
-                                <td><?php echo $factura['apellidos']; ?></td>
+                                <td><?php echo $factura['paciente_id']; ?></td>
                                 <td><?php echo $factura['fecha_emision']; ?></td>
-                                <td><?php echo $factura['estado']; ?></td>
-                                <td><?php echo $factura['monto']; ?>€</td>
+                                <td>
+                                    <?php
+                                    $estado = $factura['estado'];
+
+                                    switch ($estado) {
+                                        case 'Pendiente':
+                                            $text_gb_class = 'text-bg-warning';
+                                            break;
+                                        case 'Pagada':
+                                            $text_gb_class = 'text-bg-success';
+                                            break;
+                                        default:
+                                            $text_gb_class = 'text-bg-warning';
+                                    }
+                                    ?>
+                                    <span class="badge <?php echo $text_gb_class; ?>">
+                                        <?php echo $estado; ?>
+                                    </span>
+                                </td>
+                                <td><?php echo $factura['precio_producto']; ?>€</td>  
                                 <td>
                                     <form action="../scripts/invoice_manager.php" method="GET">
                                         <input type="hidden" name="id" value="<?php echo $factura['factura_id']; ?>">
