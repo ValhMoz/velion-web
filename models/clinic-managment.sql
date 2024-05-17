@@ -39,6 +39,19 @@ CREATE TABLE usuarios (
   FOREIGN KEY (especialidad) REFERENCES especialidades(especialidad_id)
 );
 
+CREATE TABLE documentos_sanitarios (
+  documento_id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(255),
+  descripcion TEXT,
+  ruta_documento VARCHAR(255),
+  fecha_subida TIMESTAMP NOT NULL DEFAULT current_timestamp(),
+  estado ENUM('Pendiente', 'Firmado', 'Rechazado') DEFAULT 'Pendiente',
+  paciente_id VARCHAR(9),
+  sanitario_id VARCHAR(9),
+  FOREIGN KEY (paciente_id) REFERENCES usuarios(usuario_id),
+  FOREIGN KEY (sanitario_id) REFERENCES usuarios(usuario_id)
+);
+
 -- Tabla para almacenar información de facturas
 CREATE TABLE facturas (
   factura_id INT AUTO_INCREMENT PRIMARY KEY,
