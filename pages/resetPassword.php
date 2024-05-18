@@ -22,6 +22,8 @@
                 <!-- Formulario de Reinicio de Contraseña -->
                 <form action="../scripts/resetPassword_manager.php" method="post">
                     <h2 class="mb-3">Reinicio de Contraseña</h2>
+                    <input type="hidden" name="action" value="resetear_contraseña">
+                    <input type="hidden" name="token" value="<?php echo $_GET['token']; ?>">
 
                     <!-- Contraseña Nueva -->
                     <div class="mb-3">

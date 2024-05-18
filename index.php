@@ -80,7 +80,7 @@
                     <input type="email" class="form-control" id="resetEmail" required>
                 </div>
                 <div class="modal-footer">
-                    <form action="./scripts/user_manager.php" method="post">
+                    <form action="./scripts/login_manager.php" method="post">
                         <input type="hidden" id="actionType" name="action" value="solicitar_nueva_contraseña">
                         <button type="submit" class="btn btn-primary">Enviar</button>
                     </form>

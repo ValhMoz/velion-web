@@ -51,8 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
                     'paciente_id' => $_POST["usuario_id"],
                     'fecha' => $_POST["fecha_nacimiento"]
                 );
-
-
                 // Intenta registrar un usuario con los datos proporcionados
                 $loginController->registrarUsuario($datos, $datos_historial);
             } else {
@@ -65,18 +63,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
         case 'resetear_contraseña':
             // Lógica para restablecer la contraseña
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reset_password"])) {
-                // Verificar si el token proporcionado coincide con el token almacenado en la base de datos y no ha expirado
-                $token = $_POST["token"];
-                // Aquí debes incluir la lógica para verificar si el token proporcionado coincide con el token almacenado en tu base de datos
+                $token = $_POST['token'];
+                $newPassword = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
-                if ($token_valid) {
-                    // Actualizar la contraseña del usuario en la base de datos
-                    $new_password = $_POST["password"];
-                    // Aquí debes incluir la lógica para actualizar la contraseña del usuario en tu base de datos
+                // Verifica si el token es válido
+                $query = $conn->prepare("SELECT * FROM password_resets WHERE token = ?");
+                $query->bind_param("s", $token);
+                $query->execute();
+                $result = $query->get_result();
 
-                    echo "¡Tu contraseña ha sido restablecida con éxito!";
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $email = $row['email'];
+
+                    // Actualiza la contraseña del usuario
+                    $updateQuery = $conn->prepare("UPDATE usuarios SET pass = ? WHERE email = ?");
+                    $updateQuery->bind_param("ss", $newPassword, $email);
+                    if ($updateQuery->execute()) {
+                        echo "Tu contraseña ha sido actualizada.";
+
+                        // Elimina el token de la tabla password_resets
+                        $deleteQuery = $conn->prepare("DELETE FROM password_resets WHERE email = ?");
+                        $deleteQuery->bind_param("s", $email);
+                        $deleteQuery->execute();
+                    } else {
+                        echo "No se pudo actualizar la contraseña.";
+                    }
                 } else {
-                    echo "El enlace de restablecimiento de contraseña es inválido o ha expirado. Por favor, solicita otro.";
+                    echo "Enlace de recuperación inválido o expirado.";
                 }
             }
 
@@ -84,33 +98,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
         case 'solicitar_nueva_contraseña':
             // Lógica para manejar la solicitud de recuperación de contraseña
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
-                // Conectar a la base de datos y realizar la validación del correo electrónico proporcionado
-                // Verificar si el correo electrónico existe en la base de datos
-                $email = $_POST["email"];
-                // Aquí debes incluir la lógica para verificar si el correo electrónico existe en tu base de datos
+                $email = $_POST['email'];
 
-                if ($email_exists) {
-                    // Generar un token único
-                    $token = bin2hex(random_bytes(32)); // Genera un token aleatorio de 64 caracteres (32 bytes)
-                    // Guardar el token en la base de datos junto con el correo electrónico
-                    // Aquí debes incluir la lógica para almacenar el token en tu base de datos junto con el correo electrónico
+                // Verifica si el correo electrónico existe en la base de datos
+                $query = $conn->prepare("SELECT * FROM usuarios WHERE email = ?");
+                $query->bind_param("s", $email);
+                $query->execute();
+                $result = $query->get_result();
 
-                    // Enviar correo electrónico con el enlace de restablecimiento de contraseña que contiene el token
-                    $reset_link = "http://tuweb.com/reset_password.php?token=$token";
-                    $subject = "Recuperación de contraseña";
-                    $message = "Hola,\n\nHas solicitado restablecer tu contraseña. Para cambiar tu contraseña, haz clic en el siguiente enlace: $reset_link";
-                    $headers = "From: tuemail@tudominio.com";
+                if ($result->num_rows > 0) {
+                    $token = bin2hex(random_bytes(50)); // Genera un token seguro
+                    $url = "http://tu-dominio.com/reset_password.php?token=" . $token;
 
-                    if (mail($email, $subject, $message, $headers)) {
-                        echo "Se ha enviado un enlace de restablecimiento de contraseña a tu correo electrónico.";
+                    // Inserta el token en la tabla password_resets
+                    $insertQuery = $conn->prepare("INSERT INTO password_resets (email, token) VALUES (?, ?)");
+                    $insertQuery->bind_param("ss", $email, $token);
+                    $insertQuery->execute();
+
+                    // Envía el correo electrónico
+                    $to = $email;
+                    $subject = "Recuperar Contraseña";
+                    $message = "Haz clic en el siguiente enlace para recuperar tu contraseña: " . $url;
+                    $headers = "From: no-reply@tu-dominio.com";
+
+                    if (mail($to, $subject, $message, $headers)) {
+                        echo "Se ha enviado un enlace de recuperación a tu correo electrónico.";
                     } else {
-                        echo "Hubo un problema al enviar el correo electrónico. Por favor, inténtalo de nuevo más tarde.";
+                        echo "No se pudo enviar el correo electrónico.";
                     }
                 } else {
-                    echo "El correo electrónico proporcionado no está registrado en nuestra base de datos.";
+                    echo "El correo electrónico no está registrado.";
                 }
             }
             break;
     }
 }
-?>
