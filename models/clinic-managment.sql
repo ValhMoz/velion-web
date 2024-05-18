@@ -19,6 +19,13 @@ CREATE TABLE productos (
   fecha TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 );
 
+CREATE TABLE password_resets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100) NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Tabla para almacenar información de usuarios
 CREATE TABLE usuarios (
   usuario_id VARCHAR(9) PRIMARY KEY,
