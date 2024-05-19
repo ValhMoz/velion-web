@@ -12,16 +12,50 @@
     <script src="./assets/bootstrap-5.3/js/color-modes.js"></script>
     <script src="./assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
     <style>
-        .separator-line {
-            border-top: 1px solid #ccc;
-            margin-top: 20px;
+        body {
+            background-image: url('assets/custom/img/TERAPIA-MANUAL-FISIOTERAPIA-VALLADOLID-181117555.jpg');
+            /* Reemplaza con la ruta de tu imagen */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-container h2 {
             margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #495057;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-link {
+            color: #007bff;
         }
     </style>
 </head>
 
-<body class="d-flex align-items-center py-4 bg-body-tertiary">
-    <main class="form-signin w-100 m-auto">
+<body>
+
+    <div class="login-container">
         <?php
         // Verificar si hay una alerta de usuario
         if (isset($_GET['alert']) && isset($_GET['message'])) {
@@ -31,41 +65,26 @@
             </div>';
         }
         ?>
-
+        <h2 class="text-center">Login</h2>
         <form action="./scripts/login_manager.php" method="post">
-            <!-- <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
-            <h1 class="title-login-register">Inicia Sesión</h1>
             <input type="hidden" id="actionType" name="action" value="iniciar_sesion">
-            <div class="form-floating">
-                <input type="email" class="form-control" name="email" id="email" required>
-                <label for="email">Correo electrónico</label>
-            </div>
-            <div class="form-floating">
-                <input type="password" class="form-control" name="pass" id="pass" required>
-                <label for="password">Contraseña</label>
-            </div>
-
-            <div class="form-check text-start my-3">
-                <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Mantener sesión iniciada
-                </label>
-            </div>
-            <div class="row mb-3">
-                <div class="col">
-                    <button class="btn btn-primary w-100 py-2" style="margin-bottom: 5px;" type="submit">Iniciar sesión</button>
-                </div>
-                <div class="col">
-                    <a class="btn btn-secondary w-100 py-2" type="submit" href="./pages/signup.php">Regístrate</a>
-                </div>
-            </div>
-            <hr class="separator-line">
             <div class="mb-3">
-                <button class="btn btn-outline-primary w-100 py-2" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Recuperar Contraseña</button>
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" required>
             </div>
-            <p class="mt-5 mb-3 text-body-secondary">&copy; 2024</p>
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" name="pass" id="pass" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+            <div class="mt-3 d-flex justify-content-between">
+                <a href="./pages/signup.php" class="btn btn-link">Regístrate</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-link">Recuperar contraseña</a>
+            </div>
         </form>
-    </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1">
