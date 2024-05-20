@@ -81,7 +81,7 @@ include_once './includes/dashboard-patients.php';
                                         <?php echo $estado; ?>
                                     </span>
                                 </td>
-                                <td><?php echo $factura['precio_producto']; ?>€</td>  
+                                <td><?php echo $factura['monto']; ?>€</td>  
                                 <td>
                                     <form action="../scripts/invoice_manager.php" method="GET">
                                         <input type="hidden" name="id" value="<?php echo $factura['factura_id']; ?>">

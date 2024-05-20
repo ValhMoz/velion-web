@@ -77,8 +77,8 @@ if (isset($_SESSION['alert'])) {
         <div class="col-auto">
             <select class="form-select" id="estado" name="estado" aria-label="Selecciona un estado">
                 <option selected value="" hidden>Selecciona un estado</option>
-                <option value="hombre">Pagada</option>
-                <option value="mujer">Pendiente</option>
+                <option value="Pagada">Pagada</option>
+                <option value="Pendiente">Pendiente</option>
             </select>
         </div>
         <div class="col-auto">
@@ -125,7 +125,7 @@ if (isset($_SESSION['alert'])) {
                                         <?php echo $estado; ?>
                                     </span>
                                 </td>
-                                <td><?php echo $factura['precio_producto']; ?>€</td>
+                                <td><?php echo $factura['monto']; ?>€</td>
                                 <td>
                                     <form style="width: fit-content;" action="../../scripts/invoice_manager.php" method="GET">
                                         <input type="hidden" name="id" value="<?php echo $factura['factura_id']; ?>">
