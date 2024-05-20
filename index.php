@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inicio de sesión</title>
     <link href="./assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="./assets/bootstrap-5.3/css/sign-in.css" rel="stylesheet">
-    <link href="./assets/custom/css/style.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.css" rel="stylesheet">
-    <script src="./assets/bootstrap-5.3/js/color-modes.js"></script>
     <script src="./assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
+    <link href="./assets/bootstrap-5.3/css/sign-in.css" rel="stylesheet">
+    <!-- <link href="./assets/custom/css/style.css" rel="stylesheet"> -->
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.css" rel="stylesheet"> -->
+
     <style>
         body {
-            background-image: url('assets/custom/img/TERAPIA-MANUAL-FISIOTERAPIA-VALLADOLID-181117555.jpg');
+            background-image: url('assets/custom/img/fondo.jpg');
             /* Reemplaza con la ruta de tu imagen */
             background-size: cover;
             background-position: center;
@@ -49,6 +49,8 @@
 
         .btn-link {
             color: #007bff;
+            text-decoration: none;
+            /* Quitar subrayado de los enlaces */
         }
     </style>
 </head>
@@ -65,7 +67,7 @@
             </div>';
         }
         ?>
-        <h2 class="text-center">Login</h2>
+        <h2 class="text-center">Inicia sesión</h2>
         <form action="./scripts/login_manager.php" method="post">
             <input type="hidden" id="actionType" name="action" value="iniciar_sesion">
             <div class="mb-3">
@@ -84,7 +86,7 @@
         </form>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1">
@@ -94,19 +96,20 @@
                     <h5 class="modal-title" id="exampleModalLabel">Recuperar Contraseña</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <label for="resetEmail" class="form-label">Correo electrónico</label>
-                    <input type="email" class="form-control" id="resetEmail" required>
-                </div>
-                <div class="modal-footer">
-                    <form action="./scripts/login_manager.php" method="post">
+                <form action="./scripts/login_manager.php" method="post"> <!-- Mover la etiqueta <form> aquí -->
+                    <div class="modal-body">
+                        <label for="resetEmail" class="form-label">Correo electrónico</label>
+                        <input type="email" class="form-control" id="resetEmail" name="resetEmail" required> <!-- Agregar el atributo name -->
+                    </div>
+                    <div class="modal-footer">
                         <input type="hidden" id="actionType" name="action" value="solicitar_nueva_contraseña">
                         <button type="submit" class="btn btn-primary">Enviar</button>
-                    </form>
-                </div>
+                    </div>
+                </form> <!-- Cerrar la etiqueta <form> aquí -->
             </div>
         </div>
     </div>
+
 </body>
 
 </html>

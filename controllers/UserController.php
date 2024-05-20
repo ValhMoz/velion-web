@@ -180,4 +180,8 @@ class UserController
         // Generar el archivo PDF y descargarlo
         $pdf->Output('ReporteUsuarios.pdf', 'D', true); // 'D' para descargar, 'F' para guardar en el servidor
     }
+
+    public function obtenerEspecialidades(){
+        return $this->usuarioModel->read('especialidades');
+    }
 }

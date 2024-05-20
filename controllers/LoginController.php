@@ -1,5 +1,8 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 require_once '../models/LoginModel.php';
+require '../vendor/autoload.php';
 
 class LoginController
 {
@@ -90,4 +93,67 @@ class LoginController
         header("Location: ../index.php?alert=success&message=Sesion finalizada");
         exit();
     }
+
+    public function sendPasswordResetEmail($recipientEmail, $resetLink) {
+        $mail = new PHPMailer(true);
+    
+        try {
+            // Configuración del servidor SMTP de Gmail
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'tu-correo@gmail.com'; // Tu correo de Gmail
+            $mail->Password = 'tu-contraseña-o-contraseña-de-aplicación'; // Tu contraseña de Gmail o contraseña de aplicación
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+    
+            // Remitente y destinatario
+            $mail->setFrom('tu-correo@gmail.com', 'Tu Nombre');
+            $mail->addAddress($recipientEmail);
+    
+            // Contenido del correo
+            $mail->isHTML(true);
+            $mail->Subject = 'Recuperación de contraseña';
+            $mail->Body    = 'Haz clic en el siguiente enlace para recuperar tu contraseña: <a href="' . $resetLink . '">Recuperar Contraseña</a>';
+    
+            $mail->send();
+            echo 'El mensaje ha sido enviado';
+        } catch (Exception $e) {
+            echo "No se pudo enviar el mensaje. Error de Mailer: {$mail->ErrorInfo}";
+        }
+    }
+
+    public function generatePasswordResetToken($email) {
+        $token = bin2hex(random_bytes(32)); // Genera un token seguro
+        $expires = date("U") + 1800; // Token expira en 30 minutos
+    
+        // Guarda el token en la base de datos
+        $conn = new mysqli("localhost", "root", "root", "clinic-managment");
+    
+        if ($conn->connect_error) {
+            die("Conexión fallida: " . $conn->connect_error);
+        }
+    
+        // Elimina cualquier token existente para este usuario
+        $sql = "DELETE FROM password_resets WHERE email=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+    
+        // Inserta el nuevo token
+        $sql = "INSERT INTO password_resets (email, token, expires) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $hashedToken = password_hash($token, PASSWORD_DEFAULT);
+        $stmt->bind_param("sss", $email, $hashedToken, $expires);
+        $stmt->execute();
+    
+        // Envía el correo de recuperación
+        $resetLink = 'https://tu-dominio.com/reset_password.php?token=' . $token;
+        sendPasswordResetEmail($email, $resetLink);
+    
+        $stmt->close();
+        $conn->close();
+    }
+
+    
 }

@@ -91,6 +91,10 @@ class AppointmentController
         }
     }
 
+    public function obtenerEspecialidades(){
+        return $this->appointmentModel->read('especialidades');
+    }
+
 }
 
 ?>

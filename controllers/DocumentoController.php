@@ -1,5 +1,7 @@
 <?php
 
+require_once '../models/DocumentoModel.php';
+
 class DocumentoController
 {
     private $documentoModel;

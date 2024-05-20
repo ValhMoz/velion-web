@@ -1,12 +1,17 @@
 <?php
 require_once '../scripts/session_manager.php';
-include_once './includes/dashboard.php';
+require_once '../controllers/StartController.php';
+
+$startController = new StartController();
 
 if ($rol == "Paciente") {
     header("Location: 404.php");
     exit();
 }
 
+$usuarios = $startController->obtenerUltimosUsuarios();
+
+include_once './includes/dashboard.php';
 ?>
 
 <div class="container">
@@ -53,8 +58,8 @@ if ($rol == "Paciente") {
             </div>
         </div>
     </div>
-    
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 mt-5 border-bottom">
         <h3>Últimos usuarios registrados</h3>
     </div>
 
@@ -78,7 +83,7 @@ if ($rol == "Paciente") {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($usuariosPaginados as $usuario) : ?>
+                            <?php foreach ($usuarios as $usuario) : ?>
                                 <tr>
                                     <td><?php echo $usuario['usuario_id']; ?></td>
                                     <td><?php echo $usuario['nombre']; ?></td>
@@ -131,7 +136,7 @@ if ($rol == "Paciente") {
                 </div>
             </div>
         </div>
-
+<!-- 
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-start">
                 <li class="page-item <? echo $_GET['pagina'] <= 1 ? 'disabled' : '' ?>">
@@ -145,8 +150,8 @@ if ($rol == "Paciente") {
                 </li>
             </ul>
         </nav>
-    </div>
-
+    </div> -->
+<!-- 
     <div class=" container mt-5">
         <div class="col">
             <div>
@@ -157,7 +162,7 @@ if ($rol == "Paciente") {
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 </main>
 

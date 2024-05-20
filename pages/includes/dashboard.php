@@ -8,15 +8,12 @@
     <link href="../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="../assets/bootstrap-5.3/css/dashboard.css" rel="stylesheet">
     <script src="../assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/bootstrap-5.3/js/dashboard.js"></script>
     <script src="../assets/custom/js/timeout.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="../assets/bootstrap-5.3/js/color-modes.js"></script>
     <script src="../assets/custom/js/logout.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.7.0/main.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.7.0/main.min.js"></script>
 
     <style>
         .active {

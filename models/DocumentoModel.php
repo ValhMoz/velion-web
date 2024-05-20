@@ -1,5 +1,7 @@
 <?php
 
+require_once '../models/BaseModel.php';
+
 class DocumentoModel extends BaseModel
 {
     public function subirDocumento($datos)

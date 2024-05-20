@@ -28,6 +28,7 @@ if ($_GET['pagina'] > $n_botones_paginacion) {
 
 $pacientes = $appoinmentController->obtenerListaPacientes();
 $fisioterapeutas = $appoinmentController->obtenerListaFisioterapeutas();
+$especialidades = $appoinmentController->obtenerEspecialidades();
 
 include_once './includes/dashboard.php';
 include 'modals/appointments/add_modal.php';
@@ -75,6 +76,14 @@ if (isset($_SESSION['alert'])) {
             </select>
         </div>
         <div class="col-auto">
+            <select class="form-select" id="especialidad" name="especialidad">
+                <option selected>Selecciona una especialidad</option>
+                <?php foreach ($especialidades as $especialidad) : ?>
+                    <option value="<?php echo $especialidad['especialidad_id']; ?>"><?php echo $especialidad['especialidad_id'] . ' - '. $especialidad['descripcion']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col-auto">
             <button type="submit" class="btn btn-primary mb-3">Filtrar</button>
         </div>
     </form>
@@ -89,6 +98,7 @@ if (isset($_SESSION['alert'])) {
                             <th scope="col" style="width: 10%;">Fecha</th>
                             <th scope="col" style="width: 10%;">Paciente</th>
                             <th scope="col" style="width: 10%;">Contacto Pac.</th>
+                            <th scope="col" style="width: 10%;">Especialidad</th>
                             <th scope="col" style="width: 10%;">Fisioterapeuta asociado</th>
                             <!-- <th scope="col" style="width: 10%;">Consulta</th> -->
                             <th scope="col" style="width: 5%;">Estado</th>
@@ -101,6 +111,7 @@ if (isset($_SESSION['alert'])) {
                             <td><?php echo $cita['fecha_hora']; ?></td>
                             <td><?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?></td>
                             <td><?php echo $cita['paciente_telefono'] ?></td>
+                            <td><?php echo $cita['especialidad'] ?></td>
                             <td><?php echo $cita['fisioterapeuta_nombre'] . " " . $cita['fisioterapeuta_apellidos'];  ?></td>
                             <td>
                                 <?php
