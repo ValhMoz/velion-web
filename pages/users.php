@@ -33,21 +33,7 @@ if (!empty($filtro_usuario_id) || !empty($filtro_rol)) {
     $usuariosPaginados = $userController->obtenerUsuariosPaginados($iniciar, $articulos_x_pagina);
 }
 
-
-// // Obtener el valor del filtro, si está presente en la URL
-// $filtro_usuario_id = isset($_POST['usuario_id']) ? $_POST['usuario_id'] : '';
-
-
-// // Obtener usuarios aplicando el filtro si es necesario
-// if (!empty($filtro_usuario_id)) {
-//     $usuariosPaginados = $userController->obtenerUsuariosPorID($filtro_usuario_id);
-// } else {
-//     $usuariosPaginados = $userController->obtenerUsuariosPaginados($iniciar, $articulos_x_pagina);
-// }
-
 $n_botones_paginacion = ceil(count($usuarios) / ($articulos_x_pagina));
-
-
 
 if ($_GET['pagina'] > $n_botones_paginacion) {
     header('location:users.php?pagina=1');
@@ -57,7 +43,6 @@ $especialidades = $userController->obtenerEspecialidades();
 
 include_once './includes/dashboard.php';
 include_once './modals/users/add_modal.php';
-
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -104,14 +89,13 @@ if (isset($_SESSION['alert'])) {
 ?>
 
 <div class="table-responsive small">
-
     <form class="row g-3" method="post" action="">
         <div class="col-auto">
             <input type="text" class="form-control" id="usuario_id" name="usuario_id" placeholder="Filtrar por ID...">
         </div>
         <div class="col-auto">
             <select class="form-select" id="rol" name="rol" aria-label="Selecciona tu rol">
-                <option selected value="">Selecciona tu rol</option>
+                <option selected value="" hidden>Selecciona tu rol</option>
                 <option value="administrador">Administrador</option>
                 <option value="paciente">Paciente</option>
                 <option value="fisioterapeuta">Fisioterapeuta</option>

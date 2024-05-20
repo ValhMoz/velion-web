@@ -78,7 +78,7 @@
                 <label for="password" class="form-label">Contraseña</label>
                 <input type="password" class="form-control" name="pass" id="pass" required>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Login</button>
+            <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
             <div class="mt-3 d-flex justify-content-between">
                 <a href="./pages/signup.php" class="btn btn-link">Regístrate</a>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-link">Recuperar contraseña</a>

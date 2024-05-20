@@ -1,6 +1,7 @@
 <?php
 require_once '../scripts/session_manager.php';
 include '../controllers/InvoiceController.php';
+
 $invoiceController = new InvoiceController();
 
 if ($rol == "Paciente") {
@@ -8,23 +9,36 @@ if ($rol == "Paciente") {
     exit();
 }
 
-$articulos_x_pagina = 10;
-
 if (!$_GET) {
     header('location:invoices.php?pagina=1');
 }
 
-$iniciar = ($_GET['pagina'] - 1) * $articulos_x_pagina;
+$articulos_x_pagina = 10;
 
 $facturas = $invoiceController->obtenerFacturas();
 
-$facturasPaginadas = $invoiceController->obtenerFacturasPaginadas($iniciar, $articulos_x_pagina);
+$iniciar = ($_GET['pagina'] - 1) * $articulos_x_pagina;
+
+// Obtener el valor de los filtros, si están presentes en el formulario
+$filtro_usuario_id = isset($_POST['usuario_id']) ? $_POST['usuario_id'] : '';
+$filtro_estado = isset($_POST['estado']) ? $_POST['estado'] : '';
+
+// Obtener usuarios aplicando los filtros si es necesario
+if (!empty($filtro_usuario_id) || !empty($filtro_estado)) {
+    // Si se aplica al menos un filtro
+    $usuariosPaginados = $invoiceController->buscarFacturas($filtro_usuario_id, $filtro_estado);
+} else {
+    // Si no se aplican filtros, obtener usuarios paginados
+    $usuariosPaginados = $invoiceController->obtenerFacturasPaginadas($iniciar, $articulos_x_pagina);
+}
 
 $n_botones_paginacion = ceil(count($facturas) / ($articulos_x_pagina));
 
 if ($_GET['pagina'] > $n_botones_paginacion) {
     header('location:invoices.php?pagina=1');
 }
+
+$facturasPaginadas = $invoiceController->obtenerFacturasPaginadas($iniciar, $articulos_x_pagina);
 
 include_once './includes/dashboard.php';
 include './modals/invoices/add_modal.php';
@@ -56,13 +70,13 @@ if (isset($_SESSION['alert'])) {
 ?>
 
 <div class="table-responsive small">
-    <form class="row g-3">
+    <form class="row g-3" method="post" action="">
         <div class="col-auto">
             <input type="text" class="form-control" id="usuario_id" name="usuario_id" placeholder="Filtrar por ID de usuario...">
         </div>
         <div class="col-auto">
-            <select class="form-select" id="estado" name="estado">
-                <option selected>Selecciona un estado</option>
+            <select class="form-select" id="estado" name="estado" aria-label="Selecciona un estado">
+                <option selected value="" hidden>Selecciona un estado</option>
                 <option value="hombre">Pagada</option>
                 <option value="mujer">Pendiente</option>
             </select>

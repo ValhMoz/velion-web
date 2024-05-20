@@ -17,6 +17,37 @@ class InvoiceController extends PDF_Invoice
         return $this->invoiceModel->read('facturas');
     }
 
+    public function buscarFacturas($usuario_id, $estado)
+    {
+        // Verificar si se está aplicando algún filtro
+        if (!empty($usuario_id) && !empty($estado)) {
+            // Si se están aplicando ambos filtros
+            $facturasFiltradas = $this->invoiceModel->buscarUsuariosPorIDyEstado($usuario_id, $estado);
+        } elseif (!empty($usuario_id)) {
+            // Si solo se está aplicando el filtro por ID
+            echo ("pole");
+            $facturasFiltradas = $this->invoiceModel->obtenerUsuariosPorID($usuario_id);
+        } elseif (!empty($estado)) {
+            // Si solo se está aplicando el filtro por estado
+            $facturasFiltradas = $this->invoiceModel->obtenerUsuariosPorEstado($estado);
+        } else {
+            // Si no se aplica ningún filtro, redirigir con un mensaje de alerta
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha aplicado ningún filtro.');
+            header('Location: ../pages/invoices.php');
+            exit();
+        }
+
+        // Verificar si se encontraron usuarios
+        if (!empty($facturasFiltradas)) {
+            return $facturasFiltradas;
+        } else {
+            // Si no se encontraron usuarios, mostrar mensaje de alerta
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ningún usuario con los criterios seleccionados.');
+            header('Location: ../pages/invoices.php');
+            exit();
+        }
+    }
+
     public function obtenerFacturasPaginadas($iniciar, $articulos_x_pagina)
     {
         return $this->invoiceModel->obtenerDatosFacturasPaginadas($iniciar, $articulos_x_pagina);

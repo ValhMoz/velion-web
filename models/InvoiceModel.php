@@ -41,6 +41,42 @@ class InvoiceModel extends BaseModel
         return $datos;
     }
 
+    public function obtenerUsuariosPorID($usuario_id)
+    {
+        $sql = "SELECT * FROM `facturas` WHERE paciente_id = ?";
+        $stmt = self::$conexion->prepare($sql);
+        $stmt->bind_param("s", $usuario_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $usuarios = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $usuarios;
+    }
+
+    public function obtenerUsuariosPorEstado($estado)
+    {
+        $sql = "SELECT * FROM `facturas` WHERE estado = ?";
+        $stmt = self::$conexion->prepare($sql);
+        $stmt->bind_param("s", $estado);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $usuarios = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $usuarios;
+    }
+
+    public function buscarUsuariosPorIDyEstado($usuario_id, $estado)
+    {
+        $sql = "SELECT * FROM `facturas` WHERE paciente_id = ? AND estado = ?";
+        $stmt = self::$conexion->prepare($sql);
+        $stmt->bind_param("ss", $usuario_id, $estado);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $usuarios = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $usuarios;
+    }
+
     public function obtenerDatosFactura($factura_id)
     {
         // Query para obtener los datos de una factura en específico
