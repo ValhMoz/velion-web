@@ -41,9 +41,10 @@ class InvoiceModel extends BaseModel
         return $datos;
     }
 
-    public function obtenerUsuariosPorID($usuario_id)
+    public function obtenerFacturasPorID($usuario_id)
     {
         $sql = "SELECT * FROM `facturas` WHERE paciente_id = ?";
+        $sql2 = "SELECT * FROM `productos` WHERE "
         $stmt = self::$conexion->prepare($sql);
         $stmt->bind_param("s", $usuario_id);
         $stmt->execute();
@@ -53,7 +54,7 @@ class InvoiceModel extends BaseModel
         return $usuarios;
     }
 
-    public function obtenerUsuariosPorEstado($estado)
+    public function obtenerFacturasPorEstado($estado)
     {
         $sql = "SELECT * FROM `facturas` WHERE estado = ?";
         $stmt = self::$conexion->prepare($sql);
@@ -65,7 +66,7 @@ class InvoiceModel extends BaseModel
         return $usuarios;
     }
 
-    public function buscarUsuariosPorIDyEstado($usuario_id, $estado)
+    public function buscarFacturasPorIDyEstado($usuario_id, $estado)
     {
         $sql = "SELECT * FROM `facturas` WHERE paciente_id = ? AND estado = ?";
         $stmt = self::$conexion->prepare($sql);

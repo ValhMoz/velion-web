@@ -26,10 +26,10 @@ $filtro_estado = isset($_POST['estado']) ? $_POST['estado'] : '';
 // Obtener usuarios aplicando los filtros si es necesario
 if (!empty($filtro_usuario_id) || !empty($filtro_estado)) {
     // Si se aplica al menos un filtro
-    $usuariosPaginados = $invoiceController->buscarFacturas($filtro_usuario_id, $filtro_estado);
+    $facturasPaginadas = $invoiceController->buscarFacturas($filtro_usuario_id, $filtro_estado);
 } else {
     // Si no se aplican filtros, obtener usuarios paginados
-    $usuariosPaginados = $invoiceController->obtenerFacturasPaginadas($iniciar, $articulos_x_pagina);
+    $facturasPaginadas = $invoiceController->obtenerFacturasPaginadas($iniciar, $articulos_x_pagina);
 }
 
 $n_botones_paginacion = ceil(count($facturas) / ($articulos_x_pagina));
@@ -38,7 +38,7 @@ if ($_GET['pagina'] > $n_botones_paginacion) {
     header('location:invoices.php?pagina=1');
 }
 
-$facturasPaginadas = $invoiceController->obtenerFacturasPaginadas($iniciar, $articulos_x_pagina);
+
 
 include_once './includes/dashboard.php';
 include './modals/invoices/add_modal.php';

@@ -22,14 +22,13 @@ class InvoiceController extends PDF_Invoice
         // Verificar si se está aplicando algún filtro
         if (!empty($usuario_id) && !empty($estado)) {
             // Si se están aplicando ambos filtros
-            $facturasFiltradas = $this->invoiceModel->buscarUsuariosPorIDyEstado($usuario_id, $estado);
+            $facturasFiltradas = $this->invoiceModel->buscarFacturasPorIDyEstado($usuario_id, $estado);
         } elseif (!empty($usuario_id)) {
             // Si solo se está aplicando el filtro por ID
-            echo ("pole");
-            $facturasFiltradas = $this->invoiceModel->obtenerUsuariosPorID($usuario_id);
+            $facturasFiltradas = $this->invoiceModel->obtenerFacturasPorID($usuario_id);
         } elseif (!empty($estado)) {
             // Si solo se está aplicando el filtro por estado
-            $facturasFiltradas = $this->invoiceModel->obtenerUsuariosPorEstado($estado);
+            $facturasFiltradas = $this->invoiceModel->obtenerFacturasPorEstado($estado);
         } else {
             // Si no se aplica ningún filtro, redirigir con un mensaje de alerta
             $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha aplicado ningún filtro.');
