@@ -4,6 +4,15 @@ CREATE TABLE especialidades (
   fecha TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 );
 
+CREATE TABLE clinicas (
+  clinica_id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(255) NOT NULL,
+  direccion VARCHAR(255),
+  telefono VARCHAR(20),
+  email VARCHAR(100),
+  fecha_creacion TIMESTAMP NOT NULL DEFAULT current_timestamp()
+);
+
 CREATE TABLE horarios (
   horario_id INT AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(30),
@@ -17,6 +26,13 @@ CREATE TABLE productos (
   descripcion VARCHAR(255),
   monto INT,
   fecha TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+);
+
+CREATE TABLE password_resets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100) NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Tabla para almacenar información de usuarios
@@ -37,6 +53,19 @@ CREATE TABLE usuarios (
   especialidad INT,
   sesiones_disponibles INT,
   FOREIGN KEY (especialidad) REFERENCES especialidades(especialidad_id)
+);
+
+CREATE TABLE documentos_sanitarios (
+  documento_id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(255),
+  descripcion TEXT,
+  ruta_documento VARCHAR(255),
+  fecha_subida TIMESTAMP NOT NULL DEFAULT current_timestamp(),
+  estado ENUM('Pendiente', 'Firmado', 'Rechazado') DEFAULT 'Pendiente',
+  paciente_id VARCHAR(9),
+  fisioterapeuta_id VARCHAR(9),
+  FOREIGN KEY (paciente_id) REFERENCES usuarios(usuario_id),
+  FOREIGN KEY (fisioterapeuta_id) REFERENCES usuarios(usuario_id)
 );
 
 -- Tabla para almacenar información de facturas
@@ -132,8 +161,8 @@ INSERT INTO productos (nombre, descripcion, monto) VALUES
 
 INSERT INTO usuarios (usuario_id, nombre, apellidos, telefono, fecha_nacimiento, direccion, provincia, municipio, cp, email, pass, rol, genero, especialidad, sesiones_disponibles)
 VALUES
-('123456789', 'Juan', 'Perez', '123456789', '1990-01-01', 'Calle 123', 'Provincia 1', 'Ciudad 1', '12345', 'patient@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'paciente', 'hombre', 10, NULL),
-('234567890', 'Maria', 'Lopez', '234567890', '1995-05-05', 'Avenida 456', 'Provincia 2', 'Ciudad 2', '23456', 'fisio@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'fisioterapeuta', 'mujer', NULL, 10),
+('123456789', 'Juan', 'Perez', '123456789', '1990-01-01', 'Calle 123', 'Provincia 1', 'Ciudad 1', '12345', 'patient@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'paciente', 'hombre', NULL, 10),
+('234567890', 'Maria', 'Lopez', '234567890', '1995-05-05', 'Avenida 456', 'Provincia 2', 'Ciudad 2', '23456', 'fisio@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'fisioterapeuta', 'mujer', 5, NULL),
 ('345678901', 'Pedro', 'Gomez', '345678901', '1985-10-10', 'Plaza 789', 'Provincia 3', 'Ciudad 3', '34567', 'admin@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'administrador', 'hombre', NULL, NULL);
 
 -- Insertar datos de prueba para la tabla facturas

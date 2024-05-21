@@ -34,6 +34,9 @@
             <a class="nav-link" href="invoices-patients.php" >Facturas</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="documentos.php" >Documentos</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="shop.php" >Tienda</a>
           </li>
           <li class="nav-item">

@@ -11,5 +11,9 @@ class StartController
         $this->startModel = new StartModel();
     }
 
+    public function obtenerUltimosUsuarios() {
+        return  $this->startModel->obtenerUltimosUsuarios();
+
+    }
 
 }

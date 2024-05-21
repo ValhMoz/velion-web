@@ -9,14 +9,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
 
     switch ($_POST['action']) {
         case 'asignar':
-            // $datos = array(
-            //     'paciente_id' => $_POST["paciente_id"],
-            //     'fisioterapeuta_id' => $_POST["fisioterapeuta_id"],
-            //     'fecha' => $_POST["fecha"],
-            //     'hora' => $_POST["hora"],
-            // );
-            echo('hola');
-            // $appointmentController->asignarCita();
+            $datos = array(
+                'paciente_id' => $_POST["paciente_id"],
+                'especialidad_id' => $_POST["especialidad_id"],
+                'fisioterapeuta_id' => $_POST["fisioterapeuta_id"],
+                'duracion' => $_POST["duracion"],
+                'fecha' => $_POST["fecha"],
+                'estado' => $_POST["estado"]
+            );
+            $appointmentController->asignarCita();
 
             break;
 
@@ -29,6 +30,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
             break;
 
         case 'editar':
+            $datos = array(
+                'paciente_id' => $_POST["paciente_id"],
+                'especialidad_id' => $_POST["especialidad_id"],
+                'fisioterapeuta_id' => $_POST["fisioterapeuta_id"],
+                'duracion' => $_POST["duracion"],
+                'fecha' => $_POST["fecha"],
+                'estado' => $_POST["estado"]
+            );
+            $condicion = "cita_id = '" . $_POST["cita_id"] . "'";
+            $appointmentController->editarCita('citas', $datos, $condicion);
 
             break;
 

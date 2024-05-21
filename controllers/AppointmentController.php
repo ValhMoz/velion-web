@@ -31,24 +31,17 @@ class AppointmentController
         return $this->appointmentModel->read('usuarios', 'rol = \'fisioterapeuta\'');
     }
 
-    // public function asignarCita($tabla, $datos){
-    //     if($this->appointmentModel->insert($tabla, $datos)){
-    //         $_SESSION['alert'] = array('type' => 'success', 'message' => 'Cita añadida correctamente.');
-    //         header('Location: ../pages/appointments.php');
-    //         exit();
-    //     } else {
-    //         // Dentro de la función añadirNuevoUsuario en UserController.php
-    //         $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido añadir la cita correctamente.');
-    //         header('Location: ../pages/appointments.php');
-    //         exit();
-    //     }
+    public function asignarCita($tabla, $datos){
+        if($this->appointmentModel->insert($tabla, $datos)){
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Cita añadida correctamente.');
+            header('Location: ../pages/appointments.php');
+            exit();
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido añadir la cita correctamente.');
+            header('Location: ../pages/appointments.php');
+            exit();
+        }
 
-    // }
-
-    public function asignarCita(){
-        $_SESSION['alert'] = array('type' => 'success', 'message' => 'Cita añadida correctamente.');
-        header('Location: ../pages/appointments.php');
-        exit();
     }
 
     public function editarCita($tabla, $datos, $condicion){
@@ -57,7 +50,6 @@ class AppointmentController
             header('Location: ../pages/appointments.php');
             exit();
         } else {
-            // Dentro de la función añadirNuevoUsuario en UserController.php
             $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido actualizar la cita correctamente.');
             header('Location: ../pages/appointments.php');
             exit();
@@ -71,7 +63,6 @@ class AppointmentController
             header('Location: ../pages/appointments.php');
             exit();
         } else {
-            // Dentro de la función añadirNuevoUsuario en UserController.php
             $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido eliminar la cita correctamente.');
             header('Location: ../pages/appointments.php');
             exit();
@@ -84,11 +75,14 @@ class AppointmentController
             header('Location: ../pages/appointments.php');
             exit();
         } else {
-            // Dentro de la función añadirNuevoUsuario en UserController.php
             $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido eliminar la cita correctamente.');
             header('Location: ../pages/appointments.php');
             exit();
         }
+    }
+
+    public function obtenerEspecialidades(){
+        return $this->appointmentModel->read('especialidades');
     }
 
 }

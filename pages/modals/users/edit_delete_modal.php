@@ -6,7 +6,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Usuario</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="../../scripts/user_manager.php" method="post">
+            <form action="../scripts/user_manager.php" method="post">
                 <div class="modal-body">
                     <input type="hidden" id="actionType" name="action" value="editar_usuario">
                     <div id="userDetails">
@@ -43,17 +43,28 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="rol" class="form-label">Rol</label>
-                                <select class="form-select" id="rol" name="rol" aria-label="Selecciona tu rol">
+                                <select class="form-select" id="rol" name="rol" aria-label="Selecciona tu rol" onchange="mostrarEspecialidad(this)">
                                     <option disabled>Selecciona un rol</option>
-                                    <option value="administrador" <?php if ($usuario['rol'] === 'administrador') echo 'selected'; ?>>Administrador</option>
-                                    <option value="paciente" <?php if ($usuario['rol'] === 'paciente') echo 'selected'; ?>>Paciente</option>
-                                    <option value="fisioterapeuta" <?php if ($usuario['rol'] === 'fisioterapeuta') echo 'selected'; ?>>Fisioterapeuta</option>
+                                    <option value="Administrador" <?php if ($usuario['rol'] === 'Administrador') echo 'selected'; ?>>Administrador</option>
+                                    <option value="Paciente" <?php if ($usuario['rol'] === 'Paciente') echo 'selected'; ?>>Paciente</option>
+                                    <option value="Fisioterapeuta" <?php if ($usuario['rol'] === 'Fisioterapeuta') echo 'selected'; ?>>Fisioterapeuta</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
                                 <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="<?php echo $usuario['fecha_nacimiento']; ?>" required>
                             </div>
+                        </div>
+
+                        <!-- Especialidad (visible solo si el rol es Fisioterapeuta) -->
+                        <div class="mb-3" id="especialidad-container" <?php echo ($usuario['rol'] === 'Fisioterapeuta') ? 'style="display: block;"' : 'style="display: none;"'; ?>>
+                            <label for="especialidad" class="form-label">Especialidad</label>
+                            <input class="form-control" list="datalistOptions" id="exampleDataList" value="<?php echo $usuario['especialidad']; ?>" placeholder="Escribe aquí para buscar...">
+                            <datalist id="datalistOptions">
+                                <?php foreach ($especialidades as $especialidad) : ?>
+                                    <option value="<?php echo $especialidad['especialidad_id']; ?>"><?php echo $especialidad['especialidad_id'] . ' - '. $especialidad['descripcion']; ?></option>
+                                <?php endforeach; ?>
+                            </datalist>
                         </div>
 
                         <!-- Telefono, Dirección -->
@@ -103,6 +114,41 @@
     </div>
 </div>
 
+<script>
+    // Llamar a la función mostrarEspecialidad cuando se cargue el modal
+    document.addEventListener('DOMContentLoaded', mostrarEspecialidad);
+
+    // Llamar a la función mostrarEspecialidad cuando cambie el valor del rol
+    document.addEventListener('DOMContentLoaded', function () {
+        mostrarEspecialidad(document.getElementById('rol'));
+    });
+
+    // Función para mostrar u ocultar la especialidad según el rol seleccionado
+    function mostrarEspecialidad() {
+        var rol = document.getElementById('rol').value;
+        var especialidadContainer = document.getElementById('especialidad-container');
+        if (rol === 'Fisioterapeuta') {
+            especialidadContainer.style.display = 'block';
+        } else {
+            especialidadContainer.style.display = 'none';
+        }
+    }
+
+    function mostrarEspecialidad(select) {
+        var especialidadContainer = document.getElementById('especialidad-container');
+        if (select.value === 'Fisioterapeuta') {
+            especialidadContainer.style.display = 'block';
+            document.getElementById('especialidad').setAttribute('required', 'required');
+        } else {
+            especialidadContainer.style.display = 'none';
+            document.getElementById('especialidad').removeAttribute('required');
+        }
+    }
+
+
+</script>
+
+
 <!-- Modal eliminar usuario -->
 <div class="modal fade" id="delete_<?php echo $usuario['usuario_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -115,7 +161,7 @@
                 <p>¿Deseas eliminar el usuario <?php echo $usuario['nombre'] . ' '. $usuario['apellidos']; ?> con ID: <?php echo $usuario['usuario_id']; ?>?</p>
             </div>
             <div class="modal-footer">
-                <form action="../../scripts/user_manager.php" method="post">
+                <form action="../scripts/user_manager.php" method="post">
                     <input type="hidden" id="action" name="action" value="eliminar_usuario">
                     <input type="hidden" id="usuario_id" name="usuario_id" value="<?php echo $usuario['usuario_id']; ?>">
                     <button type="submit" class="btn btn-danger">Eliminar usuario</button>

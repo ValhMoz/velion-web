@@ -58,9 +58,9 @@ class UserModel extends BaseModel
 
     public function buscarUsuariosPorIDyRol($usuario_id, $rol)
     {
-        $sql = "SELECT * FROM `usuarios` WHERE usuario_id = ?, rol = ?";
+        $sql = "SELECT * FROM `usuarios` WHERE usuario_id = ? AND rol = ?";
         $stmt = self::$conexion->prepare($sql);
-        $stmt->bind_param("s", $usuario_id, $rol);
+        $stmt->bind_param("ss", $usuario_id, $rol);
         $stmt->execute();
         $result = $stmt->get_result();
         $usuarios = $result->fetch_all(MYSQLI_ASSOC);

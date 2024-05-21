@@ -1,24 +1,41 @@
 <?php
 require_once '../scripts/session_manager.php';
 require_once '../controllers/AppointmentController.php';
-$appoinmentController = new AppointmentController();
+$appointmentController = new AppointmentController();
 
 if ($rol == "Paciente") {
     header("Location: 404.php");
     exit();
 }
 
-$articulos_x_pagina = 5;
+
 
 if (!$_GET) {
     header('location:appointments.php?pagina=1');
 }
 
+$articulos_x_pagina = 5;
+
+$citas = $appointmentController->obtenerCitas();
+
 $iniciar = ($_GET['pagina'] - 1) * $articulos_x_pagina;
 
-$citas = $appoinmentController->obtenerCitas();
+// $citasPaginadas = $appointmentController->obtenerCitasPaginadas($iniciar, $articulos_x_pagina);
 
-$citasPaginadas = $appoinmentController->obtenerCitasPaginadas($iniciar, $articulos_x_pagina);
+// Obtener el valor de los filtros, si están presentes en el formulario
+$filtro_usuario_id = isset($_POST['usuario_id']) ? $_POST['usuario_id'] : '';
+// $filtro_fecha_hora = isset($_POST['fecha_hora']) ? $_POST['fecha_hora'] : '';
+// $filtro_estado = isset($_POST['estado']) ? $_POST['estado'] : '';
+// $filtro_especialidad = isset($_POST['especialidad']) ? $_POST['especialidad'] : '';
+
+// Obtener usuarios aplicando los filtros si es necesario
+if (!empty($filtro_usuario_id) || !empty($filtro_estado)  || !empty($filtro_fecha_hora)  || !empty($filtro_especialidad) ) {
+    // Si se aplica al menos un filtro
+    // $citasPaginadas = $appointmentController->obtenerCitasFiltradas($filtro_usuario_id, $filtro_fecha_hora, $filtro_estado, $filtro_especialidad);
+} else {
+    // Si no se aplican filtros, obtener usuarios paginados
+    $citasPaginadas = $appointmentController->obtenerCitasPaginadas($iniciar, $articulos_x_pagina);
+}
 
 $n_botones_paginacion = ceil(count($citas) / ($articulos_x_pagina));
 
@@ -26,8 +43,9 @@ if ($_GET['pagina'] > $n_botones_paginacion) {
     header('location:appointments.php?pagina=1');
 }
 
-$pacientes = $appoinmentController->obtenerListaPacientes();
-$fisioterapeutas = $appoinmentController->obtenerListaFisioterapeutas();
+$pacientes = $appointmentController->obtenerListaPacientes();
+$fisioterapeutas = $appointmentController->obtenerListaFisioterapeutas();
+$especialidades = $appointmentController->obtenerEspecialidades();
 
 include_once './includes/dashboard.php';
 include 'modals/appointments/add_modal.php';
@@ -58,20 +76,27 @@ if (isset($_SESSION['alert'])) {
 ?>
 
 <div class="table-responsive small">
-    <form class="row g-3">
+    <form class="row g-3" methos="post" action="">
         <div class="col-auto">
-            <label for="inputPassword2" class="visually-hidden">Filtro</label>
-            <input type="text" class="form-control" id="inputPassword2" placeholder="Filtrar por ID de paciente...">
+            <input type="text" class="form-control" id="usuario_id" name="usuario_id" placeholder="Filtrar por ID de paciente...">
         </div>
         <div class="col-auto">
-            <input type="date" class="form-control" id="">
+            <input type="date" class="form-control" id="fecha_hora" name="fecha_hora">
         </div>
         <div class="col-auto">
             <select class="form-select" id="estado" name="estado">
-                <option selected>Selecciona un estado</option>
-                <option value="programada">Programada</option>
-                <option value="realizada">Realizada</option>
-                <option value="cancelada">Cancelada</option>
+                <option selected value="" hidden>Selecciona un estado</option>
+                <option value="Programada">Programada</option>
+                <option value="Realizada">Realizada</option>
+                <option value="Cancelada">Cancelada</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <select class="form-select" id="especialidad" name="especialidad">
+                <option selected value="" hidden>Selecciona una especialidad</option>
+                <?php foreach ($especialidades as $especialidad) : ?>
+                    <option value="<?php echo $especialidad['especialidad_id']; ?>"><?php echo $especialidad['especialidad_id'] . ' - '. $especialidad['descripcion']; ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
         <div class="col-auto">
@@ -87,12 +112,13 @@ if (isset($_SESSION['alert'])) {
                         <tr>
                             <th scope="col" style="width: 5%;">ID Pac.</th>
                             <th scope="col" style="width: 10%;">Fecha</th>
-                            <th scope="col" style="width: 10%;">Paciente</th>
-                            <th scope="col" style="width: 10%;">Contacto Pac.</th>
-                            <th scope="col" style="width: 10%;">Fisioterapeuta asociado</th>
+                            <th scope="col" style="width: 7%;">Paciente</th>
+                            <th scope="col" style="width: 7%;">Contacto Pac.</th>
+                            <th scope="col" style="width: 10%;">Especialidad</th>
+                            <th scope="col" style="width: 7%;">Fis. Asoc.</th>
                             <!-- <th scope="col" style="width: 10%;">Consulta</th> -->
-                            <th scope="col" style="width: 5%;">Estado</th>
-                            <th scope="col" style="width: 5%;">Acciones</th>
+                            <th scope="col" style="width: 6%;">Estado</th>
+                            <th scope="col" style="width: 6%;">Acciones</th>
                         </tr>
                     </thead>
                     <?php foreach ($citasPaginadas as $cita) : ?>
@@ -101,6 +127,7 @@ if (isset($_SESSION['alert'])) {
                             <td><?php echo $cita['fecha_hora']; ?></td>
                             <td><?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?></td>
                             <td><?php echo $cita['paciente_telefono'] ?></td>
+                            <td><?php echo $cita['especialidad_id']. ' - '. $cita['descripcion'] ?></td>
                             <td><?php echo $cita['fisioterapeuta_nombre'] . " " . $cita['fisioterapeuta_apellidos'];  ?></td>
                             <td>
                                 <?php

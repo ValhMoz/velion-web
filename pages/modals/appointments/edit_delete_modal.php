@@ -1,86 +1,68 @@
-<!-- Modal pedir cita -->
-<div class="modal fade" id="edit_<?php echo $cita['cita_id']; ?>" tabindex="-1" role="dialog" aria-labelledby="editarModal" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<!-- Modal -->
+<div class="modal fade" id="edit_<?php echo $cita['cita_id']; ?>" tabindex="-1" aria-labelledby="agregarCitaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar Cita</h5>
+                <h5 class="modal-title" id="agregarCitaModalLabel">Agregar Nueva Cita</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
             </div>
-            <div class="modal-body">
-                <!-- Pasos -->
-                <div id="paso1" class="pasos">
-                    <h5>1. Selecciona un paciente</h5>
-                    <select class="form-select" id="">
-                        <option value="<?php echo $usuario['paciente_id']; ?>"><?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?></option>
-                    </select>
-                </div>
-                <div id="paso2" class="pasos" style="display: none;">
-                    <h5>2. Selecciona un fisioterapeuta</h5>
-                    <select class="form-select" name="" id="">
-                        <option value=""></option>
-                    </select>
-                </div>
-                <div id="paso3" class="pasos" style="display: none;">
-                    <h5>3. Selecciona un día</h5>
+            <form action="../scripts/appoinmtment_manager.php" method="post" id="agregarCitaForm">
+                <div class="modal-body">
+                    <input type="hidden" id="actionType" name="action" value="asignar">
                     <div class="mb-3">
-                        <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                        <label for="paciente_id" class="form-label">ID del Paciente</label>
+                        <input type="text" class="form-control" list="pacienteOptions" id="paciente_id" value="<?php echo $paciente['usuario_id']; ?>">
+                        <datalist id="pacienteOptions">
+                            <?php foreach ($pacientes as $paciente) : ?>
+                                <option value="<?php echo $paciente['usuario_id']; ?>"><?php echo $paciente['nombre'] . ' ' . $paciente['apellidos']; ?></option>
+                            <?php endforeach; ?>
+                        </datalist>
+                    </div>
+                    <div class="mb-3">
+                        <label for="especialidad_id" class="form-label">Especialidad</label>
+                        <input class="form-control" list="especialidadOptions" id="especialidad_id" value="<?php echo $especialidad['especialidad_id']; ?>">
+                        <datalist id="especialidadOptions">
+                            <?php foreach ($especialidades as $especialidad) : ?>
+                                <option value="<?php echo $especialidad['especialidad_id']; ?>"><?php echo $especialidad['especialidad_id'] . ' - ' . $especialidad['descripcion']; ?></option>
+                            <?php endforeach; ?>
+                        </datalist>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fisioterapeuta_id" class="form-label">ID del Fisioterapeuta</label>
+                        <input class="form-control" list="fisioterapeutaOptions" id="fisioterapeuta_id" value="<?php echo $fisioterapeuta['usuario_id']; ?>">
+                        <datalist id="fisioterapeutaOptions">
+                            <?php foreach ($fisioterapeutas as $fisioterapeuta) : ?>
+                                <option value="<?php echo $fisioterapeuta['usuario_id']; ?>"><?php echo $fisioterapeuta['nombre'] . ' ' . $fisioterapeuta['apellidos']; ?></option>
+                            <?php endforeach; ?>
+                        </datalist>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fecha_hora" class="form-label">Fecha y Hora</label>
+                        <input type="datetime-local" class="form-control" id="fecha_hora" name="fecha_hora" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="duracion_minutos" class="form-label">Duración (minutos)</label>
+                        <input type="number" class="form-control" id="duracion_minutos" name="duracion_minutos" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="estado" class="form-label">Estado</label>
+                        <select class="form-select" id="estado" name="estado" value="<?php echo $fisioterapeuta['usuario_id']; ?>">
+                            <option value="Programada">Programada</option>
+                            <option value="Cancelada">Cancelada</option>
+                            <option value="Realizada">Realizada</option>
+                        </select>
                     </div>
                 </div>
-                <div id="paso4" class="pasos" style="display: none;">
-                    <h5>4. Selecciona una hora</h5>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="4" class="text-center">Horas de la Mañana</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="radio" name="hora" value="09:00"> 09:00</td>
-                                            <td><input type="radio" name="hora" value="10:00"> 10:00</td>
-                                            <td><input type="radio" name="hora" value="11:00"> 11:00</td>
-                                            <td><input type="radio" name="hora" value="12:00"> 12:00</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="4" class="text-center">Horas de la Tarde</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="radio" name="hora" value="17:00"> 17:00</td>
-                                            <td><input type="radio" name="hora" value="18:00"> 18:00</td>
-                                            <td><input type="radio" name="hora" value="19:00"> 19:00</td>
-                                            <td><input type="radio" name="hora" value="20:00"> 20:00</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" form="agregarCitaForm" class="btn btn-primary">Guardar Cita</button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="btnAnterior" style="display: none;">Anterior</button>
-                <button type="button" class="btn btn-primary" id="btnSiguiente">Siguiente</button>
-                <button type="button" class="btn btn-success" id="btnConfirmar" style="display: none;">Confirmar</button>
-            </div>
+            </form>
         </div>
     </div>
 </div>
+
+
 
 <!-- Modal confirmar cita -->
 <div class="modal fade" id="confirm_<?php echo $cita['cita_id']; ?>" tabindex="-1">
@@ -125,101 +107,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-        var pasoActual = 1;
-        var totalPasos = 4;
-
-        $('#btnSiguiente').click(function() {
-            if (pasoActual < totalPasos) {
-                $('#paso' + pasoActual).hide();
-                $('#paso' + (pasoActual + 1)).show();
-                if (pasoActual === totalPasos - 1) {
-                    $('#btnSiguiente').hide();
-                    $('#btnConfirmar').show();
-                } else {
-                    $('#btnAnterior').show();
-                }
-                pasoActual++;
-            }
-        });
-
-        $('#btnAnterior').click(function() {
-            if (pasoActual > 1) {
-                $('#paso' + pasoActual).hide();
-                $('#paso' + (pasoActual - 1)).show();
-                $('#btnSiguiente').show();
-                $('#btnConfirmar').hide();
-                if (pasoActual === 2) {
-                    $('#btnAnterior').hide();
-                }
-                pasoActual--;
-            }
-        });
-
-        $('#btnConfirmar').click(function() {
-            var pacienteId = $('#exampleDataList').val();
-            var fisioterapeutaId = $('#selectFisioterapeuta').val();
-            var fecha = $('#fecha_nacimiento').val();
-            var hora = $('input[name="hora"]:checked').val();
-
-            $.ajax({
-                type: 'POST',
-                url: '../scripts/appointment_manager.php',
-                data: {
-                    action: 'editar',
-                    paciente_id: pacienteId,
-                    fisioterapeuta_id: fisioterapeutaId,
-                    fecha: fecha,
-                    hora: hora
-                },
-                success: function(response) {
-                    $('#edit_<?php echo $cita['cita_id']; ?>').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    alert('Error al asignar la cita: ' + error);
-                }
-            });
-        });
-
-        $('#btnEliminar').click(function() {
-            var cita_id = $('#cita_id').val();
-
-            $.ajax({
-                type: 'POST',
-                url: '../scripts/appointment_manager.php',
-                data: {
-                    action: 'eliminar',
-                    cita_id: cita_id
-                },
-                success: function(response) {
-                    $('#delete_<?php echo $cita['cita_id']; ?>').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    alert('Error al asignar la cita: ' + error);
-                }
-            });
-        });
-
-        $('#btnCompletar').click(function() {
-            var cita_id = $('#cita_id').val();
-
-            $.ajax({
-                type: 'POST',
-                url: '../scripts/appointment_manager.php',
-                data: {
-                    action: 'confirmar',
-                    cita_id: cita_id
-                },
-                success: function(response) {
-                    $('#delete_<?php echo $cita['cita_id']; ?>').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    alert('Error al confirmar la cita: ' + error);
-                }
-            });
-        });
-
-    });
-</script>

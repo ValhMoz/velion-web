@@ -6,7 +6,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Usuario</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="../../scripts/user_manager.php" method="post">
+            <form action="../scripts/user_manager.php" method="post">
                 <div class="modal-body">
                     <input type="hidden" id="actionType" name="action" value="añadir_usuario">
 
@@ -44,17 +44,28 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="rol" class="form-label">Rol</label>
-                                <select class="form-select" id="rol" name="rol" aria-label="Selecciona tu rol">
+                                <select class="form-select" id="rol" name="rol" aria-label="Selecciona tu rol" onchange="mostrarEspecialidad(this)">
                                     <option selected>Selecciona tu rol</option>
-                                    <option value="administrador">Administrador</option>
-                                    <option value="paciente">Paciente</option>
-                                    <option value="fisioterapeuta">Fisioterapeuta</option>
+                                    <option value="Administrador">Administrador</option>
+                                    <option value="Paciente">Paciente</option>
+                                    <option value="Fisioterapeuta">Fisioterapeuta</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
                                 <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
                             </div>
+                        </div>
+
+                        <!-- Especialidad (visible solo si el rol es Fisioterapeuta) -->
+                        <div class="mb-3" id="especialidad-container" style="display: none;">
+                            <label for="especialidad" class="form-label">Especialidad</label>
+                            <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Escribe aquí para buscar...">
+                            <datalist id="datalistOptions">
+                                <?php foreach ($especialidades as $especialidad) : ?>
+                                    <option value="<?php echo $especialidad['especialidad_id']; ?>"><?php echo $especialidad['especialidad_id'] . ' - '. $especialidad['descripcion']; ?></option>
+                                <?php endforeach; ?>
+                            </datalist>
                         </div>
 
                         <!-- Telefono, Dirección -->
@@ -77,19 +88,17 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="password" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" id="pass" name="pass" minlength="8" name="pass" required>
+                                <input type="password" class="form-control" id="pass" name="pass" minlength="8" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label for="provincia" class="form-label">Provincia</label>
                                 <input type="text" class="form-control" id="provincia" name="provincia" required>
-                                </select>
                             </div>
                             <div class="col-md-4">
                                 <label for="municipio" class="form-label">Municipio</label>
                                 <input type="text" class="form-control" id="municipio" name="municipio" required>
-                                </select>
                             </div>
                             <div class="col-md-4">
                                 <label for="cp" class="form-label">Código Postal</label>
@@ -105,3 +114,20 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        mostrarEspecialidad(document.getElementById('rol'));
+    });
+
+    function mostrarEspecialidad(select) {
+        var especialidadContainer = document.getElementById('especialidad-container');
+        if (select.value === 'Fisioterapeuta') {
+            especialidadContainer.style.display = 'block';
+            document.getElementById('especialidad').setAttribute('required', 'required');
+        } else {
+            especialidadContainer.style.display = 'none';
+            document.getElementById('especialidad').removeAttribute('required');
+        }
+    }
+</script>

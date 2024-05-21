@@ -88,6 +88,19 @@ if (isset($_SESSION['alert'])) {
     </div>
 </div>
 
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-start">
+        <li class="page-item <? echo $_GET['pagina'] <= 1 ? 'disabled' : '' ?>">
+            <a class="page-link" href="appointments-patients.php?pagina=<?php echo $_GET['pagina'] - 1 ?>">Anterior</a>
+        </li>
+        <?php for ($i = 0; $i < $n_botones_paginacion; $i++) : ?>
+            <li class="page-item <? echo $_GET['pagina'] == $i + 1 ? 'active' : '' ?>"><a class="page-link" href="appointments-patients.php?pagina=<?php echo $i + 1 ?>"><?php echo $i + 1 ?></a></li>
+        <?php endfor ?>
+        <li class="page-item <? echo $_GET['pagina'] >= $n_botones_paginacion ? 'disabled' : '' ?>">
+            <a class="page-link" href="appointments-patients.php?pagina=<?php echo $_GET['pagina'] + 1 ?>">Siguiente</a>
+        </li>
+    </ul>
+</nav>
 
 </div>
 
