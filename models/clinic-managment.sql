@@ -4,6 +4,15 @@ CREATE TABLE especialidades (
   fecha TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 );
 
+CREATE TABLE clinicas (
+  clinica_id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(255) NOT NULL,
+  direccion VARCHAR(255),
+  telefono VARCHAR(20),
+  email VARCHAR(100),
+  fecha_creacion TIMESTAMP NOT NULL DEFAULT current_timestamp()
+);
+
 CREATE TABLE horarios (
   horario_id INT AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(30),
@@ -54,9 +63,9 @@ CREATE TABLE documentos_sanitarios (
   fecha_subida TIMESTAMP NOT NULL DEFAULT current_timestamp(),
   estado ENUM('Pendiente', 'Firmado', 'Rechazado') DEFAULT 'Pendiente',
   paciente_id VARCHAR(9),
-  sanitario_id VARCHAR(9),
+  fisioterapeuta_id VARCHAR(9),
   FOREIGN KEY (paciente_id) REFERENCES usuarios(usuario_id),
-  FOREIGN KEY (sanitario_id) REFERENCES usuarios(usuario_id)
+  FOREIGN KEY (fisioterapeuta_id) REFERENCES usuarios(usuario_id)
 );
 
 -- Tabla para almacenar información de facturas

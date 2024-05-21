@@ -133,13 +133,13 @@ if (isset($_SESSION['alert'])) {
                         <tr>
                             <th scope="col" style="width: 5%;">ID</th>
                             <th scope="col" style="width: 10%;">Nombre</th>
-                            <th scope="col" style="width: 15%;">Apellidos</th>
+                            <th scope="col" style="width: 10%;">Apellidos</th>
                             <th scope="col" style="width: 15%;">Email</th>
-                            <th scope="col" style="width: 27%;">Direccion</th>
+                            <th scope="col" style="width: 25%;">Direccion</th>
                             <th scope="col" style="width: 5%;">Teléfono</th>
                             <th scope="col" style="width: 5%;">Ses.Dis.</th>
                             <th scope="col" style="width: 5%;">Rol</th>
-                            <th scope="col" style="width: 10%;">Acciones</th>
+                            <th scope="col" style="width: 8%;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>

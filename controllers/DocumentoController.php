@@ -22,6 +22,18 @@ class DocumentoController
         exit();
     }
 
+    public function obtenerDocumentos(){
+        return $this->documentoModel->read('documentos_sanitarios');
+    }
+
+    public function buscarDocumentos($filtro_documento_id){
+        
+    }
+
+    public function obtenerDocumentosPaginados($iniciar, $articulos_x_pagina) {
+        return $this->documentoModel->obtenerDocumentosPaginados($iniciar, $articulos_x_pagina);
+    }
+
     public function obtenerDocumentosPorPaciente($paciente_id)
     {
         return $this->documentoModel->obtenerDocumentosPorPaciente($paciente_id);

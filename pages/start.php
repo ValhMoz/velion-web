@@ -151,18 +151,6 @@ include_once './includes/dashboard.php';
             </ul>
         </nav>
     </div> -->
-<!-- 
-    <div class=" container mt-5">
-        <div class="col">
-            <div>
-                <h4>Bienvenido</h4>
-                <p>Creado por: Sergio Física y Miguel Ortega</p>
-                <p>Github: <a href="https://github.com/Z2V-LABS/clinic-managment-web">https://github.com/Z2V-LABS/clinic-managment-web</a></p>
-                <p>Uso básico: Navega entre las diferentes opciones del menu lateral izquierdo haciendo clic en los botones.</p>
-            </div>
-        </div>
-    </div>
-</div> -->
 
 </main>
 
