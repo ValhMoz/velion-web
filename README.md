@@ -12,14 +12,15 @@ Este proyecto consiste en un Sistema de Gestión de Recursos Empresariales (ERP)
 6. PHP
 7. PHPUnit
 8. Librería externa: FPDF (para la generación de documentos PDF)
+9. PHPMailer
 
 ## Características Principales
 
-1. Registro y gestión de pacientes.
+1. Registro y gestión de usuarios, pacientes y sanitarios.
 2. Programación y gestión de citas médicas.
-3. Gestión de médicos y personal de la clínica.
-4. Visualización de calendario con citas programadas.
-5. Generación de informes y documentos PDF de citas.
+3. Gestión de historial clínico.
+4. Facturación y compras.
+5. Generación de informes PDF.
 
 ## Instalación y Configuración
 
