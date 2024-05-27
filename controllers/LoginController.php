@@ -34,6 +34,36 @@ class LoginController {
         exit();
     }
 
+    public function finishSesion()
+    {
+        // Cerrar sesión
+        session_start();
+
+        // Destruir todas las variables de sesión
+        // $_SESSION = array();
+
+        // Borrar la cookie de sesión
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
+        }
+
+        // Destruir la sesión
+        session_destroy();
+
+        // Redirigir a la página de inicio
+        header("Location: ../index.php?alert=success&message=Sesion finalizada");
+        exit();
+    }
+
     private function redirectWithMessage($message, $alertType) {
         header("Location: ../index.php?alert=$alertType&message=$message");
         exit();
