@@ -41,10 +41,9 @@ class LoginController {
 
     public function generatePasswordResetToken($email) {
         $token = bin2hex(random_bytes(32));
-        $expires = date("U") + 1800;
         $conn = $this->loginModel->getConnection();
         $this->deleteExistingTokens($conn, $email);
-        $this->insertNewToken($conn, $email, $token, $expires);
+        $this->insertNewToken($conn, $email, $token);
         $resetLink = 'https://tu-dominio.com/reset_password.php?token=' . $token;
         $this->sendPasswordResetEmail($email, $resetLink);
         $conn->close();
@@ -58,11 +57,11 @@ class LoginController {
         $stmt->close();
     }
 
-    private function insertNewToken($conn, $email, $token, $expires) {
-        $sql = "INSERT INTO password_resets (email, token, expires) VALUES (?, ?, ?)";
+    private function insertNewToken($conn, $email, $token) {
+        $sql = "INSERT INTO password_resets (email, token) VALUES (?, ?)";
         $stmt = $conn->prepare($sql);
         $hashedToken = password_hash($token, PASSWORD_DEFAULT);
-        $stmt->bind_param("sss", $email, $hashedToken, $expires);
+        $stmt->bind_param("ss", $email, $hashedToken);
         $stmt->execute();
         $stmt->close();
     }
@@ -74,7 +73,7 @@ class LoginController {
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
             $mail->Username = 'sergiofrubio@gmail.com';
-            $mail->Password = 'tu-contraseña';
+            $mail->Password = '9006sfr*';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
             $mail->setFrom('tu-correo@gmail.com', 'Tu Nombre');
