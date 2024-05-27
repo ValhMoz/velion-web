@@ -4,67 +4,37 @@ use PHPMailer\PHPMailer\Exception;
 require_once '../models/LoginModel.php';
 require '../vendor/autoload.php';
 
-class LoginController
-{
+class LoginController {
     private $loginModel;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->loginModel = new LoginModel();
     }
 
-    public function iniciarSesion($email, $pass)
-    {
-        $usuario = $this->loginModel->read('usuarios', "email= '$email'");
-        if (!empty($usuario)) {
-            // Verificar la contraseña utilizando password_verify
-            if (password_verify($pass, $usuario[0]['pass'])) {
-
-                session_start();
-
-                $_SESSION['email'] = $email;
-                $_SESSION['usuario_id'] = $usuario[0]["usuario_id"];
-                $_SESSION['nombre'] = $usuario[0]['nombre'];
-                $_SESSION['apellidos'] = $usuario[0]['apellidos'];
-                $_SESSION['telefono'] = $usuario[0]['telefono'];
-                $_SESSION['direccion'] = $usuario[0]['direccion'];
-                $_SESSION['rol'] = $usuario[0]['rol'];
-                $_SESSION['fecha_nacimiento'] = $usuario[0]['fecha_nacimiento'];
-                $_SESSION['provincia'] = $usuario[0]["provincia"];
-                $_SESSION['municipio'] = $usuario[0]['municipio'];
-                $_SESSION['cp'] = $usuario[0]['cp'];
-                $_SESSION['sesiones_disponibles'] = $usuario[0]['sesiones_disponibles'];
-
-                if ($usuario[0]['rol'] == 'Administrador' || $usuario[0]['rol'] == 'Fisioterapeuta') {
-                    header('Location: ../pages/start.php');
-                    exit();
-                } else {
-                    header('Location: ../pages/start-patients.php');
-                    exit();
-                }
+    public function iniciarSesion($email, $pass) {
+        $usuarios = $this->loginModel->read('usuarios', "email = '$email'");
+        if (!empty($usuarios)) {
+            $usuario = $usuarios[0];
+            if (password_verify($pass, $usuario['pass'])) {
+                $this->startSession($usuario);
             } else {
-                header("Location: ../index.php?alert=warning&message=Contraseña incorrecta.");
-                exit();
+                $this->redirectWithMessage("Contraseña incorrecta.", 'warning');
             }
         } else {
-            header("Location: ../index.php?alert=warning&message=Usuario no encontrado.");
-            exit();
+            $this->redirectWithMessage("Usuario no encontrado.", 'warning');
         }
     }
+    
 
-
-    public function registrarUsuario($datos, $datos_historial)
-    {
-        if ($this->loginModel->insert('usuarios', $datos) == true && ($this->loginModel->insert('historial_medico', $datos_historial)) == true) {
-            header("Location: ../index.php?alert=success&message=Se ha completado el registro.");
-            exit();
-        } else {
-            header("Location: ../index.php?alert=warning&message=No se ha podido completar el registro.");
-            exit();
-        }
+    private function startSession($usuario) {
+        session_start();
+        $_SESSION = array_merge($_SESSION, $usuario);
+        $redirectUrl = ($usuario['rol'] == 'Administrador' || $usuario['rol'] == 'Fisioterapeuta') ? '../pages/start.php' : '../pages/start-patients.php';
+        header('Location: ' . $redirectUrl);
+        exit();
     }
 
-    public function cerrarSesion()
+    public function finishSesion()
     {
         // Cerrar sesión
         session_start();
@@ -94,66 +64,60 @@ class LoginController
         exit();
     }
 
-    public function sendPasswordResetEmail($recipientEmail, $resetLink) {
+    private function redirectWithMessage($message, $alertType) {
+        header("Location: ../index.php?alert=$alertType&message=$message");
+        exit();
+    }
+
+    public function generatePasswordResetToken($email) {
+        $token = bin2hex(random_bytes(32));
+        $conn = $this->loginModel->getConnection();
+        $this->deleteExistingTokens($conn, $email);
+        $this->insertNewToken($conn, $email, $token);
+        $resetLink = 'localhost/pages/resetPassword.php?token=' . $token;
+        if($this->sendPasswordResetEmail($email, $resetLink)){
+            $this->redirectWithMessage('Se ha enviado un correo con un enlace para restablecer la contraseña', 'success');
+        }
+        $conn->close();
+    }
+
+    private function deleteExistingTokens($conn, $email) {
+        $sql = "DELETE FROM password_resets WHERE email = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    private function insertNewToken($conn, $email, $token) {
+        $sql = "INSERT INTO password_resets (email, token) VALUES (?, ?)";
+        $stmt = $conn->prepare($sql);
+        $hashedToken = password_hash($token, PASSWORD_DEFAULT);
+        $stmt->bind_param("ss", $email, $hashedToken);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    private function sendPasswordResetEmail($email, $resetLink) {
         $mail = new PHPMailer(true);
-    
         try {
-            // Configuración del servidor SMTP de Gmail
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'tu-correo@gmail.com'; // Tu correo de Gmail
-            $mail->Password = 'tu-contraseña-o-contraseña-de-aplicación'; // Tu contraseña de Gmail o contraseña de aplicación
+            $mail->Username = 'sergiofrubio@gmail.com';
+            $mail->Password = 'wcgs pxws wttd aeco ';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
-    
-            // Remitente y destinatario
-            $mail->setFrom('tu-correo@gmail.com', 'Tu Nombre');
-            $mail->addAddress($recipientEmail);
-    
-            // Contenido del correo
+            $mail->setFrom('sergiofrubio@gmail.com', 'SIGEFI');
+            $mail->addAddress($email);
             $mail->isHTML(true);
-            $mail->Subject = 'Recuperación de contraseña';
-            $mail->Body    = 'Haz clic en el siguiente enlace para recuperar tu contraseña: <a href="' . $resetLink . '">Recuperar Contraseña</a>';
-    
+            $mail->Subject = 'Recuperacion de contrasena';
+            $mail->Body = 'Haz clic en el siguiente enlace para recuperar tu contrasena: <a href="' . $resetLink . '">Recuperar Contraseña</a>';
             $mail->send();
-            echo 'El mensaje ha sido enviado';
         } catch (Exception $e) {
             echo "No se pudo enviar el mensaje. Error de Mailer: {$mail->ErrorInfo}";
         }
     }
-
-    public function generatePasswordResetToken($email) {
-        $token = bin2hex(random_bytes(32)); // Genera un token seguro
-        $expires = date("U") + 1800; // Token expira en 30 minutos
-    
-        // Guarda el token en la base de datos
-        $conn = new mysqli("localhost", "root", "root", "clinic-managment");
-    
-        if ($conn->connect_error) {
-            die("Conexión fallida: " . $conn->connect_error);
-        }
-    
-        // Elimina cualquier token existente para este usuario
-        $sql = "DELETE FROM password_resets WHERE email=?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-    
-        // Inserta el nuevo token
-        $sql = "INSERT INTO password_resets (email, token, expires) VALUES (?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $hashedToken = password_hash($token, PASSWORD_DEFAULT);
-        $stmt->bind_param("sss", $email, $hashedToken, $expires);
-        $stmt->execute();
-    
-        // Envía el correo de recuperación
-        $resetLink = 'https://tu-dominio.com/reset_password.php?token=' . $token;
-        sendPasswordResetEmail($email, $resetLink);
-    
-        $stmt->close();
-        $conn->close();
-    }
-
-    
 }
+
+?>

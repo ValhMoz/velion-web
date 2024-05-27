@@ -93,6 +93,10 @@ class BaseModel
         }
     }
 
+    public function getConnection() {
+        return self::$conexion;
+    }
+
     public function __destruct()
     {
         // No cerramos la conexión aquí para permitir conexiones persistentes

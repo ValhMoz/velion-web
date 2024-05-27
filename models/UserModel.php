@@ -32,41 +32,36 @@ class UserModel extends BaseModel
         return $datos;
     }
 
-    public function obtenerUsuariosPorID($usuario_id)
+    public function buscarUsuarios($usuario_id, $rol)
     {
-        $sql = "SELECT * FROM `usuarios` WHERE usuario_id = ?";
+        $sql = "SELECT * FROM `usuarios` WHERE 1=1";
+        $params = [];
+        $types = "";
+    
+        if (!empty($usuario_id)) {
+            $sql .= " AND usuario_id = ?";
+            $params[] = $usuario_id;
+            $types .= "s";
+        }
+    
+        if (!empty($rol)) {
+            $sql .= " AND rol = ?";
+            $params[] = $rol;
+            $types .= "s";
+        }
+    
         $stmt = self::$conexion->prepare($sql);
-        $stmt->bind_param("s", $usuario_id);
+        if ($types) {
+            $stmt->bind_param($types, ...$params);
+        }
         $stmt->execute();
         $result = $stmt->get_result();
         $usuarios = $result->fetch_all(MYSQLI_ASSOC);
         $stmt->close();
+    
         return $usuarios;
     }
-
-    public function obtenerUsuariosPorRol($rol)
-    {
-        $sql = "SELECT * FROM `usuarios` WHERE rol = ?";
-        $stmt = self::$conexion->prepare($sql);
-        $stmt->bind_param("s", $rol);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $usuarios = $result->fetch_all(MYSQLI_ASSOC);
-        $stmt->close();
-        return $usuarios;
-    }
-
-    public function buscarUsuariosPorIDyRol($usuario_id, $rol)
-    {
-        $sql = "SELECT * FROM `usuarios` WHERE usuario_id = ? AND rol = ?";
-        $stmt = self::$conexion->prepare($sql);
-        $stmt->bind_param("ss", $usuario_id, $rol);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $usuarios = $result->fetch_all(MYSQLI_ASSOC);
-        $stmt->close();
-        return $usuarios;
-    }
+    
 
     public function actualizarUsuario($usuario_id, $datos)
     {

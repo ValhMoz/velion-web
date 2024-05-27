@@ -27,8 +27,6 @@ class DocumentoModel extends BaseModel
     public function obtenerDocumentosPaginados($iniciar, $articulos_x_pagina){
          // Buscar el usuario en la base de datos
          $sql = "SELECT * FROM documentos_sanitarios LIMIT $iniciar, $articulos_x_pagina";
-
-         $resultado = self::$conexion->query($sql);
  
          // Ejecutar la consulta
          $resultado =  self::$conexion->query($sql);
@@ -44,6 +42,72 @@ class DocumentoModel extends BaseModel
              $datos[] = $fila;
          }
          return $datos;
+    }
+
+    // public function obtenerDocumentosPorID($paciente_id)
+    // {
+    //     $sql = "SELECT * FROM `documentos_sanitarios` WHERE paciente_id = ?";
+    //     $stmt = self::$conexion->prepare($sql);
+    //     $stmt->bind_param("s", $paciente_id);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $documentos = $result->fetch_all(MYSQLI_ASSOC);
+    //     $stmt->close();
+    //     return $documentos;
+    // }
+
+    // public function obtenerDocumentosPorEstado($estado)
+    // {
+    //     $sql = "SELECT * FROM `documentos_sanitarios` WHERE estado = ?";
+    //     $stmt = self::$conexion->prepare($sql);
+    //     $stmt->bind_param("s", $estado);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $documentos = $result->fetch_all(MYSQLI_ASSOC);
+    //     $stmt->close();
+    //     return $documentos;
+    // }
+
+    // public function buscarDocumentosPorIDyEstado($paciente_id, $estado)
+    // {
+    //     $sql = "SELECT * FROM `documentos_sanitarios` WHERE paciente_id = ? AND estado = ?";
+    //     $stmt = self::$conexion->prepare($sql);
+    //     $stmt->bind_param("ss", $paciente_id, $estado);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     $documentos = $result->fetch_all(MYSQLI_ASSOC);
+    //     $stmt->close();
+    //     return $documentos;
+    // }
+
+    public function buscarDocumentos($paciente_id, $estado)
+    {
+        $sql = "SELECT * FROM `documentos_sanitarios` WHERE 1=1";
+        $params = [];
+        $types = "";
+    
+        if (!empty($paciente_id)) {
+            $sql .= " AND paciente_id = ?";
+            $params[] = $paciente_id;
+            $types .= "s";
+        }
+    
+        if (!empty($estado)) {
+            $sql .= " AND estado = ?";
+            $params[] = $estado;
+            $types .= "s";
+        }
+    
+        $stmt = self::$conexion->prepare($sql);
+        if ($types) {
+            $stmt->bind_param($types, ...$params);
+        }
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $documentos = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+    
+        return $documentos;
     }
 }
 ?>

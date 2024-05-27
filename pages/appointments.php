@@ -8,39 +8,37 @@ if ($rol == "Paciente") {
     exit();
 }
 
-
-
-if (!$_GET) {
-    header('location:appointments.php?pagina=1');
+if (!$_GET){
+    header('Location: appointments.php?pagina=1');
+    exit();
 }
 
 $articulos_x_pagina = 5;
 
 $citas = $appointmentController->obtenerCitas();
 
-$iniciar = ($_GET['pagina'] - 1) * $articulos_x_pagina;
-
-// $citasPaginadas = $appointmentController->obtenerCitasPaginadas($iniciar, $articulos_x_pagina);
+$iniciar = ($_GET['pagina']  - 1) * $articulos_x_pagina;
 
 // Obtener el valor de los filtros, si están presentes en el formulario
 $filtro_usuario_id = isset($_POST['usuario_id']) ? $_POST['usuario_id'] : '';
-// $filtro_fecha_hora = isset($_POST['fecha_hora']) ? $_POST['fecha_hora'] : '';
-// $filtro_estado = isset($_POST['estado']) ? $_POST['estado'] : '';
-// $filtro_especialidad = isset($_POST['especialidad']) ? $_POST['especialidad'] : '';
+$filtro_fecha_hora = isset($_POST['fecha_hora']) ? $_POST['fecha_hora'] : '';
+$filtro_estado = isset($_POST['estado']) ? $_POST['estado'] : '';
+$filtro_especialidad = isset($_POST['especialidad']) ? $_POST['especialidad'] : '';
 
 // Obtener usuarios aplicando los filtros si es necesario
-if (!empty($filtro_usuario_id) || !empty($filtro_estado)  || !empty($filtro_fecha_hora)  || !empty($filtro_especialidad) ) {
+if (!empty($filtro_usuario_id) || !empty($filtro_estado) || !empty($filtro_fecha_hora) || !empty($filtro_especialidad)) {
     // Si se aplica al menos un filtro
-    // $citasPaginadas = $appointmentController->obtenerCitasFiltradas($filtro_usuario_id, $filtro_fecha_hora, $filtro_estado, $filtro_especialidad);
+    $citasPaginadas = $appointmentController->buscarCitas($filtro_usuario_id, $filtro_fecha_hora, $filtro_estado, $filtro_especialidad);
 } else {
     // Si no se aplican filtros, obtener usuarios paginados
     $citasPaginadas = $appointmentController->obtenerCitasPaginadas($iniciar, $articulos_x_pagina);
 }
 
-$n_botones_paginacion = ceil(count($citas) / ($articulos_x_pagina));
+$n_botones_paginacion = ceil(count($citas) / $articulos_x_pagina);
 
 if ($_GET['pagina'] > $n_botones_paginacion) {
-    header('location:appointments.php?pagina=1');
+    header('Location: appointments.php?pagina=1');
+    exit();
 }
 
 $pacientes = $appointmentController->obtenerListaPacientes();
@@ -76,7 +74,7 @@ if (isset($_SESSION['alert'])) {
 ?>
 
 <div class="table-responsive small">
-    <form class="row g-3" methos="post" action="">
+    <form class="row g-3" method="post" action="">
         <div class="col-auto">
             <input type="text" class="form-control" id="usuario_id" name="usuario_id" placeholder="Filtrar por ID de paciente...">
         </div>
@@ -176,14 +174,14 @@ if (isset($_SESSION['alert'])) {
 
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-start">
-        <li class="page-item <? echo $_GET['pagina'] <= 1 ? 'disabled' : '' ?>">
-            <a class="page-link" href="appointments.php?pagina=<?php echo $_GET['pagina'] - 1 ?>">Anterior</a>
+        <li class="page-item <?php echo $pagina <= 1 ? 'disabled' : ''; ?>">
+            <a class="page-link" href="appointments.php?pagina=<?php echo $pagina - 1; ?>">Anterior</a>
         </li>
-        <?php for ($i = 0; $i < $n_botones_paginacion; $i++) : ?>
-            <li class="page-item <? echo $_GET['pagina'] == $i + 1 ? 'active' : '' ?>"><a class="page-link" href="appointments.php?pagina=<?php echo $i + 1 ?>"><?php echo $i + 1 ?></a></li>
-        <?php endfor ?>
-        <li class="page-item <? echo $_GET['pagina'] >= $n_botones_paginacion ? 'disabled' : '' ?>">
-            <a class="page-link" href="appointments.php?pagina=<?php echo $_GET['pagina'] + 1 ?>">Siguiente</a>
+        <?php for ($i = 1; $i <= $n_botones_paginacion; $i++) : ?>
+            <li class="page-item <?php echo $pagina == $i ? 'active' : ''; ?>"><a class="page-link" href="appointments.php?pagina=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+        <?php endfor; ?>
+        <li class="page-item <?php echo $pagina >= $n_botones_paginacion ? 'disabled' : ''; ?>">
+            <a class="page-link" href="appointments.php?pagina=<?php echo $pagina + 1; ?>">Siguiente</a>
         </li>
     </ul>
 </nav>

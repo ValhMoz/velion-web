@@ -5,6 +5,6 @@ include '../controllers/LoginController.php';
 $loginController = new LoginController();
 
 // Intenta registrar un usuario con los datos proporcionados
-$loginController->cerrarSesion();
+$loginController->finishSesion();
 
 ?>

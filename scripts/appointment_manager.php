@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
                 'fecha' => $_POST["fecha"],
                 'estado' => $_POST["estado"]
             );
-            $appointmentController->asignarCita();
+            $appointmentController->asignarCita('citas', $datos);
 
             break;
 

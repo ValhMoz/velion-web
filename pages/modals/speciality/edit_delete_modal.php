@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="edit_<?php echo $especialidad['id']; ?>" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="edit_<?php echo $especialidad['especialidad_id']; ?>" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -12,7 +12,7 @@
                     <input type="text" class="form-control" id="descripcion" name="descripcion" value="<?php echo $especialidad['descripcion']; ?>">
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" id="actionType" name="action" value="añadir">
+                    <input type="hidden" id="actionType" name="action" value="editar">
                     <button type="submit" class="btn btn-primary">Editar</button>
                 </div>
             </form>
@@ -21,7 +21,7 @@
 </div>
 
 <!-- Modal eliminar usuario -->
-<div class="modal fade" id="delete_<?php echo $especialidad['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="delete_<?php echo $especialidad['especialidad_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -29,12 +29,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>¿Deseas eliminar la especialidad <?php echo $especialidad['descripcion'] ?> con ID: <?php echo $especialidad['id']; ?>?</p>
+                <p>¿Deseas eliminar la especialidad <?php echo $especialidad['descripcion'] ?> con ID: <?php echo $especialidad['especialidad_id']; ?>?</p>
             </div>
             <div class="modal-footer">
                 <form action="../scripts/speciality_manager.php" method="post">
                     <input type="hidden" id="action" name="action" value="eliminar">
-                    <input type="hidden" id="id" name="id" value="<?php echo $especialidad['id']; ?>">
+                    <input type="hidden" id="especialidad_id" name="especialidad_id" value="<?php echo $especialidad['especialidad_id']; ?>">
                     <button type="submit" class="btn btn-danger">Eliminar especialidad</button>
                 </form>
             </div>
