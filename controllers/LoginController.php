@@ -74,8 +74,10 @@ class LoginController {
         $conn = $this->loginModel->getConnection();
         $this->deleteExistingTokens($conn, $email);
         $this->insertNewToken($conn, $email, $token);
-        $resetLink = 'https://tu-dominio.com/reset_password.php?token=' . $token;
-        $this->sendPasswordResetEmail($email, $resetLink);
+        $resetLink = 'localhost/pages/resetPassword.php?token=' . $token;
+        if($this->sendPasswordResetEmail($email, $resetLink)){
+            $this->redirectWithMessage('Se ha enviado un correo con un enlace para restablecer la contraseña', 'success');
+        }
         $conn->close();
     }
 
@@ -102,15 +104,15 @@ class LoginController {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'cuenta.fail0407@gmail.com';
-            $mail->Password = 'h%E7;_Aq8x%U=W';
+            $mail->Username = 'sergiofrubio@gmail.com';
+            $mail->Password = 'wcgs pxws wttd aeco ';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
-            $mail->setFrom('tu-correo@gmail.com', 'Tu Nombre');
+            $mail->setFrom('sergiofrubio@gmail.com', 'SIGEFI');
             $mail->addAddress($email);
             $mail->isHTML(true);
-            $mail->Subject = 'Recuperación de contraseña';
-            $mail->Body = 'Haz clic en el siguiente enlace para recuperar tu contraseña: <a href="' . $resetLink . '">Recuperar Contraseña</a>';
+            $mail->Subject = 'Recuperacion de contrasena';
+            $mail->Body = 'Haz clic en el siguiente enlace para recuperar tu contrasena: <a href="' . $resetLink . '">Recuperar Contraseña</a>';
             $mail->send();
         } catch (Exception $e) {
             echo "No se pudo enviar el mensaje. Error de Mailer: {$mail->ErrorInfo}";
