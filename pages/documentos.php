@@ -11,17 +11,17 @@ if (!$_GET) {
 $articulos_x_pagina = 10;
 
 $documentos = $documentoController->obtenerDocumentos();
-// echo(json_encode($documentos));
 
 $iniciar = ($_GET['pagina'] - 1) * $articulos_x_pagina;
 
 // // Obtener el valor del filtro, si está presente en la URL
-$filtro_documento_id = isset($_POST['estado']) ? $_POST['estado'] : '';
+$paciente_id = isset($_POST['paciente_id']) ? $_POST['paciente_id'] : '';
+$estado = isset($_POST['estado']) ? $_POST['estado'] : '';
 
 // Obtener documentos aplicando los filtros si es necesario
-if (!empty($filtro_documento_id)) {
+if (!empty($paciente_id) || !empty($estado)) {
     // Si se aplica al menos un filtro
-    $documentosPaginados = $documentoController->buscarDocumentos($filtro_documento_id);
+    $documentosPaginados = $documentoController->buscarDocumentos($paciente_id, $estado);
 } else {
     // Si no se aplican filtros, obtener documentos paginados
     $documentosPaginados = $documentoController->obtenerDocumentosPaginados($iniciar, $articulos_x_pagina);
@@ -35,9 +35,10 @@ if ($_GET['pagina'] > $n_botones_paginacion) {
 
 if ($rol == "Paciente") {
     include_once './includes/dashboard-patients.php';
-}else{
+} else {
     include_once './includes/dashboard.php';
 }
+
 
 include_once './modals/documentos/add_modal.php';
 ?>
@@ -63,56 +64,107 @@ if (isset($_SESSION['alert'])) {
 }
 ?>
 
-<form class="row g-3" method="post" action="">
-    <div class="col-auto">
-        <input type="text" class="form-control" id="usuario_id" name="usuario_id" placeholder="Filtrar por ID de usuario...">
-    </div>
-    <div class="col-auto">
-        <select class="form-select" id="estado" name="estado" aria-label="Selecciona un estado">
-            <option selected hidden>Selecciona un estado</option>
-            <option value="Firmado">Firmado</option>
-            <option value="Pendiente">Pendiente</option>
-        </select>
-    </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-primary mb-3">Filtrar</button>
-    </div>
-</form>
+<div class="table-responsive small">
+    <form class="row g-3" method="post" action="">
+        <div class="col-auto">
+            <input type="text" class="form-control" id="paciente_id" name="paciente_id" placeholder="Filtrar por paciente...">
+        </div>
+        <div class="col-auto">
+            <select class="form-select" id="estado" name="estado" aria-label="Selecciona un estado">
+                <option selected hidden>Selecciona un estado</option>
+                <option value="Firmado">Firmado</option>
+                <option value="Pendiente">Pendiente</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Filtrar</button>
+        </div>
+    </form>
 
-<!-- Lista de documentos -->
-<h2 class="mt-2">Documentos Pendientes de Firma</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Descripción</th>
-            <th scope="col">Fecha de Subida</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        // Obtener documentos del paciente (ejemplo con paciente_id = 1)
-        // $documentos = (new DocumentoController())->obtenerDocumentosPorPaciente(1);
-        foreach ($documentos as $documento) {
-            echo '<tr>
-                            <td>' . $documento['documento_id'] . '</td>
-                            <td>' . $documento['nombre'] . '</td>
-                            <td>' . $documento['descripcion'] . '</td>
-                            <td>' . $documento['fecha_subida'] . '</td>
-                            <td>' . $documento['estado'] . '</td>
+
+    <div class="row">
+        <div class="col">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 5%;">ID Doc.</th>
+                            <th scope="col" style="width: 5%;">Pac. Asoc.</th>
+                            <th scope="col" style="width: 10%;">Nombre</th>
+                            <th scope="col" style="width: 17%;">Descripción</th>
+                            <th scope="col" style="width: 7%;">Fecha de subida</th>
+                            <th scope="col" style="width: 6%;">Estado</th>
+                            <th scope="col" style="width: 6%;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <?php foreach ($documentosPaginados as $documento) : ?>
+                        <tr>
+                            <td><?php echo $documento['documento_id']; ?></td>
+                            <td><?php echo $documento['paciente_id']; ?></td>
+                            <td><?php echo $documento['nombre']; ?></td>
+                            <td><?php echo $documento['descripcion']; ?></td>
+                            <td><?php echo $documento['fecha_subida'] ?></td>
                             <td>
-                                <a href="../scripts/documento_manager.php?action=firmar&documento_id=' . $documento['documento_id'] . '" class="btn btn-success btn-sm">Firmar</a>
-                                <a href="../scripts/documento_manager.php?action=rechazar&documento_id=' . $documento['documento_id'] . '" class="btn btn-danger btn-sm">Rechazar</a>
+                                <?php
+                                $estado = $documento['estado'];
+
+                                switch ($estado) {
+                                    case 'Firmado':
+                                        $text_gb_class = 'text-bg-success';
+                                        break;
+                                    case 'Rechazado':
+                                        $text_gb_class = 'text-bg-danger';
+                                        break;
+                                    case 'Pendiente':
+                                        $text_gb_class = 'text-bg-warning';
+                                        break;
+                                    default:
+                                        $text_gb_class = 'text-bg-warning';
+                                }
+                                ?>
+                                <span class="badge <?php echo $text_gb_class; ?>">
+                                    <?php echo $estado; ?>
+                                </span>
                             </td>
-                        </tr>';
-        }
-        ?>
-    </tbody>
-</table>
+                            <td>
+                                <button class="btn btn-sm btn-success" <?php if ($documento['estado'] == 'Firmado') {
+                                                                            echo 'disabled';
+                                                                        } ?> data-bs-toggle="modal" data-bs-target="#firmar_<?php echo $documento['documento_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
+                                    </svg></button>
+                                <button class="btn btn-sm btn-danger" <?php if ($documento['estado'] == 'Rechazado') {
+                                                                            echo 'disabled';
+                                                                        } ?> data-bs-toggle="modal" data-bs-target="#rechazar_<?php echo $documento['documento_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                    </svg></button>
+                                <?php include 'modals/documentos/edit_delete_modal.php'; ?>
+                            </td>
+
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-start">
+        <li class="page-item <? echo $_GET['pagina'] <= 1 ? 'disabled' : '' ?>">
+            <a class="page-link" href="appointments.php?pagina=<?php echo $_GET['pagina'] - 1 ?>">Anterior</a>
+        </li>
+        <?php for ($i = 0; $i < $n_botones_paginacion; $i++) : ?>
+            <li class="page-item <? echo $_GET['pagina'] == $i + 1 ? 'active' : '' ?>"><a class="page-link" href="appointments.php?pagina=<?php echo $i + 1 ?>"><?php echo $i + 1 ?></a></li>
+        <?php endfor ?>
+        <li class="page-item <? echo $_GET['pagina'] >= $n_botones_paginacion ? 'disabled' : '' ?>">
+            <a class="page-link" href="appointments.php?pagina=<?php echo $_GET['pagina'] + 1 ?>">Siguiente</a>
+        </li>
+    </ul>
+</nav>
+
+</main>
+
 </body>
 
 </html>

@@ -8,23 +8,34 @@ if ($rol == "Administrador" ||  $rol == "Fisioterapeuta") {
     exit();
 }
 
-$articulos_x_pagina = 5;
-
 if (!$_GET) {
     header('location:invoices-patients.php?pagina=1');
 }
 
-$iniciar = ($_GET['pagina'] - 1) * $articulos_x_pagina;
+$articulos_x_pagina = 5;
 
 $facturas = $invoiceController->obtenerFacturas();
 
-$facturasPaginadas = $invoiceController->obtenerFacturasUsuarioPaginadas($DNI, $iniciar, $articulos_x_pagina);
+$iniciar = ($_GET['pagina'] - 1) * $articulos_x_pagina;
+
+// Obtener el valor de los filtros, si están presentes en el formulario
+$filtro_usuario_id = isset($_POST['usuario_id']) ? $_POST['usuario_id'] : '';
+$filtro_estado = isset($_POST['estado']) ? $_POST['estado'] : '';
+
+// Obtener usuarios aplicando los filtros si es necesario
+if (!empty($filtro_usuario_id) || !empty($filtro_estado)) {
+    // Si se aplica al menos un filtro
+    $facturasPaginadas = $invoiceController->buscarFacturasPatients($filtro_usuario_id, $filtro_estado);
+} else {
+    // Si no se aplican filtros, obtener usuarios paginados
+    $facturasPaginadas = $invoiceController->obtenerFacturasUsuarioPaginadas($DNI, $iniciar, $articulos_x_pagina);
+}
 
 $n_botones_paginacion = ceil(count($facturas) / ($articulos_x_pagina));
 
-// if($_GET['pagina']>$n_botones_paginacion){
-//     header ('location:invoices-patients.php?pagina=1');
-// }
+if($_GET['pagina']>$n_botones_paginacion){
+    header ('location:invoices-patients.php?pagina=1');
+}
 
 include_once './includes/dashboard-patients.php';
 ?>
@@ -33,8 +44,23 @@ include_once './includes/dashboard-patients.php';
     <h1 class="h2">Facturas</h1>
 </div>
 
+<?php
+// Verificar si hay una alerta de usuario
+if (isset($_SESSION['alert'])) {
+    $alert_type = $_SESSION['alert']['type'];
+    $alert_message = $_SESSION['alert']['message'];
+    // Mostrar la alerta
+    echo '<div class="alert alert-' . $alert_type . ' alert-dismissible fade show" role="alert">' . $alert_message . '
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>';
+    // Eliminar la variable de sesión después de mostrar la alerta
+    unset($_SESSION['alert']);
+}
+?>
+
 <div class="table-responsive small">
-    <formy class="row g-3">
+    <form class="row g-3" method="post" action="">
+        <input type="text" id="usuario_id" name="usuario_id" hidden value="<?php echo $DNI?>">
         <div class="col-auto">
             <select class="form-select" id="estado" name="estado" aria-label="Selecciona un estado">
                 <option selected value="" hidden>Selecciona un estado</option>

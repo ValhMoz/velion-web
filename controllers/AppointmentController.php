@@ -30,6 +30,10 @@ class AppointmentController
     public function obtenerListaFisioterapeutas() {
         return $this->appointmentModel->read('usuarios', 'rol = \'fisioterapeuta\'');
     }
+    
+    public function obtenerEspecialidades(){
+        return $this->appointmentModel->read('especialidades');
+    }
 
     public function asignarCita($tabla, $datos){
         if($this->appointmentModel->insert($tabla, $datos)){
@@ -81,8 +85,30 @@ class AppointmentController
         }
     }
 
-    public function obtenerEspecialidades(){
-        return $this->appointmentModel->read('especialidades');
+    public function buscarCitas($filtro_usuario_id, $filtro_fecha_hora, $filtro_estado, $filtro_especialidad){
+        
+        $citasFiltradas = $this->appointmentModel->buscarCitas($filtro_usuario_id, $filtro_fecha_hora, $filtro_estado, $filtro_especialidad);
+        if (!empty ($citasFiltradas)){
+            header('Location: ../pages/appointments.php');
+            exit();
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se han encontrado citas con los criterios especificados.');
+            header('Location: ../pages/appointments.php');
+            exit();
+        }
+    }
+
+    public function buscarCitasPatients($filtro_usuario_id, $filtro_fecha_hora, $filtro_estado, $filtro_especialidad){
+        
+        $citasFiltradas = $this->appointmentModel->buscarCitas($filtro_usuario_id, $filtro_fecha_hora, $filtro_estado, $filtro_especialidad);
+        if (!empty ($citasFiltradas)){
+            header('Location: ../pages/appointments-patients.php');
+            exit();
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se han encontrado la citas con los criterios especificados.');
+            header('Location: ../pages/appointments-patients.php');
+            exit();
+        }
     }
 
 }

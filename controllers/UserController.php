@@ -23,33 +23,17 @@ class UserController
 
     public function buscarUsuarios($usuario_id, $rol)
     {
-        // Verificar si se está aplicando algún filtro
-        if (!empty($usuario_id) && !empty($rol)) {
-            // Si se están aplicando ambos filtros
-            $usuariosFiltrados = $this->usuarioModel->buscarUsuariosPorIDyRol($usuario_id, $rol);
-        } elseif (!empty($usuario_id)) {
-            // Si solo se está aplicando el filtro por ID
-            $usuariosFiltrados = $this->usuarioModel->obtenerUsuariosPorID($usuario_id);
-        } elseif (!empty($rol)) {
-            // Si solo se está aplicando el filtro por rol
-            $usuariosFiltrados = $this->usuarioModel->obtenerUsuariosPorRol($rol);
-        } else {
-            // Si no se aplica ningún filtro, redirigir con un mensaje de alerta
-            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha aplicado ningún filtro.');
-            header('Location: ../pages/users.php');
-            exit();
-        }
-
-        // Verificar si se encontraron usuarios
+        $usuariosFiltrados = $this->usuarioModel->buscarUsuarios($usuario_id, $rol);
+    
         if (!empty($usuariosFiltrados)) {
             return $usuariosFiltrados;
         } else {
-            // Si no se encontraron usuarios, mostrar mensaje de alerta
             $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ningún usuario con los criterios seleccionados.');
             header('Location: ../pages/users.php');
             exit();
         }
     }
+    
 
     public function añadirNuevoUsuario($datos)
     {

@@ -1,49 +1,36 @@
 <?php
 require_once '../scripts/session_manager.php';
 require_once '../controllers/MedicalHistoryController.php';
-require_once '../controllers/AppointmentController.php';
 
 $medHist = new MedicalHistoryController();
-$app = new AppointmentController();
 
 if ($rol == "Administrador" ||  $rol == "Fisioterapeuta") {
     header("Location: 404.php");
     exit();
 }
 
+if (!$_GET) {
+    header('location:start-patients.php?pagina=1');
+}
+
+$articulos_x_pagina = 4;
+
+$iniciar = ($_GET['pagina'] - 1) * $articulos_x_pagina;
+
 $informe = $medHist->obtenerInforme($DNI);
+
+$n_botones_paginacion = ceil(count($informe) / ($articulos_x_pagina));
+
+if($_GET['pagina']>$n_botones_paginacion){
+    header ('location:appointments-patients.php?pagina=1');
+}
+
 include_once 'includes/dashboard-patients.php';
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Bienvenid@, <?php echo $nombre ?> </h1>
 </div>
-
-<!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h3">Próximas citas</h1>
-</div>
-
-<div class="table-responsive small">
-    <div class="row">
-        Aquí se mostrarán las citas en forma de listas
-        <div class="col">
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">Cita 1</h5>
-                        <small>Fecha: 12/03/2024 Hora: 10:00</small>
-                    </div>
-                    <p class="mb-1">Información sobre la cita 1.</p>
-                    <small>Nombre del paciente: Paciente 1</small>
-                    <small>Nombre del fisioterapeuta: Fisioterapeuta 1</small>
-                    <div class="text-end mt-2">
-                        <button type="button" class="btn btn-danger">Cancelar cita</button>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div> -->
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h3">Mis informes</h1>

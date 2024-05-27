@@ -22,15 +22,13 @@ class DocumentoController
         exit();
     }
 
-    public function obtenerDocumentos(){
+    public function obtenerDocumentos()
+    {
         return $this->documentoModel->read('documentos_sanitarios');
     }
 
-    public function buscarDocumentos($filtro_documento_id){
-        
-    }
-
-    public function obtenerDocumentosPaginados($iniciar, $articulos_x_pagina) {
+    public function obtenerDocumentosPaginados($iniciar, $articulos_x_pagina)
+    {
         return $this->documentoModel->obtenerDocumentosPaginados($iniciar, $articulos_x_pagina);
     }
 
@@ -60,5 +58,17 @@ class DocumentoController
         header('Location: ../pages/documentos.php');
         exit();
     }
+
+    public function buscarDocumentos($paciente_id, $estado)
+    {
+        $documentosFiltrados = $this->documentoModel->buscarDocumentos($paciente_id, $estado);
+    
+        if (!empty($documentosFiltrados)) {
+            return $documentosFiltrados;
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ningún usuario con los criterios seleccionados.');
+            header('Location: ../pages/documentos.php');
+            exit();
+        }
+    }
 }
-?>

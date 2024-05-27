@@ -7,9 +7,6 @@
     <title>Inicio de sesión</title>
     <link href="./assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">
     <script src="./assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
-    <link href="./assets/bootstrap-5.3/css/sign-in.css" rel="stylesheet">
-    <!-- <link href="./assets/custom/css/style.css" rel="stylesheet"> -->
-    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.css" rel="stylesheet"> -->
 
     <style>
         body {
@@ -86,8 +83,6 @@
         </form>
     </div>
 
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
-
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1">
         <div class="modal-dialog">
@@ -96,19 +91,20 @@
                     <h5 class="modal-title" id="exampleModalLabel">Recuperar Contraseña</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="./scripts/login_manager.php" method="post"> <!-- Mover la etiqueta <form> aquí -->
+                <form action="./scripts/login_manager.php" method="post">
                     <div class="modal-body">
                         <label for="resetEmail" class="form-label">Correo electrónico</label>
-                        <input type="email" class="form-control" id="resetEmail" name="resetEmail" required> <!-- Agregar el atributo name -->
+                        <input type="email" class="form-control" id="resetEmail" name="resetEmail" required>
                     </div>
                     <div class="modal-footer">
-                        <input type="hidden" id="actionType" name="action" value="solicitar_nueva_contraseña">
+                        <input type="hidden" name="action" value="solicitar_nueva_contraseña">
                         <button type="submit" class="btn btn-primary">Enviar</button>
                     </div>
-                </form> <!-- Cerrar la etiqueta <form> aquí -->
+                </form>
             </div>
         </div>
     </div>
+
 
 </body>
 

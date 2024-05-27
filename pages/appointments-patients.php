@@ -8,16 +8,17 @@ if ($rol == "Administrador" ||  $rol == "Fisioterapeuta") {
     exit();
 }
 
-$articulos_x_pagina = 4;
-
-$citas = $appointmentController->obtenerCitas();
-
 if (!$_GET) {
     header('location:appointments-patients.php?pagina=1');
 }
 
+$articulos_x_pagina = 4;
+
+$citas = $appointmentController->obtenerCitas();
+
 $iniciar = ($_GET['pagina'] - 1) * $articulos_x_pagina;
 
+$filtro_usuario_id = isset($_POST['usuario_id']) ? $_POST['usuario_id'] : '';
 $filtro_fecha_hora = isset($_POST['fecha_hora']) ? $_POST['fecha_hora'] : '';
 $filtro_estado = isset($_POST['estado']) ? $_POST['estado'] : '';
 $filtro_especialidad = isset($_POST['especialidad']) ? $_POST['especialidad'] : '';
@@ -25,23 +26,23 @@ $filtro_especialidad = isset($_POST['especialidad']) ? $_POST['especialidad'] : 
 // Obtener citas aplicando los filtros si es necesario
 if (!empty($filtro_usuario_id) || !empty($filtro_estado)  || !empty($filtro_fecha_hora)  || !empty($filtro_especialidad)) {
     // Si se aplica al menos un filtro
-    // $citasPaginadas = $appointmentController->obtenerCitasFiltradas($filtro_usuario_id, $filtro_fecha_hora, $filtro_estado, $filtro_especialidad);
+    $citasPaginadas = $appointmentController->buscarCitasPatients($filtro_usuario_id, $filtro_fecha_hora, $filtro_estado, $filtro_especialidad);
 } else {
     // Si no se aplican filtros, obtener citas paginados
-    $citasPaginadas = $appointmentController->obtenerCitasPaginadas($iniciar, $articulos_x_pagina);
+    $citasPaginadas = $appointmentController->obtenerCitasUsuario($DNI,$iniciar, $articulos_x_pagina);
 }
 
 $n_botones_paginacion = ceil(count($citas) / ($articulos_x_pagina));
 
-// if($_GET['pagina']>$n_botones_paginacion){
-//     header ('location:appointments-patients.php?pagina=1');
-// }
+if($_GET['pagina']>$n_botones_paginacion){
+    header ('location:appointments-patients.php?pagina=1');
+}
 
 $fisioterapeutas = $appointmentController->obtenerListaFisioterapeutas();
 $especialidades = $appointmentController->obtenerEspecialidades();
 
 include_once './includes/dashboard-patients.php';
-include_once 'modals/appointments/add_modal.php';
+include_once 'modals/appointments/add_modal_patient.php';
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -70,7 +71,8 @@ if (isset($_SESSION['alert'])) {
 ?>
 
 <div class="table-responsive small">
-    <form class="row g-3" methos="post" action="">
+    <form class="row g-3" method="post" action="">
+        <input type="text" id="usuario_id" name="usuario_id" hidden value="<?php echo $DNI?>">
         <div class="col-auto">
             <input type="date" class="form-control" id="fecha_hora" name="fecha_hora">
         </div>
