@@ -54,54 +54,6 @@ class AppointmentModel extends BaseModel
         return $citas;
     }
 
-    // public function obtenerFacturasPorID($usuario_id)
-    // {
-    //     $sql = "SELECT c.cita_id, c.paciente_id, c.fecha_hora, c.especialidad_id, 
-    //                e.descripcion AS descripcion 
-    //         FROM `citas` c
-    //         JOIN `especialidades` e ON c.especialidad_id = e.descripcion
-    //         WHERE c.paciente_id = ?";
-    //     $stmt = self::$conexion->prepare($sql);
-    //     $stmt->bind_param("s", $usuario_id);
-    //     $stmt->execute();
-    //     $result = $stmt->get_result();
-    //     $citas = $result->fetch_all(MYSQLI_ASSOC);
-    //     $stmt->close();
-    //     return $citas;
-    // }
-
-    // public function obtenerFacturasPorEstado($estado)
-    // {
-    //     $sql = "SELECT f.factura_id, f.paciente_id, f.fecha_emision, f.estado, 
-    //                p.nombre AS producto_nombre, p.descripcion AS producto_descripcion, p.monto 
-    //         FROM `facturas` f
-    //         JOIN `productos` p ON f.producto = p.producto_id
-    //         WHERE f.estado = ?";
-    //     $stmt = self::$conexion->prepare($sql);
-    //     $stmt->bind_param("s", $estado);
-    //     $stmt->execute();
-    //     $result = $stmt->get_result();
-    //     $citas = $result->fetch_all(MYSQLI_ASSOC);
-    //     $stmt->close();
-    //     return $citas;
-    // }
-
-    // public function buscarFacturasPorIDyEstado($usuario_id, $estado)
-    // {
-    //     $sql = "SELECT f.factura_id, f.paciente_id, f.fecha_emision, f.estado, 
-    //                p.nombre AS producto_nombre, p.descripcion AS producto_descripcion, p.monto 
-    //         FROM `facturas` f
-    //         JOIN `productos` p ON f.producto = p.producto_id
-    //         WHERE f.paciente_id = ? AND f.estado = ?";
-    //     $stmt = self::$conexion->prepare($sql);
-    //     $stmt->bind_param("ss", $usuario_id, $estado);
-    //     $stmt->execute();
-    //     $result = $stmt->get_result();
-    //     $citas = $result->fetch_all(MYSQLI_ASSOC);
-    //     $stmt->close();
-    //     return $citas;
-    // }
-
     public function obtenerCitasPaginadas($iniciar, $articulos_x_pagina)
     {
         $sql = "SELECT

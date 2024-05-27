@@ -116,7 +116,7 @@ class SpecialityController
         // Recorrer los usuarios y mostrarlos en la tabla
         $pdf->SetFont('Arial', '', 8);
         foreach ($especialidades as $especialidad) {
-            $pdf->Cell(27, 10, $especialidad['id'], 1, 0, 'C');
+            $pdf->Cell(27, 10, $especialidad['especialidad_id'], 1, 0, 'C');
             $pdf->Cell(118, 10, iconv('UTF-8', 'windows-1252', $especialidad['descripcion']), 1, 0, 'L');
             $pdf->Cell(45, 10, $especialidad['fecha'], 1, 0, 'C');
             $pdf->Ln(); // Salto de línea para la siguiente fila
