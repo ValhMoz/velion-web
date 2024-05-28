@@ -1,47 +1,76 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-bs-theme="auto">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Reinicio de Contraseña</title>
     <link href="../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/bootstrap-5.3/css/dashboard.css" rel="stylesheet">
     <script src="../assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/bootstrap-5.3/js/dashboard.js"></script>
-    <script src="../assets/custom/js/timeout.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="../assets/bootstrap-5.3/js/color-modes.js"></script>
+
+    <style>
+        body {
+            background-image: url("../assets/custom/img/fondo.jpg"); /* Replace with your background image URL */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .reset-container {
+            background: rgba(255, 255, 255, 0.8); /* White background with transparency */
+            padding: 30px;
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow */
+            max-width: 400px; /* Limit form width */
+            width: 100%; /* Ensure responsiveness */
+        }
+
+        .reset-container h2 {
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #495057; /* Adjust focus border color */
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-link {
+            color: #007bff;
+            text-decoration: none; /* Remove link underline */
+        }
+    </style>
 </head>
 
 <body>
 
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <!-- Formulario de Reinicio de Contraseña -->
-                <form action="../scripts/resetPassword_manager.php" method="post">
-                    <h2 class="mb-3">Reinicio de Contraseña</h2>
-                    <input type="hidden" name="action" value="resetear_contraseña">
-                    <input type="hidden" name="token" value="<?php echo $_GET['token']; ?>">
+    <div class="reset-container">
+        <h2 class="text-center">Reinicio de Contraseña</h2>
 
-                    <!-- Contraseña Nueva -->
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Nueva Contraseña</label>
-                        <input type="password" class="form-control" id="password" name="password" minlength="8" required>
-                    </div>
+        <form action="../scripts/resetPassword_manager.php" method="post">
+            <input type="hidden" name="action" value="resetear_contraseña">
+            <input type="hidden" name="token" value="<?php echo $_GET['token']; ?>">
 
-                    <!-- Confirmar Contraseña -->
-                    <div class="mb-3">
-                        <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
-                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" minlength="8" required>
-                    </div>
-
-                    <!-- Botón de Reinicio de Contraseña -->
-                    <button type="submit" class="btn btn-primary">Reiniciar Contraseña</button>
-                </form>
+            <div class="mb-3">
+                <label for="password" class="form-label">Nueva Contraseña</label>
+                <input type="password" class="form-control" id="password" name="password" minlength="8" required>
             </div>
-        </div>
+
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" minlength="8" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Reiniciar Contraseña</button>
+        </form>
     </div>
 
 </body>
