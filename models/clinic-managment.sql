@@ -20,12 +20,10 @@ CREATE TABLE horarios (
   ult_modificacion TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 );
 
-CREATE TABLE productos (
-  producto_id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(255),
-  descripcion VARCHAR(255),
-  monto INT,
-  fecha TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+CREATE TABLE categorias(
+  categoria_id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(30),
+  descripcion VARCHAR(255)
 );
 
 CREATE TABLE password_resets (
@@ -35,9 +33,20 @@ CREATE TABLE password_resets (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE productos (
+  producto_id INT AUTO_INCREMENT PRIMARY KEY,
+  categoria_id INT,
+  nombre VARCHAR(255),
+  descripcion VARCHAR(255),
+  monto INT,
+  fecha TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  FOREIGN KEY (categoria_id) REFERENCES categorias(categoria_id)
+);
+
 -- Tabla para almacenar información de usuarios
 CREATE TABLE usuarios (
   usuario_id VARCHAR(9) PRIMARY KEY,
+  acerca_de VARCHAR(255),
   nombre VARCHAR(255),
   apellidos VARCHAR(255),
   telefono VARCHAR(100),
@@ -151,19 +160,26 @@ INSERT INTO horarios (nombre, estado) VALUES
 ('Domingo Mañana', 'Activo'),
 ('Domingo Tarde', 'Activo');
 
-INSERT INTO productos (nombre, descripcion, monto) VALUES
-('Sesión individual', '', 35),
-('Bono de 10 sesiones', '(30€/sesión)', 300),
-('Bono de 15 sesiones', '(26€/sesión)', 390),
-('Bono de 20 sesiones', '(24€/sesión)', 480),
-('Bono de 30 sesiones', '(20,5€/sesión)', 615),
-('Bono especial de 10 sesiones', '(37€/sesión)', 370);
+INSERT INTO categorias (nombre, descripcion) VALUES
+('Terapia Física', 'Sesiones de terapia física individualizadas'),
+('Bonos de Sesiones', 'Paquetes de sesiones de terapia física con descuento'),
+('Tratamientos Especiales', 'Tratamientos específicos para ciertas condiciones o necesidades'),
+('Rehabilitación', 'Programas de rehabilitación post-operatoria o lesiones'),
+('Terapias Complementarias', 'Terapias complementarias como acupuntura o electroterapia');
 
-INSERT INTO usuarios (usuario_id, nombre, apellidos, telefono, fecha_nacimiento, direccion, provincia, municipio, cp, email, pass, rol, genero, especialidad, sesiones_disponibles)
+INSERT INTO productos (nombre, categoria_id, descripcion, monto) VALUES
+('Sesión individual', 1, '', 35),
+('Bono de 10 sesiones', 2, '(30€/sesión)', 300),
+('Bono de 15 sesiones', 2, '(26€/sesión)', 390),
+('Bono de 20 sesiones', 2, '(24€/sesión)', 480),
+('Bono de 30 sesiones', 2, '(20,5€/sesión)', 615),
+('Bono especial de 10 sesiones', 3, '(37€/sesión)', 370);
+
+INSERT INTO usuarios (usuario_id, acerca_de, nombre, apellidos, telefono, fecha_nacimiento, direccion, provincia, municipio, cp, email, pass, rol, genero, especialidad, sesiones_disponibles)
 VALUES
-('123456789', 'Juan', 'Perez', '123456789', '1990-01-01', 'Calle 123', 'Provincia 1', 'Ciudad 1', '12345', 'patient@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'paciente', 'hombre', NULL, 10),
-('234567890', 'Maria', 'Lopez', '234567890', '1995-05-05', 'Avenida 456', 'Provincia 2', 'Ciudad 2', '23456', 'fisio@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'fisioterapeuta', 'mujer', 5, NULL),
-('345678901', 'Pedro', 'Gomez', '345678901', '1985-10-10', 'Plaza 789', 'Provincia 3', 'Ciudad 3', '34567', 'admin@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'administrador', 'hombre', NULL, NULL);
+('123456789', 'Juan Pérez es un paciente de 45 años que ha estado bajo nuestro cuidado desde 2015. Vive en Ciudad de México y trabaja como ingeniero. En su tiempo libre, disfruta de la lectura y el senderismo.', 'Juan', 'Perez', '123456789', '1990-01-01', 'Calle 123', 'Provincia 1', 'Ciudad 1', '12345', 'patient@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'paciente', 'hombre', NULL, 10),
+('234567890', '', 'Maria', 'Lopez', '234567890', '1995-05-05', 'Avenida 456', 'Provincia 2', 'Ciudad 2', '23456', 'fisio@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'fisioterapeuta', 'mujer', 5, NULL),
+('345678901', '', 'Pedro', 'Gomez', '345678901', '1985-10-10', 'Plaza 789', 'Provincia 3', 'Ciudad 3', '34567', 'admin@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'administrador', 'hombre', NULL, NULL);
 
 -- Insertar datos de prueba para la tabla facturas
 INSERT INTO facturas (paciente_id, fecha_emision, producto, estado)

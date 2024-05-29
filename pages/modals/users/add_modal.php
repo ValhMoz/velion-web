@@ -115,19 +115,3 @@
     </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        mostrarEspecialidad(document.getElementById('rol'));
-    });
-
-    function mostrarEspecialidad(select) {
-        var especialidadContainer = document.getElementById('especialidad-container');
-        if (select.value === 'Fisioterapeuta') {
-            especialidadContainer.style.display = 'block';
-            document.getElementById('especialidad').setAttribute('required', 'required');
-        } else {
-            especialidadContainer.style.display = 'none';
-            document.getElementById('especialidad').removeAttribute('required');
-        }
-    }
-</script>

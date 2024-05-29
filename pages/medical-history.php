@@ -10,9 +10,9 @@ if ($rol == "Paciente") {
 $medicalhistory = new MedicalHistoryController();
 
 // Manejar la búsqueda de las citas del paciente
-if (isset($_POST['user_id'])) {
-    $user_id = $_POST['user_id'];
-    $citas = $medicalhistory->obtenerCitasUsuario($user_id);
+if (isset($_GET['usuario_id'])) {
+    $usuario_id = $_GET['usuario_id'];
+    $citas = $medicalhistory->obtenerCitasUsuario($usuario_id);
     echo(json_encode($citas));
 }
 
@@ -39,8 +39,8 @@ include_once './includes/dashboard.php';
         <h1 class="mb-4">Historial Médico</h1>
     </div>
 
-    <form class="form input mb-3" action="" method="post">
-        <input class="form-control" list="datalistOptions" id="user_id" name="user_id" placeholder="Escribe aquí para buscar...">
+    <form class="form input mb-3" action="" method="get">
+        <input class="form-control" list="datalistOptions" id="usuario_id" name="usuario_id" placeholder="Escribe aquí para buscar...">
         <datalist id="datalistOptions">
             <?php foreach ($pacientes as $paciente) : ?>
                 <option value="<?php echo $paciente['usuario_id']; ?>"><?php echo $paciente['nombre'] . ' ' . $paciente['apellidos']; ?></option>

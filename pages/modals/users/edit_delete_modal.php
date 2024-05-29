@@ -114,41 +114,6 @@
     </div>
 </div>
 
-<script>
-    // Llamar a la función mostrarEspecialidad cuando se cargue el modal
-    document.addEventListener('DOMContentLoaded', mostrarEspecialidad);
-
-    // Llamar a la función mostrarEspecialidad cuando cambie el valor del rol
-    document.addEventListener('DOMContentLoaded', function () {
-        mostrarEspecialidad(document.getElementById('rol'));
-    });
-
-    // Función para mostrar u ocultar la especialidad según el rol seleccionado
-    function mostrarEspecialidad() {
-        var rol = document.getElementById('rol').value;
-        var especialidadContainer = document.getElementById('especialidad-container');
-        if (rol === 'Fisioterapeuta') {
-            especialidadContainer.style.display = 'block';
-        } else {
-            especialidadContainer.style.display = 'none';
-        }
-    }
-
-    function mostrarEspecialidad(select) {
-        var especialidadContainer = document.getElementById('especialidad-container');
-        if (select.value === 'Fisioterapeuta') {
-            especialidadContainer.style.display = 'block';
-            document.getElementById('especialidad').setAttribute('required', 'required');
-        } else {
-            especialidadContainer.style.display = 'none';
-            document.getElementById('especialidad').removeAttribute('required');
-        }
-    }
-
-
-</script>
-
-
 <!-- Modal eliminar usuario -->
 <div class="modal fade" id="delete_<?php echo $usuario['usuario_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">

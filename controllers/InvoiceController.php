@@ -91,6 +91,7 @@ class InvoiceController extends PDF_Invoice
     function generarFacturaPDF($factura_id)
     {
         $factura = $this->invoiceModel->obtenerDatosFactura($factura_id);
+        //echo(json_encode($factura));
 
         // Verificar si se encontró la factura
         if ($factura) {
@@ -134,7 +135,7 @@ class InvoiceController extends PDF_Invoice
             $y    = 109;
             $line = array(
                 "REF"    => "REF1",
-                iconv('UTF-8', 'windows-1252', "DESCRIPCIÓN")  => $factura[0]['descripcion'],
+                iconv('UTF-8', 'windows-1252', "DESCRIPCIÓN")  => $factura[0]['producto_nombre'],
                 "CANTIDAD"     => "1",
                 "PRECIO UNITARIO"      => $factura[0]['monto']. EURO,
                 "PRECIO TOTAL" => $factura[0]['monto']. EURO,

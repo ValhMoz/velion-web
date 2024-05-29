@@ -97,52 +97,63 @@ if (isset($_SESSION['alert'])) {
                             <th scope="col" style="width: 6%;">Acciones</th>
                         </tr>
                     </thead>
-                    <?php foreach ($documentosPaginados as $documento) : ?>
+
+                    <?php if (!empty($documentosPaginados)) : ?>
+                        <?php foreach ($documentosPaginados as $documento) : ?>
+                            <tr>
+                                <td><?php echo $documento['documento_id']; ?></td>
+                                <td><?php echo $documento['paciente_id']; ?></td>
+                                <td><?php echo $documento['nombre']; ?></td>
+                                <td><?php echo $documento['descripcion']; ?></td>
+                                <td><?php echo $documento['fecha_subida'] ?></td>
+                                <td>
+                                    <?php
+                                    $estado = $documento['estado'];
+
+                                    switch ($estado) {
+                                        case 'Firmado':
+                                            $text_gb_class = 'text-bg-success';
+                                            break;
+                                        case 'Rechazado':
+                                            $text_gb_class = 'text-bg-danger';
+                                            break;
+                                        case 'Pendiente':
+                                            $text_gb_class = 'text-bg-warning';
+                                            break;
+                                        default:
+                                            $text_gb_class = 'text-bg-warning';
+                                    }
+                                    ?>
+                                    <span class="badge <?php echo $text_gb_class; ?>">
+                                        <?php echo $estado; ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                                            <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z" />
+                                            <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
+                                        </svg></button>
+                                    <button class="btn btn-sm btn-success" <?php if ($documento['estado'] == 'Firmado') {
+                                                                                echo 'disabled';
+                                                                            } ?> data-bs-toggle="modal" data-bs-target="#firmar_<?php echo $documento['documento_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
+                                        </svg></button>
+                                    <button class="btn btn-sm btn-danger" <?php if ($documento['estado'] == 'Rechazado') {
+                                                                                echo 'disabled';
+                                                                            } ?> data-bs-toggle="modal" data-bs-target="#rechazar_<?php echo $documento['documento_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                        </svg></button>
+                                    <?php include 'modals/documentos/edit_delete_modal.php'; ?>
+                                </td>
+
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else : ?>
                         <tr>
-                            <td><?php echo $documento['documento_id']; ?></td>
-                            <td><?php echo $documento['paciente_id']; ?></td>
-                            <td><?php echo $documento['nombre']; ?></td>
-                            <td><?php echo $documento['descripcion']; ?></td>
-                            <td><?php echo $documento['fecha_subida'] ?></td>
-                            <td>
-                                <?php
-                                $estado = $documento['estado'];
-
-                                switch ($estado) {
-                                    case 'Firmado':
-                                        $text_gb_class = 'text-bg-success';
-                                        break;
-                                    case 'Rechazado':
-                                        $text_gb_class = 'text-bg-danger';
-                                        break;
-                                    case 'Pendiente':
-                                        $text_gb_class = 'text-bg-warning';
-                                        break;
-                                    default:
-                                        $text_gb_class = 'text-bg-warning';
-                                }
-                                ?>
-                                <span class="badge <?php echo $text_gb_class; ?>">
-                                    <?php echo $estado; ?>
-                                </span>
-                            </td>
-                            <td>
-                                <button class="btn btn-sm btn-success" <?php if ($documento['estado'] == 'Firmado') {
-                                                                            echo 'disabled';
-                                                                        } ?> data-bs-toggle="modal" data-bs-target="#firmar_<?php echo $documento['documento_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
-                                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
-                                    </svg></button>
-                                <button class="btn btn-sm btn-danger" <?php if ($documento['estado'] == 'Rechazado') {
-                                                                            echo 'disabled';
-                                                                        } ?> data-bs-toggle="modal" data-bs-target="#rechazar_<?php echo $documento['documento_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                                    </svg></button>
-                                <?php include 'modals/documentos/edit_delete_modal.php'; ?>
-                            </td>
-
+                            <td colspan="6">No se encontraron documentos.</td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php endif; ?>
                 </table>
             </div>
         </div>

@@ -106,24 +106,6 @@ if (isset($_SESSION['alert'])) {
         </div>
     </form>
 
-
-    <!-- <form class="row g-3" method="post">
-        <div class="col-auto">
-            <input type="text" class="form-control" id="usuario_id" name="usuario_id" placeholder="Filtrar por ID...">
-        </div>
-        <div class="col-auto">
-            <select class="form-select" id="rol" name="rol" aria-label="Selecciona tu rol">
-                <option selected>Selecciona tu rol</option>
-                <option value="administrador">Administrador</option>
-                <option value="paciente">Paciente</option>
-                <option value="fisioterapeuta">Fisioterapeuta</option>
-            </select>
-        </div>
-        <div class="col-auto">
-            <button type="submit" class="btn btn-primary mb-3">Filtrar</button>
-        </div>
-    </form> -->
-
     <div class="row">
         <!-- Aquí se mostrarán los usuarios en forma de tabla -->
         <div class="col">
@@ -143,60 +125,66 @@ if (isset($_SESSION['alert'])) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($usuariosPaginados as $usuario) : ?>
+                        <?php if (!empty($usuariosPaginados)) : ?>
+                            <?php foreach ($usuariosPaginados as $usuario) : ?>
+                                <tr>
+                                    <td><?php echo $usuario['usuario_id']; ?></td>
+                                    <td><?php echo $usuario['nombre']; ?></td>
+                                    <td><?php echo $usuario['apellidos']; ?></td>
+                                    <td><?php echo $usuario['email']; ?></td>
+                                    <td><?php echo $usuario['direccion'] . ' ' . $usuario['provincia'] . ' ' . $usuario['municipio'] . ' ' . $usuario['cp'] ?></td>
+                                    <td><?php echo $usuario['telefono']; ?></td>
+                                    <td><?php echo $usuario['sesiones_disponibles']; ?></td>
+                                    <td>
+                                        <?php
+                                        $rol = $usuario['rol'];
+
+                                        switch ($rol) {
+                                            case 'Paciente':
+                                                $text_gb_class = 'text-bg-secondary';
+                                                break;
+                                            case 'Fisioterapeuta':
+                                                $text_gb_class = 'text-bg-info';
+                                                break;
+                                            case 'Administrador':
+                                                $text_gb_class = 'text-bg-danger';
+                                                break;
+                                            default:
+                                                $text_gb_class = 'text-bg-secondary';
+                                        }
+                                        ?>
+                                        <span class="badge <?php echo $text_gb_class; ?>">
+                                            <?php echo $rol; ?>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-sm btn-primary" href="userdetail.php?user_id=<?php echo $usuario['usuario_id']; ?>">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
+                                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
+                                            </svg>
+                                        </a>
+                                        <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#edit_<?php echo $usuario['usuario_id']; ?>">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                            </svg>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete_<?php echo $usuario['usuario_id']; ?>">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                            </svg></button>
+                                        <?php include './modals/users/edit_delete_modal.php'; ?>
+
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else : ?>
                             <tr>
-                                <td><?php echo $usuario['usuario_id']; ?></td>
-                                <td><?php echo $usuario['nombre']; ?></td>
-                                <td><?php echo $usuario['apellidos']; ?></td>
-                                <td><?php echo $usuario['email']; ?></td>
-                                <td><?php echo $usuario['direccion'] . ' ' . $usuario['provincia'] . ' ' . $usuario['municipio'] . ' ' . $usuario['cp'] ?></td>
-                                <td><?php echo $usuario['telefono']; ?></td>
-                                <td><?php echo $usuario['sesiones_disponibles']; ?></td>
-                                <td>
-                                    <?php
-                                    $rol = $usuario['rol'];
-
-                                    switch ($rol) {
-                                        case 'Paciente':
-                                            $text_gb_class = 'text-bg-secondary';
-                                            break;
-                                        case 'Fisioterapeuta':
-                                            $text_gb_class = 'text-bg-info';
-                                            break;
-                                        case 'Administrador':
-                                            $text_gb_class = 'text-bg-danger';
-                                            break;
-                                        default:
-                                            $text_gb_class = 'text-bg-secondary';
-                                    }
-                                    ?>
-                                    <span class="badge <?php echo $text_gb_class; ?>">
-                                        <?php echo $rol; ?>
-                                    </span>
-                                </td>
-                                <td>
-                                    <a class="btn btn-sm btn-primary" href="userdetail.php?user_id=<?php echo $usuario['usuario_id']; ?>">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-                                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
-                                            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
-                                        </svg>
-                                    </a>
-                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#edit_<?php echo $usuario['usuario_id']; ?>">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
-                                        </svg>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete_<?php echo $usuario['usuario_id']; ?>">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                                        </svg></button>
-                                    <?php include './modals/users/edit_delete_modal.php'; ?>
-
-                                </td>
+                                <td colspan="6">No se encontraron usuarios.</td>
                             </tr>
-                        <?php endforeach; ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -216,6 +204,41 @@ if (isset($_SESSION['alert'])) {
             </li>
         </ul>
     </nav>
+
+    <script>
+        function mostrarEspecialidad(selectElement) {
+            var especialidadContainer = document.getElementById('especialidad-container');
+            if (selectElement.value === 'Fisioterapeuta') {
+                especialidadContainer.style.display = 'block';
+            } else {
+                especialidadContainer.style.display = 'none';
+            }
+        }
+
+        window.addEventListener('load', function() {
+            var rolSelectAgregar = document.getElementById('rol');
+            var especialidadContainerAgregar = document.getElementById('especialidad-container');
+            rolSelectAgregar.addEventListener('change', function() {
+                mostrarEspecialidad(rolSelectAgregar);
+            });
+
+            // Iterar sobre todos los elementos con id que empiezan con 'edit_'
+            document.querySelectorAll('[id^="edit_"]').forEach(function(modal) {
+                var rolSelectEditar = modal.querySelector('select[name="rol"]');
+                var especialidadContainerEditar = modal.querySelector('#especialidad-container');
+                if (rolSelectEditar) {
+                    rolSelectEditar.addEventListener('change', function() {
+                        if (rolSelectEditar.value === 'Fisioterapeuta') {
+                            especialidadContainerEditar.style.display = 'block';
+                        } else {
+                            especialidadContainerEditar.style.display = 'none';
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
 
 </div>
 
