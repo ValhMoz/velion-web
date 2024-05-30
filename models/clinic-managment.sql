@@ -74,7 +74,6 @@ CREATE TABLE citas (
   estado ENUM('Programada', 'Cancelada', 'Realizada'),
   especialidad_id INT,
   historial_id INT UNIQUE,
-  horario_id INT,
   FOREIGN KEY (paciente_id) REFERENCES usuarios(usuario_id),
   FOREIGN KEY (fisioterapeuta_id) REFERENCES usuarios(usuario_id),
   FOREIGN KEY (especialidad_id) REFERENCES especialidades(especialidad_id)
@@ -152,13 +151,13 @@ VALUES
 ('345678901', '2024-04-03', 1, 'Pendiente');
 
 -- Insertar datos de prueba en la tabla citas
-INSERT INTO citas (paciente_id, fisioterapeuta_id, fecha_hora, estado, especialidad_id, historial_id, horario_id)
+INSERT INTO citas (paciente_id, fisioterapeuta_id, fecha_hora, estado, especialidad_id, historial_id)
 VALUES
-('123456789', '234567890', '2024-01-15 10:00:00', 'Realizada', 1, 1, 1),
-('123456789', '234567890', '2024-02-20 11:00:00', 'Realizada', 1, 2, 2),
-('123456789', '234567890', '2024-03-25 09:00:00', 'Realizada', 1, 3, 3),
-('123456789', '234567890', '2024-04-20 10:00:00', 'Programada', 1, NULL, 4),
-('234567890', '345678901', '2024-05-05 14:00:00', 'Cancelada', 2, NULL, 5);
+('123456789', '234567890', '2024-01-15 10:00:00', 'Realizada', 1, 1),
+('123456789', '234567890', '2024-02-20 11:00:00', 'Realizada', 1, 2),
+('123456789', '234567890', '2024-03-25 09:00:00', 'Realizada', 1, 3),
+('123456789', '234567890', '2024-04-20 10:00:00', 'Programada', 1, NULL),
+('234567890', '345678901', '2024-05-05 14:00:00', 'Cancelada', 2, NULL);
 
 -- Insertar datos de prueba en la tabla historial_medico
 INSERT INTO historial_medico (paciente_id, fisioterapeuta_id, cita_id, fecha, descripcion, diagnostico, tratamiento, notas)

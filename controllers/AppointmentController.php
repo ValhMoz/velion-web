@@ -42,7 +42,7 @@ class AppointmentController
             $mail->Port = 587;
 
             // Configuración del remitente
-            $mail->setFrom('tuemail@tuservidor.com', 'Nombre del Remitente');
+            $mail->setFrom('sergiofrubio@gmail.com', 'SIGEFI');
 
             foreach ($citasProximas as $cita) {
                 // Configuración del destinatario
