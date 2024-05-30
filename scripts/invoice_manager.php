@@ -13,10 +13,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
                 // Obtener los valores del formulario
 
                 $datos = array(
-                    $paciente_id = $_POST["paciente_id"],
-                    $fecha_emision = $_POST["fecha_emision"],
-                    $producto_id = $_POST["producto"],
-                    $estado = $_POST["estado"]
+                    'paciente_id' => $_POST["paciente_id"],
+                    'fecha_emision' => $_POST["fecha_emision"],
+                    'producto_id' => $_POST["producto_id"],
+                    'estado' => $_POST["estado"]
                 );
 
                 // Intenta registrar un usuario con los datos proporcionados
@@ -34,7 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
         // Llamar a la función para generar la factura PDF
         $invoiceController->generarFacturaPDF($factura_id);
-        header('Location: ../pages/patients-module/./includes/dashboard.php');
         exit();
     } else {
         // Si no se recibió el ID de la factura, redirigir o mostrar un mensaje de error

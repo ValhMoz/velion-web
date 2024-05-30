@@ -1,6 +1,6 @@
 <?php
 
-require 'BaseModel.php';
+require_once 'BaseModel.php';
 
 class LoginModel extends BaseModel
 {

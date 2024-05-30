@@ -68,6 +68,12 @@
                             </datalist>
                         </div>
 
+                        <!-- Sesiones disponibles -->
+                        <div class="mb-3" id="sesiones-container" style="display: none;">
+                            <label for="lastname" class="form-label">Sesiones disponibles</label>
+                            <input type="text" class="form-control" id="sesiones_disponibles" name="sesiones_disponibles" required>
+                        </div>
+
                         <!-- Telefono, Dirección -->
                         <div class="row mb-3">
                             <div class="col-md-6">
@@ -115,19 +121,3 @@
     </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        mostrarEspecialidad(document.getElementById('rol'));
-    });
-
-    function mostrarEspecialidad(select) {
-        var especialidadContainer = document.getElementById('especialidad-container');
-        if (select.value === 'Fisioterapeuta') {
-            especialidadContainer.style.display = 'block';
-            document.getElementById('especialidad').setAttribute('required', 'required');
-        } else {
-            especialidadContainer.style.display = 'none';
-            document.getElementById('especialidad').removeAttribute('required');
-        }
-    }
-</script>

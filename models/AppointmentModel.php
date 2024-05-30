@@ -9,6 +9,55 @@ class AppointmentModel extends BaseModel
         parent::__construct(); // Llama al constructor de la clase padre (BaseModel)
     }
 
+    public function obtenerCitasProximas()
+    {
+        $sql = "SELECT 
+                    c.cita_id,
+                    c.fecha_hora,
+                    u.email AS paciente_email,
+                    u.nombre AS paciente_nombre,
+                    u.apellidos AS paciente_apellidos,
+                    u2.nombre AS fisioterapeuta_nombre,
+                    u2.apellidos AS fisioterapeuta_apellidos
+                FROM 
+                    citas c
+                INNER JOIN 
+                    usuarios u ON c.paciente_id = u.usuario_id
+                INNER JOIN 
+                    usuarios u2 ON c.fisioterapeuta_id = u2.usuario_id
+                WHERE 
+                    c.fecha_hora BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 1 DAY)
+                    AND c.estado = 'Programada'";
+
+        $resultado = self::$conexion->query($sql);
+        if (!$resultado) {
+            die("Error al ejecutar la consulta: " . self::$conexion->error);
+        }
+
+        $citas = array();
+        while ($fila = $resultado->fetch_assoc()) {
+            $citas[] = $fila;
+        }
+        return $citas;
+    }
+
+    public function obtenerUltimaEjecucion() {
+        $sql = "SELECT ultima_ejecucion FROM tareas WHERE nombre = 'enviarRecordatorios'";
+        $result = self::$conexion->query($sql);
+        if ($result && $row = $result->fetch_assoc()) {
+            return $row['ultima_ejecucion'];
+        }
+        return null;
+    }
+
+    public function actualizarUltimaEjecucion($fecha) {
+        $sql = "UPDATE tareas SET ultima_ejecucion = ? WHERE nombre = 'enviarRecordatorios'";
+        $stmt = self::$conexion->prepare($sql);
+        $stmt->bind_param("s", $fecha);
+        $stmt->execute();
+        $stmt->close();
+    }
+
     public function buscarCitas($usuarioID, $fechaHora, $estado, $especialidad)
     {
         $sql = "SELECT c.*, u.nombre AS paciente_nombre, u.apellidos AS paciente_apellidos, u.telefono AS paciente_telefono, u2.nombre AS fisioterapeuta_nombre, u2.apellidos AS fisioterapeuta_apellidos, e.descripcion AS descripcion
@@ -18,7 +67,7 @@ class AppointmentModel extends BaseModel
         INNER JOIN especialidades e ON c.especialidad_id = e.especialidad_id";
         $params = [];
         $types = "";
-    
+
         if (!empty($usuarioID)) {
             $sql .= " AND paciente_id = ?";
             $params[] = $usuarioID;
@@ -30,7 +79,7 @@ class AppointmentModel extends BaseModel
             $params[] = $fechaHora;
             $types .= "s";
         }
-    
+
         if (!empty($estado)) {
             $sql .= " AND estado = ?";
             $params[] = $estado;
@@ -42,7 +91,7 @@ class AppointmentModel extends BaseModel
             $params[] = $especialidad;
             $types .= "s";
         }
-    
+
         $stmt = self::$conexion->prepare($sql);
         if ($types) {
             $stmt->bind_param($types, ...$params);
@@ -112,7 +161,7 @@ class AppointmentModel extends BaseModel
         return $datos;
     }
 
-    public function obtenerCitasUsuario($DNI, $iniciar, $articulos_x_pagina)
+    public function obtenerCitasUsuarioPaginadas($DNI, $iniciar, $articulos_x_pagina)
     {
         $DNI = self::$conexion->real_escape_string($DNI);
 
@@ -156,6 +205,66 @@ class AppointmentModel extends BaseModel
         WHERE
             paciente_id = '$DNI'
         LIMIT $iniciar, $articulos_x_pagina";
+
+        // Ejecutar la consulta
+        $resultado =  self::$conexion->query($sql);
+
+        // Manejo de errores
+        if (!$resultado) {
+            die("Error al ejecutar la consulta: " . self::$conexion->error);
+        }
+
+        // Procesa el resultado
+        $datos = array();
+        while ($fila = $resultado->fetch_assoc()) {
+            $datos[] = $fila;
+        }
+        return $datos;
+    }
+
+    public function obtenerCitasUsuario($DNI)
+    {
+        $DNI = self::$conexion->real_escape_string($DNI);
+
+        $sql = "SELECT
+        c.cita_id,
+        c.fecha_hora,
+        c.estado,
+        e.descripcion,
+        p.usuario_id AS paciente_id,
+        p.nombre AS paciente_nombre,
+        p.apellidos AS paciente_apellidos,
+        p.telefono AS paciente_telefono,
+        -- p.email AS paciente_email,
+        -- p.fecha_nacimiento AS paciente_fecha_nacimiento,
+        -- p.direccion AS paciente_direccion,
+        -- p.provincia AS paciente_provincia,
+        -- p.municipio AS paciente_municipio,
+        -- p.cp AS paciente_cp,
+        -- p.genero AS paciente_genero,
+        p.sesiones_disponibles AS paciente_sesiones_disponibles,
+        f.usuario_id AS fisioterapeuta_id,
+        f.nombre AS fisioterapeuta_nombre,
+        f.apellidos AS fisioterapeuta_apellidos
+        -- f.telefono AS fisioterapeuta_telefono,
+        -- f.email AS fisioterapeuta_email,
+        -- f.fecha_nacimiento AS fisioterapeuta_fecha_nacimiento,
+        -- f.direccion AS fisioterapeuta_direccion,
+        -- f.provincia AS fisioterapeuta_provincia,
+        -- f.municipio AS fisioterapeuta_municipio,
+        -- f.cp AS fisioterapeuta_cp,
+        -- f.genero AS fisioterapeuta_genero,
+        -- f.sesiones_disponibles AS fisioterapeuta_sesiones_disponibles
+        FROM
+            citas c
+        INNER JOIN
+            usuarios p ON c.paciente_id = p.usuario_id
+        INNER JOIN
+            usuarios f ON c.fisioterapeuta_id = f.usuario_id
+        INNER JOIN
+            especialidades e ON c.especialidad_id = e.especialidad_id
+        WHERE
+            paciente_id = '$DNI'";
 
         // Ejecutar la consulta
         $resultado =  self::$conexion->query($sql);

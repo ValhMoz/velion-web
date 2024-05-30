@@ -41,7 +41,7 @@ class InvoiceController extends PDF_Invoice
             return $facturasFiltradas;
         } else {
             // Si no se encontraron usuarios, mostrar mensaje de alerta
-            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ningún usuario con los criterios seleccionados.');
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ningún Factura con los criterios seleccionados.');
             header('Location: ../pages/invoices.php');
             exit();
         }
@@ -71,7 +71,7 @@ class InvoiceController extends PDF_Invoice
             return $facturasFiltradas;
         } else {
             // Si no se encontraron usuarios, mostrar mensaje de alerta
-            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ningún usuario con los criterios seleccionados.');
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ningún Factura con los criterios seleccionados.');
             header('Location: ../pages/invoices-patients.php');
             exit();
         }
@@ -91,6 +91,7 @@ class InvoiceController extends PDF_Invoice
     function generarFacturaPDF($factura_id)
     {
         $factura = $this->invoiceModel->obtenerDatosFactura($factura_id);
+        //echo(json_encode($factura));
 
         // Verificar si se encontró la factura
         if ($factura) {
@@ -98,10 +99,10 @@ class InvoiceController extends PDF_Invoice
             $pdf->AddPage();
             $pdf->addSociete(
                 iconv('UTF-8', 'windows-1252', 'Clínica Fisioterapia'),
-                "CIF: X-12345678\n".
-                "Av. Prueba, 17\n" .
-                iconv('UTF-8', 'windows-1252', "Córdoba, Córdoba, 14001\n").
-                iconv('UTF-8', 'windows-1252', "Tel.: 957 000 000 • 600 000 000")
+                "CIF: X-12345678\n" .
+                    "Av. Prueba, 17\n" .
+                    iconv('UTF-8', 'windows-1252', "Córdoba, Córdoba, 14001\n") .
+                    iconv('UTF-8', 'windows-1252', "Tel.: 957 000 000 • 600 000 000")
             );
             $pdf->fact_dev("Factura:", $factura_id);
             // $pdf->temporaire("Devis temporaire");
@@ -134,10 +135,10 @@ class InvoiceController extends PDF_Invoice
             $y    = 109;
             $line = array(
                 "REF"    => "REF1",
-                iconv('UTF-8', 'windows-1252', "DESCRIPCIÓN")  => $factura[0]['descripcion'],
+                iconv('UTF-8', 'windows-1252', "DESCRIPCIÓN")  => $factura[0]['producto_nombre'],
                 "CANTIDAD"     => "1",
-                "PRECIO UNITARIO"      => $factura[0]['monto']. EURO,
-                "PRECIO TOTAL" => $factura[0]['monto']. EURO,
+                "PRECIO UNITARIO"      => $factura[0]['monto'] . EURO,
+                "PRECIO TOTAL" => $factura[0]['monto'] . EURO,
             );
             $size = $pdf->addLine($y, $line);
             // $y   += $size + 2;
@@ -206,6 +207,39 @@ class InvoiceController extends PDF_Invoice
 
     public function guardarFactura($datos)
     {
-        $this->invoiceModel->insert("facturas", $datos);
+        if ($this->invoiceModel->insert("facturas", $datos)) {
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Factura añadida correctamente.');
+            header('Location: ../pages/invoices.php');
+            exit();
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido añadir la factura correctamente.');
+            header('Location: ../pages/invoices.php');
+            exit();
+        }
+
     }
+
+    // public function actualizarSesionesDisponibles($paciente_id, $tipo_bono)
+    // {
+    //     // Obtener el número de sesiones adicionales según el tipo de bono
+    //     $sesiones_adicionales = 0;
+    //     switch ($tipo_bono) {
+    //         case 'Bono de 10 sesiones':
+    //             $sesiones_adicionales = 10;
+    //             break;
+    //         case 'Bono de 15 sesiones':
+    //             $sesiones_adicionales = 15;
+    //             break;
+    //         case 'Bono de 20 sesiones':
+    //             $sesiones_adicionales = 20;
+    //             break;
+    //         case 'Bono de 30 sesiones':
+    //             $sesiones_adicionales = 30;
+    //             break;
+    //             // Agrega más casos según sea necesario para otros tipos de bono
+    //     }
+
+    //     // Actualizar las sesiones disponibles del Factura en la base de datos
+    //     $this->invoiceModel->actualizarSesionesDisponibles($paciente_id, $sesiones_adicionales);
+    // }
 }

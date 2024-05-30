@@ -1,4 +1,3 @@
-<!-- Modal -->
 <div class="modal fade" id="AsignarCita" tabindex="-1" aria-labelledby="agregarCitaModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -10,7 +9,7 @@
                 <div class="modal-body">
                     <input type="hidden" id="actionType" name="action" value="asignar">
                     <div class="mb-3">
-                        <label for="paciente_id" class="form-label">ID del Paciente</label>
+                        <label for="paciente_id" class="form-label">Paciente</label>
                         <input type="text" class="form-control" list="pacienteOptions" id="paciente_id" name="paciente_id" placeholder="Escribe aquí para buscar...">
                         <datalist id="pacienteOptions">
                             <?php foreach ($pacientes as $paciente) : ?>
@@ -20,25 +19,23 @@
                     </div>
                     <div class="mb-3">
                         <label for="especialidad_id" class="form-label">Especialidad</label>
-                        <input class="form-control" list="especialidadOptions" id="especialidad_id" name="especialidad_id" placeholder="Escribe aquí para buscar...">
-                        <datalist id="especialidadOptions">
+                        <select class="form-select" name="especialidad_id" id="especialidad_id" required>
+                            <option value="" hidden selected>Selecciona una especialidad</option>
                             <?php foreach ($especialidades as $especialidad) : ?>
                                 <option value="<?php echo $especialidad['especialidad_id']; ?>"><?php echo $especialidad['especialidad_id'] . ' - ' . $especialidad['descripcion']; ?></option>
                             <?php endforeach; ?>
-                        </datalist>
+                        </select>
                     </div>
                     <div class="mb-3">
-                        <label for="fisioterapeuta_id" class="form-label">ID del Fisioterapeuta</label>
-                        <input class="form-control" list="fisioterapeutaOptions" id="fisioterapeuta_id" name="fisioterapeuta_id" placeholder="Escribe aquí para buscar...">
-                        <datalist id="fisioterapeutaOptions"></datalist>
+                        <label for="fisioterapeuta_id" class="form-label">Fisioterapeuta</label>
+                        <select class="form-select" name="fisioterapeuta_id" id="fisioterapeuta_id" required>
+                            <option value="" hidden selected>Selecciona un fisioterapeuta</option>
+                            <!-- Esta opción será reemplazada por JavaScript -->
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="fecha_hora" class="form-label">Fecha y Hora</label>
                         <input type="datetime-local" class="form-control" id="fecha_hora" name="fecha_hora" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="duracion_minutos" class="form-label">Duración (minutos)</label>
-                        <input type="number" class="form-control" id="duracion_minutos" name="duracion_minutos" required>
                     </div>
                     <div class="mb-3">
                         <label for="estado" class="form-label">Estado</label>
@@ -58,24 +55,3 @@
     </div>
 </div>
 
-<?php
-// Procesar la selección de especialidad y actualizar la lista de fisioterapeutas
-if (isset($_POST['especialidad_id'])) {
-    $especialidad_seleccionada = $_POST['especialidad_id'];
-
-    // Filtrar la lista de fisioterapeutas por la especialidad seleccionada
-    $fisioterapeutas_filtrados = array_filter($fisioterapeutas, function($fisioterapeuta) use ($especialidad_seleccionada) {
-        return $fisioterapeuta['especialidad_id'] == $especialidad_seleccionada;
-    });
-
-    // Crear opciones para el select de fisioterapeutas
-    $options = '';
-    foreach ($fisioterapeutas_filtrados as $fisioterapeuta) {
-        $options .= '<option value="' . $fisioterapeuta['usuario_id'] . '">' . $fisioterapeuta['nombre'] . ' ' . $fisioterapeuta['apellidos'] . '</option>';
-    }
-
-    // Imprimir las opciones actualizadas de fisioterapeutas
-    echo $options;
-    exit; // Detener la ejecución del resto de la página
-}
-?>

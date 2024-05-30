@@ -3,7 +3,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="agregarCitaModalLabel">Agregar Nueva Cita</h5>
+                <h5 class="modal-title" id="agregarCitaModalLabel">Editar Cita</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="../scripts/appoinmtment_manager.php" method="post" id="agregarCitaForm">
@@ -41,10 +41,6 @@
                         <input type="datetime-local" class="form-control" id="fecha_hora" name="fecha_hora" required>
                     </div>
                     <div class="mb-3">
-                        <label for="duracion_minutos" class="form-label">Duración (minutos)</label>
-                        <input type="number" class="form-control" id="duracion_minutos" name="duracion_minutos" required>
-                    </div>
-                    <div class="mb-3">
                         <label for="estado" class="form-label">Estado</label>
                         <select class="form-select" id="estado" name="estado" value="<?php echo $fisioterapeuta['usuario_id']; ?>">
                             <option value="Programada">Programada</option>
@@ -62,8 +58,6 @@
     </div>
 </div>
 
-
-
 <!-- Modal confirmar cita -->
 <div class="modal fade" id="confirm_<?php echo $cita['cita_id']; ?>" tabindex="-1">
     <div class="modal-dialog">
@@ -73,15 +67,48 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>¿Deseas confirmar esta cita de <?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?>?</p>
-            </div>
-            <div class="modal-footer">
-                <form action="../scripts/appointment_manager.php" method="post">
-                    <input type="hidden" id="action" name="action" value="confirmar">
-                    <input type="hidden" id="cita_id" name="cita_id" value=" <?php echo $cita['cita_id']?>">
-                    <button type="submit" class="btn btn-success" id="btnCompletar">Confirmar cita</button>
+                <form action="../scripts/appointment_manager.php" method="post" id="formCitas">
+                    <p>¿Deseas confirmar esta cita de <?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?>?</p>
+                    <input type="hidden" id="actionCitas" name="action" value="confirmar">
+                    <input type="hidden" id="cita_id" name="cita_id" value="<?php echo $cita['cita_id'] ?>">
+                </form>
+                <form action="../scripts/medicalhistory_manager.php" method="post" id="formHistorialMedico">
+                    <div class="card">
+                        <div class="card-header">
+                            Generar Historial Médico
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="diagnostico" class="form-label">Diagnóstico</label>
+                                <textarea class="form-control" name="diagnostico" id="diagnostico" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tratamiento" class="form-label">Tratamiento</label>
+                                <textarea class="form-control" name="tratamiento" id="tratamiento" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="notas" class="form-label">Notas Adicionales</label>
+                                <textarea class="form-control" name="notas" id="notas" rows="3" required></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
+            <div class="modal-footer">
+                <button id="submitForms" class="btn btn-success">Confirmar cita</button>
+            </div>
+            <script>
+                document.getElementById("submitForms").addEventListener("click", function() {
+                    document.getElementById("formHistorialMedico").submit(); // Envía el formulario de historial médico primero
+                });
+                
+                // Agregar un listener para el evento 'submit' en el formulario de historial médico
+                document.getElementById("formHistorialMedico").addEventListener("submit", function() {
+                    // Agregar el código aquí para manejar la respuesta después de enviar el formulario de historial médico
+                    // Por ejemplo, si la respuesta indica que el historial médico se creó con éxito, entonces enviar el formulario de citas
+                    document.getElementById("formCitas").submit(); // Envía el formulario de citas después de crear el historial médico
+                });
+            </script>
         </div>
     </div>
 </div>
@@ -100,7 +127,7 @@
             <div class="modal-footer">
                 <form action="../scripts/appointment_manager.php" method="post">
                     <input type="hidden" id="action" name="action" value="eliminar">
-                    <input type="hidden" id="cita_id" name="cita_id" value=" <?php echo $cita['cita_id']?>">
+                    <input type="hidden" id="cita_id" name="cita_id" value=" <?php echo $cita['cita_id'] ?>">
                     <button type="submit" class="btn btn-danger" id="btnEliminar">Eliminar cita</button>
                 </form>
             </div>

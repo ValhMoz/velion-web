@@ -37,10 +37,6 @@
                         <input type="datetime-local" class="form-control" id="fecha_hora" name="fecha_hora" required>
                     </div>
                     <div class="mb-3">
-                        <label for="duracion_minutos" class="form-label">Duración (minutos)</label>
-                        <input type="number" class="form-control" id="duracion_minutos" name="duracion_minutos" required>
-                    </div>
-                    <div class="mb-3">
                         <label for="estado" class="form-label">Estado</label>
                         <select class="form-select" id="estado" name="estado" required>
                             <option value="Programada">Programada</option>

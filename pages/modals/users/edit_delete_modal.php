@@ -57,7 +57,7 @@
                         </div>
 
                         <!-- Especialidad (visible solo si el rol es Fisioterapeuta) -->
-                        <div class="mb-3" id="especialidad-container" <?php echo ($usuario['rol'] === 'Fisioterapeuta') ? 'style="display: block;"' : 'style="display: none;"'; ?>>
+                        <div class="mb-3" id="especialidad-container" <?php echo ($usuario['rol'] === 'Fisioterapeuta' || $usuario['rol'] === 'Administrador' ) ? 'style="display: block;"' : 'style="display: none;"'; ?>>
                             <label for="especialidad" class="form-label">Especialidad</label>
                             <input class="form-control" list="datalistOptions" id="exampleDataList" value="<?php echo $usuario['especialidad']; ?>" placeholder="Escribe aquí para buscar...">
                             <datalist id="datalistOptions">
@@ -65,6 +65,12 @@
                                     <option value="<?php echo $especialidad['especialidad_id']; ?>"><?php echo $especialidad['especialidad_id'] . ' - '. $especialidad['descripcion']; ?></option>
                                 <?php endforeach; ?>
                             </datalist>
+                        </div>
+
+                        <!-- Sesiones disponibles -->
+                        <div class="mb-3" id="sesiones-container" <?php echo ($usuario['rol'] === 'Paciente') ? 'style="display: block;"' : 'style="display: none;"'; ?>>
+                            <label for="lastname" class="form-label">Sesiones disponibles</label>
+                            <input type="text" value="<?php echo $usuario['sesiones_disponibles']; ?>" class="form-control" id="sesiones_disponibles" name="sesiones_disponibles" required>
                         </div>
 
                         <!-- Telefono, Dirección -->
@@ -113,41 +119,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    // Llamar a la función mostrarEspecialidad cuando se cargue el modal
-    document.addEventListener('DOMContentLoaded', mostrarEspecialidad);
-
-    // Llamar a la función mostrarEspecialidad cuando cambie el valor del rol
-    document.addEventListener('DOMContentLoaded', function () {
-        mostrarEspecialidad(document.getElementById('rol'));
-    });
-
-    // Función para mostrar u ocultar la especialidad según el rol seleccionado
-    function mostrarEspecialidad() {
-        var rol = document.getElementById('rol').value;
-        var especialidadContainer = document.getElementById('especialidad-container');
-        if (rol === 'Fisioterapeuta') {
-            especialidadContainer.style.display = 'block';
-        } else {
-            especialidadContainer.style.display = 'none';
-        }
-    }
-
-    function mostrarEspecialidad(select) {
-        var especialidadContainer = document.getElementById('especialidad-container');
-        if (select.value === 'Fisioterapeuta') {
-            especialidadContainer.style.display = 'block';
-            document.getElementById('especialidad').setAttribute('required', 'required');
-        } else {
-            especialidadContainer.style.display = 'none';
-            document.getElementById('especialidad').removeAttribute('required');
-        }
-    }
-
-
-</script>
-
 
 <!-- Modal eliminar usuario -->
 <div class="modal fade" id="delete_<?php echo $usuario['usuario_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
