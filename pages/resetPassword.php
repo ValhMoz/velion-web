@@ -55,13 +55,13 @@
     <div class="reset-container">
         <h2 class="text-center">Reinicio de Contraseña</h2>
 
-        <form action="../scripts/resetPassword_manager.php" method="post">
+        <form action="../scripts/login_manager.php" method="post">
             <input type="hidden" name="action" value="resetear_contraseña">
             <input type="hidden" name="token" value="<?php echo $_GET['token']; ?>">
 
             <div class="mb-3">
                 <label for="password" class="form-label">Nueva Contraseña</label>
-                <input type="password" class="form-control" id="password" name="password" minlength="8" required>
+                <input type="password" class="form-control" id="pass" name="pass" minlength="8" required>
             </div>
 
             <div class="mb-3">

@@ -1,6 +1,6 @@
 <?php
 require_once '../models/UserModel.php';
-require '../assets/fpdf186/fpdf.php';
+require_once '../assets/fpdf186/fpdf.php';
 
 class UserController
 {
@@ -9,6 +9,11 @@ class UserController
     public function __construct()
     {
         $this->usuarioModel = new UserModel();
+    }
+    
+    public function obtenerUltimosUsuarios() {
+        return  $this->usuarioModel->obtenerUltimosUsuarios();
+
     }
 
     public function obtenerUsuariosPaginados($iniciar, $articulos_x_pagina)
@@ -89,7 +94,7 @@ class UserController
         }
     }
 
-    public function exportarDatos()
+    public function exportarDatosAPdf()
     {
         // Instanciar un nuevo objeto FPDF
         $pdf = new FPDF('L', 'mm', 'A4'); // Orientación horizontal, unidad de medida en mm, tamaño de página A4

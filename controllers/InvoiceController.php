@@ -99,10 +99,10 @@ class InvoiceController extends PDF_Invoice
             $pdf->AddPage();
             $pdf->addSociete(
                 iconv('UTF-8', 'windows-1252', 'Clínica Fisioterapia'),
-                "CIF: X-12345678\n".
-                "Av. Prueba, 17\n" .
-                iconv('UTF-8', 'windows-1252', "Córdoba, Córdoba, 14001\n").
-                iconv('UTF-8', 'windows-1252', "Tel.: 957 000 000 • 600 000 000")
+                "CIF: X-12345678\n" .
+                    "Av. Prueba, 17\n" .
+                    iconv('UTF-8', 'windows-1252', "Córdoba, Córdoba, 14001\n") .
+                    iconv('UTF-8', 'windows-1252', "Tel.: 957 000 000 • 600 000 000")
             );
             $pdf->fact_dev("Factura:", $factura_id);
             // $pdf->temporaire("Devis temporaire");
@@ -137,8 +137,8 @@ class InvoiceController extends PDF_Invoice
                 "REF"    => "REF1",
                 iconv('UTF-8', 'windows-1252', "DESCRIPCIÓN")  => $factura[0]['producto_nombre'],
                 "CANTIDAD"     => "1",
-                "PRECIO UNITARIO"      => $factura[0]['monto']. EURO,
-                "PRECIO TOTAL" => $factura[0]['monto']. EURO,
+                "PRECIO UNITARIO"      => $factura[0]['monto'] . EURO,
+                "PRECIO TOTAL" => $factura[0]['monto'] . EURO,
             );
             $size = $pdf->addLine($y, $line);
             // $y   += $size + 2;
@@ -207,6 +207,49 @@ class InvoiceController extends PDF_Invoice
 
     public function guardarFactura($datos)
     {
+        // Insertar la factura en la base de datos
         $this->invoiceModel->insert("facturas", $datos);
+
+        // // Obtener el ID de la factura recién insertada
+        // $factura_id = $this->invoiceModel->lastInsertId();
+
+        // // Obtener información sobre la factura recién insertada
+        // $factura = $this->invoiceModel->obtenerDatosFactura($factura_id);
+
+        // // Obtener el producto comprado en la factura
+        // $producto_id = $factura['producto'];
+
+        // // Obtener información sobre el producto comprado
+        // $producto = $this->invoiceModel->getProductoPorId($producto_id);
+
+        // // Obtener el tipo de bono del producto comprado
+        // $tipo_bono = $producto['nombre'];
+
+        // // Actualizar las sesiones disponibles del usuario según el tipo de bono
+        // $this->actualizarSesionesDisponibles($datos['paciente_id'], $tipo_bono);
     }
+
+    // public function actualizarSesionesDisponibles($paciente_id, $tipo_bono)
+    // {
+    //     // Obtener el número de sesiones adicionales según el tipo de bono
+    //     $sesiones_adicionales = 0;
+    //     switch ($tipo_bono) {
+    //         case 'Bono de 10 sesiones':
+    //             $sesiones_adicionales = 10;
+    //             break;
+    //         case 'Bono de 15 sesiones':
+    //             $sesiones_adicionales = 15;
+    //             break;
+    //         case 'Bono de 20 sesiones':
+    //             $sesiones_adicionales = 20;
+    //             break;
+    //         case 'Bono de 30 sesiones':
+    //             $sesiones_adicionales = 30;
+    //             break;
+    //             // Agrega más casos según sea necesario para otros tipos de bono
+    //     }
+
+    //     // Actualizar las sesiones disponibles del usuario en la base de datos
+    //     $this->invoiceModel->actualizarSesionesDisponibles($paciente_id, $sesiones_adicionales);
+    // }
 }

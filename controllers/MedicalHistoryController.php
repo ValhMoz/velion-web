@@ -125,11 +125,29 @@ class MedicalHistoryController extends FPDF
         return $citas;
     }
 
-    public function obtenerInforme($DNI){
+    public function obtenerInforme($DNI)
+    {
         return $this->medicalhistoryModel->obtenerInforme($DNI);
     }
 
-    public function obtenerListaPacientes() {
+    public function obtenerListaPacientes()
+    {
         return $this->medicalhistoryModel->read('usuarios', 'rol = \'paciente\'');
+    }
+
+    public function agregarHistorialMedico($datos)
+    {
+        return $this->medicalhistoryModel->insert('historial_medico', $datos);
+    }
+
+    public function obtenerIdUltimoHistorial()
+    {
+        return $this->medicalhistoryModel->obtenerUltimaId();
+    }
+    
+    public function enlazarHistorialCita($cita_id, $historial_id)
+    {
+        // Lógica para enlazar el historial médico con la cita
+        // Esto podría ser una actualización en la base de datos, asociando la cita_id con el historial_id.
     }
 }

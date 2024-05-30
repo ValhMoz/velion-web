@@ -1,6 +1,6 @@
 <?php
 
-require 'BaseModel.php';
+require_once 'BaseModel.php';
 
 class MedicalHistoryModel extends BaseModel
 {
@@ -9,100 +9,46 @@ class MedicalHistoryModel extends BaseModel
         parent::__construct(); // Llama al constructor de la clase padre (BaseModel)
     }
 
-    public function obtenerInformes()
-    {
-        $sql = "SELECT 
-        hm.historial_id AS historial_id,
-        hm.fecha AS fecha,
-        hm.descripcion AS descripcion,
-        hm.diagnostico AS diagnostico,
-        hm.tratamiento AS tratamiento,
-        hm.notas AS notas,
-        u_paciente.usuario_id AS paciente_id,
-        u_paciente.nombre AS nombre_paciente,
-        u_paciente.apellidos AS apellidos_paciente,
-        u_paciente.fecha_nacimiento AS fecha_nacimiento_paciente,
-        u_paciente.genero AS genero_paciente,
-        u_paciente.telefono AS telefono_paciente,
-        u_paciente.email AS email_paciente,
-        u_paciente.direccion AS direccion_paciente,
-        u_paciente.provincia AS provincia_paciente,
-        u_paciente.municipio AS municipio_paciente,
-        u_paciente.cp AS cp_paciente,
-        u_fisioterapeuta.nombre AS nombre_fisioterapeuta,
-        u_fisioterapeuta.apellidos AS apellidos_fisioterapeuta
-        -- u_fisioterapeuta.fecha_nacimiento AS fecha_nacimiento_fisioterapeuta,
-        -- u_fisioterapeuta.genero AS genero_fisioterapeuta,
-        -- u_fisioterapeuta.telefono AS telefono_fisioterapeuta,
-        -- u_fisioterapeuta.email AS email_fisioterapeuta,
-        -- u_fisioterapeuta.direccion AS direccion_fisioterapeuta,
-        -- u_fisioterapeuta.provincia AS provincia_fisioterapeuta,
-        -- u_fisioterapeuta.municipio AS municipio_fisioterapeuta,
-        -- u_fisioterapeuta.cp AS cp_fisioterapeuta
-        FROM 
-            historial_medico hm
-        INNER JOIN 
-            usuarios u_paciente ON hm.paciente_id = u_paciente.usuario_id
-        INNER JOIN 
-            usuarios u_fisioterapeuta ON hm.fisioterapeuta_id = u_fisioterapeuta.usuario_id;
-        ";
-
-        // Ejecutar la consulta
-        $resultado =  self::$conexion->query($sql);
-
-        // Manejo de errores
-        if (!$resultado) {
-            die("Error al ejecutar la consulta: " . self::$conexion->error);
-        }
-
-        // Procesa el resultado
-        $datos = array();
-        while ($fila = $resultado->fetch_assoc()) {
-            $datos[] = $fila;
-        }
-        return $datos;
-    }
-
     public function obtenerInforme($DNI)
     {
         $DNI = self::$conexion->real_escape_string($DNI);
 
         $sql = "SELECT 
-        hm.historial_id AS historial_id,
-        hm.fecha AS fecha,
-        hm.descripcion AS descripcion,
-        hm.diagnostico AS diagnostico,
-        hm.tratamiento AS tratamiento,
-        hm.notas AS notas,
-        u_paciente.usuario_id AS paciente_id,
-        u_paciente.nombre AS nombre_paciente,
-        u_paciente.apellidos AS apellidos_paciente,
-        u_paciente.fecha_nacimiento AS fecha_nacimiento_paciente,
-        u_paciente.genero AS genero_paciente,
-        -- u_paciente.telefono AS telefono_paciente,
-        -- u_paciente.email AS email_paciente,
-        u_paciente.direccion AS direccion_paciente,
-        u_paciente.provincia AS provincia_paciente,
-        u_paciente.municipio AS municipio_paciente,
-        u_paciente.cp AS cp_paciente,
-        u_fisioterapeuta.nombre AS nombre_fisioterapeuta,
-        u_fisioterapeuta.apellidos AS apellidos_fisioterapeuta
-        -- u_fisioterapeuta.fecha_nacimiento AS fecha_nacimiento_fisioterapeuta,
-        -- u_fisioterapeuta.genero AS genero_fisioterapeuta,
-        -- u_fisioterapeuta.telefono AS telefono_fisioterapeuta,
-        -- u_fisioterapeuta.email AS email_fisioterapeuta,
-        -- u_fisioterapeuta.direccion AS direccion_fisioterapeuta,
-        -- u_fisioterapeuta.provincia AS provincia_fisioterapeuta,
-        -- u_fisioterapeuta.municipio AS municipio_fisioterapeuta,
-        -- u_fisioterapeuta.cp AS cp_fisioterapeuta
+        c.cita_id,
+        c.fecha_hora,
+        c.estado AS estado_cita,
+        e.descripcion AS especialidad,
+        p.usuario_id AS paciente_id,
+        p.nombre AS paciente_nombre,
+        p.apellidos AS paciente_apellidos,
+        p.telefono AS paciente_telefono,
+        p.fecha_nacimiento AS paciente_fecha_nacimiento,
+        p.direccion AS paciente_direccion,
+        p.provincia AS paciente_provincia,
+        p.municipio AS paciente_municipio,
+        p.cp AS paciente_cp,
+        p.email AS paciente_email,
+        p.genero as paciente_genero,
+        hmed.historial_id,
+        hmed.fecha AS historial_fecha,
+        hmed.descripcion AS historial_descripcion,
+        hmed.diagnostico AS historial_diagnostico,
+        hmed.tratamiento AS historial_tratamiento,
+        hmed.notas AS historial_notas
         FROM 
-            historial_medico hm
-        INNER JOIN 
-            usuarios u_paciente ON hm.paciente_id = u_paciente.usuario_id
-        INNER JOIN 
-            usuarios u_fisioterapeuta ON hm.fisioterapeuta_id = u_fisioterapeuta.usuario_id
+            citas c
+        JOIN 
+            usuarios p ON c.paciente_id = p.usuario_id
+        LEFT JOIN 
+            historial_medico hmed ON c.historial_id = hmed.historial_id
+        LEFT JOIN 
+            especialidades e ON c.especialidad_id = e.especialidad_id
         WHERE 
-            u_paciente.usuario_id = '$DNI'";
+            p.usuario_id = '$DNI'
+        AND
+            c.estado = 'Realizada'
+        ORDER BY 
+        c.fecha_hora DESC";
 
         // Ejecutar la consulta
         $resultado =  self::$conexion->query($sql);
@@ -119,6 +65,12 @@ class MedicalHistoryModel extends BaseModel
         }
         return $datos;
     }
-}
 
-?>
+    public function obtenerUltimaId()
+    {
+        $sql = "SELECT MAX(historial_id) AS last_id FROM historial_medico";
+        $result = self::$conexion->query($sql);
+        $row = $result->fetch_assoc();
+        return $row['last_id'];
+    }
+}

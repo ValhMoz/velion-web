@@ -66,8 +66,8 @@ class ProductController {
         $pdf->SetFont('Arial', '', 8);
         foreach ($productos as $producto) {
             $pdf->Cell(27, 10, $producto['producto_id'], 1, 0, 'C');
-            $pdf->Cell(118, 10, iconv('UTF-8', 'windows-1252', $producto['nombre']), 1, 0, 'L');
-            $pdf->Cell(45, 10, $producto['monto'], 1, 0, 'C');
+            $pdf->Cell(118, 10, iconv('UTF-8', 'windows-1252', $producto['nombre']. '€'), 1, 0, 'L');
+            $pdf->Cell(45, 10, iconv('UTF-8', 'windows-1252', $producto['monto']. '€'), 1, 0, 'C');
             $pdf->Ln(); // Salto de línea para la siguiente fila
         }
 

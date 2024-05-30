@@ -43,6 +43,7 @@ if ($_GET['pagina'] > $n_botones_paginacion) {
 
 $pacientes = $appointmentController->obtenerListaPacientes();
 $fisioterapeutas = $appointmentController->obtenerListaFisioterapeutas();
+//echo(json_encode($fisioterapeutas));
 $especialidades = $appointmentController->obtenerEspecialidades();
 
 include_once './includes/dashboard.php';
@@ -158,16 +159,20 @@ if (isset($_SESSION['alert'])) {
                                             <path d="M9.979 5.356a.5.5 0 0 0-.968.04L7.92 10.49l-.94-3.135a.5.5 0 0 0-.926-.08L4.69 10H4.5a.5.5 0 0 0 0 1H5a.5.5 0 0 0 .447-.276l.936-1.873 1.138 3.793a.5.5 0 0 0 .968-.04L9.58 7.51l.94 3.135A.5.5 0 0 0 11 11h.5a.5.5 0 0 0 0-1h-.128z" />
                                         </svg>
                                     </a>
-                                    <button class="btn btn-sm btn-success" <?php if ($cita['estado'] == 'Realizada') {
+                                    <button class="btn btn-sm btn-success" <?php if ($cita['estado'] == 'Realizada' || $cita['estado'] == 'Cancelada') {
                                                                                 echo 'disabled';
                                                                             } ?> data-bs-toggle="modal" data-bs-target="#confirm_<?php echo $cita['cita_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
                                             <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
                                         </svg></button>
-                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#edit_<?php echo $cita['cita_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <button class="btn btn-sm btn-warning" <?php if ($cita['estado'] == 'Realizada' || $cita['estado'] == 'Cancelada') {
+                                                                                echo 'disabled';
+                                                                            } ?>data-bs-toggle="modal" data-bs-target="#edit_<?php echo $cita['cita_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                                         </svg></button>
-                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete_<?php echo $cita['cita_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <button class="btn btn-sm btn-danger" <?php if ($cita['estado'] == 'Realizada' || $cita['estado'] == 'Cancelada') {
+                                                                                echo 'disabled';
+                                                                            } ?> data-bs-toggle="modal" data-bs-target="#delete_<?php echo $cita['cita_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
                                             <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
                                         </svg></button>
@@ -202,6 +207,46 @@ if (isset($_SESSION['alert'])) {
         </li>
     </ul>
 </nav>
+
+<!-- <script>
+    console.log("Script cargado correctamente");
+
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("DOMContentLoaded capturado");
+
+        var especialidadSelect = document.getElementById("especialidad_id");
+        var fisioterapeutaSelect = document.getElementById("fisioterapeuta_id");
+        var fisioterapeutas = <?php echo json_encode($fisioterapeutas); ?>;
+        console.log("Fisioterapeutas:", fisioterapeutas);
+
+        especialidadSelect.addEventListener("change", function() {
+            console.log("Cambio en especialidad capturado");
+            var especialidadId = especialidadSelect.value;
+            console.log("Especialidad seleccionada:", especialidadId);
+
+            fisioterapeutaSelect.innerHTML = ""; // Limpiar opciones anteriores
+            var filteredFisioterapeutas = fisioterapeutas.filter(function(fisioterapeuta) {
+                return fisioterapeuta.especialidad_id == especialidadId;
+            });
+            console.log("Fisioterapeutas filtrados:", filteredFisioterapeutas);
+
+            filteredFisioterapeutas.forEach(function(fisioterapeuta) {
+                var option = document.createElement("option");
+                option.value = fisioterapeuta.usuario_id;
+                option.textContent = fisioterapeuta.nombre + " " + fisioterapeuta.apellidos;
+                fisioterapeutaSelect.appendChild(option);
+            });
+        });
+
+        fisioterapeutaSelect.addEventListener("change", function() {
+            console.log("Cambio en fisioterapeuta capturado");
+            var fisioterapeutaId = fisioterapeutaSelect.value;
+            console.log("Fisioterapeuta seleccionado:", fisioterapeutaId);
+
+            especialidadSelect.selectedIndex = 0; // Reiniciar selector de especialidades
+        });
+    });
+</script> -->
 
 </main>
 

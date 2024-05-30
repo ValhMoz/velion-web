@@ -20,7 +20,7 @@
                     <div class="mb-3">
                         <label for="producto" class="form-label">Producto</label>
                         <select class="form-select" id="producto" name="producto" required>
-                            <option value="" disabled selected>Selecciona un producto</option>
+                            <option value="" hidden selected>Selecciona un producto</option>
                             <?php foreach ($productos as $producto) : ?>
                                 <option value="<?php echo $producto['producto_id']; ?>"><?php echo $producto['nombre']; ?></option>
                             <?php endforeach; ?>

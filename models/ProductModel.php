@@ -1,5 +1,5 @@
 <?php
-require 'BaseModel.php';
+require_once 'BaseModel.php';
 
 class ProductModel extends BaseModel{
 
@@ -8,8 +8,9 @@ class ProductModel extends BaseModel{
     }
 
     public function getProductsPaginated($inicio, $articulosPorPagina) {
-        $query = "SELECT p.producto_id, p.nombre, p.descripcion, p.monto, p.fecha
-        FROM productos p
+        $query = "SELECT p.producto_id, p.nombre, p.descripcion, p.monto, c.nombre AS categoria 
+        FROM productos p 
+        JOIN categorias c ON p.categoria_id = c.categoria_id 
         LIMIT ?, ?
         ";
         $stmt = self::$conexion->prepare($query);

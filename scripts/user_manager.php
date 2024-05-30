@@ -60,13 +60,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
             $userController->actualizarDatos($datos, $condicion);
             break;
 
-        case 'exportar':
-            $userController->exportarDatos();
+        case 'pdf':
+            $userController->exportarDatosAPdf();
             break;
     }
 
-    // if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    //     $userController->exportarDatos();
-    //     exit();
-    // }
 }

@@ -68,6 +68,12 @@
                             </datalist>
                         </div>
 
+                        <!-- Sesiones disponibles -->
+                        <div class="mb-3" id="sesiones-container" style="display: none;">
+                            <label for="lastname" class="form-label">Sesiones disponibles</label>
+                            <input type="text" class="form-control" id="sesiones_disponibles" name="sesiones_disponibles" required>
+                        </div>
+
                         <!-- Telefono, Dirección -->
                         <div class="row mb-3">
                             <div class="col-md-6">

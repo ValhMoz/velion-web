@@ -57,7 +57,7 @@
                         </div>
 
                         <!-- Especialidad (visible solo si el rol es Fisioterapeuta) -->
-                        <div class="mb-3" id="especialidad-container" <?php echo ($usuario['rol'] === 'Fisioterapeuta') ? 'style="display: block;"' : 'style="display: none;"'; ?>>
+                        <div class="mb-3" id="especialidad-container" <?php echo ($usuario['rol'] === 'Fisioterapeuta' || $usuario['rol'] === 'Administrador' ) ? 'style="display: block;"' : 'style="display: none;"'; ?>>
                             <label for="especialidad" class="form-label">Especialidad</label>
                             <input class="form-control" list="datalistOptions" id="exampleDataList" value="<?php echo $usuario['especialidad']; ?>" placeholder="Escribe aquí para buscar...">
                             <datalist id="datalistOptions">
@@ -65,6 +65,12 @@
                                     <option value="<?php echo $especialidad['especialidad_id']; ?>"><?php echo $especialidad['especialidad_id'] . ' - '. $especialidad['descripcion']; ?></option>
                                 <?php endforeach; ?>
                             </datalist>
+                        </div>
+
+                        <!-- Sesiones disponibles -->
+                        <div class="mb-3" id="sesiones-container" <?php echo ($usuario['rol'] === 'Paciente') ? 'style="display: block;"' : 'style="display: none;"'; ?>>
+                            <label for="lastname" class="form-label">Sesiones disponibles</label>
+                            <input type="text" value="<?php echo $usuario['sesiones_disponibles']; ?>" class="form-control" id="sesiones_disponibles" name="sesiones_disponibles" required>
                         </div>
 
                         <!-- Telefono, Dirección -->

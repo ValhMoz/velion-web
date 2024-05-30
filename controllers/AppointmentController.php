@@ -1,6 +1,11 @@
 <?php
 
 require_once '../models/AppointmentModel.php';
+require_once '../vendor/autoload.php'; // Asegúrate de que la ruta sea correcta para tu configuración
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 
 class AppointmentController
 {
@@ -11,32 +16,94 @@ class AppointmentController
         $this->appointmentModel = new AppointmentModel();
     }
 
-    public function obtenerCitasPaginadas($iniciar, $articulos_x_pagina){
+    public function verificarYEjecutar() {
+        $ultimaEjecucion = $this->appointmentModel->obtenerUltimaEjecucion();
+        $hoy = date('Y-m-d');
+
+        if ($ultimaEjecucion !== $hoy) {
+            $this->enviarRecordatorios();
+            $this->appointmentModel->actualizarUltimaEjecucion($hoy);
+        }
+    }
+
+    public function enviarRecordatorios()
+    {
+        $citasProximas = $this->appointmentModel->obtenerCitasProximas();
+        $mail = new PHPMailer(true);
+
+        try {
+            // Configuración del servidor de correo
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'sergiofrubio@gmail.com';
+            $mail->Password = 'wcgs pxws wttd aeco';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+
+            // Configuración del remitente
+            $mail->setFrom('tuemail@tuservidor.com', 'Nombre del Remitente');
+
+            foreach ($citasProximas as $cita) {
+                // Configuración del destinatario
+                $mail->addAddress($cita['paciente_email'], $cita['paciente_nombre'] . ' ' . $cita['paciente_apellidos']);
+
+                // Contenido del correo
+                $mail->isHTML(true);
+                $mail->Subject = 'Recordatorio de Cita';
+                $mail->Body = 'Estimado/a ' . $cita['paciente_nombre'] . ' ' . $cita['paciente_apellidos'] . ',<br><br>'
+                    . 'Le recordamos que tiene una cita programada con ' . $cita['fisioterapeuta_nombre'] . ' ' . $cita['fisioterapeuta_apellidos'] . ' el día ' . date('d-m-Y H:i', strtotime($cita['fecha_hora'])) . '.<br><br>'
+                    . 'Saludos,<br>'
+                    . 'Su Clínica';
+
+                $mail->send();
+                $mail->clearAddresses(); // Limpia los destinatarios para el próximo ciclo
+            }
+
+            echo "Los recordatorios de citas se han enviado correctamente.";
+        } catch (Exception $e) {
+            echo "No se pudieron enviar los recordatorios. Error: {$mail->ErrorInfo}";
+        }
+    }
+
+    public function obtenerCitasPaginadas($iniciar, $articulos_x_pagina)
+    {
         return $this->appointmentModel->obtenerCitasPaginadas($iniciar, $articulos_x_pagina);
     }
 
-    public function obtenerCitas(){
+    public function obtenerCitas()
+    {
         return $this->appointmentModel->read('citas');
     }
 
-    public function obtenerCitasUsuario($DNI, $iniciar, $articulos_x_pagina) {
-        return $this->appointmentModel->obtenerCitasUsuario($DNI, $iniciar, $articulos_x_pagina);
+    public function obtenerCitasUsuarioPaginadas($DNI, $iniciar, $articulos_x_pagina)
+    {
+        return $this->appointmentModel->obtenerCitasUsuarioPaginadas($DNI, $iniciar, $articulos_x_pagina);
     }
 
-    public function obtenerListaPacientes() {
-        return $this->appointmentModel->read('usuarios', 'rol = \'paciente\'');
+    public function obtenerCitasUsuario($DNI)
+    {
+        return $this->appointmentModel->obtenerCitasUsuario($DNI);
     }
 
-    public function obtenerListaFisioterapeutas() {
-        return $this->appointmentModel->read('usuarios', 'rol = \'fisioterapeuta\'');
+    public function obtenerListaPacientes()
+    {
+        return $this->appointmentModel->read('usuarios', 'rol = \'Paciente\'');
     }
-    
-    public function obtenerEspecialidades(){
+
+    public function obtenerListaFisioterapeutas()
+    {
+        return $this->appointmentModel->read('usuarios', 'rol = \'Fisioterapeuta\'');
+    }
+
+    public function obtenerEspecialidades()
+    {
         return $this->appointmentModel->read('especialidades');
     }
 
-    public function asignarCita($tabla, $datos){
-        if($this->appointmentModel->insert($tabla, $datos)){
+    public function asignarCita($tabla, $datos)
+    {
+        if ($this->appointmentModel->insert($tabla, $datos)) {
             $_SESSION['alert'] = array('type' => 'success', 'message' => 'Cita añadida correctamente.');
             header('Location: ../pages/appointments.php');
             exit();
@@ -45,11 +112,11 @@ class AppointmentController
             header('Location: ../pages/appointments.php');
             exit();
         }
-
     }
 
-    public function editarCita($tabla, $datos, $condicion){
-        if($this->appointmentModel->update($tabla, $datos, $condicion)){
+    public function editarCita($tabla, $datos, $condicion)
+    {
+        if ($this->appointmentModel->update($tabla, $datos, $condicion)) {
             $_SESSION['alert'] = array('type' => 'success', 'message' => 'Cita actualizada correctamente.');
             header('Location: ../pages/appointments.php');
             exit();
@@ -58,11 +125,11 @@ class AppointmentController
             header('Location: ../pages/appointments.php');
             exit();
         }
-
     }
 
-    public function eliminarCita($tabla, $condicion){
-        if($this->appointmentModel->delete($tabla, $condicion)){
+    public function eliminarCita($tabla, $condicion)
+    {
+        if ($this->appointmentModel->delete($tabla, $condicion)) {
             $_SESSION['alert'] = array('type' => 'success', 'message' => 'Cita eliminada correctamente.');
             header('Location: ../pages/appointments.php');
             exit();
@@ -73,8 +140,9 @@ class AppointmentController
         }
     }
 
-    public function confirmarCita($tabla, $datos, $condicion) {
-        if($this->appointmentModel->update($tabla, $datos, $condicion)){
+    public function confirmarCita($tabla, $datos, $condicion)
+    {
+        if ($this->appointmentModel->update($tabla, $datos, $condicion)) {
             $_SESSION['alert'] = array('type' => 'success', 'message' => 'Cita eliminada correctamente.');
             header('Location: ../pages/appointments.php');
             exit();
@@ -85,10 +153,11 @@ class AppointmentController
         }
     }
 
-    public function buscarCitas($filtro_usuario_id, $filtro_fecha_hora, $filtro_estado, $filtro_especialidad){
-        
+    public function buscarCitas($filtro_usuario_id, $filtro_fecha_hora, $filtro_estado, $filtro_especialidad)
+    {
+
         $citasFiltradas = $this->appointmentModel->buscarCitas($filtro_usuario_id, $filtro_fecha_hora, $filtro_estado, $filtro_especialidad);
-        if (!empty ($citasFiltradas)){
+        if (!empty($citasFiltradas)) {
             header('Location: ../pages/appointments.php');
             exit();
         } else {
@@ -98,10 +167,11 @@ class AppointmentController
         }
     }
 
-    public function buscarCitasPatients($filtro_usuario_id, $filtro_fecha_hora, $filtro_estado, $filtro_especialidad){
-        
+    public function buscarCitasPatients($filtro_usuario_id, $filtro_fecha_hora, $filtro_estado, $filtro_especialidad)
+    {
+
         $citasFiltradas = $this->appointmentModel->buscarCitas($filtro_usuario_id, $filtro_fecha_hora, $filtro_estado, $filtro_especialidad);
-        if (!empty ($citasFiltradas)){
+        if (!empty($citasFiltradas)) {
             header('Location: ../pages/appointments-patients.php');
             exit();
         } else {
@@ -112,5 +182,3 @@ class AppointmentController
     }
 
 }
-
-?>

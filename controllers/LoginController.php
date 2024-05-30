@@ -24,7 +24,17 @@ class LoginController {
             $this->redirectWithMessage("Usuario no encontrado.", 'warning');
         }
     }
-    
+
+    public function registrarNuevoUsuario($datos)
+    {
+        if ($this->loginModel->insert('usuarios', $datos)) {
+            // Dentro de la función añadirNuevoUsuario en UserController.php
+            $this->redirectWithMessage("Registrado correctamente.", 'success');
+        } else {
+            // Dentro de la función añadirNuevoUsuario en UserController.php
+            $this->redirectWithMessage("Ha ocurrido un error al registrarse.", 'warning');
+        }
+    }
 
     private function startSession($usuario) {
         session_start();
@@ -81,6 +91,36 @@ class LoginController {
         $conn->close();
     }
 
+    public function resetPassword($token, $password) {
+        $conn = $this->loginModel->getConnection();
+        $sql = "SELECT email, token FROM password_resets WHERE created_at >= (NOW() - INTERVAL 1 HOUR)";
+        $result = $conn->query($sql);
+        
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (password_verify($token, $row['token'])) {
+                    $email = $row['email'];
+                    $newPasswordHash = password_hash($password, PASSWORD_DEFAULT);
+                    $updateSql = "UPDATE usuarios SET pass = ? WHERE email = ?";
+                    $stmt = $conn->prepare($updateSql);
+                    $stmt->bind_param("ss", $newPasswordHash, $email);
+                    if ($stmt->execute()) {
+                        $this->deleteExistingTokens($conn, $email);
+                        $this->redirectWithMessage('Contraseña actualizada correctamente.', 'success');
+                    } else {
+                        $this->redirectWithMessage('Error al actualizar la contraseña.', 'warning');
+                    }
+                    $stmt->close();
+                    break;
+                }
+            }
+        } else {
+            $this->redirectWithMessage('Token inválido o expirado.', 'warning');
+        }
+        
+        $conn->close();
+    }
+
     private function deleteExistingTokens($conn, $email) {
         $sql = "DELETE FROM password_resets WHERE email = ?";
         $stmt = $conn->prepare($sql);
@@ -105,7 +145,7 @@ class LoginController {
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
             $mail->Username = 'sergiofrubio@gmail.com';
-            $mail->Password = 'wcgs pxws wttd aeco ';
+            $mail->Password = 'wcgs pxws wttd aeco';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
             $mail->setFrom('sergiofrubio@gmail.com', 'SIGEFI');

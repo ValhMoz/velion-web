@@ -1,15 +1,17 @@
 <?php
 require_once '../scripts/session_manager.php';
-require_once '../controllers/StartController.php';
-
-$startController = new StartController();
+require_once '../controllers/UserController.php';
+require_once '../controllers/AppointmentController.php';
 
 if ($rol == "Paciente") {
     header("Location: 404.php");
     exit();
 }
 
-$usuarios = $startController->obtenerUltimosUsuarios();
+$appointmentController = new AppointmentController();
+$userController = new UserController();
+$appointmentController->verificarYEjecutar();
+$usuarios = $userController->obtenerUltimosUsuarios();
 
 include_once './includes/dashboard.php';
 ?>
