@@ -84,11 +84,11 @@ if (isset($_SESSION['alert'])) {
 <!-- Filtrado -->
 <div class="table-responsive small">
     <form class="row g-3 mb-3" method="POST" action="">
-        <div class="col-md-3">
+        <div class="col-auto">
             <label for="producto_id" class="form-label">ID de Producto</label>
             <input type="text" class="form-control" id="producto_id" name="producto_id" value="<?php echo $filtro_producto_id; ?>">
         </div>
-        <div class="col-md-3">
+        <div class="col-auto">
             <label for="categoria" class="form-label">Categoría</label>
             <select class="form-select" id="categoria" name="categoria">
                 <option value="">Seleccione una categoría</option>

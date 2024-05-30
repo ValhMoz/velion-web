@@ -16,13 +16,13 @@ class InvoiceModel extends BaseModel
         facturas.factura_id,
         facturas.paciente_id,
         facturas.fecha_emision,
-        facturas.producto,
+        facturas.producto_id,
         facturas.estado,
         productos.monto AS monto
         FROM 
             facturas
         JOIN 
-            productos ON facturas.producto = productos.producto_id
+            productos ON facturas.producto_id = productos.producto_id
         LIMIT $iniciar, $articulos_x_pagina";
 
         // Ejecutar la consulta
@@ -46,7 +46,7 @@ class InvoiceModel extends BaseModel
         $sql = "SELECT f.factura_id, f.paciente_id, f.fecha_emision, f.estado, 
                    p.nombre AS producto_nombre, p.descripcion AS producto_descripcion, p.monto 
             FROM `facturas` f
-            JOIN `productos` p ON f.producto = p.producto_id
+            JOIN `productos` p ON f.producto_id = p.producto_id
             WHERE f.paciente_id = ?";
         $stmt = self::$conexion->prepare($sql);
         $stmt->bind_param("s", $usuario_id);
@@ -62,7 +62,7 @@ class InvoiceModel extends BaseModel
         $sql = "SELECT f.factura_id, f.paciente_id, f.fecha_emision, f.estado, 
                    p.nombre AS producto_nombre, p.descripcion AS producto_descripcion, p.monto 
             FROM `facturas` f
-            JOIN `productos` p ON f.producto = p.producto_id
+            JOIN `productos` p ON f.producto_id = p.producto_id
             WHERE f.estado = ?";
         $stmt = self::$conexion->prepare($sql);
         $stmt->bind_param("s", $estado);
@@ -78,7 +78,7 @@ class InvoiceModel extends BaseModel
         $sql = "SELECT f.factura_id, f.paciente_id, f.fecha_emision, f.estado, 
                    p.nombre AS producto_nombre, p.descripcion AS producto_descripcion, p.monto 
             FROM `facturas` f
-            JOIN `productos` p ON f.producto = p.producto_id
+            JOIN `productos` p ON f.producto_id = p.producto_id
             WHERE f.paciente_id = ? AND f.estado = ?";
         $stmt = self::$conexion->prepare($sql);
         $stmt->bind_param("ss", $usuario_id, $estado);
@@ -92,7 +92,7 @@ class InvoiceModel extends BaseModel
 
     public function obtenerDatosFactura($factura_id)
 {
-    // Query para obtener los datos de una factura, junto con los detalles del producto y del usuario (paciente)
+    // Query para obtener los datos de una factura, junto con los detalles del producto_id y del usuario (paciente)
     $sql = "SELECT 
                 f.factura_id, 
                 f.paciente_id, 
@@ -110,7 +110,7 @@ class InvoiceModel extends BaseModel
                 u.cp as paciente_cp,
                 u.email AS paciente_email
             FROM facturas f
-            JOIN productos p ON f.producto = p.producto_id
+            JOIN productos p ON f.producto_id = p.producto_id
             JOIN usuarios u ON f.paciente_id = u.usuario_id
             WHERE f.factura_id = ?";
     
@@ -152,11 +152,11 @@ class InvoiceModel extends BaseModel
 
     public function obtenerFacturasUsuarioPaginadas($DNI, $iniciar, $articulos_x_pagina)
 {
-    // Preparar la consulta para obtener facturas paginadas junto con los detalles del producto
+    // Preparar la consulta para obtener facturas paginadas junto con los detalles del producto_id
     $sql = "SELECT f.factura_id, f.paciente_id, f.fecha_emision, f.estado, 
                    p.nombre AS producto_nombre, p.descripcion AS producto_descripcion, p.monto 
             FROM `facturas` f
-            JOIN `productos` p ON f.producto = p.producto_id
+            JOIN `productos` p ON f.producto_id = p.producto_id
             WHERE f.paciente_id = ?
             LIMIT ?, ?";
 

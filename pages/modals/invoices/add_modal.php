@@ -6,7 +6,7 @@
                 <h5 class="modal-title" id="agregarFacturaModalLabel">Agregar Factura</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="../scripts/invoices_manager.php" method="post">
+            <form action="../scripts/invoice_manager.php" method="post">
                 <div class="modal-body">
                     <input type="hidden" id="actionType" name="action" value="guardar_factura">
                     <div class="mb-3">
@@ -19,7 +19,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="producto" class="form-label">Producto</label>
-                        <select class="form-select" id="producto" name="producto" required>
+                        <select class="form-select" id="producto_id" name="producto_id" required>
                             <option value="" hidden selected>Selecciona un producto</option>
                             <?php foreach ($productos as $producto) : ?>
                                 <option value="<?php echo $producto['producto_id']; ?>"><?php echo $producto['nombre']; ?></option>

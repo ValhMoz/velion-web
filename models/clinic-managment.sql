@@ -59,10 +59,10 @@ CREATE TABLE facturas (
   factura_id INT AUTO_INCREMENT PRIMARY KEY,
   paciente_id VARCHAR(9),
   fecha_emision DATE,
-  producto INT,
+  producto_id INT,
   estado ENUM('Pendiente', 'Pagada'),
   FOREIGN KEY (paciente_id) REFERENCES usuarios(usuario_id),
-  FOREIGN KEY (producto) REFERENCES productos(producto_id)
+  FOREIGN KEY (producto_id) REFERENCES productos(producto_id)
 );
 
 -- Tabla para almacenar información de citas
@@ -144,7 +144,7 @@ VALUES
 ('345678901', '', 'Pedro', 'Gomez', '345678901', '1985-10-10', 'Plaza 789', 'Provincia 3', 'Ciudad 3', '34567', 'admin@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'Administrador', 'hombre', NULL, NULL);
 
 -- Insertar datos de prueba para la tabla facturas
-INSERT INTO facturas (paciente_id, fecha_emision, producto, estado)
+INSERT INTO facturas (paciente_id, fecha_emision, producto_id, estado)
 VALUES
 ('123456789', '2024-04-01', 2, 'Pendiente'),
 ('234567890', '2024-04-02', 5, 'Pagada'),

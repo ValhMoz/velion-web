@@ -41,7 +41,7 @@ class InvoiceController extends PDF_Invoice
             return $facturasFiltradas;
         } else {
             // Si no se encontraron usuarios, mostrar mensaje de alerta
-            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ningún usuario con los criterios seleccionados.');
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ningún Factura con los criterios seleccionados.');
             header('Location: ../pages/invoices.php');
             exit();
         }
@@ -71,7 +71,7 @@ class InvoiceController extends PDF_Invoice
             return $facturasFiltradas;
         } else {
             // Si no se encontraron usuarios, mostrar mensaje de alerta
-            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ningún usuario con los criterios seleccionados.');
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ningún Factura con los criterios seleccionados.');
             header('Location: ../pages/invoices-patients.php');
             exit();
         }
@@ -207,26 +207,16 @@ class InvoiceController extends PDF_Invoice
 
     public function guardarFactura($datos)
     {
-        // Insertar la factura en la base de datos
-        $this->invoiceModel->insert("facturas", $datos);
+        if ($this->invoiceModel->insert("facturas", $datos)) {
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Factura añadida correctamente.');
+            header('Location: ../pages/invoices.php');
+            exit();
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido añadir la factura correctamente.');
+            header('Location: ../pages/invoices.php');
+            exit();
+        }
 
-        // // Obtener el ID de la factura recién insertada
-        // $factura_id = $this->invoiceModel->lastInsertId();
-
-        // // Obtener información sobre la factura recién insertada
-        // $factura = $this->invoiceModel->obtenerDatosFactura($factura_id);
-
-        // // Obtener el producto comprado en la factura
-        // $producto_id = $factura['producto'];
-
-        // // Obtener información sobre el producto comprado
-        // $producto = $this->invoiceModel->getProductoPorId($producto_id);
-
-        // // Obtener el tipo de bono del producto comprado
-        // $tipo_bono = $producto['nombre'];
-
-        // // Actualizar las sesiones disponibles del usuario según el tipo de bono
-        // $this->actualizarSesionesDisponibles($datos['paciente_id'], $tipo_bono);
     }
 
     // public function actualizarSesionesDisponibles($paciente_id, $tipo_bono)
@@ -249,7 +239,7 @@ class InvoiceController extends PDF_Invoice
     //             // Agrega más casos según sea necesario para otros tipos de bono
     //     }
 
-    //     // Actualizar las sesiones disponibles del usuario en la base de datos
+    //     // Actualizar las sesiones disponibles del Factura en la base de datos
     //     $this->invoiceModel->actualizarSesionesDisponibles($paciente_id, $sesiones_adicionales);
     // }
 }
