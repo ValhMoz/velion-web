@@ -67,13 +67,20 @@ switch ($uri[2]) {
     case 'usuarios':
         if ($requestMethod == 'GET') {
             if (isset($uri[3])) {
-                
+                // Implementar lógica para obtener un solo usuario
             } else {
-                
+                // Implementar lógica para obtener todos los usuarios
             }
         } else if ($requestMethod == 'POST') {
             $data = json_decode(file_get_contents("php://input"), true);
-            echo(json_encode($loginController->iniciarSesion()));
+            if (isset($data['email']) && isset($data['pass'])) {
+                $email = $data['email'];
+                $pass = $data['pass'];
+            } else {
+                echo json_encode(["message" => "Datos incompletos"]);
+                exit();
+            }
+            echo(json_encode($loginController->iniciarSesion($email, $pass, true)));
         }
         break;
         // Añadir más rutas según sea necesario

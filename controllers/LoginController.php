@@ -21,6 +21,7 @@ class LoginController {
                    return $usuario;
                 }
             }
+            return ["message" => "Credenciales incorrectas"];
         }
 
         if (!empty($usuarios)) {
