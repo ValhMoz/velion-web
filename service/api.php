@@ -4,6 +4,7 @@ require '../controllers/ProductController.php';
 require '../controllers/MedicalHistoryController.php';
 require '../controllers/AppointmentController.php';
 require '../controllers/UserController.php';
+require '../controllers/LoginController.php';
 
 header("Content-Type: application/json");
 
@@ -22,6 +23,7 @@ $productController = new ProductController();
 $appointmentController = new AppointmentController();
 $medicalhistoryController = new MedicalHistoryController();
 $userController = new UserController();
+$loginController = new LoginController();
 
 switch ($uri[2]) {
     case 'productos':
@@ -63,6 +65,16 @@ switch ($uri[2]) {
         }
         break;
     case 'usuarios':
+        if ($requestMethod == 'GET') {
+            if (isset($uri[3])) {
+                
+            } else {
+                
+            }
+        } else if ($requestMethod == 'POST') {
+            $data = json_decode(file_get_contents("php://input"), true);
+            echo(json_encode($loginController->iniciarSesion()));
+        }
         break;
         // Añadir más rutas según sea necesario
     default:

@@ -11,8 +11,18 @@ class LoginController {
         $this->loginModel = new LoginModel();
     }
 
-    public function iniciarSesion($email, $pass) {
+    public function iniciarSesion($email, $pass, $isApiResquest = false) {
         $usuarios = $this->loginModel->read('usuarios', "email = '$email'");
+
+        if ($isApiResquest){
+            if (!empty($usuarios)) {
+                $usuario = $usuarios[0];
+                if (password_verify($pass, $usuario['pass'])) {
+                   return $usuario;
+                }
+            }
+        }
+
         if (!empty($usuarios)) {
             $usuario = $usuarios[0];
             if (password_verify($pass, $usuario['pass'])) {
