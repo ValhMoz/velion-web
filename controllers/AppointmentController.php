@@ -16,55 +16,55 @@ class AppointmentController
         $this->appointmentModel = new AppointmentModel();
     }
 
-    public function verificarYEjecutar() {
-        $ultimaEjecucion = $this->appointmentModel->obtenerUltimaEjecucion();
-        $hoy = date('Y-m-d');
+    // public function verificarYEjecutar() {
+    //     $ultimaEjecucion = $this->appointmentModel->obtenerUltimaEjecucion();
+    //     $hoy = date('Y-m-d');
 
-        if ($ultimaEjecucion !== $hoy) {
-            $this->enviarRecordatorios();
-            $this->appointmentModel->actualizarUltimaEjecucion($hoy);
-        }
-    }
+    //     if ($ultimaEjecucion !== $hoy) {
+    //         $this->enviarRecordatorios();
+    //         $this->appointmentModel->actualizarUltimaEjecucion($hoy);
+    //     }
+    // }
 
-    public function enviarRecordatorios()
-    {
-        $citasProximas = $this->appointmentModel->obtenerCitasProximas();
-        $mail = new PHPMailer(true);
+    // public function enviarRecordatorios()
+    // {
+    //     $citasProximas = $this->appointmentModel->obtenerCitasProximas();
+    //     $mail = new PHPMailer(true);
 
-        try {
-            // Configuración del servidor de correo
-            $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
-            $mail->SMTPAuth = true;
-            $mail->Username = 'sergiofrubio@gmail.com';
-            $mail->Password = 'wcgs pxws wttd aeco';
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port = 587;
+    //     try {
+    //         // Configuración del servidor de correo
+    //         $mail->isSMTP();
+    //         $mail->Host = 'smtp.gmail.com';
+    //         $mail->SMTPAuth = true;
+    //         $mail->Username = 'sergiofrubio@gmail.com';
+    //         $mail->Password = 'wcgs pxws wttd aeco';
+    //         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    //         $mail->Port = 587;
 
-            // Configuración del remitente
-            $mail->setFrom('sergiofrubio@gmail.com', 'SIGEFI');
+    //         // Configuración del remitente
+    //         $mail->setFrom('sergiofrubio@gmail.com', 'SIGEFI');
 
-            foreach ($citasProximas as $cita) {
-                // Configuración del destinatario
-                $mail->addAddress($cita['paciente_email'], $cita['paciente_nombre'] . ' ' . $cita['paciente_apellidos']);
+    //         foreach ($citasProximas as $cita) {
+    //             // Configuración del destinatario
+    //             $mail->addAddress($cita['paciente_email'], $cita['paciente_nombre'] . ' ' . $cita['paciente_apellidos']);
 
-                // Contenido del correo
-                $mail->isHTML(true);
-                $mail->Subject = 'Recordatorio de Cita';
-                $mail->Body = 'Estimado/a ' . $cita['paciente_nombre'] . ' ' . $cita['paciente_apellidos'] . ',<br><br>'
-                    . 'Le recordamos que tiene una cita programada con ' . $cita['fisioterapeuta_nombre'] . ' ' . $cita['fisioterapeuta_apellidos'] . ' el día ' . date('d-m-Y H:i', strtotime($cita['fecha_hora'])) . '.<br><br>'
-                    . 'Saludos,<br>'
-                    . 'Su Clínica';
+    //             // Contenido del correo
+    //             $mail->isHTML(true);
+    //             $mail->Subject = 'Recordatorio de Cita';
+    //             $mail->Body = 'Estimado/a ' . $cita['paciente_nombre'] . ' ' . $cita['paciente_apellidos'] . ',<br><br>'
+    //                 . 'Le recordamos que tiene una cita programada con ' . $cita['fisioterapeuta_nombre'] . ' ' . $cita['fisioterapeuta_apellidos'] . ' el día ' . date('d-m-Y H:i', strtotime($cita['fecha_hora'])) . '.<br><br>'
+    //                 . 'Saludos,<br>'
+    //                 . 'Su Clínica';
 
-                $mail->send();
-                $mail->clearAddresses(); // Limpia los destinatarios para el próximo ciclo
-            }
+    //             $mail->send();
+    //             $mail->clearAddresses(); // Limpia los destinatarios para el próximo ciclo
+    //         }
 
-            echo "Los recordatorios de citas se han enviado correctamente.";
-        } catch (Exception $e) {
-            echo "No se pudieron enviar los recordatorios. Error: {$mail->ErrorInfo}";
-        }
-    }
+    //         echo "Los recordatorios de citas se han enviado correctamente.";
+    //     } catch (Exception $e) {
+    //         echo "No se pudieron enviar los recordatorios. Error: {$mail->ErrorInfo}";
+    //     }
+    // }
 
     public function obtenerCitasPaginadas($iniciar, $articulos_x_pagina)
     {
@@ -81,9 +81,20 @@ class AppointmentController
         return $this->appointmentModel->obtenerCitasUsuarioPaginadas($DNI, $iniciar, $articulos_x_pagina);
     }
 
-    public function obtenerCitasUsuario($DNI)
+    public function obtenerCitasUsuario($DNI, $isApiRequest = false)
     {
-        return $this->appointmentModel->obtenerCitasUsuario($DNI);
+        $citas =  $this->appointmentModel->obtenerCitasUsuario($DNI);
+
+        if ($isApiRequest) {
+            return $citas;
+        }
+    
+        if (!$citas) {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ninguna cita médica para el usuario seleccionado.');
+            header("Location: ../pages/appointments-patients.php");
+            exit();
+        }
+        return $citas;
     }
 
     public function obtenerListaPacientes()

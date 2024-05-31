@@ -1,6 +1,9 @@
 <?php
 
-require './controllers/ProductController.php';
+require '../controllers/ProductController.php';
+require '../controllers/MedicalHistoryController.php';
+require '../controllers/AppointmentController.php';
+require '../controllers/UserController.php';
 
 header("Content-Type: application/json");
 
@@ -15,7 +18,10 @@ if ($uri[1] !== 'api' || !isset($uri[2])) {
     exit();
 }
 
-$controller = new ProductController();
+$productController = new ProductController();
+$appointmentController = new AppointmentController();
+$medicalhistoryController = new MedicalHistoryController();
+$userController = new UserController();
 
 switch ($uri[2]) {
     case 'productos':
@@ -23,26 +29,38 @@ switch ($uri[2]) {
             if (isset($uri[3])) {
                 // Implementar lógica para obtener un solo producto
             } else {
-                echo $controller->obtenerProductos();
+                echo(json_encode($productController->obtenerProductos()));
             }
         } else if ($requestMethod == 'POST') {
             $data = json_decode(file_get_contents("php://input"), true);
-            $controller->agregarProducto('productos', $data);
+            $productController->agregarProducto('productos', $data);
         }
         break;
     case 'informes':
         if ($requestMethod == 'GET') {
             if (isset($uri[3])) {
-                // Implementar lógica para obtener un solo producto
+                $DNI = $uri[3];
+                echo(json_encode($medicalhistoryController->obtenerInformeUsuario($DNI, true)));
             } else {
-                echo $controller->obtenerProductos();
+                //echo $medicalhistoryController->obtenerInformeUsuario($DNI);
             }
         } else if ($requestMethod == 'POST') {
             $data = json_decode(file_get_contents("php://input"), true);
-            $controller->agregarProducto('productos', $data);
+            $productController->agregarProducto('productos', $data);
         }
         break;
     case 'citas':
+        if ($requestMethod == 'GET') {
+            if (isset($uri[3])) {
+                $DNI = $uri[3];
+                echo(json_encode($appointmentController->obtenerCitasUsuario($DNI, true)));
+            } else {
+                //echo $medicalhistoryController->obtenerInformeUsuario($DNI);
+            }
+        } else if ($requestMethod == 'POST') {
+            $data = json_decode(file_get_contents("php://input"), true);
+            $productController->agregarProducto('productos', $data);
+        }
         break;
     case 'usuarios':
         break;

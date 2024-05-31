@@ -104,14 +104,20 @@ class MedicalHistoryController extends FPDF
         }
     }
 
-    public function obtenerInformeUsuario($DNI)
+    public function obtenerInformeUsuario($DNI, $isApiRequest = false)
     {
-        if (!$this->medicalhistoryModel->obtenerInforme($DNI)) {
+        $informe = $this->medicalhistoryModel->obtenerInforme($DNI);
+        
+        if ($isApiRequest) {
+            return $informe;
+        }
+    
+        if (!$informe) {
             $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ningún informe médico para el usuario seleccionado.');
             header("Location: ../pages/medical-history.php");
             exit();
         }
-        return ($this->medicalhistoryModel->obtenerInforme($DNI));
+        return $informe;
     }
 
     public function obtenerCitasUsuario($usuario_id)
