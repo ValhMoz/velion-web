@@ -26,9 +26,13 @@ class UserController
         return $this->usuarioModel->read('usuarios');
     }
 
-    public function buscarUsuarios($usuario_id, $rol)
+    public function buscarUsuarios($usuario_id, $rol, $isApiRequest = false)
     {
         $usuariosFiltrados = $this->usuarioModel->buscarUsuarios($usuario_id, $rol);
+
+        if($isApiRequest){
+            return $usuariosFiltrados;
+        }
     
         if (!empty($usuariosFiltrados)) {
             return $usuariosFiltrados;

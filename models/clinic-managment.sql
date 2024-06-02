@@ -4,12 +4,6 @@ CREATE TABLE especialidades (
   fecha TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 );
 
-CREATE TABLE tareas (
-    tarea_id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(255) UNIQUE,
-    ultima_ejecucion DATE
-);
-
 CREATE TABLE categorias(
   categoria_id INT AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(30),
@@ -93,8 +87,6 @@ CREATE TABLE historial_medico (
   FOREIGN KEY (fisioterapeuta_id) REFERENCES usuarios(usuario_id),
   FOREIGN KEY (cita_id) REFERENCES citas(cita_id)
 );
-
-INSERT INTO tareas (nombre, ultima_ejecucion) VALUES ('enviarRecordatorios', NULL);
 
 -- Insertar datos de prueba para la tabla especialidades
 INSERT INTO especialidades (descripcion) VALUES

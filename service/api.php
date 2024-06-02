@@ -67,7 +67,8 @@ switch ($uri[2]) {
     case 'usuarios':
         if ($requestMethod == 'GET') {
             if (isset($uri[3])) {
-                // Implementar lógica para obtener un solo usuario
+                $DNI = $uri[3];
+                echo(json_encode($userController->buscarUsuarios($DNI, "", true)));
             } else {
                 // Implementar lógica para obtener todos los usuarios
             }
