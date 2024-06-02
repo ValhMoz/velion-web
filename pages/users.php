@@ -169,13 +169,16 @@ if (isset($_SESSION['alert'])) {
 
                                         switch ($rol) {
                                             case 'Paciente':
-                                                $text_gb_class = 'text-bg-secondary';
+                                                $text_gb_class = 'text-bg-info';
                                                 break;
                                             case 'Fisioterapeuta':
-                                                $text_gb_class = 'text-bg-info';
+                                                $text_gb_class = 'text-bg-success';
                                                 break;
                                             case 'Administrador':
                                                 $text_gb_class = 'text-bg-danger';
+                                                break;
+                                            case 'Ninguno':
+                                                $text_gb_class = 'text-bg-secondary';
                                                 break;
                                             default:
                                                 $text_gb_class = 'text-bg-secondary';

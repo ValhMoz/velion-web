@@ -13,6 +13,7 @@ $medicalhistory = new MedicalHistoryController();
 if (isset($_GET['usuario_id'])) {
     $usuario_id = $_GET['usuario_id'];
     $citas = $medicalhistory->obtenerInforme($usuario_id);
+    //echo (json_encode($citas));
 }
 
 

@@ -75,6 +75,19 @@ class AppointmentController
         }
     }
 
+    public function asignarCitaPatients($tabla, $datos)
+    {
+        if ($this->appointmentModel->insert($tabla, $datos)) {
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Cita añadida correctamente.');
+            header('Location: ../pages/appointments-patients.php');
+            exit();
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido añadir la cita correctamente.');
+            header('Location: ../pages/appointments-patients.php');
+            exit();
+        }
+    }
+
     public function editarCita($tabla, $datos, $condicion)
     {
         if ($this->appointmentModel->update($tabla, $datos, $condicion)) {
@@ -101,6 +114,19 @@ class AppointmentController
         }
     }
 
+    public function eliminarCitaPatient($tabla, $condicion)
+    {
+        if ($this->appointmentModel->delete($tabla, $condicion)) {
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Cita eliminada correctamente.');
+            header('Location: ../pages/appointments-patients.php');
+            exit();
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido eliminar la cita correctamente.');
+            header('Location: ../pages/appointments-patients.php');
+            exit();
+        }
+    }
+
     public function confirmarCita($tabla, $datos, $condicion)
     {
         if ($this->appointmentModel->update($tabla, $datos, $condicion)) {
@@ -119,8 +145,7 @@ class AppointmentController
 
         $citasFiltradas = $this->appointmentModel->buscarCitas($filtro_usuario_id, $filtro_fecha_hora, $filtro_estado, $filtro_especialidad);
         if (!empty($citasFiltradas)) {
-            header('Location: ../pages/appointments.php');
-            exit();
+            return $citasFiltradas;
         } else {
             $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se han encontrado citas con los criterios especificados.');
             header('Location: ../pages/appointments.php');
@@ -130,11 +155,9 @@ class AppointmentController
 
     public function buscarCitasPatients($filtro_usuario_id, $filtro_fecha_hora, $filtro_estado, $filtro_especialidad)
     {
-
         $citasFiltradas = $this->appointmentModel->buscarCitas($filtro_usuario_id, $filtro_fecha_hora, $filtro_estado, $filtro_especialidad);
         if (!empty($citasFiltradas)) {
-            header('Location: ../pages/appointments-patients.php');
-            exit();
+            return $citasFiltradas;
         } else {
             $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se han encontrado la citas con los criterios especificados.');
             header('Location: ../pages/appointments-patients.php');

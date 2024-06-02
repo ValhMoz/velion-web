@@ -12,7 +12,7 @@ if (!$_GET) {
     header('location:invoices-patients.php?pagina=1');
 }
 
-$articulos_x_pagina = 5;
+$articulos_x_pagina = 10;
 
 $facturas = $invoiceController->obtenerFacturas();
 

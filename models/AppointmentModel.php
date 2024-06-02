@@ -60,7 +60,7 @@ class AppointmentModel extends BaseModel
 
     public function buscarCitas($usuarioID, $fechaHora, $estado, $especialidad)
     {
-        $sql = "SELECT c.*, u.nombre AS paciente_nombre, u.apellidos AS paciente_apellidos, u.telefono AS paciente_telefono, u2.nombre AS fisioterapeuta_nombre, u2.apellidos AS fisioterapeuta_apellidos, e.descripcion AS descripcion
+        $sql = "SELECT c.*, u.nombre AS paciente_nombre, u.apellidos AS paciente_apellidos, u.telefono AS paciente_telefono, u2.nombre AS fisioterapeuta_nombre, u2.apellidos AS fisioterapeuta_apellidos, e.descripcion AS descripcion, e.especialidad_id AS especialidad_id
         FROM citas c
         INNER JOIN usuarios u ON c.paciente_id = u.usuario_id
         INNER JOIN usuarios u2 ON c.fisioterapeuta_id = u2.usuario_id
@@ -69,7 +69,7 @@ class AppointmentModel extends BaseModel
         $types = "";
 
         if (!empty($usuarioID)) {
-            $sql .= " AND paciente_id = ?";
+            $sql .= " AND c.paciente_id = ?";
             $params[] = $usuarioID;
             $types .= "s";
         }
@@ -87,7 +87,7 @@ class AppointmentModel extends BaseModel
         }
 
         if (!empty($especialidad)) {
-            $sql .= " AND c.especialidad_id = ?";
+            $sql .= " AND especialidad_id = ?";
             $params[] = $especialidad;
             $types .= "s";
         }
@@ -169,6 +169,7 @@ class AppointmentModel extends BaseModel
         c.cita_id,
         c.fecha_hora,
         c.estado,
+        e.especialidad_id,
         e.descripcion,
         p.usuario_id AS paciente_id,
         p.nombre AS paciente_nombre,

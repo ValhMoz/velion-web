@@ -6,43 +6,40 @@
                 <h5 class="modal-title" id="agregarCitaModalLabel">Editar Cita</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="../scripts/appoinmtment_manager.php" method="post" id="agregarCitaForm">
+            <form action="../scripts/appointment_manager.php" method="post" id="editarCitaForm">
                 <div class="modal-body">
                     <input type="hidden" id="actionType" name="action" value="asignar">
+                    <input type="hidden" id="cita_id" name="cita_id" value="<?php echo $cita['cita_id']?>">
                     <div class="mb-3">
                         <label for="paciente_id" class="form-label">ID del Paciente</label>
-                        <input type="text" class="form-control" list="pacienteOptions" id="paciente_id" value="<?php echo $paciente['usuario_id']; ?>">
-                        <datalist id="pacienteOptions">
-                            <?php foreach ($pacientes as $paciente) : ?>
-                                <option value="<?php echo $paciente['usuario_id']; ?>"><?php echo $paciente['nombre'] . ' ' . $paciente['apellidos']; ?></option>
-                            <?php endforeach; ?>
-                        </datalist>
+                        <input type="text" class="form-select" name="paciente_id" id="paciente_id" value="<?php echo $cita['paciente_nombre'] . ' ' . $cita['paciente_apellidos']; ?>" disabled required>
                     </div>
                     <div class="mb-3">
                         <label for="especialidad_id" class="form-label">Especialidad</label>
-                        <input class="form-control" list="especialidadOptions" id="especialidad_id" value="<?php echo $especialidad['especialidad_id']; ?>">
-                        <datalist id="especialidadOptions">
+                        <select class="form-select" name="especialidad_id" id="especialidad_id" required>
+                            <option value="<?php echo $cita['especialidad_id']?> "hidden selected><?php echo $cita['especialidad_id'] . ' - ' . $cita['descripcion']; ?></option>
                             <?php foreach ($especialidades as $especialidad) : ?>
                                 <option value="<?php echo $especialidad['especialidad_id']; ?>"><?php echo $especialidad['especialidad_id'] . ' - ' . $especialidad['descripcion']; ?></option>
                             <?php endforeach; ?>
-                        </datalist>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="fisioterapeuta_id" class="form-label">ID del Fisioterapeuta</label>
-                        <input class="form-control" list="fisioterapeutaOptions" id="fisioterapeuta_id" value="<?php echo $fisioterapeuta['usuario_id']; ?>">
-                        <datalist id="fisioterapeutaOptions">
+                        <select class="form-select" name="fisioterapeuta_id" id="fisioterapeuta_id" required>
+                            <option value="<?php echo $cita['fisioterapeuta_id']; ?>" hidden selected><?php echo $cita['fisioterapeuta_nombre'] . ' ' . $cita['fisioterapeuta_apellidos']; ?></option>
                             <?php foreach ($fisioterapeutas as $fisioterapeuta) : ?>
                                 <option value="<?php echo $fisioterapeuta['usuario_id']; ?>"><?php echo $fisioterapeuta['nombre'] . ' ' . $fisioterapeuta['apellidos']; ?></option>
                             <?php endforeach; ?>
-                        </datalist>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="fecha_hora" class="form-label">Fecha y Hora</label>
-                        <input type="datetime-local" class="form-control" id="fecha_hora" name="fecha_hora" required>
+                        <input type="datetime-local" class="form-control" id="fecha_hora" name="fecha_hora" value="<?php echo $cita['fecha_hora']; ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="estado" class="form-label">Estado</label>
-                        <select class="form-select" id="estado" name="estado" value="<?php echo $fisioterapeuta['usuario_id']; ?>">
+                        <select class="form-select" id="estado" name="estado">
+                            <option value="<?php echo $cita['estado']?>" hidden selected><?php echo $cita['estado']?></option>
                             <option value="Programada">Programada</option>
                             <option value="Cancelada">Cancelada</option>
                             <option value="Realizada">Realizada</option>
@@ -51,7 +48,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" form="agregarCitaForm" class="btn btn-primary">Guardar Cita</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cita</button>
                 </div>
             </form>
         </div>

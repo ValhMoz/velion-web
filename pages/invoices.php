@@ -76,7 +76,7 @@ if (isset($_SESSION['alert'])) {
 <div class="table-responsive small">
     <form class="row g-3" method="post" action="">
         <div class="col-auto">
-            <input type="text" class="form-control" id="usuario_id" name="usuario_id" placeholder="Filtrar por ID de usuario...">
+            <input type="text" class="form-control" id="usuario_id" name="usuario_id" placeholder="Filtrar por ID del cliente...">
         </div>
         <div class="col-auto">
             <select class="form-select" id="estado" name="estado" aria-label="Selecciona un estado">

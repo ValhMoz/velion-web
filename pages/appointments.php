@@ -88,6 +88,7 @@ if (isset($_SESSION['alert'])) {
                 <option value="Programada">Programada</option>
                 <option value="Realizada">Realizada</option>
                 <option value="Cancelada">Cancelada</option>
+                <option value="Pendiente">Pendiente</option>
             </select>
         </div>
         <div class="col-auto">
@@ -143,6 +144,9 @@ if (isset($_SESSION['alert'])) {
                                         case 'Programada':
                                             $text_gb_class = 'text-bg-warning';
                                             break;
+                                        case 'Pendiente':
+                                            $text_gb_class = 'text-bg-info';
+                                            break;
                                         default:
                                             $text_gb_class = 'text-bg-warning';
                                     }
@@ -152,26 +156,27 @@ if (isset($_SESSION['alert'])) {
                                     </span>
                                 </td>
                                 <td>
-                                    <a href="medical-history.php?usuario_id=<?php echo $cita['paciente_id']; ?>" class="btn btn-primary btn-sm">
+                                    <button onclick="window.location='medical-history.php?usuario_id=<?php echo $cita['paciente_id']; ?>'" class="btn btn-primary btn-sm" <?php if ($cita['estado'] == 'Programada' || $cita['estado'] == 'Pendiente' || $cita['estado'] == 'Cancelada') {
+                                                                                echo 'hidden';
+                                                                            } ?>>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox=" 0 0 16 16">
                                             <path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5z" />
                                             <path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5z" />
                                             <path d="M9.979 5.356a.5.5 0 0 0-.968.04L7.92 10.49l-.94-3.135a.5.5 0 0 0-.926-.08L4.69 10H4.5a.5.5 0 0 0 0 1H5a.5.5 0 0 0 .447-.276l.936-1.873 1.138 3.793a.5.5 0 0 0 .968-.04L9.58 7.51l.94 3.135A.5.5 0 0 0 11 11h.5a.5.5 0 0 0 0-1h-.128z" />
                                         </svg>
-                                    </a>
-                                    <button class="btn btn-sm btn-success" <?php if ($cita['estado'] == 'Realizada' || $cita['estado'] == 'Cancelada') {
-                                                                                echo 'disabled';
+                                    </button>
+                                    <button class="btn btn-sm btn-success" <?php if ($cita['estado'] == 'Realizada' || $cita['estado'] == 'Cancelada' || $cita['estado'] == 'Pendiente') {
+                                                                                echo 'hidden';
                                                                             } ?> data-bs-toggle="modal" data-bs-target="#confirm_<?php echo $cita['cita_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
                                             <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
                                         </svg></button>
-                                    <button class="btn btn-sm btn-warning" <?php if ($cita['estado'] == 'Realizada' || $cita['estado'] == 'Cancelada') {
-                                                                                echo 'disabled';
-                                                                            } ?>data-bs-toggle="modal" data-bs-target="#edit_<?php echo $cita['cita_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
-                                        </svg></button>
+                                    <button class="btn btn-warning btn-sm" <?php if ($cita['estado'] == 'Realizada' || $cita['estado'] == 'Cancelada') {
+                                                                                echo 'style="display: none"';
+                                                                            } ?>data-bs-toggle="modal" data-bs-target="#edit_<?php echo $cita['cita_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                                            <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+                                                                          </svg></button>
                                     <button class="btn btn-sm btn-danger" <?php if ($cita['estado'] == 'Realizada' || $cita['estado'] == 'Cancelada') {
-                                                                                echo 'disabled';
+                                                                                echo 'hidden';
                                                                             } ?> data-bs-toggle="modal" data-bs-target="#delete_<?php echo $cita['cita_id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
                                             <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />

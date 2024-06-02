@@ -4,7 +4,7 @@ require_once '../controllers/MedicalHistoryController.php';
 
 $medHist = new MedicalHistoryController();
 
-if ($rol == "Administrador" ||  $rol == "Fisioterapeuta") {
+if ($rol == "Administrador" || $rol == "Fisioterapeuta") {
     header("Location: 404.php");
     exit();
 }
@@ -17,12 +17,12 @@ $articulos_x_pagina = 4;
 
 $iniciar = ($_GET['pagina'] - 1) * $articulos_x_pagina;
 
-$informe = $medHist->obtenerInforme($DNI);
+$informes = $medHist->obtenerInforme($DNI);
 
-$n_botones_paginacion = ceil(count($informe) / ($articulos_x_pagina));
+$n_botones_paginacion = ceil(count($informes) / ($articulos_x_pagina));
 
-if($_GET['pagina']>$n_botones_paginacion){
-    header ('location:appointments-patients.php?pagina=1');
+if ($_GET['pagina'] > $n_botones_paginacion) {
+    header('location:appointments-patients.php?pagina=1');
 }
 
 include_once 'includes/dashboard-patients.php';
@@ -50,41 +50,49 @@ if (isset($_SESSION['alert'])) {
 }
 ?>
 
-<div class="table-responsive small">
+<div class="table-responsive">
     <div class="row">
-        <!-- Aquí se mostrará el informe en forma de listas -->
+        <!-- Aquí se mostrará cada informe en forma de listas -->
         <div class="col">
             <ul class="list-group">
-                <li class="list-group-item">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-2">Informe 1</h5>
-                        <small>Fecha: <?php echo $informe[0]['fecha']; ?></small>
-                    </div>
-                    <p class="mb-1">Información sobre el informe.</p>
-                    <small>Nombre del paciente: <?php echo $informe[0]['nombre_paciente'] . " " . $informe[0]['apellidos_paciente']; ?></small>
-                    <small>Nombre del fisioterapeuta: <?php echo $informe[0]['nombre_fisioterapeuta'] . " " . $informe[0]['apellidos_fisioterapeuta']; ?></small>
-                    <div class="text-end mt-2">
-                        <form action="../scripts/medicalhistory_manager.php" method="GET">
-                            <input type="hidden" id="id" name="id" value="<?php echo $factura[0]['historial_id']; ?>">
-                            <button type="submit" class="btn btn-success">Descargar</button>
-                        </form>
-                    </div>
-                </li>
+                <?php foreach ($informes as $informe) { ?>
+                    <li class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-2">Informe <?php echo $informe['historial_id']; ?></h5>
+                            <small>Fecha: <?php echo $informe['fecha_hora']; ?></small>
+                        </div>
+                        <p class="mb-2">Información sobre el informe.</p>
+                        <small>Nombre del paciente:
+                            <?php echo $informe['paciente_nombre'] . " " . $informe['paciente_apellidos']; ?></small>
+                        <br>
+                        <small>Nombre del fisioterapeuta:
+                            <?php echo $informe['fisioterapeuta_nombre'] . " " . $informe['fisioterapeuta_apellidos']; ?></small>
+                        <div class="text-end mt-2">
+                            <form action="../scripts/medicalhistory_manager.php" method="GET">
+                                <input type="hidden" id="historial_id" name="historial_id"
+                                    value="<?php echo $informe['historial_id']; ?>">
+                                <button type="submit" class="btn btn-success">Descargar</button>
+                            </form>
+                        </div>
+                    </li>
+                <?php } ?>
             </ul>
         </div>
     </div>
 </div>
 
+
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-start">
         <li class="page-item <? echo $_GET['pagina'] <= 1 ? 'disabled' : '' ?>">
-            <a class="page-link" href="appointments-patients.php?pagina=<?php echo $_GET['pagina'] - 1 ?>">Anterior</a>
+            <a class="page-link" href="start-patients.php?pagina=<?php echo $_GET['pagina'] - 1 ?>">Anterior</a>
         </li>
-        <?php for ($i = 0; $i < $n_botones_paginacion; $i++) : ?>
-            <li class="page-item <? echo $_GET['pagina'] == $i + 1 ? 'active' : '' ?>"><a class="page-link" href="appointments-patients.php?pagina=<?php echo $i + 1 ?>"><?php echo $i + 1 ?></a></li>
+        <?php for ($i = 0; $i < $n_botones_paginacion; $i++): ?>
+            <li class="page-item <? echo $_GET['pagina'] == $i + 1 ? 'active' : '' ?>"><a class="page-link"
+                    href="start-patients.php?pagina=<?php echo $i + 1 ?>"><?php echo $i + 1 ?></a></li>
         <?php endfor ?>
         <li class="page-item <? echo $_GET['pagina'] >= $n_botones_paginacion ? 'disabled' : '' ?>">
-            <a class="page-link" href="appointments-patients.php?pagina=<?php echo $_GET['pagina'] + 1 ?>">Siguiente</a>
+            <a class="page-link" href="start-patients.php?pagina=<?php echo $_GET['pagina'] + 1 ?>">Siguiente</a>
         </li>
     </ul>
 </nav>
