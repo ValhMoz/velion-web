@@ -13,7 +13,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="categoria" class="form-label">Categoría</label>
-                        <select class="form-select" id="categoria" name="categoria">
+                        <select class="form-select" id="categoria_id" name="categoria_id">
                             <option value="">Seleccione una categoría</option>
                             <?php foreach ($categorias as $categoria) : ?>
                                 <option value="<?php echo $categoria['categoria_id']; ?>" <?php echo ($filtro_categoria == $categoria['categoria_id']) ? 'selected' : ''; ?>><?php echo $categoria['nombre']; ?></option>

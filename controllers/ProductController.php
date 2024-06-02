@@ -26,15 +26,39 @@ class ProductController {
     }
     
     public function agregarProducto($tabla, $datos) {
-        return $this->productModel->insert($tabla, $datos);
+        if ($this->productModel->insert($tabla, $datos)) {
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Producto añadido correctamente.');
+            header('Location: ../pages/products.php');
+            exit();
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido añadir el producto correctamente.');
+            header('Location: ../pages/products.php');
+            exit();
+        }
     }
 
     public function editarProducto($tabla, $datos, $condicion) {
-        return $this->productModel->update($tabla, $datos, $condicion);
+        if ($this->productModel->update($tabla, $datos, $condicion)) {
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Datos del producto actualizados correctamente.');
+            header('Location: ../pages/products.php');
+            exit();
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido actualizar los datos del producto.');
+            header('Location: ../pages/products.php');
+            exit();
+        }
     }
 
     public function eliminarProducto($tabla, $condicion) {
-        return $this->productModel->delete($$tabla, $condicion);
+        if ($this->productModel->delete($tabla, $condicion)) {
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Producto eliminado correctamente.');
+            header('Location: ../pages/products.php');
+            exit();
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido eliminar el producto correctamente.');
+            header('Location: ../pages/products.php');
+            exit();
+        }
     }
 
     public function exportarDatos()

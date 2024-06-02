@@ -81,7 +81,7 @@ class UserController
             header('Location: ../pages/users.php');
             exit();
         } else {
-            $_SESSION['alert'] = array('type' => 'success', 'message' => 'No se ha podido eliminar el usuario correctamente.');
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido eliminar el usuario correctamente.');
             header('Location: ../pages/users.php');
             exit();
         }

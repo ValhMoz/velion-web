@@ -71,12 +71,14 @@ include_once './modals/products/add_modal.php';
 </div>
 
 <?php
-// Verificar si hay una alerta de producto
 if (isset($_SESSION['alert'])) {
+    $alert_type = $_SESSION['alert']['type'];
+    $alert_message = $_SESSION['alert']['message'];
     // Mostrar la alerta
-    echo '<div class="alert alert-' . $_SESSION['alert']['type'] . ' alert-dismissible fade show" role="alert">' . $_SESSION['alert']['message'] . '
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>';
+    echo '<div class="alert alert-' . $alert_type . ' alert-dismissible fade show" role="alert">' . $alert_message . '
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>';
+    // Eliminar la variable de sesión después de mostrar la alerta
     unset($_SESSION['alert']);
 }
 ?>

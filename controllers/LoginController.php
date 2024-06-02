@@ -50,7 +50,7 @@ class LoginController {
     private function startSession($usuario) {
         session_start();
         $_SESSION = array_merge($_SESSION, $usuario);
-        $redirectUrl = ($usuario['rol'] == 'Administrador' || $usuario['rol'] == 'Fisioterapeuta') ? '../pages/start.php' : '../index.php?alert=warning&message=No tienes permiso para acceder.';
+        $redirectUrl = ($usuario['rol'] == 'Administrador' || $usuario['rol'] == 'Fisioterapeuta') ? '../pages/start.php' : '../pages/start-patients.php';
         header('Location: ' . $redirectUrl);
         exit();
     }
