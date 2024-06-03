@@ -28,60 +28,52 @@ $loginController = new LoginController();
 switch ($uri[2]) {
     case 'productos':
         if ($requestMethod == 'GET') {
-            if (isset($uri[3])) {
-                // Implementar lógica para obtener un solo producto
-            } else {
-                echo(json_encode($productController->obtenerProductos()));
-            }
-        } else if ($requestMethod == 'POST') {
-            $data = json_decode(file_get_contents("php://input"), true);
-            $productController->agregarProducto('productos', $data);
+            echo (json_encode($productController->obtenerProductos()));
         }
         break;
     case 'informes':
         if ($requestMethod == 'GET') {
             if (isset($uri[3])) {
                 $DNI = $uri[3];
-                echo(json_encode($medicalhistoryController->obtenerInformeUsuario($DNI, true)));
-            } else {
-                //echo $medicalhistoryController->obtenerInformeUsuario($DNI);
+                echo (json_encode($medicalhistoryController->obtenerInformeUsuario($DNI, true)));
             }
-        } else if ($requestMethod == 'POST') {
-            $data = json_decode(file_get_contents("php://input"), true);
-            $productController->agregarProducto('productos', $data);
         }
         break;
+        case 'informe':
+            if ($requestMethod == 'GET') {
+                if (isset($uri[3])) {
+                    $DNI = $uri[3];
+                    echo (json_encode($medicalhistoryController->generarInformeMedico(1)));
+                }
+            }
+            break;
     case 'citas':
         if ($requestMethod == 'GET') {
             if (isset($uri[3])) {
                 $DNI = $uri[3];
-                echo(json_encode($appointmentController->obtenerCitasUsuario($DNI, true)));
-            } else {
-                //echo $medicalhistoryController->obtenerInformeUsuario($DNI);
+                echo (json_encode($appointmentController->obtenerCitasUsuario($DNI, true)));
             }
-        } else if ($requestMethod == 'POST') {
-            $data = json_decode(file_get_contents("php://input"), true);
-            $productController->agregarProducto('productos', $data);
         }
         break;
     case 'usuarios':
         if ($requestMethod == 'GET') {
             if (isset($uri[3])) {
                 $DNI = $uri[3];
-                echo(json_encode($userController->buscarUsuarios($DNI, "", true)));
-            } else {
-                // Implementar lógica para obtener todos los usuarios
+                echo (json_encode($userController->buscarUsuarios($DNI, "", true)));
             }
         } else if ($requestMethod == 'POST') {
-            $data = json_decode(file_get_contents("php://input"), true);
-            if (isset($data['email']) && isset($data['pass'])) {
-                $email = $data['email'];
-                $pass = $data['pass'];
+            // Obtener el contenido del cuerpo de la solicitud POST
+            $json = file_get_contents('php://input');
+
+            // Decodificar el JSON
+            $data = json_decode($json, true);
+            $email = isset($_POST['email']) ? urldecode($_POST['email']) : '';
+            $pass = isset($_POST['pass']) ? urldecode($_POST['pass']) : '';
+            if ($email && $pass) {
+                echo (json_encode($loginController->iniciarSesion($email, $pass, true)));
             } else {
                 echo json_encode(["message" => "Datos incompletos"]);
-                exit();
             }
-            echo(json_encode($loginController->iniciarSesion($email, $pass, true)));
         }
         break;
         // Añadir más rutas según sea necesario
