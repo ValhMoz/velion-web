@@ -1,5 +1,6 @@
 <!-- Modal -->
-<div class="modal fade" id="edit_<?php echo $cita['cita_id']; ?>" tabindex="-1" aria-labelledby="agregarCitaModalLabel" aria-hidden="true">
+<div class="modal fade" id="edit_<?php echo $cita['cita_id']; ?>" tabindex="-1" aria-labelledby="agregarCitaModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,38 +9,51 @@
             </div>
             <form action="../scripts/appointment_manager.php" method="post" id="editarCitaForm">
                 <div class="modal-body">
-                    <input type="hidden" id="actionType" name="action" value="asignar">
-                    <input type="hidden" id="cita_id" name="cita_id" value="<?php echo $cita['cita_id']?>">
+                    <input type="hidden" id="actionType" name="action" value="editar">
+                    <input type="hidden" id="cita_id" name="cita_id" value="<?php echo $cita['cita_id'] ?>">
                     <div class="mb-3">
-                        <label for="paciente_id" class="form-label">ID del Paciente</label>
-                        <input type="text" class="form-select" name="paciente_id" id="paciente_id" value="<?php echo $cita['paciente_nombre'] . ' ' . $cita['paciente_apellidos']; ?>" disabled required>
+                        <label for="paciente_nombre" class="form-label">Nombre del Paciente</label>
+                        <input type="text" class="form-control" name="paciente_nombre" id="paciente_nombre"
+                            value="<?php echo $cita['paciente_nombre'] . ' ' . $cita['paciente_apellidos']; ?>" disabled
+                            required>
+                        <input type="hidden" name="paciente_id" value="<?php echo $cita['paciente_id']; ?>">
                     </div>
                     <div class="mb-3">
                         <label for="especialidad_id" class="form-label">Especialidad</label>
                         <select class="form-select" name="especialidad_id" id="especialidad_id" required>
-                            <option value="<?php echo $cita['especialidad_id']?> "hidden selected><?php echo $cita['especialidad_id'] . ' - ' . $cita['descripcion']; ?></option>
-                            <?php foreach ($especialidades as $especialidad) : ?>
-                                <option value="<?php echo $especialidad['especialidad_id']; ?>"><?php echo $especialidad['especialidad_id'] . ' - ' . $especialidad['descripcion']; ?></option>
+                            <option value="<?php echo $cita['especialidad_id'] ?> " hidden selected>
+                                <?php echo $cita['especialidad_id'] . ' - ' . $cita['descripcion']; ?>
+                            </option>
+                            <?php foreach ($especialidades as $especialidad): ?>
+                                <option value="<?php echo $especialidad['especialidad_id']; ?>">
+                                    <?php echo $especialidad['especialidad_id'] . ' - ' . $especialidad['descripcion']; ?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="fisioterapeuta_id" class="form-label">ID del Fisioterapeuta</label>
                         <select class="form-select" name="fisioterapeuta_id" id="fisioterapeuta_id" required>
-                            <option value="<?php echo $cita['fisioterapeuta_id']; ?>" hidden selected><?php echo $cita['fisioterapeuta_nombre'] . ' ' . $cita['fisioterapeuta_apellidos']; ?></option>
-                            <?php foreach ($fisioterapeutas as $fisioterapeuta) : ?>
-                                <option value="<?php echo $fisioterapeuta['usuario_id']; ?>"><?php echo $fisioterapeuta['nombre'] . ' ' . $fisioterapeuta['apellidos']; ?></option>
+                            <option value="<?php echo $cita['fisioterapeuta_id']; ?>" hidden selected>
+                                <?php echo $cita['fisioterapeuta_nombre'] . ' ' . $cita['fisioterapeuta_apellidos']; ?>
+                            </option>
+                            <?php foreach ($fisioterapeutas as $fisioterapeuta): ?>
+                                <option value="<?php echo $fisioterapeuta['usuario_id']; ?>">
+                                    <?php echo $fisioterapeuta['nombre'] . ' ' . $fisioterapeuta['apellidos']; ?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="fecha_hora" class="form-label">Fecha y Hora</label>
-                        <input type="datetime-local" class="form-control" id="fecha_hora" name="fecha_hora" value="<?php echo $cita['fecha_hora']; ?>" required>
+                        <input type="datetime-local" class="form-control" id="fecha_hora" name="fecha_hora"
+                            value="<?php echo $cita['fecha_hora']; ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="estado" class="form-label">Estado</label>
                         <select class="form-select" id="estado" name="estado">
-                            <option value="<?php echo $cita['estado']?>" hidden selected><?php echo $cita['estado']?></option>
+                            <option value="<?php echo $cita['estado'] ?>" hidden selected><?php echo $cita['estado'] ?>
+                            </option>
                             <option value="Programada">Programada</option>
                             <option value="Cancelada">Cancelada</option>
                             <option value="Realizada">Realizada</option>
@@ -65,7 +79,9 @@
             </div>
             <div class="modal-body">
                 <form action="../scripts/appointment_manager.php" method="post" id="formCitas">
-                    <p>¿Deseas confirmar esta cita de <?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?>?</p>
+                    <p>¿Deseas confirmar esta cita de
+                        <?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?>?
+                    </p>
                     <input type="hidden" id="actionCitas" name="action" value="confirmar">
                     <input type="hidden" id="cita_id" name="cita_id" value="<?php echo $cita['cita_id'] ?>">
                 </form>
@@ -77,11 +93,13 @@
                         <div class="card-body">
                             <div class="mb-3">
                                 <label for="diagnostico" class="form-label">Diagnóstico</label>
-                                <textarea class="form-control" name="diagnostico" id="diagnostico" rows="3" required></textarea>
+                                <textarea class="form-control" name="diagnostico" id="diagnostico" rows="3"
+                                    required></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="tratamiento" class="form-label">Tratamiento</label>
-                                <textarea class="form-control" name="tratamiento" id="tratamiento" rows="3" required></textarea>
+                                <textarea class="form-control" name="tratamiento" id="tratamiento" rows="3"
+                                    required></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="notas" class="form-label">Notas Adicionales</label>
@@ -95,12 +113,12 @@
                 <button id="submitForms" class="btn btn-success">Confirmar cita</button>
             </div>
             <script>
-                document.getElementById("submitForms").addEventListener("click", function() {
+                document.getElementById("submitForms").addEventListener("click", function () {
                     document.getElementById("formHistorialMedico").submit(); // Envía el formulario de historial médico primero
                 });
-                
+
                 // Agregar un listener para el evento 'submit' en el formulario de historial médico
-                document.getElementById("formHistorialMedico").addEventListener("submit", function() {
+                document.getElementById("formHistorialMedico").addEventListener("submit", function () {
                     // Agregar el código aquí para manejar la respuesta después de enviar el formulario de historial médico
                     // Por ejemplo, si la respuesta indica que el historial médico se creó con éxito, entonces enviar el formulario de citas
                     document.getElementById("formCitas").submit(); // Envía el formulario de citas después de crear el historial médico
@@ -119,7 +137,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>¿Deseas eliminar esta cita de <?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?>?</p>
+                <p>¿Deseas eliminar esta cita de
+                    <?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?>?
+                </p>
             </div>
             <div class="modal-footer">
                 <form action="../scripts/appointment_manager.php" method="post">

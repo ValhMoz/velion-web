@@ -26,13 +26,13 @@ if (isset($_GET['usuario_id'])) {
 
 <div class="container">
     <div class="profile-header">
-        <img src="https://via.placeholder.com/150" alt="Foto de Perfil" class="profile-picture">
+        <img src="../assets/custom/img/foto_perfil.jpg" alt="Foto de Perfil" class="profile-picture">
     </div>
     <div class="row">
         <div class="col-md-3">
             <div class="profile-info text-center">
                 <h1><? echo ($usuario[0]['nombre'] . ' ' .  $usuario[0]['apellidos']); ?></h1>
-                <p><? echo ($usuario[0]['rol']); ?></p>
+                <b><? echo ($usuario[0]['rol']); ?></b>
             </div>
         </div>
         <div class="col-md-9">

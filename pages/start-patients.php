@@ -28,13 +28,8 @@ if ($_GET['pagina'] > $n_botones_paginacion) {
 include_once 'includes/dashboard-patients.php';
 ?>
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Bienvenid@, <?php echo $nombre ?> </h1>
-</div>
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h3">Mis informes</h1>
-</div>
+
 
 <?php
 // Verificar si hay una alerta de usuario
@@ -54,24 +49,30 @@ if (isset($_SESSION['alert'])) {
     <div class="row">
         <!-- Aquí se mostrará cada informe en forma de listas -->
         <div class="col">
-            <ul class="list-group">
+            <ul class="list-group mt-5 custom-bg" style="background-color: transparent">
+                <li class="list-group-item" style="background-color: #222; border:none">
+                    <h3 class="mb-0 d-flex justify-content-center align-items-center" style="color: #FFFFFF">Mis informes</h3>
+                </li>
                 <?php foreach ($informes as $informe) { ?>
-                    <li class="list-group-item">
+                    <li class="list-group-item custom-blur">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-2">Informe <?php echo $informe['historial_id']; ?></h5>
                             <small>Fecha: <?php echo $informe['fecha_hora']; ?></small>
                         </div>
-                        <p class="mb-2">Información sobre el informe.</p>
+                        <p class="mb-2"><b>Información sobre el informe:</b></p>
                         <small>Nombre del paciente:
                             <?php echo $informe['paciente_nombre'] . " " . $informe['paciente_apellidos']; ?></small>
                         <br>
                         <small>Nombre del fisioterapeuta:
                             <?php echo $informe['fisioterapeuta_nombre'] . " " . $informe['fisioterapeuta_apellidos']; ?></small>
+                        <br>
+                        <small>Especialidad:
+                            <?php echo $informe['especialidad']; ?></small>
                         <div class="text-end mt-2">
                             <form action="../scripts/medicalhistory_manager.php" method="GET">
                                 <input type="hidden" id="historial_id" name="historial_id"
                                     value="<?php echo $informe['historial_id']; ?>">
-                                <button type="submit" class="btn btn-success">Descargar</button>
+                                <button type="submit" class="btn btn-success btn-dark">Descargar</button>
                             </form>
                         </div>
                     </li>
@@ -81,18 +82,18 @@ if (isset($_SESSION['alert'])) {
     </div>
 </div>
 
-
+<br>
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-start">
         <li class="page-item <? echo $_GET['pagina'] <= 1 ? 'disabled' : '' ?>">
-            <a class="page-link" href="start-patients.php?pagina=<?php echo $_GET['pagina'] - 1 ?>">Anterior</a>
+            <a class="page-link" style="background-color: #222; color: #FFFFFF; border-color:#222" href="start-patients.php?pagina=<?php echo $_GET['pagina'] - 1 ?>">Anterior</a>
         </li>
         <?php for ($i = 0; $i < $n_botones_paginacion; $i++): ?>
             <li class="page-item <? echo $_GET['pagina'] == $i + 1 ? 'active' : '' ?>"><a class="page-link"
                     href="start-patients.php?pagina=<?php echo $i + 1 ?>"><?php echo $i + 1 ?></a></li>
         <?php endfor ?>
         <li class="page-item <? echo $_GET['pagina'] >= $n_botones_paginacion ? 'disabled' : '' ?>">
-            <a class="page-link" href="start-patients.php?pagina=<?php echo $_GET['pagina'] + 1 ?>">Siguiente</a>
+            <a class="page-link custom-page-link" style="background-color: #222; color: #FFFFFF; border-color:#222" href="start-patients.php?pagina=<?php echo $_GET['pagina'] + 1 ?>">Siguiente</a>
         </li>
     </ul>
 </nav>
