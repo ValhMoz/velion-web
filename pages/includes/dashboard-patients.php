@@ -25,6 +25,7 @@
       color: #000 !important;
     }
 
+
     .navbar-dark .navbar-toggler-icon {
       filter: invert(1);
     }
@@ -60,6 +61,76 @@
       border-color: #222;
       /* Borde del mismo color que el fondo */
     }
+
+    .custom-color {
+      color: #000000;
+    }
+
+    .profile-header {
+      width: 1200px;
+      /* Ajusta el ancho según tus necesidades */
+      height: 300px;
+      /* Ajusta la altura según tus necesidades */
+      background-image: url('../assets/custom/img/foto_fondo_perfil.jpg');
+      background-size: cover;
+      /* Ajusta la imagen para que cubra todo el div */
+      background-position: center;
+      /* Centra la imagen en el div */
+      position: relative;
+      /* Para posicionar el contenido dentro del div */
+      border-radius: 10px;
+    }
+
+    .profile-picture {
+      border: none;
+    }
+
+    .nav-link {
+      color: #343a40;
+      /* Color oscuro para los botones no seleccionados */
+    }
+
+    .nav-link.active {
+      background-color: #343a40 !important;
+      /* Color oscuro */
+      color: white !important;
+      /* Texto blanco para contraste */
+    }
+
+    .nav-link:hover {
+      background-color: #495057;
+      /* Color oscuro más claro en hover */
+      color: white;
+    }
+
+    .link-wrapper {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: inherit;
+      /* Mantiene el color del texto según el contexto */
+    }
+
+    .link-wrapper img {
+      margin-right: 10px;
+      /* Espaciado entre la imagen y el texto */
+    }
+
+    .link-wrapper span {
+      font-size: 1.2em;
+      /* Ajusta el tamaño del texto */
+      color: black;
+      /* Cambia el color del texto a negro */
+      text-decoration: none;
+      /* Elimina el subrayado */
+      font-size: 1.3rem;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    .link-wrapper:hover span {
+      text-decoration: none;
+      /* Asegura que el texto no se subraye al pasar el mouse */
+    }
   </style>
 </head>
 
@@ -67,9 +138,11 @@
 
   <nav class="navbar sticky-top navbar-expand-lg navbar-dark shadow">
     <div class="container">
-      <img src="../assets/custom/img/foto_perfil.jpg" alt="Foto de Perfil" class="rounded-circle me-2"
-        style="width: 30px; height: 30px;">
-      <a class="navbar-brand" href="#"><?php echo $nombre . ' ' . $apellidos; ?></a>
+      <a href="userdetail.php?usuario_id=<?php echo $DNI ?>" class="link-wrapper">
+        <img src="../assets/custom/img/foto_perfil.jpg" alt="Foto de Perfil" class="rounded-circle"
+          style="width: 30px; height: 30px;">
+        <span><?php echo $nombre . ' ' . $apellidos; ?></span>
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -94,11 +167,6 @@
           <li class="nav-item">
             <a class="nav-link" href="shop.php">
               <i class="bi bi-shop"></i> Tienda
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="userdetail.php?usuario_id=<?php echo $DNI ?>">
-              <i class="bi bi-person"></i> Perfil
             </a>
           </li>
           <li class="nav-item">
