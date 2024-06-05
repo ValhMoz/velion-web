@@ -32,9 +32,9 @@
                                 <label for="genero" class="form-label">Género</label>
                                 <select class="form-select" id="genero" name="genero" aria-label="Selecciona tu género">
                                     <option value="" disabled>Selecciona tu género</option>
-                                    <option value="hombre" <?php if ($usuario['genero'] === 'hombre') echo 'selected'; ?>>Hombre</option>
-                                    <option value="mujer" <?php if ($usuario['genero'] === 'mujer') echo 'selected'; ?>>Mujer</option>
-                                    <option value="otro" <?php if ($usuario['genero'] === 'otro') echo 'selected'; ?>>Otro</option>
+                                    <option value="Hombre" <?php if ($usuario['genero'] === 'Hombre') echo 'selected'; ?>>Hombre</option>
+                                    <option value="Mujer" <?php if ($usuario['genero'] === 'Mujer') echo 'selected'; ?>>Mujer</option>
+                                    <option value="Otro" <?php if ($usuario['genero'] === 'Otro') echo 'selected'; ?>>Otro</option>
                                 </select>
                             </div>
                         </div>

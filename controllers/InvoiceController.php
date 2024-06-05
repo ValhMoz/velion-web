@@ -177,7 +177,7 @@ class InvoiceController extends PDF_Invoice
     //         case 'Bono de 30 sesiones':
     //             $sesiones_adicionales = 30;
     //             break;
-    //             // Agrega más casos según sea necesario para otros tipos de bono
+    //             // Agrega más casos según sea necesario para Otros tipos de bono
     //     }
 
     //     // Actualizar las sesiones disponibles del Factura en la base de datos

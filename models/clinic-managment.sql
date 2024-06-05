@@ -42,7 +42,7 @@ CREATE TABLE usuarios (
   email VARCHAR(100) UNIQUE,
   pass VARCHAR(255),
   rol ENUM('Administrador', 'Paciente', 'Fisioterapeuta'),
-  genero ENUM('hombre', 'mujer', 'otro'),
+  genero ENUM('Hombre', 'Mujer', 'Otro'),
   especialidad INT,
   sesiones_disponibles INT,
   FOREIGN KEY (especialidad) REFERENCES especialidades(especialidad_id)
@@ -119,9 +119,9 @@ INSERT INTO productos (nombre, categoria_id, descripcion, monto) VALUES
 -- Insertar datos de prueba para la tabla usuarios
 INSERT INTO usuarios (usuario_id, acerca_de, nombre, apellidos, telefono, fecha_nacimiento, direccion, provincia, municipio, cp, email, pass, rol, genero, especialidad, sesiones_disponibles)
 VALUES
-('123456789', 'Juan Pérez es un paciente de 45 años que ha estado bajo nuestro cuidado desde 2015. Vive en Ciudad de México y trabaja como ingeniero. En su tiempo libre, disfruta de la lectura y el senderismo.', 'Juan', 'Perez', '123456789', '1990-01-01', 'Calle 123', 'Provincia 1', 'Ciudad 1', '12345', 'patient@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'Paciente', 'hombre', NULL, 10),
-('234567890', '', 'Maria', 'Lopez', '234567890', '1995-05-05', 'Avenida 456', 'Provincia 2', 'Ciudad 2', '23456', 'fisio@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'Fisioterapeuta', 'mujer', 5, NULL),
-('345678901', '', 'Pedro', 'Gomez', '345678901', '1985-10-10', 'Plaza 789', 'Provincia 3', 'Ciudad 3', '34567', 'admin@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'Administrador', 'hombre', NULL, NULL),
+('123456789', 'Juan Pérez es un paciente de 45 años que ha estado bajo nuestro cuidado desde 2015. Vive en Ciudad de México y trabaja como ingeniero. En su tiempo libre, disfruta de la lectura y el senderismo.', 'Juan', 'Perez', '123456789', '1990-01-01', 'Calle 123', 'Provincia 1', 'Ciudad 1', '12345', 'patient@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'Paciente', 'Hombre', NULL, 10),
+('234567890', '', 'Maria', 'Lopez', '234567890', '1995-05-05', 'Avenida 456', 'Provincia 2', 'Ciudad 2', '23456', 'fisio@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'Fisioterapeuta', 'Mujer', 5, NULL),
+('345678901', '', 'Pedro', 'Gomez', '345678901', '1985-10-10', 'Plaza 789', 'Provincia 3', 'Ciudad 3', '34567', 'admin@example.com', '$2y$10$N7JA82u/XFyaeHM.4t44S.9KKcgpj5yikEYBZ8k/0cp4qmvA/MEb6', 'Administrador', 'Hombre', NULL, NULL),
 ('000000000', NULL, 'No asignado', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ninguno', NULL, NULL, NULL);
 
 -- Insertar datos de prueba para la tabla facturas
