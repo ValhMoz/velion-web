@@ -162,8 +162,8 @@ class LoginController {
             $mail->setFrom('sergiofrubio@gmail.com', 'SIGEFI');
             $mail->addAddress($email);
             $mail->isHTML(true);
-            $mail->Subject = 'Recuperacion de contrasena';
-            $mail->Body = 'Haz clic en el siguiente enlace para recuperar tu contrasena: <a href="' . $resetLink . '">Recuperar Contraseña</a>';
+            $mail->Subject = iconv('UTF-8', 'windows-1252', "Recuperación de contraseña");
+            $mail->Body = 'Haz clic en el siguiente enlace para recuperar tu contraseña: <a href="' . $resetLink . '">Recuperar Contraseña</a>';
             $mail->send();
         } catch (Exception $e) {
             echo "No se pudo enviar el mensaje. Error de Mailer: {$mail->ErrorInfo}";
