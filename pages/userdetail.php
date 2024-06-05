@@ -100,18 +100,18 @@ if (isset($_GET['usuario_id'])) {
 
                                     <div class="mb-2">
                                         <label for="email" class="form-label" style="margin-left: 5px;">Correo Electrónico:</label>
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Correo electrónico" style="border: 0.1px solid black;" value="<?php echo $correo ?>">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Correo electrónico" value="<?php echo $correo ?>">
                                     </div>
                                     <div class="mb-2">
                                         <label for="pass" class="form-label" style="margin-left: 5px;">Nueva contraseña:</label>
-                                        <input type="password" class="form-control" id="pass" name="pass" placeholder="Contraseña" style="border: 0.1px solid black;" required>
+                                        <input type="password" class="form-control" id="pass" name="pass" placeholder="Contraseña" required>
                                     </div>
                                     <div class="mb-2">
                                         <label for="confirmPassword" class="form-label" style="margin-left: 5px;">Confirmar nueva contraseña:</label>
-                                        <input type="password" class="form-control" id="confirmPass" name="confirmPass" placeholder="Confirmar Contraseña" style="border: 0.1px solid black;" required>
+                                        <input type="password" class="form-control" id="confirmPass" name="confirmPass" placeholder="Confirmar Contraseña" required>
                                         <div id="passwordError" class="text-danger"></div>
                                     </div>
-                                    <button type="submit" class="btn btn-dark" style="border: 0.1px solid black;" onclick="return validatePassword()">Guardar Cambios</button>
+                                    <button type="submit" class="btn btn-light" onclick="return validatePassword()">Guardar Cambios</button>
                                 </form>
                             </div>
                         </div>

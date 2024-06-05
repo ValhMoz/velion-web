@@ -97,12 +97,6 @@
       /* Texto blanco para contraste */
     }
 
-    .nav-link:hover {
-      background-color: #495057;
-      /* Color oscuro más claro en hover */
-      color: white;
-    }
-
     .link-wrapper {
       display: flex;
       align-items: center;

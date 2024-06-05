@@ -138,8 +138,6 @@ if (isset($_SESSION['alert'])) {
                                     <?php echo $estado; ?>
                                 </span></small>
                             <div class="text-end mt-2">
-                                <!-- <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                data-bs-target="#edit_<?php echo $cita['cita_id']; ?>">Modificar cita</button> -->
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#delete_<?php echo $cita['cita_id']; ?>">Cancelar cita</button>
                                 <?php include 'modals/appointments-patients/edit_delete_modal.php'; ?>
