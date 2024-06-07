@@ -101,8 +101,8 @@ if (isset($_SESSION['alert'])) {
     <div class="row">
         <!-- Aquí se mostrarán las citas en forma de listas -->
         <div class="col">
-            <ul class="list-group custom-bg">
-                <li class="list-group-item" style="background-color: #222; border:none">
+            <ul class="list-group">
+                <li class="list-group-item custom-blur">
                     <h3 class="mb-0 d-flex justify-content-center align-items-center" style="color: #FFFFFF">Mis citas</h3>
                 </li>
                 <?php foreach ($citasPaginadas as $cita): ?>

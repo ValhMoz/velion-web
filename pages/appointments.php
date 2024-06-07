@@ -3,6 +3,7 @@ require_once '../scripts/session_manager.php';
 require_once '../controllers/AppointmentController.php';
 $appointmentController = new AppointmentController();
 
+
 if ($rol == "Paciente") {
     header("Location: 404.php");
     exit();
@@ -144,8 +145,11 @@ if (isset($_SESSION['alert'])) {
                                         case 'Programada':
                                             $text_gb_class = 'text-bg-warning';
                                             break;
+                                        case 'Pendiente':
+                                            $text_gb_class = 'text-bg-info';
+                                            break;
                                         default:
-                                            $text_gb_class = 'text-bg-warning';
+                                            $text_gb_class = 'text-bg-info';
                                     }
                                     ?>
                                     <span class="badge <?php echo $text_gb_class; ?>">

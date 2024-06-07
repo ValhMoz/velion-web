@@ -50,7 +50,7 @@ if (isset($_SESSION['alert'])) {
         <!-- Aquí se mostrará cada informe en forma de listas -->
         <div class="col">
             <ul class="list-group mt-5 custom-bg" style="background-color: transparent">
-                <li class="list-group-item" style="background-color: #222; border:none">
+                <li class="list-group-item custom-blur">
                     <h3 class="mb-0 d-flex justify-content-center align-items-center" style="color: #FFFFFF">Mis informes</h3>
                 </li>
                 <?php foreach ($informes as $informe) { ?>
@@ -72,7 +72,7 @@ if (isset($_SESSION['alert'])) {
                             <form action="../scripts/medicalhistory_manager.php" method="GET">
                                 <input type="hidden" id="id" name="id"
                                     value="<?php echo $informe['cita_id']; ?>">
-                                <button type="submit" class="btn btn-success btn-dark">Descargar</button>
+                                <button type="submit" class="btn btn-success btn-success">Descargar</button>
                             </form>
                         </div>
                     </li>

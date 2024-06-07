@@ -186,24 +186,34 @@ class AppointmentModel extends BaseModel
         return $datos;
     }
 
+    // Agrega tu método modificado getAvailableSlots aquí
     public function getAvailableSlots($fisioterapeuta_id, $date) {
         $sql = "SELECT fecha_hora FROM citas WHERE fisioterapeuta_id = ? AND DATE(fecha_hora) = ?";
-        $stmt = $this->conn->prepare($sql);
+        $stmt = self::$conexion->prepare($sql);
         $stmt->bind_param("is", $fisioterapeuta_id, $date);
         $stmt->execute();
         $result = $stmt->get_result();
         $bookedSlots = [];
-
+    
         while ($row = $result->fetch_assoc()) {
             $bookedSlots[] = $row['fecha_hora'];
         }
-
+    
+        $stmt->close();
+    
+        // Agregar var_dump para depuración
+        var_dump($bookedSlots);
+    
         return $bookedSlots;
     }
+    
+    
+       
 
+    // Agrega tu método modificado bookAppointment aquí
     public function bookAppointment($paciente_id, $fisioterapeuta_id, $fecha_hora) {
         $sql = "INSERT INTO citas (paciente_id, fisioterapeuta_id, fecha_hora) VALUES (?, ?, ?)";
-        $stmt = $this->conn->prepare($sql);
+        $stmt = self::$conexion->prepare($sql);
         $stmt->bind_param("iis", $paciente_id, $fisioterapeuta_id, $fecha_hora);
         return $stmt->execute();
     }

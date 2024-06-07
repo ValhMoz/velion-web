@@ -35,7 +35,7 @@ include_once './includes/dashboard-patients.php';
                         <li></li>
                         <br>
                     </ul>
-                    <button type="button" id="bono3" class="w-100 btn btn-lg btn-outline-secondary buy">Haz click aquí
+                    <button type="button" id="bono3" class="w-100 btn btn-lg btn-outline-light buy">Haz click aquí
                         para comprar</button>
                 </div>
             </div>
@@ -50,7 +50,7 @@ include_once './includes/dashboard-patients.php';
                     <ul class="list-unstyled mt-3 mb-4">
                         <li>(30€/sesión)</li>
                     </ul>
-                    <button type="button" id="bono1" class="w-100 btn btn-lg btn-outline-secondary buy">Haz click aquí
+                    <button type="button" id="bono1" class="w-100 btn btn-lg btn-outline-light buy">Haz click aquí
                         para comprar</button>
                 </div>
             </div>
@@ -65,7 +65,7 @@ include_once './includes/dashboard-patients.php';
                     <ul class="list-unstyled mt-3 mb-4">
                         <li>(26€/sesión)</li>
                     </ul>
-                    <button type="button" id="bono2" class="w-100 btn btn-lg btn-outline-secondary buy">Haz click aquí
+                    <button type="button" id="bono2" class="w-100 btn btn-lg btn-outline-light buy">Haz click aquí
                         para comprar</button>
                 </div>
             </div>
@@ -80,7 +80,7 @@ include_once './includes/dashboard-patients.php';
                     <ul class="list-unstyled mt-3 mb-4">
                         <li>(24€/sesión)</li>
                     </ul>
-                    <button type="button" id="bono3" class="w-100 btn btn-lg btn-outline-secondary buy">Haz click aquí
+                    <button type="button" id="bono3" class="w-100 btn btn-lg btn-outline-light buy">Haz click aquí
                         para comprar</button>
                 </div>
             </div>
@@ -95,7 +95,7 @@ include_once './includes/dashboard-patients.php';
                     <ul class="list-unstyled mt-3 mb-4">
                         <li>(20,5€/sesión)</li>
                     </ul>
-                    <button type="button" id="bono3" class="w-100 btn btn-lg btn-outline-secondary buy">Haz click aquí
+                    <button type="button" id="bono3" class="w-100 btn btn-lg btn-outline-light buy">Haz click aquí
                         para comprar</button>
                 </div>
             </div>
@@ -110,7 +110,7 @@ include_once './includes/dashboard-patients.php';
                     <ul class="list-unstyled mt-3 mb-4">
                         <li>(37€/sesión)</li>
                     </ul>
-                    <button type="button" id="bono3" class="w-100 btn btn-lg btn-outline-secondary buy">Haz click aquí
+                    <button type="button" id="bono3" class="w-100 btn btn-lg btn-outline-light buy">Haz click aquí
                         para comprar</button>
                 </div>
             </div>

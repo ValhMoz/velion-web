@@ -8,6 +8,7 @@
             </div>
             <form action="../scripts/speciality_manager.php" method="post">
                 <div class="modal-body">
+                    <input type="hidden" value="<?php echo $especialidad['especialidad_id']; ?>" id="especialidad_id" name="especialidad_id">
                     <label for="descipcion" class="form-label">Descripción</label>
                     <input type="text" class="form-control" id="descripcion" name="descripcion" value="<?php echo $especialidad['descripcion']; ?>">
                 </div>

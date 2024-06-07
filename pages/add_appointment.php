@@ -1,57 +1,38 @@
-<?php
-require_once '../scripts/session_manager.php';
-require_once '../controllers/AppointmentController.php';
-$appointmentController = new AppointmentController();
+<?php include './includes/dashboard.php';?>
 
-$fisioterapeutas = $appointmentController->obtenerListaFisioterapeutas();
-
-$filtro_usuario_id = isset($_POST['usuario_id']) ? $_POST['usuario_id'] : '';
-$filtro_fecha = isset($_POST['date']) ? $_POST['date'] : '';
-
-if(!empty($filtro_fecha) && !empty($filtro_usuario_id)) {
-    $slots = $appointmentController->getSlots($filtro_fecha, $filtro_usuario_id);
-    echo(json_encode($slots));
-    
-}
-
-include './includes/dashboard.php';
-?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Seleccione una Cita</title>
-</head>
-<body>
-    <h1>Seleccione una Cita</h1>
-    <form  method="post">
-        <input type="hidden" id="action" name="get_available_slots" value="get_available_slots">
-        <label for="fisioterapeuta">Fisioterapeuta:</label>
-        <select id="fisioterapeuta" name="fisioterapeuta_id">
-            <?php foreach ($fisioterapeutas as $fisioterapeuta): ?>
-                <option value="<?= $fisioterapeuta['usuario_id'] ?>"><?= $fisioterapeuta['nombre'] . ' ' . $fisioterapeuta['apellidos'] ?></option>
-            <?php endforeach; ?>
-        </select>
-        <br><br>
-        <label for="date">Fecha:</label>
-        <input type="date" id="date" name="date">
-        <br><br>
-        <button type="subtmit">Buscar Horarios Disponibles</button>
-    </form>
-
-
-    <h1>Horarios disponibles</h1>
-    <form action="../scripts/appointment.php" method="post">
-        <input type="hidden" id="action" name="get_available_slots" value="get_available_slots">
-        <label for="fisioterapeuta">Horarios:</label>
-        <select id="fisioterapeuta" name="fisioterapeuta_id">
-            <?php foreach ($slots as $slot): ?>
-                <option value="<?= $slot ?>"><?= $slot?></option>
-            <?php endforeach; ?>
-        </select>
-        <br><br>
-        <br><br>
-        <button type="subtmit">Confirmar cita</button>
-    </form>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="card-title mb-0">Solicitud de Cita Médica</h5>
+                </div>
+                <div class="card-body">
+                    <form action="procesar_cita.php" method="POST">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="usuario_id" name="usuario_id" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Fisioterapeuta</label>
+                            <input type="email" class="form-control" id="fisioterapeuta_id" name="fisioterapeuta_id" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Especialidad</label>
+                            <input type="email" class="form-control" id="especialidad_id" name="especialidad_id" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fecha" class="form-label">Fecha</label>
+                            <input type="date" class="form-date" id="fecha_hora" name="fecha_hora" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success">Enviar Cita</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

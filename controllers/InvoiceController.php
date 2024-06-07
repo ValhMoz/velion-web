@@ -135,7 +135,7 @@ class InvoiceController extends PDF_Invoice
             $y    = 109;
             $line = array(
                 "REF"    => "REF1",
-                iconv('UTF-8', 'windows-1252', "DESCRIPCIÓN")  => $factura[0]['producto_nombre'],
+                iconv('UTF-8', 'windows-1252', "DESCRIPCIÓN")  => iconv('UTF-8', 'windows-1252', $factura[0]['producto_nombre']),
                 "CANTIDAD"     => "1",
                 "PRECIO UNITARIO"      => $factura[0]['monto'] . EURO,
                 "PRECIO TOTAL" => $factura[0]['monto'] . EURO,
@@ -160,27 +160,32 @@ class InvoiceController extends PDF_Invoice
 
     }
 
-    // public function actualizarSesionesDisponibles($paciente_id, $tipo_bono)
-    // {
-    //     // Obtener el número de sesiones adicionales según el tipo de bono
-    //     $sesiones_adicionales = 0;
-    //     switch ($tipo_bono) {
-    //         case 'Bono de 10 sesiones':
-    //             $sesiones_adicionales = 10;
-    //             break;
-    //         case 'Bono de 15 sesiones':
-    //             $sesiones_adicionales = 15;
-    //             break;
-    //         case 'Bono de 20 sesiones':
-    //             $sesiones_adicionales = 20;
-    //             break;
-    //         case 'Bono de 30 sesiones':
-    //             $sesiones_adicionales = 30;
-    //             break;
-    //             // Agrega más casos según sea necesario para Otros tipos de bono
-    //     }
+    public function confirmarFactura($datos, $condicion)
+    {
+        if ($this->invoiceModel->update("facturas", $datos, $condicion)) {
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Pago de la factura confirmado correctamente.');
+            header('Location: ../pages/invoices.php');
+            exit();
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido conmfirma el pago de la factura correctamente.');
+            header('Location: ../pages/invoices.php');
+            exit();
+        }
 
-    //     // Actualizar las sesiones disponibles del Factura en la base de datos
-    //     $this->invoiceModel->actualizarSesionesDisponibles($paciente_id, $sesiones_adicionales);
-    // }
+    }
+
+    public function eliminarFactura($condicion)
+    {
+        if ($this->invoiceModel->delete("facturas", $condicion)) {
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Factura eliminada correctamente.');
+            header('Location: ../pages/invoices.php');
+            exit();
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido la factura correctamente.');
+            header('Location: ../pages/invoices.php');
+            exit();
+        }
+
+    }
+
 }

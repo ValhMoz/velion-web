@@ -38,27 +38,27 @@ class MedicalHistoryController extends FPDF
         $pdf->SetFillColor(230, 230, 230);
 
         // Recuadro para los datos del paciente
-        $pdf->Rect(10, 20, 90, 30, 'DF');
+        $pdf->Rect(10, 25, 90, 30, 'DF');
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Datos del Paciente'), 0, 1, 'L');
+        $pdf->Cell(0, 18, iconv('UTF-8', 'windows-1252', 'Datos del Paciente'), 0, 1, 'L');
         $pdf->SetFont('Arial', '', 12);
         $pdf->SetXY(10, 25);
-        $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Nombre: ') . iconv('UTF-8', 'windows-1252', $paciente_nombre), 0, 1, 'L');
+        $pdf->Cell(0, 18, iconv('UTF-8', 'windows-1252', 'Nombre: ') . iconv('UTF-8', 'windows-1252', $paciente_nombre), 0, 1, 'L');
         $pdf->SetXY(10, 30);
-        $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Fecha de Nacimiento: ') . iconv('UTF-8', 'windows-1252', $paciente_fecha_nacimiento), 0, 1, 'L');
+        $pdf->Cell(0, 18, iconv('UTF-8', 'windows-1252', 'Fecha de Nacimiento: ') . iconv('UTF-8', 'windows-1252', $paciente_fecha_nacimiento), 0, 1, 'L');
         $pdf->SetXY(10, 35);
-        $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Género: ') . iconv('UTF-8', 'windows-1252', $paciente_genero), 0, 1, 'L');
+        $pdf->Cell(0, 18, iconv('UTF-8', 'windows-1252', 'Género: ') . iconv('UTF-8', 'windows-1252', $paciente_genero), 0, 1, 'L');
 
         // Recuadro para los datos del facultativo
-        $pdf->Rect(110, 20, 90, 30, 'DF');
+        $pdf->Rect(110, 25, 90, 30, 'DF');
         $pdf->SetFont('Arial', 'B', 12);
         $pdf->SetXY(110, 20);
-        $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Datos del Facultativo'), 0, 1, 'L');
+        $pdf->Cell(0, 18, iconv('UTF-8', 'windows-1252', 'Datos del Facultativo'), 0, 1, 'L');
         $pdf->SetFont('Arial', '', 12);
         $pdf->SetXY(110, 25);
-        $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Nombre: ') . iconv('UTF-8', 'windows-1252', $fisioterapeuta_nombre), 0, 1, 'L');
+        $pdf->Cell(0, 18, iconv('UTF-8', 'windows-1252', 'Nombre: ') . iconv('UTF-8', 'windows-1252', $fisioterapeuta_nombre), 0, 1, 'L');
         $pdf->SetXY(110, 30);
-        $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Especialidad: ') . iconv('UTF-8', 'windows-1252', $especialidad), 0, 1, 'L');
+        $pdf->Cell(0, 18, iconv('UTF-8', 'windows-1252', 'Especialidad: ') . iconv('UTF-8', 'windows-1252', $especialidad), 0, 1, 'L');
 
         // Recuadro para el diagnóstico
         $pdf->Rect(10, 70, 190, 30, 'DF');

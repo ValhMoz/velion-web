@@ -87,13 +87,11 @@ if (isset($_SESSION['alert'])) {
 <div class="table-responsive small">
     <form class="row g-3 mb-3" method="POST" action="">
         <div class="col-auto">
-            <label for="producto_id" class="form-label">ID de Producto</label>
             <input type="text" class="form-control" id="producto_id" name="producto_id" value="<?php echo $filtro_producto_id; ?>" placeholder="Filtrar por ID...">
         </div>
         <div class="col-auto">
-            <label for="categoria" class="form-label">Categoría</label>
             <select class="form-select" id="categoria_id" name="categoria_id">
-                <option value="" selected hidden>Seleccione una categoría</option>
+                <option selected value="" hidden>Seleccione una categoría</option>
                 <?php foreach ($categorias as $categoria) : ?>
                     <option value="<?php echo $categoria['categoria_id']; ?>" <?php echo ($filtro_categoria == $categoria['categoria_id']) ? 'selected' : ''; ?>><?php echo $categoria['nombre']; ?></option>
                 <?php endforeach; ?>

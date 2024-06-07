@@ -11,7 +11,7 @@
                     <input type="hidden" id="paciente_id" name="paciente_id" value="<?php echo $DNI?>">
                     <input type="hidden" id="fisioterapeuta_id" name="fisioterapeuta_id" value="000000000">
                     <input type="hidden" id="estado" name="estado" value="Pendiente">
-                    <div class="mb-3">
+                    <div class="mb-3">  
                         <label for="especialidad_id" class="form-label">Especialidad</label>
                         <select class="form-select" name="especialidad_id" id="especialidad_id" required>
                             <option value="" hidden selected>Selecciona una especialidad</option>

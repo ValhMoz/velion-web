@@ -164,25 +164,13 @@ class AppointmentController
     //     return $fisioterapeutas;
     // }
 
-    public function getSlots($fisioterapeuta_id,  $date) {
-        $bookedSlots = $appointmentModel->getAvailableSlots($fisioterapeuta_id, $date);
-
-        // Generate all time slots for the day
-        $allSlots = $this->generateTimeSlots($date);
-
-        $availableSlots = array_diff($allSlots, $bookedSlots);
-
-        return $availableSlots;
-    }
-
     public function book() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $paciente_id = $_POST['paciente_id'];
             $fisioterapeuta_id = $_POST['fisioterapeuta_id'];
             $fecha_hora = $_POST['fecha_hora'];
 
-            $appointmentModel = new Appointment();
-            $success = $appointmentModel->bookAppointment($paciente_id, $fisioterapeuta_id, $fecha_hora);
+            $success = $this->appointmentModel->bookAppointment($paciente_id, $fisioterapeuta_id, $fecha_hora);
 
             if ($success) {
                 $_SESSION['alert'] = array('type' => 'warning', 'success' => 'Cita reservada exitosamente.');
@@ -196,17 +184,28 @@ class AppointmentController
         }
     }
 
+    public function getSlots($fisioterapeuta_id, $date) {
+        $bookedSlots = $this->appointmentModel->getAvailableSlots($fisioterapeuta_id, $date);
+    
+        // Generate all time slots for the day
+        $allSlots = $this->generateTimeSlots($date);
+    
+        $availableSlots = array_diff($allSlots, $bookedSlots);
+    
+        return $availableSlots;
+    }
+    
     private function generateTimeSlots($date) {
         $start = new DateTime($date . ' 08:00');
         $end = new DateTime($date . ' 17:00');
         $interval = new DateInterval('PT60M');
         $slots = [];
-
+    
         while ($start < $end) {
             $slots[] = $start->format('Y-m-d H:i:s');
             $start->add($interval);
         }
-
+    
         return $slots;
     }
 

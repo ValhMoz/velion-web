@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
         case 'confirmar':
             $datos = array(
                 'estado' => 'Realizada',
-                'descripcion' => $_POST['descripcion'],
+                'diagnostico' => $_POST['diagnostico'],
                 'tratamiento' => $_POST['tratamiento'],
                 'notas' => $_POST['notas']
 

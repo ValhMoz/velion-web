@@ -19,7 +19,6 @@ class ProductController {
 
     public function buscarProductos($productoId, $categoria) {
         $productosFiltrados = $this->productModel->searchProducts($productoId, $categoria);
-    
         if (!empty($productosFiltrados)) {
             return $productosFiltrados;
         } else {

@@ -35,10 +35,9 @@
     }
 
     .custom-blur {
-      backdrop-filter: blur(40px);
-      border: 2px solid #222;
-      color: #000 !important;
-      background: none;
+      border: 2px solid black;
+      color: #FFFFFF !important;
+      background: #222;
     }
 
     .custom-bg-color {

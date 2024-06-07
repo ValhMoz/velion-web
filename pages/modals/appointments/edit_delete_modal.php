@@ -73,19 +73,18 @@
 <div class="modal fade" id="confirm_<?php echo $cita['cita_id']; ?>" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Confirmar cita</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="../scripts/appointment_manager.php" method="post" id="formCitas">
+            <form action="../scripts/appointment_manager.php" method="post" id="formCitas">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar cita</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
                     <p>¿Deseas confirmar esta cita de
                         <?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?>?
                     </p>
                     <input type="hidden" id="actionCitas" name="action" value="confirmar">
                     <input type="hidden" id="cita_id" name="cita_id" value="<?php echo $cita['cita_id'] ?>">
-                </form>
-                <form action="../scripts/medicalhistory_manager.php" method="post" id="formHistorialMedico">
                     <div class="card">
                         <div class="card-header">
                             Generar Historial Médico
@@ -107,23 +106,12 @@
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button id="submitForms" class="btn btn-success">Confirmar cita</button>
-            </div>
-            <script>
-                document.getElementById("submitForms").addEventListener("click", function () {
-                    document.getElementById("formHistorialMedico").submit(); // Envía el formulario de historial médico primero
-                });
 
-                // Agregar un listener para el evento 'submit' en el formulario de historial médico
-                document.getElementById("formHistorialMedico").addEventListener("submit", function () {
-                    // Agregar el código aquí para manejar la respuesta después de enviar el formulario de historial médico
-                    // Por ejemplo, si la respuesta indica que el historial médico se creó con éxito, entonces enviar el formulario de citas
-                    document.getElementById("formCitas").submit(); // Envía el formulario de citas después de crear el historial médico
-                });
-            </script>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Confirmar cita</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

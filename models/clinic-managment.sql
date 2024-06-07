@@ -65,9 +65,8 @@ CREATE TABLE citas (
   paciente_id VARCHAR(9),
   fisioterapeuta_id VARCHAR(9),
   fecha_hora DATETIME,
-  estado ENUM('Programada', 'Cancelada', 'Realizada'),
+  estado ENUM('Programada', 'Cancelada', 'Realizada', 'Pendiente'),
   especialidad_id INT,
-  descripcion TEXT,
   diagnostico TEXT,
   tratamiento TEXT,
   notas TEXT,
@@ -132,10 +131,10 @@ VALUES
 ('345678901', '2024-04-03', 1, 'Pendiente');
 
 -- Insertar datos de prueba en la tabla citas
-INSERT INTO citas (paciente_id, fisioterapeuta_id, fecha_hora, estado, especialidad_id, descripcion, diagnostico, tratamiento, notas)
+INSERT INTO citas (paciente_id, fisioterapeuta_id, fecha_hora, estado, especialidad_id, diagnostico, tratamiento, notas)
 VALUES
-('123456789', '234567890', '2024-01-15 10:00:00', 'Realizada', 1, 'Fisioterapia y ejercicios de fortalecimiento', 'Mejoría progresiva', NULL, NULL),
-('123456789', '234567890', '2024-02-20 11:00:00', 'Realizada', 1, 'Revisión de dolor de espalda', 'Lumbalgia', 'Continuar con fisioterapia', 'Dolor disminuido en un 50%'),
-('123456789', '234567890', '2024-03-25 09:00:00', 'Realizada', 1, 'Rehabilitación post cirugía de rodilla', 'Post-cirugía', 'Ejercicios de movilidad y fortalecimiento', 'Buena evolución'),
-('123456789', '234567890', '2024-04-20 10:00:00', 'Programada', 1, NULL, NULL, NULL, NULL),
-('234567890', '345678901', '2024-05-05 14:00:00', 'Cancelada', 2, NULL, NULL, NULL, NULL);
+('123456789', '234567890', '2024-01-15 10:00:00', 'Realizada', 1, 'Mejoría progresiva', NULL, NULL),
+('123456789', '234567890', '2024-02-20 11:00:00', 'Realizada', 1, 'Lumbalgia', 'Continuar con fisioterapia', 'Dolor disminuido en un 50%'),
+('123456789', '234567890', '2024-03-25 09:00:00', 'Realizada', 1, 'Post-cirugía', 'Ejercicios de movilidad y fortalecimiento', 'Buena evolución'),
+('123456789', '234567890', '2024-04-20 10:00:00', 'Programada', 1, NULL, NULL, NULL),
+('234567890', '345678901', '2024-05-05 14:00:00', 'Cancelada', 2, NULL, NULL, NULL);
