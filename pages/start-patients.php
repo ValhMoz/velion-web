@@ -56,7 +56,7 @@ if (isset($_SESSION['alert'])) {
                 <?php foreach ($informes as $informe) { ?>
                     <li class="list-group-item custom-blur">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-2">Informe <?php echo $informe['historial_id']; ?></h5>
+                            <h5 class="mb-2">Informe <?php echo $informe['cita_id']; ?></h5>
                             <small>Fecha: <?php echo $informe['fecha_hora']; ?></small>
                         </div>
                         <p class="mb-2"><b>Información sobre el informe:</b></p>
@@ -70,8 +70,8 @@ if (isset($_SESSION['alert'])) {
                             <?php echo $informe['especialidad']; ?></small>
                         <div class="text-end mt-2">
                             <form action="../scripts/medicalhistory_manager.php" method="GET">
-                                <input type="hidden" id="historial_id" name="historial_id"
-                                    value="<?php echo $informe['historial_id']; ?>">
+                                <input type="hidden" id="id" name="id"
+                                    value="<?php echo $informe['cita_id']; ?>">
                                 <button type="submit" class="btn btn-success btn-dark">Descargar</button>
                             </form>
                         </div>

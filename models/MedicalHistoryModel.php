@@ -17,6 +17,10 @@ class MedicalHistoryModel extends BaseModel
         c.cita_id,
         c.fecha_hora,
         c.estado AS estado_cita,
+        c.diagnostico,
+        c.descripcion,
+        c.notas,
+        c.tratamiento,
         e.descripcion AS especialidad,
         p.usuario_id AS paciente_id,
         p.nombre AS paciente_nombre,
@@ -30,21 +34,13 @@ class MedicalHistoryModel extends BaseModel
         p.email AS paciente_email,
         p.genero AS paciente_genero,
         f.nombre AS fisioterapeuta_nombre,
-        f.apellidos AS fisioterapeuta_apellidos,
-        hmed.historial_id,
-        hmed.fecha AS historial_fecha,
-        hmed.descripcion AS historial_descripcion,
-        hmed.diagnostico AS historial_diagnostico,
-        hmed.tratamiento AS historial_tratamiento,
-        hmed.notas AS historial_notas
+        f.apellidos AS fisioterapeuta_apellidos
         FROM 
             citas c
         JOIN 
             usuarios p ON c.paciente_id = p.usuario_id
         JOIN
             usuarios f ON c.fisioterapeuta_id = f.usuario_id
-        LEFT JOIN 
-            historial_medico hmed ON c.historial_id = hmed.historial_id
         LEFT JOIN 
             especialidades e ON c.especialidad_id = e.especialidad_id
         WHERE 
@@ -78,6 +74,10 @@ class MedicalHistoryModel extends BaseModel
         c.cita_id,
         c.fecha_hora,
         c.estado AS estado_cita,
+        c.diagnostico,
+        c.descripcion,
+        c.notas,
+        c.tratamiento,
         e.descripcion AS especialidad,
         p.usuario_id AS paciente_id,
         p.nombre AS paciente_nombre,
@@ -91,13 +91,7 @@ class MedicalHistoryModel extends BaseModel
         p.email AS paciente_email,
         p.genero AS paciente_genero,
         f.nombre AS fisioterapeuta_nombre,
-        f.apellidos AS fisioterapeuta_apellidos,
-        hmed.historial_id,
-        hmed.fecha AS historial_fecha,
-        hmed.descripcion AS historial_descripcion,
-        hmed.diagnostico AS historial_diagnostico,
-        hmed.tratamiento AS historial_tratamiento,
-        hmed.notas AS historial_notas
+        f.apellidos AS fisioterapeuta_apellidos
         FROM 
             citas c
         JOIN 
@@ -105,11 +99,9 @@ class MedicalHistoryModel extends BaseModel
         JOIN
             usuarios f ON c.fisioterapeuta_id = f.usuario_id
         LEFT JOIN 
-            historial_medico hmed ON c.historial_id = hmed.historial_id
-        LEFT JOIN 
             especialidades e ON c.especialidad_id = e.especialidad_id
         WHERE 
-            hmed.historial_id = '$historial_id'
+            c.cita_id = '$historial_id'
         AND
             c.estado = 'Realizada'
         ORDER BY 

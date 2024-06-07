@@ -1,5 +1,4 @@
 <?php
-
 require '../controllers/ProductController.php';
 require '../controllers/MedicalHistoryController.php';
 require '../controllers/AppointmentController.php';
@@ -13,9 +12,11 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode('/', $uri);
 
 // Asegúrate de que la URL contenga al menos /api/productos
-if ($uri[1] !== 'api' || !isset($uri[2])) {
+if ($uri[1] !== 'api' || ! isset($uri[2])) {
     header("HTTP/1.1 404 Not Found");
-    echo json_encode(["message" => "Recurso no encontrado"]);
+    echo json_encode([
+        "message" => "Recurso no encontrado"
+    ]);
     exit();
 }
 
@@ -39,19 +40,36 @@ switch ($uri[2]) {
             }
         }
         break;
-        case 'informe':
-            if ($requestMethod == 'GET') {
-                if (isset($uri[3])) {
-                    $DNI = $uri[3];
-                    echo (json_encode($medicalhistoryController->generarInformeMedico(1)));
-                }
+    case 'informe':
+        if ($requestMethod == 'GET') {
+            if (isset($uri[3])) {
+                $DNI = $uri[3];
+                echo (json_encode($medicalhistoryController->generarInformeMedico(1)));
             }
-            break;
+        }
+        break;
     case 'citas':
         if ($requestMethod == 'GET') {
             if (isset($uri[3])) {
                 $DNI = $uri[3];
                 echo (json_encode($appointmentController->obtenerCitasUsuario($DNI, true)));
+            }
+        }
+        break;
+    case 'registro':
+        if ($requestMethod == 'GET') {
+            if (isset($uri[3])) {
+                $DNI = $uri[3];
+                echo (json_encode($appointmentController->obtenerCitasUsuario($DNI, true)));
+            }
+        }
+        break;
+        break;
+    case 'recoverpass':
+        if ($requestMethod == 'GET') {
+            if (isset($uri[3])) {
+                $DNI = $uri[3];
+                echo (json_encode($loginController->generatePasswordResetToken($email, true)));
             }
         }
         break;
@@ -72,13 +90,17 @@ switch ($uri[2]) {
             if ($email && $pass) {
                 echo (json_encode($loginController->iniciarSesion($email, $pass, true)));
             } else {
-                echo json_encode(["message" => "Datos incompletos"]);
+                echo json_encode([
+                    "message" => "Datos incompletos"
+                ]);
             }
         }
         break;
-        // Añadir más rutas según sea necesario
+    // Añadir más rutas según sea necesario
     default:
         header("HTTP/1.1 404 Not Found");
-        echo json_encode(["message" => "Recurso no encontrado"]);
+        echo json_encode([
+            "message" => "Recurso no encontrado"
+        ]);
         break;
 }

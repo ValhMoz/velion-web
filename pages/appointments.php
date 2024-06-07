@@ -144,9 +144,6 @@ if (isset($_SESSION['alert'])) {
                                         case 'Programada':
                                             $text_gb_class = 'text-bg-warning';
                                             break;
-                                        case 'Pendiente':
-                                            $text_gb_class = 'text-bg-info';
-                                            break;
                                         default:
                                             $text_gb_class = 'text-bg-warning';
                                     }
@@ -212,46 +209,6 @@ if (isset($_SESSION['alert'])) {
         </li>
     </ul>
 </nav>
-
-<!-- <script>
-    console.log("Script cargado correctamente");
-
-    document.addEventListener("DOMContentLoaded", function() {
-        console.log("DOMContentLoaded capturado");
-
-        var especialidadSelect = document.getElementById("especialidad_id");
-        var fisioterapeutaSelect = document.getElementById("fisioterapeuta_id");
-        var fisioterapeutas = <?php echo json_encode($fisioterapeutas); ?>;
-        console.log("Fisioterapeutas:", fisioterapeutas);
-
-        especialidadSelect.addEventListener("change", function() {
-            console.log("Cambio en especialidad capturado");
-            var especialidadId = especialidadSelect.value;
-            console.log("Especialidad seleccionada:", especialidadId);
-
-            fisioterapeutaSelect.innerHTML = ""; // Limpiar opciones anteriores
-            var filteredFisioterapeutas = fisioterapeutas.filter(function(fisioterapeuta) {
-                return fisioterapeuta.especialidad_id == especialidadId;
-            });
-            console.log("Fisioterapeutas filtrados:", filteredFisioterapeutas);
-
-            filteredFisioterapeutas.forEach(function(fisioterapeuta) {
-                var option = document.createElement("option");
-                option.value = fisioterapeuta.usuario_id;
-                option.textContent = fisioterapeuta.nombre + " " + fisioterapeuta.apellidos;
-                fisioterapeutaSelect.appendChild(option);
-            });
-        });
-
-        fisioterapeutaSelect.addEventListener("change", function() {
-            console.log("Cambio en fisioterapeuta capturado");
-            var fisioterapeutaId = fisioterapeutaSelect.value;
-            console.log("Fisioterapeuta seleccionado:", fisioterapeutaId);
-
-            especialidadSelect.selectedIndex = 0; // Reiniciar selector de especialidades
-        });
-    });
-</script> -->
 
 </main>
 

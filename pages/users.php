@@ -177,9 +177,6 @@ if (isset($_SESSION['alert'])) {
                                             case 'Administrador':
                                                 $text_gb_class = 'text-bg-danger';
                                                 break;
-                                            case 'Ninguno':
-                                                $text_gb_class = 'text-bg-secondary';
-                                                break;
                                             default:
                                                 $text_gb_class = 'text-bg-secondary';
                                         }

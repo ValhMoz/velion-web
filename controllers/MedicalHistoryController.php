@@ -11,9 +11,9 @@ class MedicalHistoryController extends FPDF
         $this->medicalhistoryModel = new MedicalHistoryModel();
     }
 
-    public function generarInformeMedico($historial_id)
+    public function generarInformeMedico($cita_id)
     {
-        $informe = $this->medicalhistoryModel->imprimirInforme($historial_id);
+        $informe = $this->medicalhistoryModel->imprimirInforme($cita_id);
         // Crear una instancia de FPDF
         $pdf = new FPDF();
         $pdf->AddPage();
@@ -30,9 +30,9 @@ class MedicalHistoryController extends FPDF
         $paciente_genero = $informe[0]['paciente_genero'];
         $fisioterapeuta_nombre = $informe[0]['fisioterapeuta_nombre'] . ' ' . $informe[0]['fisioterapeuta_apellidos'];
         $especialidad = $informe[0]['especialidad'];
-        $historial_diagnostico = $informe[0]['historial_diagnostico'];
-        $historial_tratamiento = $informe[0]['historial_tratamiento'];
-        $historial_notas = $informe[0]['historial_notas'];
+        $diagnostico = $informe[0]['diagnostico'];
+        $tratamiento = $informe[0]['tratamiento'];
+        $notas = $informe[0]['notas'];
 
         // Generar los recuadros con la información
         $pdf->SetFillColor(230, 230, 230);
@@ -67,7 +67,7 @@ class MedicalHistoryController extends FPDF
         $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Diagnóstico Médico'), 0, 1, 'L');
         $pdf->SetFont('Arial', '', 12);
         $pdf->SetXY(15, 75);
-        $pdf->MultiCell(0, 10, iconv('UTF-8', 'windows-1252', $historial_diagnostico));
+        $pdf->MultiCell(0, 10, iconv('UTF-8', 'windows-1252', $diagnostico));
 
         // Recuadro para el tratamiento
         $pdf->Rect(10, 120, 190, 30, 'DF');
@@ -76,7 +76,7 @@ class MedicalHistoryController extends FPDF
         $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Tratamiento'), 0, 1, 'L');
         $pdf->SetFont('Arial', '', 12);
         $pdf->SetXY(15, 125);
-        $pdf->MultiCell(0, 10, iconv('UTF-8', 'windows-1252', $historial_tratamiento));
+        $pdf->MultiCell(0, 10, iconv('UTF-8', 'windows-1252', $tratamiento));
 
         // Recuadro para las observaciones
         $pdf->Rect(10, 170, 190, 30, 'DF');
@@ -85,7 +85,7 @@ class MedicalHistoryController extends FPDF
         $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Observaciones'), 0, 1, 'L');
         $pdf->SetFont('Arial', '', 12);
         $pdf->SetXY(15, 175);
-        $pdf->MultiCell(0, 10, iconv('UTF-8', 'windows-1252', $historial_notas));
+        $pdf->MultiCell(0, 10, iconv('UTF-8', 'windows-1252', $notas));
 
         // Salida del PDF
         $pdf->Output('', '', true);
@@ -93,7 +93,7 @@ class MedicalHistoryController extends FPDF
 
     public function actualizarInformeMedico($datos, $condicion)
     {
-        if ($this->medicalhistoryModel->update('historial_medico', $datos, $condicion)) {
+        if ($this->medicalhistoryModel->update('medico', $datos, $condicion)) {
             $_SESSION['alert'] = array('type' => 'success', 'message' => 'Informe médico actualizado correctamente.');
             header("Location: ../pages/medical-history.php");
             exit();
@@ -143,7 +143,7 @@ class MedicalHistoryController extends FPDF
 
     public function agregarHistorialMedico($datos)
     {
-        return $this->medicalhistoryModel->insert('historial_medico', $datos);
+        return $this->medicalhistoryModel->insert('medico', $datos);
     }
 
     public function obtenerIdUltimoHistorial()
@@ -151,9 +151,9 @@ class MedicalHistoryController extends FPDF
         return $this->medicalhistoryModel->obtenerUltimaId();
     }
     
-    public function enlazarHistorialCita($cita_id, $historial_id)
+    public function enlazarHistorialCita($cita_id, $id)
     {
         // Lógica para enlazar el historial médico con la cita
-        // Esto podría ser una actualización en la base de datos, asociando la cita_id con el historial_id.
+        // Esto podría ser una actualización en la base de datos, asociando la cita_id con el id.
     }
 }

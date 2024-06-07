@@ -22,7 +22,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
 
         case 'confirmar':
             $datos = array(
-                'estado' => 'Realizada'
+                'estado' => 'Realizada',
+                'descripcion' => $_POST['descripcion'],
+                'tratamiento' => $_POST['tratamiento'],
+                'notas' => $_POST['notas']
+
             );
             $condicion = "cita_id = '" . $_POST["cita_id"] . "'";
             $appointmentController->confirmarCita('citas', $datos, $condicion);
