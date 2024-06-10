@@ -52,7 +52,7 @@ switch ($uri[2]) {
         if ($requestMethod == 'GET') {
             if (isset($uri[3])) {
                 $DNI = $uri[3];
-                echo (json_encode($appointmentController->obtenerCitasUsuario($DNI, true)));
+                echo (json_encode($appointmentController->obtenerCitasUsuario($DNI)));
             }
         }
         break;
@@ -90,8 +90,29 @@ switch ($uri[2]) {
     case 'recoverpass':
         if ($requestMethod == 'GET') {
             if (isset($uri[3])) {
-                $DNI = $uri[3];
+                $email = $uri[3];
                 echo (json_encode($loginController->generatePasswordResetToken($email, true)));
+            }
+        }
+        break;
+    case 'actualizar-datos':
+        if ($requestMethod == 'POST') {
+            // Obtener el contenido del cuerpo de la solicitud POST
+            $json = file_get_contents('php://input');
+
+            // Decodificar el JSON
+            $data = json_decode($json, true);
+            $datos = array(
+                'email' => $_POST["email"],
+                'pass' => password_hash($_POST["pass"], PASSWORD_DEFAULT),
+            );
+            $condicion = "usuario_id = '" . $_POST["usuario_id"] . "'";
+            if ($datos) {
+                echo (json_encode($userController->actualizarDatos($datos, $condicion, true)));
+            } else {
+                echo json_encode([
+                    "message" => "Datos incompletos"
+                ]);
             }
         }
         break;

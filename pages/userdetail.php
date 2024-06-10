@@ -18,7 +18,6 @@ if (isset($_GET['usuario_id'])) {
     $usuario = $userController->buscarUsuarios($_GET['usuario_id'], '');
     $citas = $appointmentController->obtenerCitasUsuario($_GET['usuario_id']);
     $informes = $medicalhistory->obtenerInforme($_GET['usuario_id']);
-    //echo(json_encode($informes));
 }
 
 
@@ -84,7 +83,7 @@ if (isset($_GET['usuario_id'])) {
                         <h3>Historial Médico</h3>
                         <ul class="list-group" style="margin-right: 10%">
                             <?php foreach ($informes as $informe) : ?>
-                                <li class="list-group-item"><? echo $informe['fecha_hora'] . ' ' .  $informe['historial_descripcion']; ?></li>
+                                <li class="list-group-item"><? echo $informe['fecha_hora'] . ' ' .  $informe['especialidad']; ?></li>
                             <?php endforeach; ?>
                         </ul>
                     </div>

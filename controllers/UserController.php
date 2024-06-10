@@ -87,14 +87,23 @@ class UserController
         }
     }
 
-    public function actualizarDatos($datos, $condicion)
+    public function actualizarDatos($datos, $condicion, $isApiRequest = false)
     {
-        if ($this->usuarioModel->update('usuarios', $datos, $condicion) == true) {
-            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Datos actualizados correctamente.');
-            header('Location: ../pages/settings.php');
-            exit();
+        if($isApiRequest){
+            if ($this->usuarioModel->update('usuarios', $datos, $condicion) == true) {
+               return ["message" => "Datos actualizados correctamente."];
+            } else {
+                return ["message" => "No se han podido actualizar tus datos."];
+            }
+
         } else {
-            echo "No se ha podido completar el registro";
+            if ($this->usuarioModel->update('usuarios', $datos, $condicion) == true) {
+                $_SESSION['alert'] = array('type' => 'success', 'message' => 'Datos actualizados correctamente.');
+                header('Location: ../pages/settings.php');
+                exit();
+            } else {
+                echo "No se ha podido completar el registro";
+            }
         }
     }
 

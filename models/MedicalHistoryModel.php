@@ -120,12 +120,5 @@ class MedicalHistoryModel extends BaseModel
         }
         return $datos;
     }
-
-    public function obtenerUltimaId()
-    {
-        $sql = "SELECT MAX(historial_id) AS last_id FROM historial_medico";
-        $result = self::$conexion->query($sql);
-        $row = $result->fetch_assoc();
-        return $row['last_id'];
-    }
+    
 }

@@ -25,20 +25,9 @@ class AppointmentController
         return $this->appointmentModel->obtenerCitasUsuarioPaginadas($DNI, $iniciar, $articulos_x_pagina);
     }
 
-    public function obtenerCitasUsuario($DNI, $isApiRequest = false)
+    public function obtenerCitasUsuario($DNI)
     {
-        $citas =  $this->appointmentModel->obtenerCitasUsuario($DNI);
-
-        if ($isApiRequest) {
-            return $citas;
-        }
-    
-        if (!$citas) {
-            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ninguna cita médica para el usuario seleccionado.');
-            header("Location: ../pages/appointments-patients.php");
-            exit();
-        }
-        return $citas;
+        return $this->appointmentModel->obtenerCitasUsuario($DNI);
     }
 
     public function obtenerListaPacientes()
@@ -159,10 +148,10 @@ class AppointmentController
         }
     }
 
-    // public function showAvailableSlots() {
-    //     $fisioterapeutas = $this->obtenerListaFisioterapeutas();
-    //     return $fisioterapeutas;
-    // }
+    public function showAvailableSlots() {
+        $fisioterapeutas = $this->obtenerListaFisioterapeutas();
+        return $fisioterapeutas;
+    }
 
     public function book() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
