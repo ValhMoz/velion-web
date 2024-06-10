@@ -40,7 +40,7 @@ switch ($uri[2]) {
             }
         }
         break;
-    case 'informe':
+    case 'generar-informe':
         if ($requestMethod == 'GET') {
             if (isset($uri[3])) {
                 $DNI = $uri[3];
@@ -57,13 +57,35 @@ switch ($uri[2]) {
         }
         break;
     case 'registro':
-        if ($requestMethod == 'GET') {
-            if (isset($uri[3])) {
-                $DNI = $uri[3];
-                echo (json_encode($appointmentController->obtenerCitasUsuario($DNI, true)));
+        if ($requestMethod == 'POST') {
+            // Obtener el contenido del cuerpo de la solicitud POST
+            $json = file_get_contents('php://input');
+
+            // Decodificar el JSON
+            $data = json_decode($json, true);
+            $datos = array(
+                'usuario_id' => $_POST["usuario_id"],
+                'nombre' => $_POST["nombre"],
+                'apellidos' => $_POST["apellidos"],
+                'genero' => $_POST["genero"],
+                'telefono' => $_POST["telefono"],
+                'fecha_nacimiento' => $_POST["fecha_nacimiento"],
+                'direccion' => $_POST["direccion"],
+                'provincia' => $_POST["provincia"],
+                'municipio' => $_POST["municipio"],
+                'cp' => $_POST["cp"],
+                'email' => $_POST["email"],
+                'pass' => password_hash($_POST["pass"], PASSWORD_DEFAULT),
+                'rol' => 'Paciente'
+            );
+            if ($datos) {
+                echo (json_encode($loginController->registrarNuevoUsuario($datos, true)));
+            } else {
+                echo json_encode([
+                    "message" => "Datos incompletos"
+                ]);
             }
         }
-        break;
         break;
     case 'recoverpass':
         if ($requestMethod == 'GET') {

@@ -17,11 +17,14 @@ class LoginController {
         if ($isApiResquest){
             if (!empty($usuarios)) {
                 $usuario = $usuarios[0];
-                if (password_verify($pass, $usuario['pass'])) {
+                if (password_verify($pass, $usuario['pass']) && $usuario['rol'] == 'Paciente') {
                    return $usuario;
+                } else{
+                    return ["message" => "No tienes permiso para acceder."];
+
                 }
             }
-            return ["message" => "Credenciales incorrectas"];
+            return ["message" => "Credenciales incorrectas."];
         }
 
         if (!empty($usuarios)) {
@@ -36,15 +39,24 @@ class LoginController {
         }
     }
 
-    public function registrarNuevoUsuario($datos)
+    public function registrarNuevoUsuario($datos, $isApiResquest = false)
     {
-        if ($this->loginModel->insert('usuarios', $datos)) {
-            // Dentro de la función añadirNuevoUsuario en UserController.php
-            $this->redirectWithMessage("Registrado correctamente.", 'success');
+        if ($isApiResquest){
+            if ($this->loginModel->insert('usuarios', $datos)){
+                return ["message" => "Usuario registrado"];
+            }else{
+                return ["message" => "Error al completar el registro"];
+            }
         } else {
-            // Dentro de la función añadirNuevoUsuario en UserController.php
-            $this->redirectWithMessage("Ha ocurrido un error al registrarse.", 'warning');
+            if ($this->loginModel->insert('usuarios', $datos)) {
+                // Dentro de la función añadirNuevoUsuario en UserController.php
+                $this->redirectWithMessage("Registrado correctamente.", 'success');
+            } else {
+                // Dentro de la función añadirNuevoUsuario en UserController.php
+                $this->redirectWithMessage("Ha ocurrido un error al registrarse.", 'warning');
+            }
         }
+
     }
 
     private function startSession($usuario) {
