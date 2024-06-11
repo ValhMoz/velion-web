@@ -33,9 +33,9 @@
                                 <label for="genero" class="form-label">Género</label>
                                 <select class="form-select" id="genero" name="genero" aria-label="Selecciona tu género">
                                     <option selected>Selecciona tu género</option>
-                                    <option value="hombre">Hombre</option>
-                                    <option value="mujer">Mujer</option>
-                                    <option value="otro">Otro</option>
+                                    <option value="Hombre">Hombre</option>
+                                    <option value="Mujer">Mujer</option>
+                                    <option value="Otro">Otro</option>
                                 </select>
                             </div>
                         </div>

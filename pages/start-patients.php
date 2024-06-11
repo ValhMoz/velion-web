@@ -4,7 +4,7 @@ require_once '../controllers/MedicalHistoryController.php';
 
 $medHist = new MedicalHistoryController();
 
-if ($rol == "Administrador" ||  $rol == "Fisioterapeuta") {
+if ($rol == "Administrador" || $rol == "Fisioterapeuta") {
     header("Location: 404.php");
     exit();
 }
@@ -17,24 +17,19 @@ $articulos_x_pagina = 4;
 
 $iniciar = ($_GET['pagina'] - 1) * $articulos_x_pagina;
 
-$informe = $medHist->obtenerInforme($DNI);
+$informes = $medHist->obtenerInforme($DNI);
 
-$n_botones_paginacion = ceil(count($informe) / ($articulos_x_pagina));
+$n_botones_paginacion = ceil(count($informes) / ($articulos_x_pagina));
 
-if($_GET['pagina']>$n_botones_paginacion){
-    header ('location:appointments-patients.php?pagina=1');
+if ($_GET['pagina'] > $n_botones_paginacion) {
+    header('location:appointments-patients.php?pagina=1');
 }
 
 include_once 'includes/dashboard-patients.php';
 ?>
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Bienvenid@, <?php echo $nombre ?> </h1>
-</div>
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h3">Mis informes</h1>
-</div>
+
 
 <?php
 // Verificar si hay una alerta de usuario
@@ -50,41 +45,55 @@ if (isset($_SESSION['alert'])) {
 }
 ?>
 
-<div class="table-responsive small">
+<div class="table-responsive">
     <div class="row">
-        <!-- Aquí se mostrará el informe en forma de listas -->
+        <!-- Aquí se mostrará cada informe en forma de listas -->
         <div class="col">
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-2">Informe 1</h5>
-                        <small>Fecha: <?php echo $informe[0]['fecha']; ?></small>
-                    </div>
-                    <p class="mb-1">Información sobre el informe.</p>
-                    <small>Nombre del paciente: <?php echo $informe[0]['nombre_paciente'] . " " . $informe[0]['apellidos_paciente']; ?></small>
-                    <small>Nombre del fisioterapeuta: <?php echo $informe[0]['nombre_fisioterapeuta'] . " " . $informe[0]['apellidos_fisioterapeuta']; ?></small>
-                    <div class="text-end mt-2">
-                        <form action="../scripts/medicalhistory_manager.php" method="GET">
-                            <input type="hidden" id="id" name="id" value="<?php echo $factura[0]['historial_id']; ?>">
-                            <button type="submit" class="btn btn-success">Descargar</button>
-                        </form>
-                    </div>
+            <ul class="list-group mt-5 custom-bg" style="background-color: transparent">
+                <li class="list-group-item custom-blur">
+                    <h3 class="mb-0 d-flex justify-content-center align-items-center" style="color: #FFFFFF">Mis informes</h3>
                 </li>
+                <?php foreach ($informes as $informe) { ?>
+                    <li class="list-group-item custom-blur">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-2">Informe <?php echo $informe['cita_id']; ?></h5>
+                            <small>Fecha: <?php echo $informe['fecha_hora']; ?></small>
+                        </div>
+                        <p class="mb-2"><b>Información sobre el informe:</b></p>
+                        <small>Nombre del paciente:
+                            <?php echo $informe['paciente_nombre'] . " " . $informe['paciente_apellidos']; ?></small>
+                        <br>
+                        <small>Nombre del fisioterapeuta:
+                            <?php echo $informe['fisioterapeuta_nombre'] . " " . $informe['fisioterapeuta_apellidos']; ?></small>
+                        <br>
+                        <small>Especialidad:
+                            <?php echo $informe['especialidad']; ?></small>
+                        <div class="text-end mt-2">
+                            <form action="../scripts/medicalhistory_manager.php" method="GET">
+                                <input type="hidden" id="id" name="id"
+                                    value="<?php echo $informe['cita_id']; ?>">
+                                <button type="submit" class="btn btn-success btn-success">Descargar</button>
+                            </form>
+                        </div>
+                    </li>
+                <?php } ?>
             </ul>
         </div>
     </div>
 </div>
 
+<br>
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-start">
         <li class="page-item <? echo $_GET['pagina'] <= 1 ? 'disabled' : '' ?>">
-            <a class="page-link" href="appointments-patients.php?pagina=<?php echo $_GET['pagina'] - 1 ?>">Anterior</a>
+            <a class="page-link" style="background-color: #222; color: #FFFFFF; border-color:#222" href="start-patients.php?pagina=<?php echo $_GET['pagina'] - 1 ?>">Anterior</a>
         </li>
-        <?php for ($i = 0; $i < $n_botones_paginacion; $i++) : ?>
-            <li class="page-item <? echo $_GET['pagina'] == $i + 1 ? 'active' : '' ?>"><a class="page-link" href="appointments-patients.php?pagina=<?php echo $i + 1 ?>"><?php echo $i + 1 ?></a></li>
+        <?php for ($i = 0; $i < $n_botones_paginacion; $i++): ?>
+            <li class="page-item <? echo $_GET['pagina'] == $i + 1 ? 'active' : '' ?>"><a class="page-link"
+                    href="start-patients.php?pagina=<?php echo $i + 1 ?>"><?php echo $i + 1 ?></a></li>
         <?php endfor ?>
         <li class="page-item <? echo $_GET['pagina'] >= $n_botones_paginacion ? 'disabled' : '' ?>">
-            <a class="page-link" href="appointments-patients.php?pagina=<?php echo $_GET['pagina'] + 1 ?>">Siguiente</a>
+            <a class="page-link custom-page-link" style="background-color: #222; color: #FFFFFF; border-color:#222" href="start-patients.php?pagina=<?php echo $_GET['pagina'] + 1 ?>">Siguiente</a>
         </li>
     </ul>
 </nav>

@@ -1,7 +1,6 @@
 <?php
 require_once '../scripts/session_manager.php';
-if($rol == "Administrador" ||  $rol == "Fisioterapeuta")
-{
+if ($rol == "Administrador" || $rol == "Fisioterapeuta") {
     header("Location: 404.php");
     exit();
 }
@@ -22,7 +21,8 @@ $fecha_emision = date('Y-m-d');
     <meta name="description" content="">
     <meta name="generator" content="Hugo 0.118.2">
     <title>Confirmación de compra</title>
-    <link href="../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/bootstrap-5.3/js/color-modes.js"></script>
     <meta name="theme-color" content="#712cf9">
 
@@ -116,7 +116,17 @@ $fecha_emision = date('Y-m-d');
         .bd-mode-toggle .dropdown-menu .active .bi {
             display: block !important;
         }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .button-container .btn {
+            flex: 1;
+        }
     </style>
+
 
 </head>
 
@@ -160,37 +170,44 @@ $fecha_emision = date('Y-m-d');
                         <div class="row g-3">
                             <div class="col-sm-6">
                                 <label for="firstName" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $nombre ?>" disabled>
+                                <input type="text" class="form-control" id="nombre" name="nombre"
+                                    value="<?php echo $nombre ?>" disabled>
                             </div>
 
                             <div class="col-sm-6">
                                 <label for="lastName" class="form-label">Apellidos</label>
-                                <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $apellidos ?>" disabled>
+                                <input type="text" class="form-control" id="apellidos" name="apellidos"
+                                    value="<?php echo $apellidos ?>" disabled>
                             </div>
 
                             <div class="col-12">
                                 <label for="email" class="form-label">Correo electrónico</label>
-                                <input type="email" class="form-control" id="email" name="email" value="<?php echo $correo ?>" disabled>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    value="<?php echo $correo ?>" disabled>
                             </div>
 
                             <div class="col-12">
                                 <label for="direccion" class="form-label">Dirección</label>
-                                <input type="text" class="form-control" id="direccion" name="direccion" value="<?php echo $direccion ?>" disabled>
+                                <input type="text" class="form-control" id="direccion" name="direccion"
+                                    value="<?php echo $direccion ?>" disabled>
                             </div>
 
                             <div class="col-md-5">
                                 <label for="state" class="form-label">Provincia</label>
-                                <input type="text" class="form-control" id="provincia" value="<?php echo $provincia ?>" disabled>
+                                <input type="text" class="form-control" id="provincia" value="<?php echo $provincia ?>"
+                                    disabled>
                             </div>
 
                             <div class="col-md-4">
                                 <label for="state" class="form-label">Municipicio</label>
-                                <input type="text" class="form-control" id="municipio" value="<?php echo $municipio ?>" disabled>
+                                <input type="text" class="form-control" id="municipio" value="<?php echo $municipio ?>"
+                                    disabled>
                             </div>
 
                             <div class="col-md-3">
                                 <label for="zip" class="form-label">CP</label>
-                                <input type="text" class="form-control" id="cp" name="cp" value="<?php echo $cp ?>" disabled>
+                                <input type="text" class="form-control" id="cp" name="cp" value="<?php echo $cp ?>"
+                                    disabled>
                             </div>
                         </div>
 
@@ -201,11 +218,13 @@ $fecha_emision = date('Y-m-d');
 
                             <div class="my-3">
                                 <div class="form-check">
-                                    <input id="credit" name="paymentMethod" type="radio" class="form-check-input" value="tarjeta" onclick="mostrarCamposPago()" checked required>
+                                    <input id="credit" name="paymentMethod" type="radio" class="form-check-input"
+                                        value="tarjeta" onclick="mostrarCamposPago()" checked required>
                                     <label class="form-check-label" for="credit">Tarjeta</label>
                                 </div>
                                 <div class="form-check">
-                                    <input id="debit" name="paymentMethod" type="radio" class="form-check-input" value="transferencia" onclick="mostrarCamposPago()" required>
+                                    <input id="debit" name="paymentMethod" type="radio" class="form-check-input"
+                                        value="transferencia" onclick="mostrarCamposPago()" required>
                                     <label class="form-check-label" for="debit">Transferencia</label>
                                 </div>
                             </div>
@@ -223,7 +242,8 @@ $fecha_emision = date('Y-m-d');
                                 <div class="row mb-3">
                                     <div class="col">
                                         <label for="expiracionTarjeta" class="form-label">Fecha de Expiración</label>
-                                        <input type="text" class="form-control" id="expiracionTarjeta" name="expiracionTarjeta" placeholder="MM/AA">
+                                        <input type="text" class="form-control" id="expiracionTarjeta"
+                                            name="expiracionTarjeta" placeholder="MM/AA">
                                     </div>
                                     <div class="col">
                                         <label for="cvvTarjeta" class="form-label">CVV</label>
@@ -240,7 +260,8 @@ $fecha_emision = date('Y-m-d');
                                 </div>
                                 <div class="mb-3">
                                     <label for="nombreBeneficiario" class="form-label">Nombre del Beneficiario</label>
-                                    <input type="text" class="form-control" id="nombreBeneficiario" name="nombreBeneficiario">
+                                    <input type="text" class="form-control" id="nombreBeneficiario"
+                                        name="nombreBeneficiario">
                                 </div>
                                 <!-- Otros campos relacionados con la transferencia -->
                             </div>
@@ -249,17 +270,20 @@ $fecha_emision = date('Y-m-d');
 
                         <hr class="my-4">
 
-                        <button class="w-100 btn btn-primary btn-lg" type="submit">Pagar</button>
-                </div>
+                        <div class="button-container">
+                            <button class="w-100 btn btn-primary btn-lg" type="submit">Pagar</button>
+                            <a class="w-100 btn btn-secondary btn-lg" href="shop.php">Cancelar</a>
+                        </div>
+                    </div>
             </form>
         </main>
 
         <footer class="my-5 pt-5 text-body-secondary text-center text-small">
-            <p class="mb-1">&copy; 2024 Company Name</p>
+            <p class="mb-1">&copy; 2024 Zero 2 Valhalla' Labs</p>
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="#">Privacy</a></li>
-                <li class="list-inline-item"><a href="#">Terms</a></li>
-                <li class="list-inline-item"><a href="#">Support</a></li>
+                <li class="list-inline-item"><a href="#">Privacidad</a></li>
+                <li class="list-inline-item"><a href="#">Terminos</a></li>
+                <li class="list-inline-item"><a href="#">Soporte</a></li>
             </ul>
         </footer>
     </div>

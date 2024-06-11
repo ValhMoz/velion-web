@@ -67,11 +67,11 @@ class SpecialityController
     public function eliminarEspecialidad($datos)
     {
         if ($this->specialityModel->delete('especialidades', $datos)) {
-            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Usuario eliminado correctamente.');
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Especialidad eliminada correctamente.');
             header('Location: ../pages/speciality.php');
             exit();
         } else {
-            $_SESSION['alert'] = array('type' => 'success', 'message' => 'No se ha podido eliminar el usuario correctamente.');
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'No se ha podido eliminar la especialidad correctamente.');
             header('Location: ../pages/speciality.php');
             exit();
         }

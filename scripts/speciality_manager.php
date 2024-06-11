@@ -10,7 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
         case 'añadir':
             $datos = array(
                 'descripcion' => $_POST["descripcion"],
-                'ult_modificacion' => $_POST["ult_modificacion"],
             );
 
             $specialityController->añadirEspecialidad($datos);
@@ -18,28 +17,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
 
         case 'editar':
             $datos = array(
-                'id' => $_POST["id"],
                 'descripcion' => $_POST["descripcion"],
-                'ult_modificacion' => $_POST["ult_modificacion"],
             );
 
-            $condicion = "id = '" . $_POST["id"] . "'";
+            $condicion = "especialidad_id = '" . $_POST["especialidad_id"] . "'";
             $specialityController->editarEspecialidad($datos, $condicion);
             break;
 
         case 'eliminar':
-            $datos = "id = '" . $_POST["id"] . "'";
+            $datos = "especialidad_id = '" . $_POST["especialidad_id"] . "'";
             $specialityController->eliminarEspecialidad($datos);
             break;
 
-        case 'actualizar_datos':
-            $datos = array(
-                'email' => $_POST["email"],
-                'pass' => password_hash($_POST["pass"], PASSWORD_DEFAULT)
-            );
-            $condicion = "usuario_id = '" . $_POST["usuario_id"] . "'";
-            $userController->actualizarDatos($datos, $condicion);
-            break;
         case 'exportar':
             $specialityController->exportarDatos();
             break;

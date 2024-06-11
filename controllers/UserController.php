@@ -26,9 +26,13 @@ class UserController
         return $this->usuarioModel->read('usuarios');
     }
 
-    public function buscarUsuarios($usuario_id, $rol)
+    public function buscarUsuarios($usuario_id, $rol, $isApiRequest = false)
     {
         $usuariosFiltrados = $this->usuarioModel->buscarUsuarios($usuario_id, $rol);
+
+        if($isApiRequest){
+            return $usuariosFiltrados;
+        }
     
         if (!empty($usuariosFiltrados)) {
             return $usuariosFiltrados;
@@ -77,20 +81,29 @@ class UserController
             header('Location: ../pages/users.php');
             exit();
         } else {
-            $_SESSION['alert'] = array('type' => 'success', 'message' => 'No se ha podido eliminar el usuario correctamente.');
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido eliminar el usuario correctamente.');
             header('Location: ../pages/users.php');
             exit();
         }
     }
 
-    public function actualizarDatos($datos, $condicion)
+    public function actualizarDatos($datos, $condicion, $isApiRequest = false)
     {
-        if ($this->usuarioModel->update('usuarios', $datos, $condicion) == true) {
-            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Datos actualizados correctamente.');
-            header('Location: ../pages/settings.php');
-            exit();
+        if($isApiRequest){
+            if ($this->usuarioModel->update('usuarios', $datos, $condicion) == true) {
+               return ["message" => "Datos actualizados correctamente."];
+            } else {
+                return ["message" => "No se han podido actualizar tus datos."];
+            }
+
         } else {
-            echo "No se ha podido completar el registro";
+            if ($this->usuarioModel->update('usuarios', $datos, $condicion) == true) {
+                $_SESSION['alert'] = array('type' => 'success', 'message' => 'Datos actualizados correctamente.');
+                header('Location: ../pages/settings.php');
+                exit();
+            } else {
+                echo "No se ha podido completar el registro";
+            }
         }
     }
 

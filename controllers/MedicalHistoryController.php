@@ -11,9 +11,9 @@ class MedicalHistoryController extends FPDF
         $this->medicalhistoryModel = new MedicalHistoryModel();
     }
 
-    public function generarInformeMedico($paciente_id)
+    public function generarInformeMedico($cita_id)
     {
-        $informe = $this->medicalhistoryModel->obtenerInforme($paciente_id);
+        $informe = $this->medicalhistoryModel->imprimirInforme($cita_id);
         // Crear una instancia de FPDF
         $pdf = new FPDF();
         $pdf->AddPage();
@@ -25,40 +25,40 @@ class MedicalHistoryController extends FPDF
         $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Informe Médico'), 0, 1, 'C');
 
         // Datos del paciente, facultativo, diagnóstico, tratamiento y observaciones
-        $nombre_paciente = $informe[0]['nombre_paciente'] . ' ' . $informe[0]['apellidos_paciente'];
-        $fecha_nacimiento = $informe[0]['fecha'];
-        $genero = $informe[0]['genero_paciente'];
-        $nombre_facultativo = $informe[0]['nombre_fisioterapeuta'] . ' ' . $informe[0]['apellidos_fisioterapeuta'];
-        $especialidad = "Fisioterapeuta";
+        $paciente_nombre = $informe[0]['paciente_nombre'] . ' ' . $informe[0]['paciente_apellidos'];
+        $paciente_fecha_nacimiento = $informe[0]['paciente_fecha_nacimiento'];
+        $paciente_genero = $informe[0]['paciente_genero'];
+        $fisioterapeuta_nombre = $informe[0]['fisioterapeuta_nombre'] . ' ' . $informe[0]['fisioterapeuta_apellidos'];
+        $especialidad = $informe[0]['especialidad'];
         $diagnostico = $informe[0]['diagnostico'];
         $tratamiento = $informe[0]['tratamiento'];
-        $observaciones = $informe[0]['notas'];
+        $notas = $informe[0]['notas'];
 
         // Generar los recuadros con la información
         $pdf->SetFillColor(230, 230, 230);
 
         // Recuadro para los datos del paciente
-        $pdf->Rect(10, 20, 90, 30, 'DF');
+        $pdf->Rect(10, 25, 90, 30, 'DF');
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Datos del Paciente'), 0, 1, 'L');
+        $pdf->Cell(0, 18, iconv('UTF-8', 'windows-1252', 'Datos del Paciente'), 0, 1, 'L');
         $pdf->SetFont('Arial', '', 12);
         $pdf->SetXY(10, 25);
-        $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Nombre: ') . iconv('UTF-8', 'windows-1252', $nombre_paciente), 0, 1, 'L');
+        $pdf->Cell(0, 18, iconv('UTF-8', 'windows-1252', 'Nombre: ') . iconv('UTF-8', 'windows-1252', $paciente_nombre), 0, 1, 'L');
         $pdf->SetXY(10, 30);
-        $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Fecha de Nacimiento: ') . iconv('UTF-8', 'windows-1252', $fecha_nacimiento), 0, 1, 'L');
+        $pdf->Cell(0, 18, iconv('UTF-8', 'windows-1252', 'Fecha de Nacimiento: ') . iconv('UTF-8', 'windows-1252', $paciente_fecha_nacimiento), 0, 1, 'L');
         $pdf->SetXY(10, 35);
-        $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Género: ') . iconv('UTF-8', 'windows-1252', $genero), 0, 1, 'L');
+        $pdf->Cell(0, 18, iconv('UTF-8', 'windows-1252', 'Género: ') . iconv('UTF-8', 'windows-1252', $paciente_genero), 0, 1, 'L');
 
         // Recuadro para los datos del facultativo
-        $pdf->Rect(110, 20, 90, 30, 'DF');
+        $pdf->Rect(110, 25, 90, 30, 'DF');
         $pdf->SetFont('Arial', 'B', 12);
         $pdf->SetXY(110, 20);
-        $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Datos del Facultativo'), 0, 1, 'L');
+        $pdf->Cell(0, 18, iconv('UTF-8', 'windows-1252', 'Datos del Facultativo'), 0, 1, 'L');
         $pdf->SetFont('Arial', '', 12);
         $pdf->SetXY(110, 25);
-        $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Nombre: ') . iconv('UTF-8', 'windows-1252', $nombre_facultativo), 0, 1, 'L');
+        $pdf->Cell(0, 18, iconv('UTF-8', 'windows-1252', 'Nombre: ') . iconv('UTF-8', 'windows-1252', $fisioterapeuta_nombre), 0, 1, 'L');
         $pdf->SetXY(110, 30);
-        $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Especialidad: ') . iconv('UTF-8', 'windows-1252', $especialidad), 0, 1, 'L');
+        $pdf->Cell(0, 18, iconv('UTF-8', 'windows-1252', 'Especialidad: ') . iconv('UTF-8', 'windows-1252', $especialidad), 0, 1, 'L');
 
         // Recuadro para el diagnóstico
         $pdf->Rect(10, 70, 190, 30, 'DF');
@@ -85,7 +85,7 @@ class MedicalHistoryController extends FPDF
         $pdf->Cell(0, 10, iconv('UTF-8', 'windows-1252', 'Observaciones'), 0, 1, 'L');
         $pdf->SetFont('Arial', '', 12);
         $pdf->SetXY(15, 175);
-        $pdf->MultiCell(0, 10, iconv('UTF-8', 'windows-1252', $observaciones));
+        $pdf->MultiCell(0, 10, iconv('UTF-8', 'windows-1252', $notas));
 
         // Salida del PDF
         $pdf->Output('', '', true);
@@ -93,7 +93,7 @@ class MedicalHistoryController extends FPDF
 
     public function actualizarInformeMedico($datos, $condicion)
     {
-        if ($this->medicalhistoryModel->update('historial_medico', $datos, $condicion)) {
+        if ($this->medicalhistoryModel->update('medico', $datos, $condicion)) {
             $_SESSION['alert'] = array('type' => 'success', 'message' => 'Informe médico actualizado correctamente.');
             header("Location: ../pages/medical-history.php");
             exit();
@@ -104,14 +104,20 @@ class MedicalHistoryController extends FPDF
         }
     }
 
-    public function obtenerInformeUsuario($DNI)
+    public function obtenerInformeUsuario($DNI, $isApiRequest = false)
     {
-        if (!$this->medicalhistoryModel->obtenerInforme($DNI)) {
+        $informe = $this->medicalhistoryModel->obtenerInforme($DNI);
+        
+        if ($isApiRequest) {
+            return $informe;
+        }
+    
+        if (!$informe) {
             $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ningún informe médico para el usuario seleccionado.');
             header("Location: ../pages/medical-history.php");
             exit();
         }
-        return ($this->medicalhistoryModel->obtenerInforme($DNI));
+        return $informe;
     }
 
     public function obtenerCitasUsuario($usuario_id)
@@ -135,19 +141,4 @@ class MedicalHistoryController extends FPDF
         return $this->medicalhistoryModel->read('usuarios', 'rol = \'paciente\'');
     }
 
-    public function agregarHistorialMedico($datos)
-    {
-        return $this->medicalhistoryModel->insert('historial_medico', $datos);
-    }
-
-    public function obtenerIdUltimoHistorial()
-    {
-        return $this->medicalhistoryModel->obtenerUltimaId();
-    }
-    
-    public function enlazarHistorialCita($cita_id, $historial_id)
-    {
-        // Lógica para enlazar el historial médico con la cita
-        // Esto podría ser una actualización en la base de datos, asociando la cita_id con el historial_id.
-    }
 }

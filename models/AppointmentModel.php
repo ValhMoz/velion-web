@@ -9,58 +9,9 @@ class AppointmentModel extends BaseModel
         parent::__construct(); // Llama al constructor de la clase padre (BaseModel)
     }
 
-    public function obtenerCitasProximas()
-    {
-        $sql = "SELECT 
-                    c.cita_id,
-                    c.fecha_hora,
-                    u.email AS paciente_email,
-                    u.nombre AS paciente_nombre,
-                    u.apellidos AS paciente_apellidos,
-                    u2.nombre AS fisioterapeuta_nombre,
-                    u2.apellidos AS fisioterapeuta_apellidos
-                FROM 
-                    citas c
-                INNER JOIN 
-                    usuarios u ON c.paciente_id = u.usuario_id
-                INNER JOIN 
-                    usuarios u2 ON c.fisioterapeuta_id = u2.usuario_id
-                WHERE 
-                    c.fecha_hora BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 1 DAY)
-                    AND c.estado = 'Programada'";
-
-        $resultado = self::$conexion->query($sql);
-        if (!$resultado) {
-            die("Error al ejecutar la consulta: " . self::$conexion->error);
-        }
-
-        $citas = array();
-        while ($fila = $resultado->fetch_assoc()) {
-            $citas[] = $fila;
-        }
-        return $citas;
-    }
-
-    public function obtenerUltimaEjecucion() {
-        $sql = "SELECT ultima_ejecucion FROM tareas WHERE nombre = 'enviarRecordatorios'";
-        $result = self::$conexion->query($sql);
-        if ($result && $row = $result->fetch_assoc()) {
-            return $row['ultima_ejecucion'];
-        }
-        return null;
-    }
-
-    public function actualizarUltimaEjecucion($fecha) {
-        $sql = "UPDATE tareas SET ultima_ejecucion = ? WHERE nombre = 'enviarRecordatorios'";
-        $stmt = self::$conexion->prepare($sql);
-        $stmt->bind_param("s", $fecha);
-        $stmt->execute();
-        $stmt->close();
-    }
-
     public function buscarCitas($usuarioID, $fechaHora, $estado, $especialidad)
     {
-        $sql = "SELECT c.*, u.nombre AS paciente_nombre, u.apellidos AS paciente_apellidos, u.telefono AS paciente_telefono, u2.nombre AS fisioterapeuta_nombre, u2.apellidos AS fisioterapeuta_apellidos, e.descripcion AS descripcion
+        $sql = "SELECT c.*, u.nombre AS paciente_nombre, u.apellidos AS paciente_apellidos, u.telefono AS paciente_telefono, u2.nombre AS fisioterapeuta_nombre, u2.apellidos AS fisioterapeuta_apellidos, e.descripcion AS descripcion, e.especialidad_id AS especialidad_id
         FROM citas c
         INNER JOIN usuarios u ON c.paciente_id = u.usuario_id
         INNER JOIN usuarios u2 ON c.fisioterapeuta_id = u2.usuario_id
@@ -69,7 +20,7 @@ class AppointmentModel extends BaseModel
         $types = "";
 
         if (!empty($usuarioID)) {
-            $sql .= " AND paciente_id = ?";
+            $sql .= " AND c.paciente_id = ?";
             $params[] = $usuarioID;
             $types .= "s";
         }
@@ -115,26 +66,10 @@ class AppointmentModel extends BaseModel
         p.nombre AS paciente_nombre,
         p.apellidos AS paciente_apellidos,
         p.telefono AS paciente_telefono,
-        -- p.email AS paciente_email,
-        -- p.fecha_nacimiento AS paciente_fecha_nacimiento,
-        -- p.direccion AS paciente_direccion,
-        -- p.provincia AS paciente_provincia,
-        -- p.municipio AS paciente_municipio,
-        -- p.cp AS paciente_cp,
-        -- p.genero AS paciente_genero,
         p.sesiones_disponibles AS paciente_sesiones_disponibles,
         f.usuario_id AS fisioterapeuta_id,
         f.nombre AS fisioterapeuta_nombre,
         f.apellidos AS fisioterapeuta_apellidos
-        -- f.telefono AS fisioterapeuta_telefono,
-        -- f.email AS fisioterapeuta_email,
-        -- f.fecha_nacimiento AS fisioterapeuta_fecha_nacimiento,
-        -- f.direccion AS fisioterapeuta_direccion,
-        -- f.provincia AS fisioterapeuta_provincia,
-        -- f.municipio AS fisioterapeuta_municipio,
-        -- f.cp AS fisioterapeuta_cp,
-        -- f.genero AS fisioterapeuta_genero,
-        -- f.sesiones_disponibles AS fisioterapeuta_sesiones_disponibles
         FROM
             citas c
         INNER JOIN
@@ -169,31 +104,16 @@ class AppointmentModel extends BaseModel
         c.cita_id,
         c.fecha_hora,
         c.estado,
+        e.especialidad_id,
         e.descripcion,
         p.usuario_id AS paciente_id,
         p.nombre AS paciente_nombre,
         p.apellidos AS paciente_apellidos,
         p.telefono AS paciente_telefono,
-        -- p.email AS paciente_email,
-        -- p.fecha_nacimiento AS paciente_fecha_nacimiento,
-        -- p.direccion AS paciente_direccion,
-        -- p.provincia AS paciente_provincia,
-        -- p.municipio AS paciente_municipio,
-        -- p.cp AS paciente_cp,
-        -- p.genero AS paciente_genero,
         p.sesiones_disponibles AS paciente_sesiones_disponibles,
         f.usuario_id AS fisioterapeuta_id,
         f.nombre AS fisioterapeuta_nombre,
         f.apellidos AS fisioterapeuta_apellidos
-        -- f.telefono AS fisioterapeuta_telefono,
-        -- f.email AS fisioterapeuta_email,
-        -- f.fecha_nacimiento AS fisioterapeuta_fecha_nacimiento,
-        -- f.direccion AS fisioterapeuta_direccion,
-        -- f.provincia AS fisioterapeuta_provincia,
-        -- f.municipio AS fisioterapeuta_municipio,
-        -- f.cp AS fisioterapeuta_cp,
-        -- f.genero AS fisioterapeuta_genero,
-        -- f.sesiones_disponibles AS fisioterapeuta_sesiones_disponibles
         FROM
             citas c
         INNER JOIN
@@ -235,26 +155,10 @@ class AppointmentModel extends BaseModel
         p.nombre AS paciente_nombre,
         p.apellidos AS paciente_apellidos,
         p.telefono AS paciente_telefono,
-        -- p.email AS paciente_email,
-        -- p.fecha_nacimiento AS paciente_fecha_nacimiento,
-        -- p.direccion AS paciente_direccion,
-        -- p.provincia AS paciente_provincia,
-        -- p.municipio AS paciente_municipio,
-        -- p.cp AS paciente_cp,
-        -- p.genero AS paciente_genero,
         p.sesiones_disponibles AS paciente_sesiones_disponibles,
         f.usuario_id AS fisioterapeuta_id,
         f.nombre AS fisioterapeuta_nombre,
         f.apellidos AS fisioterapeuta_apellidos
-        -- f.telefono AS fisioterapeuta_telefono,
-        -- f.email AS fisioterapeuta_email,
-        -- f.fecha_nacimiento AS fisioterapeuta_fecha_nacimiento,
-        -- f.direccion AS fisioterapeuta_direccion,
-        -- f.provincia AS fisioterapeuta_provincia,
-        -- f.municipio AS fisioterapeuta_municipio,
-        -- f.cp AS fisioterapeuta_cp,
-        -- f.genero AS fisioterapeuta_genero,
-        -- f.sesiones_disponibles AS fisioterapeuta_sesiones_disponibles
         FROM
             citas c
         INNER JOIN
@@ -280,5 +184,37 @@ class AppointmentModel extends BaseModel
             $datos[] = $fila;
         }
         return $datos;
+    }
+
+    // Agrega tu método modificado getAvailableSlots aquí
+    public function getAvailableSlots($fisioterapeuta_id, $date) {
+        $sql = "SELECT fecha_hora FROM citas WHERE fisioterapeuta_id = ? AND DATE(fecha_hora) = ?";
+        $stmt = self::$conexion->prepare($sql);
+        $stmt->bind_param("is", $fisioterapeuta_id, $date);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $bookedSlots = [];
+    
+        while ($row = $result->fetch_assoc()) {
+            $bookedSlots[] = $row['fecha_hora'];
+        }
+    
+        $stmt->close();
+    
+        // Agregar var_dump para depuración
+        var_dump($bookedSlots);
+    
+        return $bookedSlots;
+    }
+    
+    
+       
+
+    // Agrega tu método modificado bookAppointment aquí
+    public function bookAppointment($paciente_id, $fisioterapeuta_id, $fecha_hora) {
+        $sql = "INSERT INTO citas (paciente_id, fisioterapeuta_id, fecha_hora) VALUES (?, ?, ?)";
+        $stmt = self::$conexion->prepare($sql);
+        $stmt->bind_param("iis", $paciente_id, $fisioterapeuta_id, $fecha_hora);
+        return $stmt->execute();
     }
 }

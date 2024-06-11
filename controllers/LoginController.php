@@ -11,8 +11,22 @@ class LoginController {
         $this->loginModel = new LoginModel();
     }
 
-    public function iniciarSesion($email, $pass) {
+    public function iniciarSesion($email, $pass, $isApiResquest = false) {
         $usuarios = $this->loginModel->read('usuarios', "email = '$email'");
+
+        if ($isApiResquest){
+            if (!empty($usuarios)) {
+                $usuario = $usuarios[0];
+                if (password_verify($pass, $usuario['pass']) && $usuario['rol'] == 'Paciente') {
+                   return $usuario;
+                } else{
+                    return ["message" => "No tienes permiso para acceder."];
+
+                }
+            }
+            return ["message" => "Credenciales incorrectas."];
+        }
+
         if (!empty($usuarios)) {
             $usuario = $usuarios[0];
             if (password_verify($pass, $usuario['pass'])) {
@@ -25,15 +39,24 @@ class LoginController {
         }
     }
 
-    public function registrarNuevoUsuario($datos)
+    public function registrarNuevoUsuario($datos, $isApiResquest = false)
     {
-        if ($this->loginModel->insert('usuarios', $datos)) {
-            // Dentro de la función añadirNuevoUsuario en UserController.php
-            $this->redirectWithMessage("Registrado correctamente.", 'success');
+        if ($isApiResquest){
+            if ($this->loginModel->insert('usuarios', $datos)){
+                return ["message" => "Usuario registrado"];
+            }else{
+                return ["message" => "Error al completar el registro"];
+            }
         } else {
-            // Dentro de la función añadirNuevoUsuario en UserController.php
-            $this->redirectWithMessage("Ha ocurrido un error al registrarse.", 'warning');
+            if ($this->loginModel->insert('usuarios', $datos)) {
+                // Dentro de la función añadirNuevoUsuario en UserController.php
+                $this->redirectWithMessage("Registrado correctamente.", 'success');
+            } else {
+                // Dentro de la función añadirNuevoUsuario en UserController.php
+                $this->redirectWithMessage("Ha ocurrido un error al registrarse.", 'warning');
+            }
         }
+
     }
 
     private function startSession($usuario) {
@@ -151,8 +174,8 @@ class LoginController {
             $mail->setFrom('sergiofrubio@gmail.com', 'SIGEFI');
             $mail->addAddress($email);
             $mail->isHTML(true);
-            $mail->Subject = 'Recuperacion de contrasena';
-            $mail->Body = 'Haz clic en el siguiente enlace para recuperar tu contrasena: <a href="' . $resetLink . '">Recuperar Contraseña</a>';
+            $mail->Subject = iconv('UTF-8', 'windows-1252', "Recuperación de contraseña");
+            $mail->Body = 'Haz clic en el siguiente enlace para recuperar tu contraseña: <a href="' . $resetLink . '">Recuperar Contraseña</a>';
             $mail->send();
         } catch (Exception $e) {
             echo "No se pudo enviar el mensaje. Error de Mailer: {$mail->ErrorInfo}";

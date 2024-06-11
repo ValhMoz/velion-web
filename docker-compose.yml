@@ -9,14 +9,14 @@ services:
       - "80:80"
     volumes:
       - ../clinic-managment-web:/var/www/html
-      - ../clinic-managment-web/doc:/var/www/html/doc  # Añadir este volumen para el directorio doc
-    environment:
-      APACHE_RUN_USER: www-data
-      APACHE_RUN_GROUP: www-data
-    command: >
-      bash -c "chown -R www-data:www-data /var/www/html/doc &&
-               chmod -R 755 /var/www/html/doc &&
-               apache2-foreground"
+      # - ../clinic-managment-web/doc:/var/www/html/doc  # Añadir este volumen para el directorio doc
+    # environment:
+    #   APACHE_RUN_USER: www-data
+    #   APACHE_RUN_GROUP: www-data
+    # command: >
+    #   bash -c "chown -R www-data:www-data /var/www/html/doc &&
+    #            chmod -R 755 /var/www/html/doc &&
+    #            apache2-foreground"
     restart: always
 
   phpmyadmin:

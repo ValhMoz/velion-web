@@ -13,12 +13,24 @@ class ProductController {
         return $this->productModel->read('productos');
     }
 
+    public function obtenerFacturasUsuario($DNI){
+        return $this->productModel->obtenerFacturasPorID($DNI);
+    }
+
+
     public function obtenerProductosPaginados($inicio, $articulosPorPagina) {
         return $this->productModel->getProductsPaginated($inicio, $articulosPorPagina);
     }
 
     public function buscarProductos($productoId, $categoria) {
-        return $this->productModel->searchProducts($productoId, $categoria);
+        $productosFiltrados = $this->productModel->searchProducts($productoId, $categoria);
+        if (!empty($productosFiltrados)) {
+            return $productosFiltrados;
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha encontrado ningún usuario con los criterios seleccionados.');
+            header('Location: ../pages/products.php');
+            exit();
+        }
     }
 
     public function obtenerCategorias() {
@@ -26,20 +38,45 @@ class ProductController {
     }
     
     public function agregarProducto($tabla, $datos) {
-        return $this->productModel->insert($tabla, $datos);
+        if ($this->productModel->insert($tabla, $datos)) {
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Producto añadido correctamente.');
+            header('Location: ../pages/products.php');
+            exit();
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido añadir el producto correctamente.');
+            header('Location: ../pages/products.php');
+            exit();
+        }
     }
 
     public function editarProducto($tabla, $datos, $condicion) {
-        return $this->productModel->update($tabla, $datos, $condicion);
+        if ($this->productModel->update($tabla, $datos, $condicion)) {
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Datos del producto actualizados correctamente.');
+            header('Location: ../pages/products.php');
+            exit();
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido actualizar los datos del producto.');
+            header('Location: ../pages/products.php');
+            exit();
+        }
     }
 
     public function eliminarProducto($tabla, $condicion) {
-        return $this->productModel->delete($$tabla, $condicion);
+        if ($this->productModel->delete($tabla, $condicion)) {
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Producto eliminado correctamente.');
+            header('Location: ../pages/products.php');
+            exit();
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido eliminar el producto correctamente.');
+            header('Location: ../pages/products.php');
+            exit();
+        }
     }
 
     public function exportarDatos()
     {
-        $productos = $this->productModel->read('productos');
+        $productos = $this->productModel->obtenerProductos();
+
     
         // Instanciar un nuevo objeto FPDF
         $pdf = new FPDF(); // Orientación horizontal, unidad de medida en mm, tamaño de página A4
@@ -58,15 +95,18 @@ class ProductController {
         $pdf->SetFont('Arial', 'B', 8); // Cambiar el tamaño de la letra
         $pdf->SetFillColor(230, 230, 230);
         $pdf->Cell(27, 10, 'ID', 1, 0, 'C'); // Reducir la anchura de la celda
-        $pdf->Cell(118, 10, iconv('UTF-8', 'windows-1252', 'Nombre'), 1, 0, 'C'); // Ajustar la anchura de la celda
+        $pdf->Cell(59, 10, iconv('UTF-8', 'windows-1252', 'Nombre'), 1, 0, 'C'); // Ajustar la anchura de la celda
+        $pdf->Cell(59, 10, iconv('UTF-8', 'windows-1252', 'Categoria'), 1, 0, 'C'); // Ajustar la anchura de la celda
         $pdf->Cell(45, 10, iconv('UTF-8', 'windows-1252', 'Monto'), 1, 0, 'C'); // Ajustar la anchura de la celda
+
         $pdf->Ln(); // Salto de línea para la siguiente fila
     
         // Recorrer los usuarios y mostrarlos en la tabla
         $pdf->SetFont('Arial', '', 8);
         foreach ($productos as $producto) {
             $pdf->Cell(27, 10, $producto['producto_id'], 1, 0, 'C');
-            $pdf->Cell(118, 10, iconv('UTF-8', 'windows-1252', $producto['nombre']. '€'), 1, 0, 'L');
+            $pdf->Cell(59, 10, iconv('UTF-8', 'windows-1252', $producto['nombre']), 1, 0, 'L');
+            $pdf->Cell(59, 10, iconv('UTF-8', 'windows-1252', $producto['categoria']), 1, 0, 'L');
             $pdf->Cell(45, 10, iconv('UTF-8', 'windows-1252', $producto['monto']. '€'), 1, 0, 'C');
             $pdf->Ln(); // Salto de línea para la siguiente fila
         }

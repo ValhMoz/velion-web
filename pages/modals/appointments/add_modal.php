@@ -10,12 +10,12 @@
                     <input type="hidden" id="actionType" name="action" value="asignar">
                     <div class="mb-3">
                         <label for="paciente_id" class="form-label">Paciente</label>
-                        <input type="text" class="form-control" list="pacienteOptions" id="paciente_id" name="paciente_id" placeholder="Escribe aquí para buscar...">
-                        <datalist id="pacienteOptions">
+                        <select class="form-select" name="paciente_id" id="paciente_id" required>
+                            <option value="" hidden selected>Selecciona un paciente</option>
                             <?php foreach ($pacientes as $paciente) : ?>
                                 <option value="<?php echo $paciente['usuario_id']; ?>"><?php echo $paciente['nombre'] . ' ' . $paciente['apellidos']; ?></option>
                             <?php endforeach; ?>
-                        </datalist>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="especialidad_id" class="form-label">Especialidad</label>
@@ -30,7 +30,9 @@
                         <label for="fisioterapeuta_id" class="form-label">Fisioterapeuta</label>
                         <select class="form-select" name="fisioterapeuta_id" id="fisioterapeuta_id" required>
                             <option value="" hidden selected>Selecciona un fisioterapeuta</option>
-                            <!-- Esta opción será reemplazada por JavaScript -->
+                            <?php foreach ($fisioterapeutas as $fisioterapeuta) : ?>
+                                <option value="<?php echo $fisioterapeuta['usuario_id']; ?>"><?php echo $fisioterapeuta['nombre'] . ' ' . $fisioterapeuta['apellidos']; ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="mb-3">

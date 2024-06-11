@@ -17,6 +17,9 @@ class MedicalHistoryModel extends BaseModel
         c.cita_id,
         c.fecha_hora,
         c.estado AS estado_cita,
+        c.diagnostico,
+        c.notas,
+        c.tratamiento,
         e.descripcion AS especialidad,
         p.usuario_id AS paciente_id,
         p.nombre AS paciente_nombre,
@@ -28,19 +31,15 @@ class MedicalHistoryModel extends BaseModel
         p.municipio AS paciente_municipio,
         p.cp AS paciente_cp,
         p.email AS paciente_email,
-        p.genero as paciente_genero,
-        hmed.historial_id,
-        hmed.fecha AS historial_fecha,
-        hmed.descripcion AS historial_descripcion,
-        hmed.diagnostico AS historial_diagnostico,
-        hmed.tratamiento AS historial_tratamiento,
-        hmed.notas AS historial_notas
+        p.genero AS paciente_genero,
+        f.nombre AS fisioterapeuta_nombre,
+        f.apellidos AS fisioterapeuta_apellidos
         FROM 
             citas c
         JOIN 
             usuarios p ON c.paciente_id = p.usuario_id
-        LEFT JOIN 
-            historial_medico hmed ON c.historial_id = hmed.historial_id
+        JOIN
+            usuarios f ON c.fisioterapeuta_id = f.usuario_id
         LEFT JOIN 
             especialidades e ON c.especialidad_id = e.especialidad_id
         WHERE 
@@ -66,11 +65,60 @@ class MedicalHistoryModel extends BaseModel
         return $datos;
     }
 
-    public function obtenerUltimaId()
+    public function imprimirInforme($historial_id)
     {
-        $sql = "SELECT MAX(historial_id) AS last_id FROM historial_medico";
-        $result = self::$conexion->query($sql);
-        $row = $result->fetch_assoc();
-        return $row['last_id'];
+        $historial_id = self::$conexion->real_escape_string($historial_id);
+
+        $sql = "SELECT 
+        c.cita_id,
+        c.fecha_hora,
+        c.estado AS estado_cita,
+        c.diagnostico,
+        c.notas,
+        c.tratamiento,
+        e.descripcion AS especialidad,
+        p.usuario_id AS paciente_id,
+        p.nombre AS paciente_nombre,
+        p.apellidos AS paciente_apellidos,
+        p.telefono AS paciente_telefono,
+        p.fecha_nacimiento AS paciente_fecha_nacimiento,
+        p.direccion AS paciente_direccion,
+        p.provincia AS paciente_provincia,
+        p.municipio AS paciente_municipio,
+        p.cp AS paciente_cp,
+        p.email AS paciente_email,
+        p.genero AS paciente_genero,
+        f.nombre AS fisioterapeuta_nombre,
+        f.apellidos AS fisioterapeuta_apellidos
+        FROM 
+            citas c
+        JOIN 
+            usuarios p ON c.paciente_id = p.usuario_id
+        JOIN
+            usuarios f ON c.fisioterapeuta_id = f.usuario_id
+        LEFT JOIN 
+            especialidades e ON c.especialidad_id = e.especialidad_id
+        WHERE 
+            c.cita_id = '$historial_id'
+        AND
+            c.estado = 'Realizada'
+        ORDER BY 
+        c.fecha_hora DESC";
+
+        // Ejecutar la consulta
+        $resultado =  self::$conexion->query($sql);
+
+        // Manejo de errores
+        if (!$resultado) {
+            die("Error al ejecutar la consulta: " . self::$conexion->error);
+        }
+
+        // Procesa el resultado
+        $datos = array();
+        while ($fila = $resultado->fetch_assoc()) {
+            $datos[] = $fila;
+        }
+        return $datos;
     }
+    
 }

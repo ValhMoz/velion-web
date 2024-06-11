@@ -71,12 +71,14 @@ include_once './modals/products/add_modal.php';
 </div>
 
 <?php
-// Verificar si hay una alerta de producto
 if (isset($_SESSION['alert'])) {
+    $alert_type = $_SESSION['alert']['type'];
+    $alert_message = $_SESSION['alert']['message'];
     // Mostrar la alerta
-    echo '<div class="alert alert-' . $_SESSION['alert']['type'] . ' alert-dismissible fade show" role="alert">' . $_SESSION['alert']['message'] . '
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>';
+    echo '<div class="alert alert-' . $alert_type . ' alert-dismissible fade show" role="alert">' . $alert_message . '
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>';
+    // Eliminar la variable de sesión después de mostrar la alerta
     unset($_SESSION['alert']);
 }
 ?>
@@ -85,13 +87,11 @@ if (isset($_SESSION['alert'])) {
 <div class="table-responsive small">
     <form class="row g-3 mb-3" method="POST" action="">
         <div class="col-auto">
-            <label for="producto_id" class="form-label">ID de Producto</label>
-            <input type="text" class="form-control" id="producto_id" name="producto_id" value="<?php echo $filtro_producto_id; ?>">
+            <input type="text" class="form-control" id="producto_id" name="producto_id" value="<?php echo $filtro_producto_id; ?>" placeholder="Filtrar por ID...">
         </div>
         <div class="col-auto">
-            <label for="categoria" class="form-label">Categoría</label>
-            <select class="form-select" id="categoria" name="categoria">
-                <option value="">Seleccione una categoría</option>
+            <select class="form-select" id="categoria_id" name="categoria_id">
+                <option selected value="" hidden>Seleccione una categoría</option>
                 <?php foreach ($categorias as $categoria) : ?>
                     <option value="<?php echo $categoria['categoria_id']; ?>" <?php echo ($filtro_categoria == $categoria['categoria_id']) ? 'selected' : ''; ?>><?php echo $categoria['nombre']; ?></option>
                 <?php endforeach; ?>

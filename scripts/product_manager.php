@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
         case 'añadir':
             $datos = array(
                 'nombre' => $_POST["nombre"],
-                'categoria' => $_POST["categoria"],
+                'categoria_id' => $_POST["categoria_id"],
                 'descripcion' => $_POST["descripcion"],
                 'monto' => $_POST["monto"]
             );
@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"]) {
         case 'editar':
             $datos = array(
                 'nombre' => $_POST["nombre"],
-                'categoria' => $_POST["categoria"],
+                'categoria_id' => $_POST["categoria_id"],
                 'descripcion' => $_POST["descripcion"],
                 'monto' => $_POST["monto"]
             );

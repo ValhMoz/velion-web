@@ -31,5 +31,8 @@ function validarInput() {
     if (!validarDNI(dni)) {
         idError.textContent = 'El DNI no es válido.';
         idError.style.color = 'red';
+    } else {
+        idError.textContent = '';
+
     }
 }
