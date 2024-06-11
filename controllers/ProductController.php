@@ -13,6 +13,11 @@ class ProductController {
         return $this->productModel->read('productos');
     }
 
+    public function obtenerFacturasUsuario($DNI){
+        return $this->productModel->obtenerFacturasPorID($DNI);
+    }
+
+
     public function obtenerProductosPaginados($inicio, $articulosPorPagina) {
         return $this->productModel->getProductsPaginated($inicio, $articulosPorPagina);
     }

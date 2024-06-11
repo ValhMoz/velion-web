@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Panel de gestión</title>
+    <link rel="icon" href="../assets/custom/img/VELION Logo Rounded.png" type="image/png">
     <link rel="stylesheet" href="../assets/custom/css/style.css">
     <link rel="stylesheet" href="../assets/custom/css/userdetail.css">
     <link href="../assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">

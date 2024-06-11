@@ -1,7 +1,7 @@
 <?php
 
 require_once '../models/InvoiceModel.php';
-require '../assets/fpdf186/invoice.php';
+require_once '../assets/fpdf186/invoice.php';
 
 class InvoiceController extends PDF_Invoice
 {
@@ -15,6 +15,10 @@ class InvoiceController extends PDF_Invoice
     public function obtenerFacturas()
     {
         return $this->invoiceModel->read('facturas');
+    }
+
+    public function obtenerFacturasUsuario($DNI){
+        return $this->invoiceModel->obtenerFacturasPorID($DNI);
     }
 
     public function buscarFacturas($usuario_id, $estado)

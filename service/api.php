@@ -56,6 +56,14 @@ switch ($uri[2]) {
             }
         }
         break;
+    case 'facturas':
+        if ($requestMethod == 'GET') {
+            if (isset($uri[3])) {
+                $DNI = $uri[3];
+                echo (json_encode($productController->obtenerFacturasUsuario($DNI)));
+            }
+        }
+        break;
     case 'registro':
         if ($requestMethod == 'POST') {
             // Obtener el contenido del cuerpo de la solicitud POST

@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inicio de sesión</title>
+    <link rel="icon" href="./assets/custom/img/VELION Logo Rounded.png" type="image/png">
     <link href="./assets/bootstrap-5.3/css/bootstrap.min.css" rel="stylesheet">
     <script src="./assets/bootstrap-5.3/js/bootstrap.bundle.min.js"></script>
 
