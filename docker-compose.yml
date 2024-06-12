@@ -8,8 +8,8 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ../clinic-managment-web:/var/www/html
-      # - ../clinic-managment-web/doc:/var/www/html/doc  # Añadir este volumen para el directorio doc
+      - ../velion-web:/var/www/html
+      # - ../velion-web/doc:/var/www/html/doc  # Añadir este volumen para el directorio doc
     # environment:
     #   APACHE_RUN_USER: www-data
     #   APACHE_RUN_GROUP: www-data
