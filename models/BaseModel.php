@@ -12,7 +12,7 @@ class BaseModel
             $host = 'mysql';
             $usuario = 'root';
             $contrasena = 'root';
-            $base_de_datos = 'clinic-managment';
+            $base_de_datos = 'velion';
 
             // Intenta establecer la conexión
             self::$conexion = new mysqli($host, $usuario, $contrasena, $base_de_datos);
