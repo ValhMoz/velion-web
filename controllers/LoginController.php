@@ -102,7 +102,7 @@ class LoginController {
         exit();
     }
 
-    public function generatePasswordResetToken($email) {
+    public function generatePasswordResetToken($email, $isApiResquest = false) {
         $token = bin2hex(random_bytes(32));
         $conn = $this->loginModel->getConnection();
         $this->deleteExistingTokens($conn, $email);
@@ -112,6 +112,11 @@ class LoginController {
             $this->redirectWithMessage('Se ha enviado un correo con un enlace para restablecer la contraseña', 'success');
         }
         $conn->close();
+
+        if ($isApiResquest){
+            return ["message" => "Solicitud enviada correctamente"];
+
+        }
     }
 
     public function resetPassword($token, $password) {

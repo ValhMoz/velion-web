@@ -75,7 +75,7 @@ switch ($uri[2]) {
                 'usuario_id' => $_POST["usuario_id"],
                 'nombre' => $_POST["nombre"],
                 'apellidos' => $_POST["apellidos"],
-                'genero' => $_POST["genero"],
+                //'genero' => $_POST["genero"],
                 'telefono' => $_POST["telefono"],
                 'fecha_nacimiento' => $_POST["fecha_nacimiento"],
                 'direccion' => $_POST["direccion"],
