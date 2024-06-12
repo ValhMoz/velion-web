@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-develop',
-        'version' => 'dev-develop',
-        'reference' => '5cb0394886091a6d029a8a489a2fce26907e3f41',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'cc57ff00e3e5c879295d694c30d4ccc52dc2bbfb',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,11 +11,20 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-develop',
-            'version' => 'dev-develop',
-            'reference' => '5cb0394886091a6d029a8a489a2fce26907e3f41',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'cc57ff00e3e5c879295d694c30d4ccc52dc2bbfb',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'firebase/php-jwt' => array(
+            'pretty_version' => 'v6.10.1',
+            'version' => '6.10.1.0',
+            'reference' => '500501c2ce893c824c801da135d02661199f60c5',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../firebase/php-jwt',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
