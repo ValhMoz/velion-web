@@ -107,7 +107,7 @@ class LoginController {
         $conn = $this->loginModel->getConnection();
         $this->deleteExistingTokens($conn, $email);
         $this->insertNewToken($conn, $email, $token);
-        $resetLink = 'localhost/pages/resetPassword.php?token=' . $token;
+        $resetLink = 'velion.es/pages/resetPassword.php?token=' . $token;
         if($this->sendPasswordResetEmail($email, $resetLink)){
             $this->redirectWithMessage('Se ha enviado un correo con un enlace para restablecer la contraseña', 'success');
         }
@@ -170,18 +170,19 @@ class LoginController {
         $mail = new PHPMailer(true);
         try {
             $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
+            $mail->Host = 'smtp.serviciodecorreo.es';
             $mail->SMTPAuth = true;
-            $mail->Username = 'sergiofrubio@gmail.com';
-            $mail->Password = 'wcgs pxws wttd aeco';
+            $mail->Username = 'administracion@velion.es';
+            $mail->Password = 'Velion123';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
-            $mail->setFrom('sergiofrubio@gmail.com', 'SIGEFI');
+            $mail->setFrom('administracion@velion.es', 'VELION');
             $mail->addAddress($email);
             $mail->isHTML(true);
             $mail->Subject = iconv('UTF-8', 'windows-1252', "Recuperación de contraseña");
             $mail->Body = 'Haz clic en el siguiente enlace para recuperar tu contraseña: <a href="' . $resetLink . '">Recuperar Contraseña</a>';
             $mail->send();
+            $this->redirectWithMessage('Se ha enviado un correo con un enlace para restablecer la contraseña', 'success');
         } catch (Exception $e) {
             echo "No se pudo enviar el mensaje. Error de Mailer: {$mail->ErrorInfo}";
         }
