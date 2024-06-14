@@ -9,6 +9,10 @@ if ($rol == "Paciente") {
 
 $userController = new UserController();
 $usuarios = $userController->obtenerUltimosUsuarios();
+$total_usuarios = $userController->conteoUsuarios();
+$total_fisioterapeutas = $userController->conteoFisioterapeutas();
+$total_facturas = $userController->conteoFacturas();
+$total_citas = $userController->conteoCitas();
 
 include_once './includes/dashboard.php';
 ?>
@@ -21,7 +25,7 @@ include_once './includes/dashboard.php';
                 <div class="card text-white bg-primary">
                     <div class="card-body">
                         <h5 class="card-title">Usuarios Registrados</h5>
-                        <p class="card-text fs-1">500</p>
+                        <p class="card-text fs-1"><?php echo $total_usuarios; ?></p>
                     </div>
                 </div>
             </div>
@@ -31,7 +35,7 @@ include_once './includes/dashboard.php';
                 <div class="card text-white bg-success">
                     <div class="card-body">
                         <h5 class="card-title">Fisioterapeutas</h5>
-                        <p class="card-text fs-1">50</p>
+                        <p class="card-text fs-1"><?php echo $total_fisioterapeutas; ?></p>
                     </div>
                 </div>
             </div>
@@ -41,7 +45,7 @@ include_once './includes/dashboard.php';
                 <div class="card text-white bg-danger">
                     <div class="card-body">
                         <h5 class="card-title">Facturas</h5>
-                        <p class="card-text fs-1">200</p>
+                        <p class="card-text fs-1"><?php echo $total_facturas; ?></p>
                     </div>
                 </div>
             </div>
@@ -51,7 +55,7 @@ include_once './includes/dashboard.php';
                 <div class="card text-white bg-warning">
                     <div class="card-body">
                         <h5 class="card-title">Citas</h5>
-                        <p class="card-text fs-1">1000</p>
+                        <p class="card-text fs-1"><?php echo $total_citas; ?></p>
                     </div>
                 </div>
             </div>
@@ -135,7 +139,7 @@ include_once './includes/dashboard.php';
                 </div>
             </div>
         </div>
-<!-- 
+        <!-- 
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-start">
                 <li class="page-item <? echo $_GET['pagina'] <= 1 ? 'disabled' : '' ?>">
@@ -151,8 +155,8 @@ include_once './includes/dashboard.php';
         </nav>
     </div> -->
 
-</main>
+        </main>
 
-</body>
+        </body>
 
-</html>
+        </html>

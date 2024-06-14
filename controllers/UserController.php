@@ -107,6 +107,22 @@ class UserController
         }
     }
 
+    public function conteoUsuarios(){
+        return $this->usuarioModel->conteoUsuarios();
+    }
+
+    public function conteoFisioterapeutas(){
+        return $this->usuarioModel->conteoFisioterapeutas();
+    }
+
+    public function conteoFacturas(){
+        return $this->usuarioModel->conteoFacturas();
+    }
+
+    public function conteoCitas(){
+        return $this->usuarioModel->conteoCitas();
+    }
+
     public function exportarDatosAPdf()
     {
         // Instanciar un nuevo objeto FPDF

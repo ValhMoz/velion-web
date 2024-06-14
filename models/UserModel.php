@@ -13,7 +13,7 @@ class UserModel extends BaseModel
     {
         // Prepara la consulta para obtener los últimos 5 usuarios ordenados por fecha de creación
         $sql = "SELECT * FROM usuarios ORDER BY usuario_id DESC LIMIT ?";
-        
+
         // Prepara y ejecuta la consulta
         $stmt = self::$conexion->prepare($sql);
         $stmt->bind_param("i", $limite);
@@ -28,7 +28,7 @@ class UserModel extends BaseModel
 
         // Libera el statement y cierra la conexión
         $stmt->close();
-        
+
         return $usuarios;
     }
 
@@ -60,19 +60,19 @@ class UserModel extends BaseModel
         $sql = "SELECT * FROM `usuarios` WHERE 1=1";
         $params = [];
         $types = "";
-    
+
         if (!empty($usuario_id)) {
             $sql .= " AND usuario_id = ?";
             $params[] = $usuario_id;
             $types .= "s";
         }
-    
+
         if (!empty($rol)) {
             $sql .= " AND rol = ?";
             $params[] = $rol;
             $types .= "s";
         }
-    
+
         $stmt = self::$conexion->prepare($sql);
         if ($types) {
             $stmt->bind_param($types, ...$params);
@@ -81,10 +81,10 @@ class UserModel extends BaseModel
         $result = $stmt->get_result();
         $usuarios = $result->fetch_all(MYSQLI_ASSOC);
         $stmt->close();
-    
+
         return $usuarios;
     }
-    
+
 
     public function actualizarUsuario($usuario_id, $datos)
     {
@@ -137,5 +137,81 @@ class UserModel extends BaseModel
         // Redirigir a la página de usuarios
         header('Location: ../pages/users.php');
         exit();
+    }
+
+    public function conteoUsuarios()
+    {
+        // Consulta SQL para contar el número de usuarios
+        $sql = "SELECT COUNT(*) AS total_usuarios FROM usuarios";
+        $conexion = self::$conexion;
+        $result = $conexion->query($sql);
+
+        // Obtener el resultado
+        $total_usuarios = 0;
+        if ($result->num_rows > 0) {
+            // Obtener la fila de resultado
+            $row = $result->fetch_assoc();
+            $total_usuarios = $row['total_usuarios'];
+            return $total_usuarios;
+        }
+
+        $conexion->close();
+    }
+
+    public function conteoFisioterapeutas()
+    {
+        // Consulta SQL para contar el número de usuarios
+        $sql = "SELECT COUNT(*) AS total_fisioterapeutas FROM usuarios WHERE rol = 'Fisioterapeuta'";
+        $conexion = self::$conexion;
+        $result = $conexion->query($sql);
+
+        // Obtener el resultado
+        $total_fisioterapeutas = 0;
+        if ($result->num_rows > 0) {
+            // Obtener la fila de resultado
+            $row = $result->fetch_assoc();
+            $total_fisioterapeutas = $row['total_fisioterapeutas'];
+            return $total_fisioterapeutas;
+        }
+
+        $conexion->close();
+    }
+
+    public function conteoFacturas()
+    {
+        // Consulta SQL para contar el número de usuarios
+        $sql = "SELECT COUNT(*) AS total_facturas FROM facturas";
+        $conexion = self::$conexion;
+        $result = $conexion->query($sql);
+
+        // Obtener el resultado
+        $total_facturas = 0;
+        if ($result->num_rows > 0) {
+            // Obtener la fila de resultado
+            $row = $result->fetch_assoc();
+            $total_facturas = $row['total_facturas'];
+            return $total_facturas;
+        }
+
+        $conexion->close();
+    }
+
+    public function conteoCitas()
+    {
+        // Consulta SQL para contar el número de usuarios
+        $sql = "SELECT COUNT(*) AS total_citas FROM citas";
+        $conexion = self::$conexion;
+        $result = $conexion->query($sql);
+
+        // Obtener el resultado
+        $total_citas = 0;
+        if ($result->num_rows > 0) {
+            // Obtener la fila de resultado
+            $row = $result->fetch_assoc();
+            $total_citas = $row['total_citas'];
+            return $total_citas;
+        }
+
+        $conexion->close();
     }
 }
