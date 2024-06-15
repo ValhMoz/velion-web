@@ -44,7 +44,7 @@ switch ($uri[2]) {
         if ($requestMethod == 'GET') {
             if (isset($uri[3])) {
                 $DNI = $uri[3];
-                echo (json_encode($medicalhistoryController->generarInformeMedico(1)));
+                echo (json_encode($medicalhistoryController->generarInformeMedico($DNI)));
             }
         }
         break;
