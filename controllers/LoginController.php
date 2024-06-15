@@ -107,7 +107,7 @@ class LoginController {
         $conn = $this->loginModel->getConnection();
         $this->deleteExistingTokens($conn, $email);
         $this->insertNewToken($conn, $email, $token);
-        $resetLink = 'velion.es/pages/resetPassword.php?token=' . $token;
+        $resetLink = 'paroxytone-conjunct.000webhostapp.com/pages/resetPassword.php?token=' . $token;
         $emailExistente = $this->loginModel->obtenerEmail($email);
         
         if($emailExistente){
