@@ -102,21 +102,26 @@ class LoginController {
         exit();
     }
 
-    public function generatePasswordResetToken($email, $isApiResquest = false) {
+    public function generatePasswordResetToken($email, $isApiRequest = false) {
         $token = bin2hex(random_bytes(32));
         $conn = $this->loginModel->getConnection();
         $this->deleteExistingTokens($conn, $email);
         $this->insertNewToken($conn, $email, $token);
         $resetLink = 'velion.es/pages/resetPassword.php?token=' . $token;
-        if($this->sendPasswordResetEmail($email, $resetLink)){
-            $this->redirectWithMessage('Se ha enviado un correo con un enlace para restablecer la contraseña', 'success');
+        $emailExistente = $this->loginModel->obtenerEmail($email);
+        
+        if($emailExistente){
+            if($this->sendPasswordResetEmail($email, $resetLink)){
+                $this->redirectWithMessage('Se ha enviado un correo con un enlace para restablecer la contraseña', 'success');
+            }
+            if ($isApiRequest){
+                return ["message" => "Solicitud enviada correctamente"];
+            }
+        } else {
+            $this->redirectWithMessage('Este correo no está registrado','warning');
         }
+        
         $conn->close();
-
-        if ($isApiResquest){
-            return ["message" => "Solicitud enviada correctamente"];
-
-        }
     }
 
     public function resetPassword($token, $password) {
