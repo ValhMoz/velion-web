@@ -1,19 +1,23 @@
 <?php
 require_once '../models/UserModel.php';
 require_once '../assets/fpdf186/fpdf.php';
+include '../scripts/session_manager.php';
 
 class UserController
 {
     private $usuarioModel;
+    private $DNI;  // Añadimos una propiedad para almacenar el DNI
 
     public function __construct()
     {
         $this->usuarioModel = new UserModel();
+        // Asignamos el DNI desde la sesión a la propiedad de la clase
+        $this->DNI = $_SESSION['usuario_id'];
     }
-    
-    public function obtenerUltimosUsuarios() {
-        return  $this->usuarioModel->obtenerUltimosUsuarios();
 
+    public function obtenerUltimosUsuarios()
+    {
+        return $this->usuarioModel->obtenerUltimosUsuarios();
     }
 
     public function obtenerUsuariosPaginados($iniciar, $articulos_x_pagina)
@@ -30,10 +34,10 @@ class UserController
     {
         $usuariosFiltrados = $this->usuarioModel->buscarUsuarios($usuario_id, $rol);
 
-        if($isApiRequest){
+        if ($isApiRequest) {
             return $usuariosFiltrados;
         }
-    
+
         if (!empty($usuariosFiltrados)) {
             return $usuariosFiltrados;
         } else {
@@ -42,7 +46,6 @@ class UserController
             exit();
         }
     }
-    
 
     public function añadirNuevoUsuario($datos)
     {
@@ -59,7 +62,6 @@ class UserController
         }
     }
 
-
     public function editarUsuario($datos, $condicion)
     {
         if ($this->usuarioModel->update('usuarios', $datos, $condicion)) {
@@ -72,7 +74,6 @@ class UserController
             exit();
         }
     }
-
 
     public function eliminarUsuario($datos)
     {
@@ -89,17 +90,16 @@ class UserController
 
     public function actualizarDatos($datos, $condicion, $isApiRequest = false)
     {
-        if($isApiRequest){
+        if ($isApiRequest) {
             if ($this->usuarioModel->update('usuarios', $datos, $condicion) == true) {
-               return ["message" => "Datos actualizados correctamente."];
+                return ["message" => "Datos actualizados correctamente."];
             } else {
                 return ["message" => "No se han podido actualizar tus datos."];
             }
-
         } else {
             if ($this->usuarioModel->update('usuarios', $datos, $condicion) == true) {
                 $_SESSION['alert'] = array('type' => 'success', 'message' => 'Datos actualizados correctamente.');
-                header('Location: ../pages/settings.php');
+                header('Location: ../pages/userdetail.php?usuario_id=' . $this->DNI . '');
                 exit();
             } else {
                 echo "No se ha podido completar el registro";
@@ -107,19 +107,23 @@ class UserController
         }
     }
 
-    public function conteoUsuarios(){
+    public function conteoUsuarios()
+    {
         return $this->usuarioModel->conteoUsuarios();
     }
 
-    public function conteoFisioterapeutas(){
+    public function conteoFisioterapeutas()
+    {
         return $this->usuarioModel->conteoFisioterapeutas();
     }
 
-    public function conteoFacturas(){
+    public function conteoFacturas()
+    {
         return $this->usuarioModel->conteoFacturas();
     }
 
-    public function conteoCitas(){
+    public function conteoCitas()
+    {
         return $this->usuarioModel->conteoCitas();
     }
 
@@ -185,7 +189,9 @@ class UserController
         $pdf->Output('ReporteUsuarios.pdf', 'D', true); // 'D' para descargar, 'F' para guardar en el servidor
     }
 
-    public function obtenerEspecialidades(){
+    public function obtenerEspecialidades()
+    {
         return $this->usuarioModel->read('especialidades');
     }
 }
+?>
