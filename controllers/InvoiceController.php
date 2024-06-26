@@ -164,6 +164,20 @@ class InvoiceController extends PDF_Invoice
 
     }
 
+    public function guardarFacturaPorUsuario($datos)
+    {
+        if ($this->invoiceModel->insert("facturas", $datos)) {
+            $_SESSION['alert'] = array('type' => 'success', 'message' => 'Factura añadida correctamente.');
+            header('Location: ../pages/invoices-patients.php');
+            exit();
+        } else {
+            $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido añadir la factura correctamente.');
+            header('Location: ../pages/invoices-patients.php');
+            exit();
+        }
+
+    }
+
     public function confirmarFactura($datos, $condicion)
     {
         if ($this->invoiceModel->update("facturas", $datos, $condicion)) {

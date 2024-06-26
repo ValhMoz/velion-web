@@ -45,6 +45,12 @@ class AppointmentController
         return $this->appointmentModel->read('especialidades');
     }
 
+      // Obtiene todos los fisioterapeutas por especialidad
+      public function obtenerFisioterapeutasPorEspecialidad($especialidad_id)
+      {
+          return $this->appointmentModel->read('usuarios', 'rol = \'Fisioterapeuta\' AND especialidad = ' . $especialidad_id);
+      }
+
     public function asignarCita($tabla, $datos)
     {
         if ($this->appointmentModel->insert($tabla, $datos)) {
@@ -148,54 +154,73 @@ class AppointmentController
         }
     }
 
-    public function showAvailableSlots() {
-        $fisioterapeutas = $this->obtenerListaFisioterapeutas();
-        return $fisioterapeutas;
+    public function obtenerHorasDisponibles($fisioterapeuta_id, $fecha)
+    {
+        $bookedSlots = $this->appointmentModel->getAvailableSlots($fisioterapeuta_id, $fecha);
+        $allSlots = $this->generateTimeSlots($fecha);
+        $availableSlots = array_diff($allSlots, $bookedSlots);
+        return json_encode(array_values($availableSlots));
     }
 
-    public function book() {
+    private function generateTimeSlots($date)
+    {
+        $start = new DateTime($date . ' 08:00');
+        $end = new DateTime($date . ' 17:00');
+        $interval = new DateInterval('PT60M');
+        $slots = [];
+
+        while ($start < $end) {
+            $slots[] = $start->format('H:i');
+            $start->add($interval);
+        }
+
+        return $slots;
+    }
+
+    // Método para manejar la solicitud de cita
+    public function book()
+    {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $paciente_id = $_POST['paciente_id'];
             $fisioterapeuta_id = $_POST['fisioterapeuta_id'];
             $fecha_hora = $_POST['fecha_hora'];
 
             $success = $this->appointmentModel->bookAppointment($paciente_id, $fisioterapeuta_id, $fecha_hora);
-
             if ($success) {
-                $_SESSION['alert'] = array('type' => 'warning', 'success' => 'Cita reservada exitosamente.');
+                $_SESSION['alert'] = array('type' => 'success', 'message' => 'Cita reservada exitosamente.');
                 header('Location: ../pages/appointments.php');
+                exit();
             } else {
                 $_SESSION['alert'] = array('type' => 'warning', 'message' => 'No se ha podido reservar la cita.');
-            header('Location: ../pages/appointments.php');
+                header('Location: ../pages/appointments.php');
+                exit();
             }
-        // } else {
-        //     header("Location: index.php?controller=Appointment&action=showAvailableSlots");
         }
-    }
-
-    public function getSlots($fisioterapeuta_id, $date) {
-        $bookedSlots = $this->appointmentModel->getAvailableSlots($fisioterapeuta_id, $date);
-    
-        // Generate all time slots for the day
-        $allSlots = $this->generateTimeSlots($date);
-    
-        $availableSlots = array_diff($allSlots, $bookedSlots);
-    
-        return $availableSlots;
-    }
-    
-    private function generateTimeSlots($date) {
-        $start = new DateTime($date . ' 08:00');
-        $end = new DateTime($date . ' 17:00');
-        $interval = new DateInterval('PT60M');
-        $slots = [];
-    
-        while ($start < $end) {
-            $slots[] = $start->format('Y-m-d H:i:s');
-            $start->add($interval);
-        }
-    
-        return $slots;
     }
 
 }
+
+if (isset($_GET['action'])) {
+    $controller = new AppointmentController();
+
+    switch ($_GET['action']) {
+        case 'obtenerEspecialidades':
+            $especialidades = $controller->obtenerEspecialidades();
+            echo json_encode($especialidades);
+            break;
+
+        case 'obtenerFisioterapeutasPorEspecialidad':
+            $especialidad_id = $_GET['especialidad_id'];
+            $fisioterapeutas = $controller->obtenerFisioterapeutasPorEspecialidad($especialidad_id);
+            echo json_encode($fisioterapeutas);
+            break;
+
+        case 'obtenerHorasDisponibles':
+            $fecha = $_GET['fecha'];
+            $fisioterapeuta_id = $_GET['fisioterapeuta_id'];
+            $horas = $controller->obtenerHorasDisponibles($fisioterapeuta_id, $fecha);
+            echo json_encode($horas);
+            break;
+    }
+}
+?>

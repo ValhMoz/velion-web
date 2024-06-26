@@ -96,7 +96,7 @@ if (isset($_SESSION['alert'])) {
             <select class="form-select" id="especialidad" name="especialidad">
                 <option selected value="" hidden>Selecciona una especialidad</option>
                 <?php foreach ($especialidades as $especialidad) : ?>
-                    <option value="<?php echo $especialidad['especialidad_id']; ?>"><?php echo $especialidad['especialidad_id'] . ' - ' . $especialidad['descripcion']; ?></option>
+                    <option value="<?php echo $especialidad['especialidad_id']; ?>"><?php echo $especialidad['descripcion']; ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -129,7 +129,7 @@ if (isset($_SESSION['alert'])) {
                                 <td><?php echo $cita['fecha_hora']; ?></td>
                                 <td><?php echo $cita['paciente_nombre'] . " " . $cita['paciente_apellidos']; ?></td>
                                 <td><?php echo $cita['paciente_telefono'] ?></td>
-                                <td><?php echo $cita['especialidad_id'] . ' - ' . $cita['descripcion'] ?></td>
+                                <td><?php echo $cita['descripcion'] ?></td>
                                 <td><?php echo $cita['fisioterapeuta_nombre'] . " " . $cita['fisioterapeuta_apellidos'];  ?></td>
                                 <td>
                                     <?php
@@ -145,9 +145,9 @@ if (isset($_SESSION['alert'])) {
                                         case 'Programada':
                                             $text_gb_class = 'text-bg-warning';
                                             break;
-                                        case 'Pendiente':
-                                            $text_gb_class = 'text-bg-info';
-                                            break;
+                                        // case 'Pendiente':
+                                        //     $text_gb_class = 'text-bg-info';
+                                        //     break;
                                         default:
                                             $text_gb_class = 'text-bg-info';
                                     }

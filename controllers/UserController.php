@@ -1,18 +1,14 @@
 <?php
 require_once '../models/UserModel.php';
 require_once '../assets/fpdf186/fpdf.php';
-include '../scripts/session_manager.php';
 
 class UserController
 {
     private $usuarioModel;
-    private $DNI;  // Añadimos una propiedad para almacenar el DNI
 
     public function __construct()
     {
         $this->usuarioModel = new UserModel();
-        // Asignamos el DNI desde la sesión a la propiedad de la clase
-        $this->DNI = $_SESSION['usuario_id'];
     }
 
     public function obtenerUltimosUsuarios()
@@ -99,7 +95,7 @@ class UserController
         } else {
             if ($this->usuarioModel->update('usuarios', $datos, $condicion) == true) {
                 $_SESSION['alert'] = array('type' => 'success', 'message' => 'Datos actualizados correctamente.');
-                header('Location: ../pages/userdetail.php?usuario_id=' . $this->DNI . '');
+                header('Location: ../pages/userdetail.php?usuario_id=' . '');
                 exit();
             } else {
                 echo "No se ha podido completar el registro";

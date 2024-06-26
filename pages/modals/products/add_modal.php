@@ -29,7 +29,9 @@
                         <input type="number" class="form-control" id="monto" name="monto" required>
                     </div>
                     <input type="hidden" id="actionType" name="action" value="añadir">
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Guardar</button>
                 </form>
             </div>
         </div>
