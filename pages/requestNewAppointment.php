@@ -1,14 +1,12 @@
 <?php
-// if ($rol == "Paciente") {
-//     header("Location: 404.php");
-//     exit();
-// }
+require_once '../scripts/session_manager.php';
 
-// if (!$_GET) {
-//     header('location:users.php?pagina=1');
-// }
+if ($rol != "Paciente") {
+    header("Location: 404.php");
+    exit();
+}
 
-include_once './includes/dashboard.php';
+include_once './includes/dashboard-patients.php';
 ?>
 
 <div class="container mt-5">
