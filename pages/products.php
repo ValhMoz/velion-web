@@ -109,11 +109,11 @@ if (isset($_SESSION['alert'])) {
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Precio</th>
-                            <th>Categoría</th>
-                            <th>Acciones</th>
+                            <th style="width: 5%;">ID</th>
+                            <th style="width: 10%;">Nombre</th>
+                            <th style="width: 10%;">Precio</th>
+                            <th style="width: 10%;">Categoría</th>
+                            <th style="width: 1%;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
